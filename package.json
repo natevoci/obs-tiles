@@ -1,0 +1,21 @@
+{
+  "name": "OBS-tiles",
+  "version": "1.0.0",
+  "description": "Web app for controlling OBS Studio through obs-websocket",
+  "main": "src/index.js",
+  "author": "Nate",
+  "license": "MIT",
+  "scripts": {
+    "start": "parcel src/index.html"
+  },
+  "dependencies": {
+    "react": "^17.0.2",
+    "react-dom": "^17.0.2"
+  },
+  "devDependencies": {
+    "@babel/core": "^7.14.3",
+    "@babel/preset-env": "^7.14.2",
+    "@babel/preset-react": "^7.13.13",
+    "parcel-bundler": "^1.12.5"
+  }
+}
