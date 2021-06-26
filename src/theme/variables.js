@@ -13,6 +13,7 @@ const colors = {
 	nevada: '#6f7070',
 	froly: '#e57373',
 	turquoise: '#5ee2a0',
+	blue: '#0066ff',
 	nero: '#231f20',
 	black: '#000000',
 };
@@ -28,6 +29,9 @@ const swatches = {
 	error: colors.froly,
 	text: colors.nero,
 	textLight: colors.nevada,
+	sceneBackground: colors.black,
+	sceneText: colors.offWhite,
+	selectionHighlight: colors.blue,
 };
 
 const typography = {

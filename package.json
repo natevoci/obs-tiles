@@ -1,15 +1,19 @@
 {
-  "name": "OBS-tiles",
+  "name": "obs-tiles",
   "version": "1.0.0",
   "description": "Web app for controlling OBS Studio through obs-websocket",
   "main": "src/index.js",
   "author": "Nate",
   "license": "MIT",
   "scripts": {
-    "start": "parcel src/index.html"
+    "start": "parcel src/index.html",
+    "build": "parcel build src/index.html"
   },
   "dependencies": {
+    "@material-ui/core": "^4.11.4",
+    "@material-ui/icons": "^4.11.2",
     "components": "^0.1.0",
+    "obs-websocket-js": "^4.0.2",
     "react": "^17.0.2",
     "react-dom": "^17.0.2",
     "styled-components": "^5.3.0"

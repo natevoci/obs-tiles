@@ -2,6 +2,7 @@ import React from 'react';
 import styled from 'styled-components';
 
 // import { MainNav } from './MainNav';
+import { SettingsDialog } from '../Settings/SettingsDialog';
 import OBSLogo from '~/assets/obslogo.png';
 
 const Wrapper = styled.div`
@@ -26,5 +27,7 @@ export const Header = () => (
     <Wrapper>
         <Logo src={OBSLogo} alt="OBS logo" />
         {/* <MainNav /> */}
+        <SettingsDialog />
+
     </Wrapper>
 );
