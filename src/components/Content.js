@@ -12,14 +12,19 @@ const Main = styled.main`
 `;
 
 export const Content = () => {
-	const { settings } = useSettings();
+	const {settings: {
+		connections,
+		...settings
+	}} = useSettings();
 
 	return (
 		<Main
 			data-elementtype='Main'
 		>
 			<Tiles
-				tiles={settings.tiles}
+				tileSize='10'
+				direction='row'
+				{...settings}
 			/>
 		</Main>
 	);

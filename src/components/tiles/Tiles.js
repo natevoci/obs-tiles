@@ -1,7 +1,7 @@
 import React from 'react';
 import styled, { css } from 'styled-components';
-import { Button } from '@material-ui/core';
 
+import { Button } from './Button';
 import { SceneButton } from './SceneButton';
 
 const validDirections = {
@@ -27,12 +27,7 @@ const TilesGroup = styled.div`
 	flex-wrap: wrap;
 `;
 
-const StyledButton = styled(Button)`
-	width: ${p => p.$size*16}px;
-`;
-
 const TileWrapper = styled.div`
-	/* display: flex; */
 	position: relative;
 	margin: ${p => p.theme.grid(0.5)};
 
@@ -43,23 +38,24 @@ const TileWrapper = styled.div`
 		margin-right: 0;
 		` : ''}
 	}
-
 `;
 
 export const Tiles = ({
 	tiles,
-	connectionName,
-	direction = 'row',
+	connection,
+	tileSize,
+	direction,
 }) => {
-
 	const tileComponents = tiles.map((tile) => {
 		if (!tile) {
 			return null;
 		}
 
-		if (tile.connection) {
-			connectionName = tile.connection;
-		}
+		const inheritableProps = {
+			connection,
+			tileSize,
+			direction,
+		};
 
 		if (tile.group) {
 			return (
@@ -67,28 +63,20 @@ export const Tiles = ({
 					data-elementtype='TilesGroupWrapper'
 				>
 					<h3>{tile.group}</h3>
-					<Tiles
-						{...tile}
-						connectionName={connectionName}
-					/>
+					<Tiles {...inheritableProps} {...tile} />
 				</TilesGroupWrapper>
 			);
 		}
 
 		if (tile.button) {
 			return (
-				<StyledButton
-					$size={10}
-					variant='contained'
-				>
-					{tile.label || tile.button}
-				</StyledButton>
+				<Button {...inheritableProps} {...tile} />
 			);
 		}
 
 		if (tile.scene) {
 			return (
-				<SceneButton tile={tile} connectionName={connectionName} />
+				<SceneButton {...inheritableProps} {...tile} />
 			);
 		}
 

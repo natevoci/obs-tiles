@@ -27,6 +27,7 @@ export const SettingsDialog = () => {
 		<>
 			<IconButton
 				aria-label="settings"
+				color='inherit'
 				onClick={() => {
 					setValue(JSON.stringify(settings, null, 2));
 					setSettingsVisible(true);

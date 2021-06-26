@@ -6,25 +6,26 @@ import { SettingsContext } from './SettingsContext';
 export const SettingsProvider = ({ children }) => {
 	const [settings, setSettings] = React.useState(window.localStorage.getItem(`settings`) || {
 		connections: {
-				localhost: {
-					address: 'localhost:4444',
-					password: '',
-				},
-				liveStream: {
+			localhost: {
+				address: '192.168.10.101:4444',
+				password: '',
+			},
+			liveStream: {
 						address: 'streamingauditorium:4444',
 						password: '',
-				},
-				projector: {
-						// address: 'laptop02:4444',
-						address: 'localhost:4444',
-						password: '',
-				},
+			},
+			projector: {
+				// address: 'laptop02:4444',
+				address: '192.168.10.101:4444',
+				password: '',
+			},
 		},
+
+		tileSize: 18,
 		tiles: [
 			{
 				group: 'Live Stream',
 				connection: 'localhost',
-				// direction: 'row',
 				tiles: [
 					{
 						scene: '0 - Black',
@@ -49,7 +50,6 @@ export const SettingsProvider = ({ children }) => {
 					},
 					{
 						button: 'toggleStreaming',
-						label: 'Toggle Streaming',
 					},
 				],
 			},

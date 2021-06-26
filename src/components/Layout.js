@@ -14,8 +14,9 @@ const Wrapper = styled.div`
     margin: 0;
     background-color: ${p => p.theme.background};
     font-family: ${p => p.theme.fontFamily};
-    font-size: ${p => p.theme.fontSize.small};
+    font-size: ${p => p.theme.fontSize.medium};
     font-weight: ${p => p.theme.fontWeight.regular};
+    color: ${p => p.theme.text};
 `;
 
 export const Layout = ({ children }) => {

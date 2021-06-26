@@ -51,7 +51,7 @@ export const OBSWebsocketProvider = ({ children }) => {
 }
 
 export const useObsWebsocket = ({
-	connectionName: name
+	connection: name
 }) => {
 	const { getConnection } = React.useContext(obsContext);
 	const connection = getConnection(name);
@@ -71,8 +71,9 @@ export const useObsWebsocket = ({
 	const useSceneImage = ({
 		scene,
 		tileSize,
+		refreshTime = 1000,
 	}) => {
-		const [imageData, setImageData] = React.useState();
+		const [data, setData] = React.useState();
 
 		React.useEffect(
 			() => {
@@ -86,11 +87,11 @@ export const useObsWebsocket = ({
 							height: tileSize*9,
 						}).then(data => {
 							if (data?.img) {
-								setImageData(data.img);
-								timeout = setTimeout(updateScreenshot, 200);
+								setData(data.img);
+								timeout = setTimeout(updateScreenshot, refreshTime);
 							}
 						}).catch((err) => {
-							setImageData(null);
+							setData(null);
 							throw err;
 						});
 					};
@@ -105,23 +106,23 @@ export const useObsWebsocket = ({
 					}
 				}
 			},
-			[obs],
+			[obs, refreshTime],
 		);
 	
-		return imageData;
+		return data;
 	};
 
 	const useCurrentScene = () => {
-		const [currentScene, setCurrentScene] = React.useState();
+		const [data, setData] = React.useState();
 	
 		React.useEffect(
 			() => {
 				if (obs) {
 					obs.send('GetCurrentScene').then(data => {
-						setCurrentScene(data.name);
+						setData(data.name);
 					});
 					obs.on('SwitchScenes', data => {
-						setCurrentScene(data.sceneName);
+						setData(data.sceneName);
 						console.log('switchscenes');
 					});
 				}
@@ -129,7 +130,7 @@ export const useObsWebsocket = ({
 			[obs],
 		);
 	
-		return currentScene;
+		return data;
 	};
 
 	const setCurrentScene = ({
@@ -143,16 +144,16 @@ export const useObsWebsocket = ({
 	};
 
 	const useTransition = () => {
-		const [transitionData, setTransitionData] = React.useState(false);
+		const [data, setData] = React.useState(false);
 
 		React.useEffect(
 			() => {
 				if (obs) {
 					obs.on('TransitionBegin', data => {
-						setTransitionData(data);
+						setData(data);
 					});
 					obs.on('TransitionEnd', () => {
-						setTransitionData(null);
+						setData(null);
 						console.log('transitionend');
 					});
 				}
@@ -160,13 +161,82 @@ export const useObsWebsocket = ({
 			[obs],
 		);
 
-		return transitionData;
+		return data;
 	}
+
+	const useStreamStatus = () => {
+		const [data, setData] = React.useState();
+	
+		React.useEffect(
+			() => {
+				if (obs) {
+					obs.on('StreamStatus', data => {
+						setData(data);
+					});
+				}
+			},
+			[obs],
+		);
+	
+		return data;
+	};
+
+	const useIsStreaming = () => {
+		const [data, setData] = React.useState();
+	
+		React.useEffect(
+			() => {
+				if (obs) {
+					obs.send('GetStreamingStatus').then(data => {
+						setData(data.streaming ? 'started' : 'stopped');
+					});
+					obs.on('StreamStarting', () => {
+						setData('starting');
+					});
+					obs.on('StreamStarted', () => {
+						setData('started');
+					});
+					obs.on('StreamStopping', () => {
+						setData('stopping');
+					});
+					obs.on('StreamStopped', () => {
+						setData('stopped');
+					});
+				}
+			},
+			[obs],
+		);
+
+		return {
+			isStarted: data === 'started',
+			isStopped: data === 'stopped',
+			isStarting: data === 'starting',
+			isStopping: data === 'stopping',
+			isLoading: !data,
+		};
+	};
+
+	const startStreaming = () => {
+		obs?.send?.('StartStreaming');
+	};
+
+	const stopStreaming = () => {
+		obs?.send?.('StopStreaming');
+	};
+
+	const startStopStreaming = () => {
+		obs?.send?.('StartStopStreaming');
+	};
 
 	return {
 		useSceneImage,
 		useCurrentScene,
 		setCurrentScene,
 		useTransition,
+		useStreamStatus,
+		useIsStreaming,
+		startStreaming,
+		stopStreaming,
+		startStopStreaming,
 	};
 }
