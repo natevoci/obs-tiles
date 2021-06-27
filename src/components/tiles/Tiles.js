@@ -3,6 +3,7 @@ import styled, { css } from 'styled-components';
 
 import { Button } from './Button';
 import { SceneButton } from './SceneButton';
+import { Text } from './Text';
 
 const validDirections = {
 	column: 'column',
@@ -15,6 +16,7 @@ const TilesGroupWrapper = styled.div`
 	align-items: center;
 	border: 1px solid ${p => p.theme.border};
 	background-color: ${p => p.theme.navBackground};
+	padding: 0 ${p => p.theme.grid(0.5)};
 
 	& h3 {
 		margin-top: ${p => p.theme.grid(1)};
@@ -29,14 +31,11 @@ const TilesGroup = styled.div`
 
 const TileWrapper = styled.div`
 	position: relative;
-	margin: ${p => p.theme.grid(0.5)};
+	margin: 0;
 
 	&:not(:last-child) {
-		${p => p.$direction === 'column' ? css`
-		margin-bottom: 0;
-		` : p.$direction === 'row' ? css`
-		margin-right: 0;
-		` : ''}
+		margin-right: ${p => p.theme.grid(0.5)};
+		margin-bottom: ${p => p.theme.grid(1)};
 	}
 `;
 
@@ -68,6 +67,10 @@ export const Tiles = ({
 			);
 		}
 
+		if (tile.tiles) {
+			return <Tiles {...inheritableProps} {...tile} />;
+		}
+
 		if (tile.button) {
 			return (
 				<Button {...inheritableProps} {...tile} />
@@ -78,6 +81,12 @@ export const Tiles = ({
 			return (
 				<SceneButton {...inheritableProps} {...tile} />
 			);
+		}
+
+		if (tile.text) {
+			return (
+				<Text {...inheritableProps} {...tile} />
+			)
 		}
 
 		return null;

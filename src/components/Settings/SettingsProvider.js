@@ -26,6 +26,7 @@ export const SettingsProvider = ({ children }) => {
 			{
 				group: 'Live Stream',
 				connection: 'localhost',
+				direction: 'row',
 				tiles: [
 					{
 						scene: '0 - Black',
@@ -49,10 +50,18 @@ export const SettingsProvider = ({ children }) => {
 						scene: 'Video Call (Zoom)'
 					},
 					{
-						button: 'toggleStreaming',
-					},
-					{
-						button: 'toggleRecording',
+						direction: 'column',
+						tiles: [
+							{
+								button: 'toggleStreaming',
+							},
+							{
+								button: 'toggleRecording',
+							},
+							{
+								text: 'stats',
+							},
+						],
 					},
 				],
 			},

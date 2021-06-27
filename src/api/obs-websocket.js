@@ -8,41 +8,47 @@ const obsContext = React.createContext({});
 export const OBSWebsocketProvider = ({ children }) => {
 	const { current: connections } = React.useRef({});
 	const { settings } = useSettings();
+	const [connected, setConnected] = React.useState(false);
+
+	const getConnection = React.useCallback(
+		(name) => {
+			if (!connections[name]) {
+				const connSettings = settings.connections[name];
+				if (!connSettings) {
+					throw new Error(`Missing connection information for {name}`);
+				}
+
+				const connection = {};
+				connection.name = name;
+				connection.obs = new OBSWebSocket();
+				connection.failed = false;
+				
+				connection.obs.on('AuthenticationSuccess', () => {
+					setConnected(true);
+				});
+				connection.obs.on('AuthenticationFailure', () => {
+					console.error('Authentication failed');
+				});
+				connection.obs.on('error', (err) => {
+					connection.failed = err;
+				});
+
+				connection.obs.connect({
+					address: connSettings.address,
+					password: connSettings.password,
+				});
+				connections[name] = connection;
+			}
+			return connections[name];
+		},
+		[],
+	);
 
 	return (
 		<obsContext.Provider
 			value={{
-				getConnection: (name) => {
-					if (!connections[name]) {
-						const connSettings = settings.connections[name];
-						if (!connSettings) {
-							throw new Error(`Missing connection information for {name}`);
-						}
-
-						const connection = {};
-						connection.name = name;
-						connection.obs = new OBSWebSocket();
-						connection.connected = false;
-						connection.failed = false;
-						
-						connection.obs.on('AuthenticationSuccess', () => {
-							connection.connected = true;
-						});
-						connection.obs.on('AuthenticationFailure', () => {
-							console.error('Authentication failed');
-						});
-						connection.obs.on('error', (err) => {
-							connection.failed = err;
-						});
-
-						connection.obs.connect({
-							address: connSettings.address,
-							password: connSettings.password,
-						});
-						connections[name] = connection;
-					}
-					return connections[name];
-				},
+				connected,
+				getConnection,
 			}}
 		>
 			{children}
@@ -53,18 +59,8 @@ export const OBSWebsocketProvider = ({ children }) => {
 export const useObsWebsocket = ({
 	connection: name
 }) => {
-	const { getConnection } = React.useContext(obsContext);
+	const { connected, getConnection } = React.useContext(obsContext);
 	const connection = getConnection(name);
-	const [connected, setConnected] = React.useState(connection.connected);
-
-	React.useEffect(
-		() => {
-			connection.obs.on('AuthenticationSuccess', () => {
-				setConnected(true);
-			});
-		},
-		[]
-	);
 
 	const obs = connected ? connection.obs : null;
 
@@ -285,6 +281,37 @@ export const useObsWebsocket = ({
 		};
 	};
 
+	const useStats = ({
+		refreshTime = 1000,
+	} = {}) => {
+		const [data, setData] = React.useState();
+	
+		React.useEffect(
+			() => {
+				if (obs) {
+					let timeout;
+					const getStats = () => {
+						send('GetStats', {}, data => {
+							setData(data.stats);
+							timeout = setTimeout(getStats, refreshTime);
+						});
+					};
+
+					getStats();
+
+					return () => {
+						if (timeout) {
+							clearTimeout(timeout);
+						}
+					};
+				}
+			},
+			[obs],
+		);
+
+		return data;
+	}
+
 	const startRecording = () => {
 		send('StartRecording');
 	};
@@ -311,5 +338,6 @@ export const useObsWebsocket = ({
 		startRecording,
 		stopRecording,
 		startStopRecording,
+		useStats,
 	};
 }

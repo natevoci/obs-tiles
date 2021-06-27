@@ -3,7 +3,6 @@ import styled, { css } from 'styled-components';
 import { Button as MUIButton } from '@material-ui/core';
 
 import { useObsWebsocket } from '~/api';
-import { LocalPrintshopSharp } from '@material-ui/icons';
 
 const StyledMUIButton = styled(MUIButton)`
 	width: ${p => p.$size*16}px;
