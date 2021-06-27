@@ -2,7 +2,7 @@ import React from 'react';
 import styled, { css } from 'styled-components';
 import { Button as MUIButton } from '@material-ui/core';
 
-import { useObsWebsocket } from '~/api';
+import { useObs } from '~/api/obs';
 
 const StyledMUIButton = styled(MUIButton)`
 	width: ${p => p.$size*16}px;
@@ -31,18 +31,16 @@ const StyledButton = ({
 
 const ButtonComponents = {
 	'toggleStreaming': ({
+		obs,
 		tileSize,
-		connection,
 	}) => {
-		const obs = useObsWebsocket({ connection });
-
 		const {
 			isStarted,
 			isStopped,
 			isStarting,
 			isStopping,
 			isLoading,
-		} = obs.useIsStreaming();
+		} = obs.useDataProvider('isStreaming');
 
 		return (
 			<StyledButton
@@ -50,24 +48,22 @@ const ButtonComponents = {
 				label={isStarted ? 'Stop Streaming' : isStopped ? 'Start Streaming' : isStarting ? 'Starting...' : isStopping ? 'Stopping' : '...'}
 				color={isStarted ? 'secondary' : isStopped ? 'primary' : 'inherit'}
 				disabled={isStarting || isStopping || isLoading}
-				onClick={isStarted ? obs.stopStreaming : isStopped ? obs.startStreaming : undefined}
+				onClick={isStarted ? () => obs.action('stopStreaming') : isStopped ? () => obs.action('startStreaming') : undefined}
 			/>
 		);
 	},
 
 	'toggleRecording': ({
+		obs,
 		tileSize,
-		connection,
 	}) => {
-		const obs = useObsWebsocket({ connection });
-
 		const {
 			isStarted,
 			isStopped,
 			isStarting,
 			isStopping,
 			isLoading,
-		} = obs.useIsRecording();
+		} = obs.useDataProvider('isRecording');
 
 		return (
 			<StyledButton
@@ -75,16 +71,24 @@ const ButtonComponents = {
 				label={isStarted ? 'Stop Recording' : isStopped ? 'Start Recording' : isStarting ? 'Starting...' : isStopping ? 'Stopping' : '...'}
 				color={isStarted ? 'secondary' : isStopped ? 'primary' : 'inherit'}
 				disabled={isStarting || isStopping || isLoading}
-				onClick={isStarted ? obs.stopRecording : isStopped ? obs.startRecording : undefined}
+				onClick={isStarted ? () => obs.action('stopRecording') : isStopped ? () => obs.action('startRecording') : undefined}
 			/>
 		);
 	},
 };
 
-export const Button = (props) => {
+export const Button = ({
+	connection,
+	...props
+}) => {
+	const obs = useObs({ connection });
+
 	const component = ButtonComponents[props.button];
 
-	return component ? React.createElement(component, props) : null;
+	return component && obs.connected ? React.createElement(component, {
+		obs,
+		...props,
+	}) : null;
 };
 
 

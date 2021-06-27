@@ -1,1 +1,1 @@
-export * from './obs-websocket';
+export * as obs from './obs';

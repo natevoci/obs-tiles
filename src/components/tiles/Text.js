@@ -2,7 +2,7 @@ import React from 'react';
 import styled, { css } from 'styled-components';
 import { LinearProgress } from '@material-ui/core';
 
-import { useObsWebsocket } from '~/api';
+import { useObs } from '~/api/obs';
 
 const Paragraph = styled.p`
 	width: ${p => p.$size*16}px;
@@ -18,14 +18,13 @@ const formatMB = (mb) => {
 
 const TextComponents = {
 	'stats': ({
+		obs,
 		tileSize,
 		connection,
 	}) => {
 		const size = parseInt(tileSize);
 
-		const obs = useObsWebsocket({ connection });
-
-		const stats = obs.useStats();
+		const stats = obs.useDataProvider('stats');
 
 		if (!stats) {
 			return null;
@@ -53,10 +52,18 @@ const TextComponents = {
 
 };
 
-export const Text = (props) => {
+export const Text = ({
+	connection,
+	...props
+}) => {
+	const obs = useObs({ connection });
+
 	const component = TextComponents[props.text];
 
-	return component ? React.createElement(component, props) : null;
+	return component && obs.connected ? React.createElement(component, {
+		obs,
+		...props,
+	}) : null;
 };
 
 

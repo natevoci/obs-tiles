@@ -19,7 +19,7 @@ const TilesGroupWrapper = styled.div`
 	padding: 0 ${p => p.theme.grid(0.5)};
 
 	& h3 {
-		margin-top: ${p => p.theme.grid(1)};
+		margin: ${p => p.theme.grid(1)} 0;
 	}
 `;
 

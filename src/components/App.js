@@ -1,6 +1,6 @@
 import * as React from 'react';
 
-import { OBSWebsocketProvider } from '~/api/obs-websocket';
+import { OBSWebsocketProvider } from '~/api/obs';
 import { SettingsProvider } from "~/components/Settings/SettingsProvider";
 import { ThemeProvider } from "~/theme/theme";
 

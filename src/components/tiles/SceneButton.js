@@ -1,7 +1,7 @@
 import React from 'react';
 import styled, { css } from 'styled-components';
 
-import { useObsWebsocket } from '~/api';
+import { useObs } from '~/api/obs';
 
 const SceneWrapper = styled.div`
 	display: block;
@@ -39,26 +39,24 @@ const Paragraph = styled.p`
 	background-color: #474a23;
 `;
 
-export const SceneButton = ({
+const SceneButtonComponent = ({
+	obs,
 	scene,
 	tileSize = '10',
-	connection,
 }) => {
 	const size = parseInt(tileSize);
 
-	const obs = useObsWebsocket({ connection });
-
-	const currentScene = obs.useCurrentScene();
+	const currentScene = obs.useDataProvider('currentScene');
 	
-	const transition = obs.useTransition();
+	const transition = obs.useDataProvider('transition');
 	
 	const isPrevScene = currentScene === scene && transition?.fromScene === scene;
 	const isCurrentScene = transition?.toScene === scene || currentScene === scene;
 	
-	const imageData = obs.useSceneImage({
+	const imageData = obs.useDataProvider('sceneImage', {
 		scene,
 		tileSize: Math.min(size, 20),
-		refreshTime: isCurrentScene ? 200 : 5000,
+		refreshTime: isCurrentScene ? 40 : 100,
 	});
 
 	return (
@@ -72,7 +70,7 @@ export const SceneButton = ({
 				data-elementtype='SceneWrapper'
 				$isCurrentScene={isCurrentScene || isPrevScene}
 				$isPrevScene={isPrevScene}
-				onClick={() => obs.setCurrentScene({scene})}
+				onClick={() => obs.action('setCurrentScene', {scene})}
 			>
 				<StyledImg
 					src={imageData}
@@ -82,4 +80,16 @@ export const SceneButton = ({
 			</SceneWrapper>
 		</>
 	);
+};
+
+export const SceneButton = ({
+	connection,
+	...props
+}) => {
+	const obs = useObs({ connection });
+
+	return obs.connected ? React.createElement(SceneButtonComponent, {
+		obs,
+		...props,
+	}) : null;
 };
