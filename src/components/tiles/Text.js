@@ -25,12 +25,14 @@ const TextComponents = {
 		const size = parseInt(tileSize);
 
 		const stats = obs.useDataProvider('stats');
+		const videoInfo = obs.useDataProvider('videoInfo');
 
 		if (!stats) {
 			return null;
 		}
 
 		const fps = stats['fps'] || 0;
+		const fpsPerc = videoInfo?.fps > 0 ? 100 * fps / videoInfo?.fps : 0;
 		const cpuUsage = stats['cpu-usage'] || 0;
 		const memoryUsage = stats['memory-usage'] || 0;
 		const freeDiskSpace = stats['free-disk-space'] || 0;
@@ -41,8 +43,9 @@ const TextComponents = {
 				$size={size}
 			>
 				<Paragraph $size={size}>FPS: {fps.toFixed(2)}</Paragraph>
+				<LinearProgress variant='determinate' value={Math.round(fpsPerc)} color={fpsPerc > 80 ? 'primary' : 'secondary'} />
 				<Paragraph $size={size}>CPU: {cpuUsage.toFixed(0)}%</Paragraph>
-				<LinearProgress variant='determinate' value={Math.round(cpuUsage)} />
+				<LinearProgress variant='determinate' value={Math.round(cpuUsage)} color={cpuUsage < 80 ? 'primary' : 'secondary'} />
 				<Paragraph $size={size}>Memory: {formatMB(memoryUsage)}</Paragraph>
 				<Paragraph $size={size}>Free Disk: {formatMB(freeDiskSpace)}</Paragraph>
 				<Paragraph $size={size}>Skipped Frames: {outputSkippedFrames}</Paragraph>

@@ -1,7 +1,7 @@
 import { createProvider } from '../createProvider';
 
 export const videoInfo = (obs, {
-	refreshTime = 5000,
+	refreshTime = 60000,
 } = {}) => createProvider({
 	attach: (onChanged) => {
 		let timeout;
