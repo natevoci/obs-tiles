@@ -1,3 +1,4 @@
+import { ViewColumn } from '@material-ui/icons';
 import React from 'react';
 import { useContext } from 'react';
 
@@ -15,13 +16,14 @@ export const SettingsProvider = ({ children }) => {
 				password: '',
 			},
 			projector: {
-				// address: 'laptop02:4444',
-				address: '192.168.10.101:4444',
+				// address: 'laptop-2:4444',
+				address: '192.168.10.114:4444',
 				password: '',
 			},
 		},
 
 		tileSize: 18,
+		direction: 'column',
 		tiles: [
 			{
 				group: 'Live Stream',
@@ -65,30 +67,37 @@ export const SettingsProvider = ({ children }) => {
 					},
 				],
 			},
-			// {
-			// 	group: 'Projector',
-			// 	connection: 'projector',
-			// 	tiles: [
-			// 		{
-			// 			scene: '0 - Black',
-			// 		},
-			// 		{
-			// 			scene: '3 - Cameras'
-			// 		},
-			// 		{
-			// 			scene: '7 - 20-80'
-			// 		},
-			// 		{
-			// 			scene: '8 - Side by Side'
-			// 		},
-			// 		{
-			// 			scene: '9 - 80-20'
-			// 		},
-			// 		{
-			// 			scene: '1 - Projector',
-			// 		},
-			// 	]
-			// },
+			{
+				group: 'Projector',
+				connection: 'projector',
+				direction: 'row',
+				tiles: [
+					{
+						scene: '0 - Black',
+					},
+					{
+						scene: '1 - Screen',
+					},
+					{
+						scene: '3 - Cameras'
+					},
+					{
+						scene: '5 - Video Call'
+					},
+					{
+						scene: '7 - 20-80'
+					},
+					{
+						scene: '8 - Side by Side'
+					},
+					{
+						scene: '9 - 80-20'
+					},
+					{
+						text: 'stats',
+					},
+				],
+			},
 		]
 	});
 

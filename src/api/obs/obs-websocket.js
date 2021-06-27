@@ -2,6 +2,7 @@ import * as React from 'react';
 import OBSWebSocket from 'obs-websocket-js';
 
 import { useSettings } from '~/components/Settings/SettingsContext';
+import { useForceUpdate } from '~/hooks';
 
 import * as factories from './providers';
 import * as actions from './actions';
@@ -11,7 +12,7 @@ const obsContext = React.createContext({});
 export const OBSWebsocketProvider = ({ children }) => {
 	const { current: connections } = React.useRef({});
 	const { settings } = useSettings();
-	const [connected, setConnected] = React.useState(false);
+	const forceUpdate = useForceUpdate();
 
 	const getConnection = React.useCallback(
 		(name) => {
@@ -25,10 +26,12 @@ export const OBSWebsocketProvider = ({ children }) => {
 				connection.instance = new OBSWebSocket();
 				connection.public = {};
 				connection.public.name = name;
+				connection.public.connected = false;
 				connection.public.failed = false;
 				
 				connection.instance.on('AuthenticationSuccess', () => {
-					setConnected(true);
+					connection.public.connected = true;
+					forceUpdate({});
 				});
 				connection.instance.on('AuthenticationFailure', () => {
 					console.error('Authentication failed');
@@ -50,7 +53,7 @@ export const OBSWebsocketProvider = ({ children }) => {
 									onFailed(err);
 								}
 								else {
-									console.debug(`Error calling '${requestName}': ${err}`);
+									console.debug(`Error calling '${requestName}'`, err, connection);
 								}
 							}
 							else {
@@ -80,7 +83,8 @@ export const OBSWebsocketProvider = ({ children }) => {
 						connection.providers[providerId] = provider;
 					}
 
-					const [, forceUpdate] = React.useState(provider.value);
+					const forceUpdate = useForceUpdate();
+					
 					React.useEffect(
 						() => {
 							provider.attach(forceUpdate);
@@ -116,7 +120,6 @@ export const OBSWebsocketProvider = ({ children }) => {
 	return (
 		<obsContext.Provider
 			value={{
-				connected,
 				getConnection,
 			}}
 		>
@@ -128,11 +131,8 @@ export const OBSWebsocketProvider = ({ children }) => {
 export const useObs = ({
 	connection: name
 }) => {
-	const { connected, getConnection } = React.useContext(obsContext);
+	const { getConnection } = React.useContext(obsContext);
 	const connection = getConnection(name);
 
-	return {
-		...connection.public,
-		connected,
-	};
+	return connection.public;
 }

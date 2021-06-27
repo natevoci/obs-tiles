@@ -24,7 +24,10 @@ export const sceneImage = (obs, {
 					}
 				},
 				err => {
-					console.error(`Error loading shapshot`, err);
+					console.error(`Error loading shapshot`, {
+						connection: obs.name,
+						scene,
+					}, err);
 					onChanged(null);
 				}
 			);
