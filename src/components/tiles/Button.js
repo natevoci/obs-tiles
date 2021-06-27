@@ -7,6 +7,11 @@ import { LocalPrintshopSharp } from '@material-ui/icons';
 
 const StyledMUIButton = styled(MUIButton)`
 	width: ${p => p.$size*16}px;
+
+	&.MuiButton-contained.Mui-disabled {
+		background-color: ${p => p.theme.disabledBackground};
+		color: ${p => p.theme.disabledText};
+	}
 `;
 
 const StyledButton = ({
@@ -43,9 +48,35 @@ const ButtonComponents = {
 		return (
 			<StyledButton
 				tileSize={tileSize}
-				label={isStarted ? 'Stop Streaming' : isStopped ? 'Start Streaming' : isStarting ? 'Starting...' : isStopping ? 'Stopping' : 'Start Streaming'}
+				label={isStarted ? 'Stop Streaming' : isStopped ? 'Start Streaming' : isStarting ? 'Starting...' : isStopping ? 'Stopping' : '...'}
+				color={isStarted ? 'secondary' : isStopped ? 'primary' : 'inherit'}
 				disabled={isStarting || isStopping || isLoading}
 				onClick={isStarted ? obs.stopStreaming : isStopped ? obs.startStreaming : undefined}
+			/>
+		);
+	},
+
+	'toggleRecording': ({
+		tileSize,
+		connection,
+	}) => {
+		const obs = useObsWebsocket({ connection });
+
+		const {
+			isStarted,
+			isStopped,
+			isStarting,
+			isStopping,
+			isLoading,
+		} = obs.useIsRecording();
+
+		return (
+			<StyledButton
+				tileSize={tileSize}
+				label={isStarted ? 'Stop Recording' : isStopped ? 'Start Recording' : isStarting ? 'Starting...' : isStopping ? 'Stopping' : '...'}
+				color={isStarted ? 'secondary' : isStopped ? 'primary' : 'inherit'}
+				disabled={isStarting || isStopping || isLoading}
+				onClick={isStarted ? obs.stopRecording : isStopped ? obs.startRecording : undefined}
 			/>
 		);
 	},

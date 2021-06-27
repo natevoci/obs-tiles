@@ -64,12 +64,14 @@ export const SceneButton = ({
 	return (
 		<>
 			<SelectionIndicator
+				data-elementtype='SelectionIndicator'
 				$isVisible={isCurrentScene || isPrevScene}
 				$isPrevScene={isPrevScene}
 			/>
 			<SceneWrapper
 				data-elementtype='SceneWrapper'
-				$currentScene={currentScene === scene}
+				$isCurrentScene={isCurrentScene || isPrevScene}
+				$isPrevScene={isPrevScene}
 				onClick={() => obs.setCurrentScene({scene})}
 			>
 				<StyledImg

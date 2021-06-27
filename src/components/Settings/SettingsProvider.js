@@ -11,8 +11,8 @@ export const SettingsProvider = ({ children }) => {
 				password: '',
 			},
 			liveStream: {
-						address: 'streamingauditorium:4444',
-						password: '',
+				address: 'streamingauditorium:4444',
+				password: '',
 			},
 			projector: {
 				// address: 'laptop02:4444',
@@ -50,6 +50,9 @@ export const SettingsProvider = ({ children }) => {
 					},
 					{
 						button: 'toggleStreaming',
+					},
+					{
+						button: 'toggleRecording',
 					},
 				],
 			},

@@ -68,6 +68,24 @@ export const useObsWebsocket = ({
 
 	const obs = connected ? connection.obs : null;
 
+	const send = (requestName, args, onSucceeded, onFailed) => {
+		if (obs) {
+			obs.sendCallback(requestName, args, (err, data) => {
+				if (err) {
+					if (onFailed) {
+						onFailed(err);
+					}
+					else {
+						console.debug(`Error calling '${requestName}': ${err}`);
+					}
+				}
+				else {
+					onSucceeded?.(data);
+				}
+			});
+		}
+	}
+
 	const useSceneImage = ({
 		scene,
 		tileSize,
@@ -80,20 +98,24 @@ export const useObsWebsocket = ({
 				let timeout;
 				if (obs) {
 					const updateScreenshot = () => {
-						return obs.send('TakeSourceScreenshot', {
-							sourceName: scene,
-							embedPictureFormat: 'png',
-							width: tileSize*16,
-							height: tileSize*9,
-						}).then(data => {
-							if (data?.img) {
-								setData(data.img);
-								timeout = setTimeout(updateScreenshot, refreshTime);
+						send(
+							'TakeSourceScreenshot',
+							{
+								sourceName: scene,
+								embedPictureFormat: 'png',
+								width: tileSize*16,
+								height: tileSize*9,
+							},
+							data => {
+								if (data?.img) {
+									setData(data.img);
+									timeout = setTimeout(updateScreenshot, refreshTime);
+								}
+							},
+							err => {
+								setData(null);
 							}
-						}).catch((err) => {
-							setData(null);
-							throw err;
-						});
+						);
 					};
 
 					updateScreenshot();
@@ -118,7 +140,7 @@ export const useObsWebsocket = ({
 		React.useEffect(
 			() => {
 				if (obs) {
-					obs.send('GetCurrentScene').then(data => {
+					send('GetCurrentScene', {}, data => {
 						setData(data.name);
 					});
 					obs.on('SwitchScenes', data => {
@@ -137,7 +159,7 @@ export const useObsWebsocket = ({
 		scene
 	}) => {
 		if (obs) {
-			obs.send('SetCurrentScene', {
+			send('SetCurrentScene', {
 				'scene-name': scene,
 			});
 		}
@@ -187,7 +209,7 @@ export const useObsWebsocket = ({
 		React.useEffect(
 			() => {
 				if (obs) {
-					obs.send('GetStreamingStatus').then(data => {
+					send('GetStreamingStatus', {}, data => {
 						setData(data.streaming ? 'started' : 'stopped');
 					});
 					obs.on('StreamStarting', () => {
@@ -217,15 +239,62 @@ export const useObsWebsocket = ({
 	};
 
 	const startStreaming = () => {
-		obs?.send?.('StartStreaming');
+		send('StartStreaming');
 	};
 
 	const stopStreaming = () => {
-		obs?.send?.('StopStreaming');
+		send('StopStreaming');
 	};
 
 	const startStopStreaming = () => {
-		obs?.send?.('StartStopStreaming');
+		send('StartStopStreaming');
+	};
+
+	const useIsRecording = () => {
+		const [data, setData] = React.useState();
+	
+		React.useEffect(
+			() => {
+				if (obs) {
+					send('GetStreamingStatus', {}, data => {
+						setData(data.recording ? 'started' : 'stopped');
+					});
+					obs.on('RecordingStarting', () => {
+						setData('starting');
+					});
+					obs.on('RecordingStarted', () => {
+						setData('started');
+					});
+					obs.on('RecordingStopping', () => {
+						setData('stopping');
+					});
+					obs.on('RecordingStopped', () => {
+						setData('stopped');
+					});
+				}
+			},
+			[obs],
+		);
+
+		return {
+			isStarted: data === 'started',
+			isStopped: data === 'stopped',
+			isStarting: data === 'starting',
+			isStopping: data === 'stopping',
+			isLoading: !data,
+		};
+	};
+
+	const startRecording = () => {
+		send('StartRecording');
+	};
+
+	const stopRecording = () => {
+		send('StopRecording');
+	};
+
+	const startStopRecording = () => {
+		send('StartStopRecording');
 	};
 
 	return {
@@ -238,5 +307,9 @@ export const useObsWebsocket = ({
 		startStreaming,
 		stopStreaming,
 		startStopStreaming,
+		useIsRecording,
+		startRecording,
+		stopRecording,
+		startStopRecording,
 	};
 }
