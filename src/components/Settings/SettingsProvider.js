@@ -9,16 +9,13 @@ export const SettingsProvider = ({ children }) => {
 		connections: {
 			localhost: {
 				address: '192.168.10.101:4444',
-				password: '',
 			},
 			liveStream: {
-				address: 'streamingauditorium:4444',
-				password: '',
+				address: '192.168.12.56:4444',
 			},
 			projector: {
 				// address: 'laptop-2:4444',
 				address: '192.168.10.114:4444',
-				password: '',
 			},
 		},
 

@@ -4,7 +4,8 @@ import styled, { css } from 'styled-components';
 import { useObs } from '~/api/obs';
 
 const SceneWrapper = styled.div`
-	display: block;
+	display: flex;
+	flex-direction: column;
 	position: relative;
 	align-items: center;
 	color: ${p => p.theme.sceneText};
@@ -33,18 +34,27 @@ const StyledImg = styled.img`
 	}
 `;
 
+const Connecting = styled.p`
+	position: absolute;
+	text-align: center;
+	font-size: ${p => p.theme.fontSize.large};
+	top: 40%;
+`;
+
 const Paragraph = styled.p`
 	text-align: center;
 	font-size: ${p => p.theme.fontSize.large};
 	background-color: #474a23;
 `;
 
-const SceneButtonComponent = ({
-	obs,
+export const SceneButton = ({
+	connection,
 	scene,
 	tileSize = '10',
 }) => {
 	const size = parseInt(tileSize);
+
+	const obs = useObs({ connection });
 
 	const currentScene = obs.useDataProvider('currentScene');
 	
@@ -71,7 +81,10 @@ const SceneButtonComponent = ({
 				$isCurrentScene={isCurrentScene || isPrevScene}
 				$isPrevScene={isPrevScene}
 				onClick={() => obs.action('setCurrentScene', {scene})}
-			>
+				>
+				{!obs.connected ? (
+					<Connecting>{obs.failedConnection ? 'Failed to connect' : 'Connecting...'}</Connecting>
+				) : null}
 				<StyledImg
 					src={imageData}
 					$size={size}
@@ -80,16 +93,4 @@ const SceneButtonComponent = ({
 			</SceneWrapper>
 		</>
 	);
-};
-
-export const SceneButton = ({
-	connection,
-	...props
-}) => {
-	const obs = useObs({ connection });
-
-	return obs.connected ? React.createElement(SceneButtonComponent, {
-		obs,
-		...props,
-	}) : null;
 };

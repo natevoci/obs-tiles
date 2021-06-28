@@ -28,22 +28,36 @@ export const OBSWebsocketProvider = ({ children }) => {
 				connection.public.name = name;
 				connection.public.connected = false;
 				connection.public.failed = false;
+				connection.public.failedConnection = false;
 				
-				connection.instance.on('AuthenticationSuccess', () => {
-					connection.public.connected = true;
-					forceUpdate({});
-				});
-				connection.instance.on('AuthenticationFailure', () => {
-					console.error('Authentication failed');
-				});
 				connection.instance.on('error', (err) => {
+					console.error(`error for connection '${name}'`, err);
 					connection.public.failed = err;
 				});
 
-				connection.instance.connect({
-					address: connSettings.address,
-					password: connSettings.password,
-				});
+				const connect = () => {
+					const password = window.localStorage.getItem(`password-${connSettings.address}`);
+					connection.instance.connect({
+						address: connSettings.address,
+						password: password || '',
+					}).then(() => {
+						console.log('connected');
+						connection.public.connected = true;
+						forceUpdate({});
+					}).catch(err => {
+						if (err.error === 'Authentication Failed.') {
+							const password = prompt(`Please enter the password for ${connSettings.address}:`);
+							if (password !== null) {
+								window.localStorage.setItem(`password-${connSettings.address}`, password);
+								connect();
+							}
+						}
+						console.error(`Error connecting to '${name}' connection:`, err.error);
+						connection.public.failedConnection = err.error;
+						forceUpdate();
+					});
+				}
+				connect();
 
 				connection.public.send = (requestName, args, onSucceeded, onFailed) => {
 					if (connection.instance) {
@@ -70,33 +84,37 @@ export const OBSWebsocketProvider = ({ children }) => {
 				connection.providers = {};
 
 				connection.public.useDataProvider = (name, args) => {
-					const providerId = JSON.stringify({name, args});
+					const providerId = JSON.stringify({name, args, connected: connection.public.connected});
 					let provider = connection.providers[providerId];
 
-					if (!provider) {
-						const factory = factories[name];
-						if (!factory) {
-							console.error(`obs provider named '${name}' not found.`);
-							return undefined;
+					if (typeof args?.enabled === 'undefined' || Boolean(args?.enabled)) {
+						if (!provider && connection.public.connected) {
+							const factory = factories[name];
+							if (!factory) {
+								console.error(`obs provider named '${name}' not found.`);
+								return undefined;
+							}
+							provider = factory(connection.public, args);
+							connection.providers[providerId] = provider;
 						}
-						provider = factory(connection.public, args);
-						connection.providers[providerId] = provider;
 					}
 
 					const forceUpdate = useForceUpdate();
 					
 					React.useEffect(
 						() => {
-							provider.attach(forceUpdate);
-
-							return () => {
-								provider.detach(forceUpdate);
+							if (provider) {
+								provider.attach(forceUpdate);
+	
+								return () => {
+									provider.detach(forceUpdate);
+								}
 							}
 						},
 						[provider],
 					);
 
-					return provider.value;
+					return provider?.value;
 				};
 
 				connection.public.action = (name, args) => {
