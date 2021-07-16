@@ -24,9 +24,11 @@ export const OBSWebsocketProvider = ({ children }) => {
 
 				const connection = {};
 				connection.instance = new OBSWebSocket();
+				connection.shouldBeConnected = false;
 				connection.public = {};
 				connection.public.name = name;
 				connection.public.connected = false;
+				connection.public.connecting = false;
 				connection.public.failed = false;
 				connection.public.failedConnection = false;
 				
@@ -35,29 +37,60 @@ export const OBSWebsocketProvider = ({ children }) => {
 					connection.public.failed = err;
 				});
 
+				connection.instance.on('ConnectionClosed', () => {
+					console.log(`Connection closed`);
+					connection.public.connected = false;
+					forceUpdate();
+
+					setTimeout(
+						() => {
+							if (!connection.public.connected && connection.shouldBeConnected) {
+								connect();
+							}
+						},
+						5000
+					);
+				});
+
 				const connect = () => {
+					connection.shouldBeConnected = true;
+					connection.public.connecting = true;
+					forceUpdate();
+
 					const password = window.localStorage.getItem(`password-${connSettings.address}`);
 					connection.instance.connect({
 						address: connSettings.address,
 						password: password || '',
 					}).then(() => {
-						console.log('connected');
 						connection.public.connected = true;
-						forceUpdate({});
 					}).catch(err => {
+						connection.public.connected = false;
 						if (err.error === 'Authentication Failed.') {
 							const password = prompt(`Please enter the password for ${connSettings.address}:`);
 							if (password !== null) {
 								window.localStorage.setItem(`password-${connSettings.address}`, password);
 								connect();
+								return;
 							}
 						}
 						console.error(`Error connecting to '${name}' connection:`, err.error);
 						connection.public.failedConnection = err.error;
+					}).then(() => {
+						connection.public.connecting = false;
 						forceUpdate();
 					});
 				}
 				connect();
+
+				connection.public.disconnect = () => {
+					connection.shouldBeConnected = false;
+					connection.instance.disconnect();
+					connection.public.connected = false;
+				}
+
+				connection.public.reconnect = () => {
+					connect();
+				};
 
 				connection.public.send = (requestName, args, onSucceeded, onFailed) => {
 					if (connection.instance) {
@@ -111,7 +144,7 @@ export const OBSWebsocketProvider = ({ children }) => {
 								}
 							}
 						},
-						[provider],
+						[provider, connection.public.connected],
 					);
 
 					return provider?.value;

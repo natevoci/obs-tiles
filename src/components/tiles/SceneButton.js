@@ -1,5 +1,6 @@
 import React from 'react';
 import styled, { css } from 'styled-components';
+import { CircularProgress } from '@material-ui/core';
 
 import { useObs } from '~/api/obs';
 
@@ -24,6 +25,18 @@ const SelectionIndicator = styled.div`
 	transition: box-shadow 0.25s ease-in-out 0s, opacity 0.5s ease-in-out 0s;
 `;
 
+const Connecting = styled.p`
+	position: absolute;
+	text-align: center;
+	font-size: ${p => p.theme.fontSize.large};
+	top: 40%;
+`;
+
+const StyledCircularProgress = styled(CircularProgress)`
+	position: absolute;
+	top: 60%;
+`;
+
 const StyledImg = styled.img`
 	display: block;
 	width: ${p => p.$size*16}px;
@@ -34,17 +47,18 @@ const StyledImg = styled.img`
 	}
 `;
 
-const Connecting = styled.p`
+const ImgOverlay = styled.div`
 	position: absolute;
-	text-align: center;
-	font-size: ${p => p.theme.fontSize.large};
-	top: 40%;
+	width: ${p => p.$size*16}px;
+	height: ${p => p.$size*9}px;
+	box-shadow: inset 0 -7px 3px -5px ${p => p.theme.sceneTextBackground};
 `;
 
 const Paragraph = styled.p`
 	text-align: center;
 	font-size: ${p => p.theme.fontSize.large};
-	background-color: #474a23;
+	width: 100%;
+	background-color: ${p => p.theme.sceneTextBackground};
 `;
 
 export const SceneButton = ({
@@ -80,13 +94,28 @@ export const SceneButton = ({
 				data-elementtype='SceneWrapper'
 				$isCurrentScene={isCurrentScene || isPrevScene}
 				$isPrevScene={isPrevScene}
-				onClick={() => obs.action('setCurrentScene', {scene})}
+				onClick={() => {
+					if (obs.connected) {
+						obs.action('setCurrentScene', {scene});
+					}
+					else {
+						obs.reconnect();
+					}
+				}}
 				>
 				{!obs.connected ? (
-					<Connecting>{obs.failedConnection ? 'Failed to connect' : 'Connecting...'}</Connecting>
+					<>
+						<Connecting>{obs.failedConnection ?? 'Connecting...'}</Connecting>
+						{obs.connecting ? (
+							<StyledCircularProgress />
+						) : null}
+					</>
 				) : null}
 				<StyledImg
 					src={imageData}
+					$size={size}
+				/>
+				<ImgOverlay
 					$size={size}
 				/>
 				<Paragraph>{scene}</Paragraph>

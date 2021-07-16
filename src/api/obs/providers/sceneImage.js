@@ -9,28 +9,30 @@ export const sceneImage = (obs, {
 		let timeout;
 		let attached = true;
 		const fn = () => {
-			obs.send(
-				'TakeSourceScreenshot',
-				{
-					sourceName: scene,
-					embedPictureFormat: 'jpg',
-					width: tileSize*16,
-					height: tileSize*9,
-				},
-				data => {
-					if (attached && data?.img) {
-						onChanged(data.img);
-						timeout = setTimeout(fn, refreshTime);
+			if (obs.connected) {
+				obs.send(
+					'TakeSourceScreenshot',
+					{
+						sourceName: scene,
+						embedPictureFormat: 'jpg',
+						width: tileSize*16,
+						height: tileSize*9,
+					},
+					data => {
+						if (attached && data?.img) {
+							onChanged(data.img);
+							timeout = setTimeout(fn, refreshTime);
+						}
+					},
+					err => {
+						console.error(`Error loading shapshot`, {
+							connection: obs.name,
+							scene,
+						}, err);
+						onChanged(null);
 					}
-				},
-				err => {
-					console.error(`Error loading shapshot`, {
-						connection: obs.name,
-						scene,
-					}, err);
-					onChanged(null);
-				}
-			);
+				);
+			}
 		};
 
 		fn();

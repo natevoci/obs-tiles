@@ -15,7 +15,7 @@ const TilesGroupWrapper = styled.div`
 	flex-direction: column;
 	align-items: center;
 	border: 1px solid ${p => p.theme.border};
-	background-color: ${p => p.theme.navBackground};
+	background-color: ${p => p.theme.groupBackground};
 	padding: 0 ${p => p.theme.grid(0.5)};
 
 	& h3 {
@@ -27,16 +27,15 @@ const TilesGroup = styled.div`
 	display: flex;
 	flex-direction: ${p => validDirections[p.$direction] || 'row'};
 	flex-wrap: wrap;
+	margin-right: ${p => p.theme.grid(-0.5)};
+	margin-bottom: ${p => p.theme.grid(-1)};
 `;
 
 const TileWrapper = styled.div`
 	position: relative;
 	margin: 0;
-
-	&:not(:last-child) {
-		margin-right: ${p => p.theme.grid(0.5)};
-		margin-bottom: ${p => p.theme.grid(1)};
-	}
+	margin-right: ${p => p.theme.grid(0.5)};
+	margin-bottom: ${p => p.theme.grid(1)};
 `;
 
 export const Tiles = ({
