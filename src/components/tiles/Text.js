@@ -6,6 +6,7 @@ import { useObs } from '~/api/obs';
 
 const Paragraph = styled.p`
 	width: ${p => p.$size*16}px;
+	font-size: ${p => 14*p.$size/18}px;
 `;
 
 const StyledText = styled.div`
