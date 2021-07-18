@@ -1,4 +1,4 @@
-import { EventTrigger } from '/src/EventTrigger';
+import { EventTrigger } from '~/src/EventTrigger';
 
 export const createProvider = ({init, attach}) => {
 	let result = {

@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { useObs } from '/src/api/obs';
+import { useObs } from '~/src/api/obs';
 
 import {
 	SceneWrapper,

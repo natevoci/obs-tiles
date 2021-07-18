@@ -2,7 +2,7 @@ import React from 'react';
 import styled, { css } from 'styled-components';
 import { CircularProgress } from '@material-ui/core';
 
-import { useObs } from '/src/api/obs';
+import { useObs } from '~/src/api/obs';
 
 export const SceneWrapper = styled.div`
 	display: flex;
