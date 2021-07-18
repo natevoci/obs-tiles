@@ -2,3 +2,4 @@
 /.parcel-cache
 /dist
 /node_modules
+/parcel-bundle-reports

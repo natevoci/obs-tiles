@@ -7,8 +7,8 @@
   "license": "MIT",
   "scripts": {
     "start": "parcel src/index.html",
-    "build": "parcel build --public-url ./ src/index.html",
-    "analyze": "parcel build src/index.html --reporter @parcel/reporter-bundle-analyzer"
+    "build": "parcel build src/index.html --public-url ./",
+    "analyze": "cross-env PARCEL_BUNDLE_ANALYZER=1 parcel build src/index.html --public-url ./ --reporter @parcel/reporter-bundle-analyzer"
   },
   "dependencies": {
     "@material-ui/core": "^4.11.4",
@@ -23,7 +23,9 @@
     "@babel/core": "^7.14.3",
     "@babel/preset-env": "^7.14.2",
     "@babel/preset-react": "^7.13.13",
+    "@parcel/reporter-bundle-analyzer": "^2.0.0-nightly.1694",
     "@parcel/transformer-image": "2.0.0-beta.2",
+    "cross-env": "^7.0.3",
     "parcel": "^2.0.0-beta.2"
   }
 }
