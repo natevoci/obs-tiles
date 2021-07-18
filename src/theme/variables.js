@@ -44,7 +44,7 @@ const swatches = {
 	sceneTextBackground: colors.grey2,
 	sceneText: colors.offWhite,
 	sceneBorder: colors.grey9,
-	selectionHighlight: '#80a1ff',
+	selectionHighlight: '#559a61',
 };
 
 const typography = {
