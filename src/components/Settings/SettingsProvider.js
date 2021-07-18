@@ -65,6 +65,33 @@ export const SettingsProvider = ({ children }) => {
 				],
 			},
 			{
+				group: 'Cameras',
+				connection: 'localhost',
+				direction: 'row',
+				tiles: [
+					{
+						sceneItem: {
+							title: 'Camcorder',
+							scene: 'Cameras',
+							item: 'NDI - AuditoriumCamcorder',
+						} ,
+					},
+					{
+						sceneItem: {
+							title: 'Tablet',
+							scene: 'Cameras',
+							item: 'VLC - Tablet camera',
+						} ,
+					},
+					{
+						sceneItem: {
+							scene: 'Cameras',
+							item: 'Fake Camera',
+						} ,
+					},
+				],
+			},
+			{
 				group: 'Projector',
 				connection: 'projector',
 				direction: 'row',

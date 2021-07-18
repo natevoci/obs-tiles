@@ -4,7 +4,7 @@ import { CircularProgress } from '@material-ui/core';
 
 import { useObs } from '~/api/obs';
 
-const SceneWrapper = styled.div`
+export const SceneWrapper = styled.div`
 	display: flex;
 	flex-direction: column;
 	position: relative;
@@ -13,7 +13,7 @@ const SceneWrapper = styled.div`
 	background-color: ${p => p.theme.sceneBackground};
 `;
 
-const SelectionIndicator = styled.div`
+export const SelectionIndicator = styled.div`
 	position: absolute;
 	width: 100%;
 	height: 100%;
@@ -25,19 +25,19 @@ const SelectionIndicator = styled.div`
 	transition: box-shadow 0.25s ease-in-out 0s, opacity 0.5s ease-in-out 0s;
 `;
 
-const Connecting = styled.p`
+export const Connecting = styled.p`
 	position: absolute;
 	text-align: center;
 	font-size: ${p => p.theme.fontSize.large};
 	top: 40%;
 `;
 
-const StyledCircularProgress = styled(CircularProgress)`
+export const StyledCircularProgress = styled(CircularProgress)`
 	position: absolute;
 	top: 60%;
 `;
 
-const StyledImg = styled.img`
+export const StyledImg = styled.img`
 	display: block;
 	width: ${p => p.$size*16}px;
 	height: ${p => p.$size*9}px;
@@ -47,14 +47,14 @@ const StyledImg = styled.img`
 	}
 `;
 
-const ImgOverlay = styled.div`
+export const ImgOverlay = styled.div`
 	position: absolute;
 	width: ${p => p.$size*16}px;
 	height: ${p => p.$size*9}px;
 	box-shadow: inset 0 -7px 3px -5px ${p => p.theme.sceneTextBackground};
 `;
 
-const Paragraph = styled.p`
+export const Paragraph = styled.p`
 	text-align: center;
 	font-size: ${p => p.theme.fontSize.large};
 	width: 100%;

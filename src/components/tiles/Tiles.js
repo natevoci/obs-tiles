@@ -3,6 +3,7 @@ import styled, { css } from 'styled-components';
 
 import { Button } from './Button';
 import { SceneButton } from './SceneButton';
+import { SceneItemButton } from './SceneItemButton';
 import { Text } from './Text';
 
 const validDirections = {
@@ -15,8 +16,9 @@ const TilesGroupWrapper = styled.div`
 	flex-direction: column;
 	align-items: center;
 	border: 1px solid ${p => p.theme.border};
+	border-radius: ${p => p.theme.grid(0.5)};
 	background-color: ${p => p.theme.groupBackground};
-	padding: 0 ${p => p.theme.grid(0.5)};
+	padding: 0 ${p => p.theme.grid(0.5)} ${p => p.theme.grid(0.5)} ${p => p.theme.grid(0.5)};
 
 	& h3 {
 		margin: ${p => p.theme.grid(1)} 0;
@@ -26,7 +28,7 @@ const TilesGroupWrapper = styled.div`
 const TilesGroup = styled.div`
 	display: flex;
 	flex-direction: ${p => validDirections[p.$direction] || 'row'};
-	flex-wrap: wrap;
+	flex-wrap: ${p => p.$wrap === false ? 'nowrap' : 'wrap'};
 	margin-right: ${p => p.theme.grid(-0.5)};
 	margin-bottom: ${p => p.theme.grid(-1)};
 `;
@@ -43,6 +45,7 @@ export const Tiles = ({
 	connection,
 	tileSize,
 	direction,
+	wrap,
 }) => {
 	const tileComponents = tiles.map((tile) => {
 		if (!tile) {
@@ -52,7 +55,6 @@ export const Tiles = ({
 		const inheritableProps = {
 			connection,
 			tileSize,
-			direction,
 		};
 
 		if (tile.group) {
@@ -82,6 +84,12 @@ export const Tiles = ({
 			);
 		}
 
+		if (tile.sceneItem) {
+			return (
+				<SceneItemButton {...inheritableProps} {...tile} />
+			)
+		}
+
 		if (tile.text) {
 			return (
 				<Text {...inheritableProps} {...tile} />
@@ -94,6 +102,7 @@ export const Tiles = ({
 	return (
 		<TilesGroup
 			$direction={direction}
+			$wrap={wrap}
 			data-elementtype='TilesGroup'
 		>
 			{tileComponents.map(
@@ -102,6 +111,7 @@ export const Tiles = ({
 						key={index}
 						data-elementtype='TileWrapper'
 						$direction={direction}
+						$wrap={wrap}
 					>
 						{tile}
 					</TileWrapper>
