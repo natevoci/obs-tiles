@@ -1,8 +1,8 @@
 import * as React from 'react';
 import OBSWebSocket from 'obs-websocket-js';
 
-import { useSettings } from '~/components/Settings/SettingsContext';
-import { useForceUpdate } from '~/hooks';
+import { useSettings } from '/src/components/Settings/SettingsContext';
+import { useForceUpdate } from '/src/hooks';
 
 import * as factories from './providers';
 import * as actions from './actions';

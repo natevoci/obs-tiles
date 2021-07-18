@@ -2,7 +2,7 @@ import React from 'react';
 import styled, { css } from 'styled-components';
 import { Button as MUIButton } from '@material-ui/core';
 
-import { useObs } from '~/api/obs';
+import { useObs } from '/src/api/obs';
 
 const StyledMUIButton = styled(MUIButton)`
 	width: ${p => p.$size*16}px;

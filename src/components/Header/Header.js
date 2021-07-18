@@ -3,7 +3,7 @@ import styled from 'styled-components';
 
 // import { MainNav } from './MainNav';
 import { SettingsDialog } from '../Settings/SettingsDialog';
-import OBSLogo from '~/assets/obslogo.png';
+import OBSLogo from 'url:/src/assets/obslogo.png';
 
 const Wrapper = styled.div`
     position: fixed;
