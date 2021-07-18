@@ -7,7 +7,7 @@
   "license": "MIT",
   "scripts": {
     "start": "parcel src/index.html",
-    "build": "parcel build src/index.html"
+    "build": "parcel --public-url ./ build src/index.html"
   },
   "dependencies": {
     "@material-ui/core": "^4.11.4",
