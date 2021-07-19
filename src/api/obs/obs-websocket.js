@@ -92,6 +92,8 @@ export const OBSWebsocketProvider = ({ children }) => {
 					connect();
 				};
 
+				// See https://github.com/Palakis/obs-websocket/blob/4.9.1/docs/generated/protocol.md#takesourcescreenshot
+				// for details of request names and args
 				connection.public.send = (requestName, args, onSucceeded, onFailed) => {
 					if (connection.instance) {
 						connection.instance.sendCallback(requestName, args, (err, data) => {

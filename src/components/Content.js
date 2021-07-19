@@ -5,10 +5,7 @@ import { useSettings } from './Settings/SettingsContext';
 import { Tiles } from './tiles/Tiles';
 
 const Main = styled.main`
-	height: calc(100% - ${p => p.theme.grid(8)});
-	margin-top: ${p => p.theme.grid(8)};
-	padding: ${p => p.theme.grid(2)};
-	overflow: auto;
+	padding: ${p => p.theme.grid(1)};
 `;
 
 export const Content = () => {

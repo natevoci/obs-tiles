@@ -19,7 +19,7 @@ export const SettingsProvider = ({ children }) => {
 			},
 		},
 
-		tileSize: 18,
+		tileSize: 12,
 		direction: 'column',
 		tiles: [
 			{
@@ -62,32 +62,34 @@ export const SettingsProvider = ({ children }) => {
 							},
 						],
 					},
-				],
-			},
-			{
-				group: 'Cameras',
-				connection: 'localhost',
-				direction: 'row',
-				tiles: [
 					{
-						sceneItem: {
-							title: 'Camcorder',
-							scene: 'Cameras',
-							item: 'NDI - AuditoriumCamcorder',
-						} ,
-					},
-					{
-						sceneItem: {
-							title: 'Tablet',
-							scene: 'Cameras',
-							item: 'VLC - Tablet camera',
-						} ,
-					},
-					{
-						sceneItem: {
-							scene: 'Cameras',
-							item: 'Fake Camera',
-						} ,
+						group: 'Cameras',
+						// connection: 'localhost',
+						connection: 'projector',
+						direction: 'row',
+						tiles: [
+							{
+								sceneItem: {
+									title: 'Camcorder',
+									scene: 'Cameras',
+									item: 'NDI - AuditoriumCamcorder',
+								} ,
+							},
+							{
+								sceneItem: {
+									title: 'Tablet',
+									scene: 'Cameras',
+									item: 'VLC - Tablet camera',
+								} ,
+							},
+							{
+								sceneItem: {
+									title: 'Front',
+									scene: 'Cameras',
+									item: 'Fake Camera',
+								} ,
+							},
+						],
 					},
 				],
 			},
@@ -119,6 +121,33 @@ export const SettingsProvider = ({ children }) => {
 					},
 					{
 						text: 'stats',
+					},
+					{
+						group: 'Cameras',
+						direction: 'row',
+						tiles: [
+							{
+								sceneItem: {
+									title: 'Camcorder',
+									scene: 'Cameras',
+									item: 'NDI - Camcorder',
+								} ,
+							},
+							{
+								sceneItem: {
+									title: 'Tablet',
+									scene: 'Cameras',
+									item: 'VLC - Tablet camera',
+								} ,
+							},
+							{
+								sceneItem: {
+									title: 'Front',
+									scene: 'Cameras',
+									item: 'Fake Camera',
+								} ,
+							},
+						],
 					},
 				],
 			},

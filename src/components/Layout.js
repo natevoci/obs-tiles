@@ -7,7 +7,7 @@ import { Content } from './Content';
 const Wrapper = styled.div`
     display: flex;
     flex-direction: column;
-    overflow: hidden;
+    overflow: auto;
     position: relative;
     top: 0;
     height: 100%;
@@ -22,8 +22,8 @@ const Wrapper = styled.div`
 export const Layout = ({ children }) => {
     return (
         <Wrapper>
-            <Header />
             <Content />
+            <Header />
         </Wrapper>
     );
 };

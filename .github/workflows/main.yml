@@ -38,9 +38,10 @@ jobs:
       - name: Run yarn build
         run: yarn build
 
-      # Deploy to github pages
+      # Deploy to github pages (with https://github.com/peaceiris/actions-gh-pages)
       - name: Deploy to github pages
         uses: peaceiris/actions-gh-pages@v3
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           publish_dir: ./dist
+          cname: obs-tiles.deepcreek.org.au

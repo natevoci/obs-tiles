@@ -6,16 +6,11 @@ import { SettingsDialog } from '../Settings/SettingsDialog';
 import OBSLogo from 'url:/src/assets/obslogo.png';
 
 const Wrapper = styled.div`
-    position: fixed;
-    top: 0;
-    right: 0;
-    left: 0;
     height: ${p => p.theme.grid(8)};
     display: flex;
     align-items: center;
     justify-content: space-between;
     padding: ${p => p.theme.grid(4)} ${p => p.theme.grid(2)};
-    border-bottom: 1px solid ${p => p.theme.border};
     background-color: ${p => p.theme.navBackground};
 `;
 
