@@ -80,7 +80,14 @@ export const OBSWebsocketProvider = ({ children }) => {
 						forceUpdate();
 					});
 				}
-				connect();
+
+				// Start connecting after this render cycle is complete.
+				window.setTimeout(
+					() => {
+						connect();
+					},
+					0,
+				);
 
 				connection.public.disconnect = () => {
 					connection.shouldBeConnected = false;
