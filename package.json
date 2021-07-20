@@ -2,7 +2,6 @@
   "name": "obs-tiles",
   "version": "1.0.0",
   "description": "Web app for controlling OBS Studio through obs-websocket",
-  "main": "dist/index.html",
   "author": "Nate",
   "license": "MIT",
   "scripts": {
