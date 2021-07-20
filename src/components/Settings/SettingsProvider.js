@@ -72,21 +72,21 @@ export const SettingsProvider = ({ children }) => {
 								sceneItem: {
 									scene: 'Cameras',
 									item: 'NDI - AuditoriumCamcorder',
-								} ,
+								},
 								title: 'Camcorder',
 							},
 							{
 								sceneItem: {
 									scene: 'Cameras',
 									item: 'VLC - Tablet camera',
-								} ,
+								},
 								title: 'Tablet',
 							},
 							{
 								sceneItem: {
 									scene: 'Cameras',
 									item: 'Fake Camera',
-								} ,
+								},
 								title: 'Front',
 							},
 						],
