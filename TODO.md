@@ -24,12 +24,6 @@
 - Generic "send" button
   - import URL in query string to allow bookmarks, and separate Configs
 
-- Document tile types and properties
-
 - Add background colour prop to groups
 
 - YouTube demo
-
-- [PWA](https://docs.microsoft.com/en-us/microsoft-edge/progressive-web-apps-chromium/get-started)
-  - Add manifest
-  - Add service worker with offline support

@@ -15,10 +15,10 @@ import {
 export const SceneItemButton = ({
 	connection,
 	sceneItem: {
-		title,
 		scene,
 		item,
 	},
+	title,
 	tileSize = '10',
 }) => {
 	const size = parseInt(tileSize);

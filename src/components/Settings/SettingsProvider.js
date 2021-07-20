@@ -70,24 +70,24 @@ export const SettingsProvider = ({ children }) => {
 						tiles: [
 							{
 								sceneItem: {
-									title: 'Camcorder',
 									scene: 'Cameras',
 									item: 'NDI - AuditoriumCamcorder',
 								} ,
+								title: 'Camcorder',
 							},
 							{
 								sceneItem: {
-									title: 'Tablet',
 									scene: 'Cameras',
 									item: 'VLC - Tablet camera',
 								} ,
+								title: 'Tablet',
 							},
 							{
 								sceneItem: {
-									title: 'Front',
 									scene: 'Cameras',
 									item: 'Fake Camera',
 								} ,
+								title: 'Front',
 							},
 						],
 					},
@@ -128,24 +128,24 @@ export const SettingsProvider = ({ children }) => {
 						tiles: [
 							{
 								sceneItem: {
-									title: 'Camcorder',
 									scene: 'Cameras',
 									item: 'NDI - Camcorder',
 								} ,
+								title: 'Camcorder',
 							},
 							{
 								sceneItem: {
-									title: 'Tablet',
 									scene: 'Cameras',
 									item: 'VLC - Tablet camera',
 								} ,
+								title: 'Tablet',
 							},
 							{
 								sceneItem: {
-									title: 'Front',
 									scene: 'Cameras',
 									item: 'Fake Camera',
 								} ,
+								title: 'Front',
 							},
 						],
 					},

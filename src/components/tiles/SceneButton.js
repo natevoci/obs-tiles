@@ -65,6 +65,7 @@ export const Paragraph = styled.p`
 export const SceneButton = ({
 	connection,
 	scene,
+	title,
 	tileSize = '10',
 }) => {
 	const size = parseInt(tileSize);
@@ -119,7 +120,7 @@ export const SceneButton = ({
 				<ImgOverlay
 					$size={size}
 				/>
-				<Paragraph>{scene}</Paragraph>
+				<Paragraph>{title ?? scene}</Paragraph>
 			</SceneWrapper>
 		</>
 	);
