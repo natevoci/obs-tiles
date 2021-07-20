@@ -28,13 +28,14 @@ export const SelectionIndicator = styled.div`
 export const Connecting = styled.p`
 	position: absolute;
 	text-align: center;
-	font-size: ${p => p.theme.fontSize.large};
-	top: 40%;
+	font-size: ${p => p.theme.fontSize.small};
+	top: 20%;
 `;
 
 export const StyledCircularProgress = styled(CircularProgress)`
 	position: absolute;
-	top: 60%;
+	top: 40%;
+	z-index: 10;
 `;
 
 export const StyledImg = styled.img`
