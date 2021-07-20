@@ -2,7 +2,7 @@
 
 http://obs-tiles.deepcreek.org.au/
 
-OBS-tiles provides a simple interface for switching between scenes in [OBS](https://obsproject.com/) using the [OBS-websocket](https://github.com/Palakis/obs-websocket/releases) plugin.
+OBS-tiles provides a simple interface for switching between scenes in one or more [OBS](https://obsproject.com/) instances using the [OBS-websocket](https://github.com/Palakis/obs-websocket/releases) plugin.
 
 ## Screenshot
 
