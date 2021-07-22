@@ -1,6 +1,4 @@
-import { ViewColumn } from '@material-ui/icons';
 import React from 'react';
-import { useContext } from 'react';
 
 import { SettingsContext } from './SettingsContext';
 

@@ -1,8 +1,8 @@
 import React from 'react';
-import styled, { css } from 'styled-components';
+import styled from 'styled-components';
 import { LinearProgress } from '@material-ui/core';
 
-import { useObs } from '~/src/api/obs';
+import { useObs } from '~/api/obs';
 
 const Paragraph = styled.p`
 	width: ${p => p.$size*16}px;
@@ -21,7 +21,6 @@ const TextComponents = {
 	'stats': ({
 		obs,
 		tileSize,
-		connection,
 	}) => {
 		const size = parseInt(tileSize);
 

@@ -1,8 +1,8 @@
 import React from 'react';
-import styled, { css } from 'styled-components';
+import styled from 'styled-components';
 import { CircularProgress } from '@material-ui/core';
 
-import { useObs } from '~/src/api/obs';
+import { useObs } from '~/api/obs';
 
 export const SceneWrapper = styled.div`
 	display: flex;
@@ -104,7 +104,7 @@ export const SceneButton = ({
 						obs.reconnect();
 					}
 				}}
-				>
+			>
 				{!obs.connected ? (
 					<>
 						<Connecting>{obs.failedConnection ?? 'Connecting...'}</Connecting>

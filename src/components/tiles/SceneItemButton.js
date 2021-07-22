@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { useObs } from '~/src/api/obs';
+import { useObs } from '~/api/obs';
 
 import {
 	SceneWrapper,
@@ -59,7 +59,7 @@ export const SceneItemButton = ({
 						obs.reconnect();
 					}
 				}}
-				>
+			>
 				{!obs.connected ? (
 					<>
 						<Connecting>{obs.failedConnection ?? 'Connecting...'}</Connecting>

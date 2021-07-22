@@ -21,13 +21,13 @@ export const sceneItemProperties = (
 			);
 		} 
 		fetchProperties();
-		obs.on('SceneItemVisibilityChanged', data => {
+		obs.on('SceneItemVisibilityChanged', () => {
 			fetchProperties();
 		});
-		obs.on('SceneItemLockChanged', data => {
+		obs.on('SceneItemLockChanged', () => {
 			fetchProperties();
 		});
-		obs.on('SceneItemTransformChanged', data => {
+		obs.on('SceneItemTransformChanged', () => {
 			fetchProperties();
 		});
 	}

@@ -1,8 +1,8 @@
 import * as React from 'react';
 import OBSWebSocket from 'obs-websocket-js';
 
-import { useSettings } from '~/src/components/Settings/SettingsContext';
-import { useForceUpdate } from '~/src/hooks';
+import { useSettings } from '~/components/Settings/SettingsContext';
+import { useForceUpdate } from '~/hooks';
 
 import * as factories from './providers';
 import * as actions from './actions';
@@ -125,21 +125,9 @@ export const OBSWebsocketProvider = ({ children }) => {
 
 				connection.providers = {};
 
-				connection.public.useDataProvider = (name, args) => {
+				const useDataProvider = (name, args) => {
 					const providerId = JSON.stringify({name, args, connected: connection.public.connected});
 					let provider = connection.providers[providerId];
-
-					if (typeof args?.enabled === 'undefined' || Boolean(args?.enabled)) {
-						if (!provider && connection.public.connected) {
-							const factory = factories[name];
-							if (!factory) {
-								console.error(`obs provider named '${name}' not found.`);
-								return undefined;
-							}
-							provider = factory(connection.public, args);
-							connection.providers[providerId] = provider;
-						}
-					}
 
 					const forceUpdate = useForceUpdate();
 					
@@ -156,8 +144,21 @@ export const OBSWebsocketProvider = ({ children }) => {
 						[provider, connection.public.connected],
 					);
 
+					if (typeof args?.enabled === 'undefined' || Boolean(args?.enabled)) {
+						if (!provider && connection.public.connected) {
+							const factory = factories[name];
+							if (!factory) {
+								console.error(`obs provider named '${name}' not found.`);
+								return undefined;
+							}
+							provider = factory(connection.public, args);
+							connection.providers[providerId] = provider;
+						}
+					}
+
 					return provider?.value;
 				};
+				connection.public.useDataProvider = useDataProvider;
 
 				connection.public.action = (name, args) => {
 					const factory = actions[name];

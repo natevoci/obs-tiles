@@ -1,4 +1,4 @@
-self.addEventListener('install', event => {
+self.addEventListener('install', () => {
 	console.log('server-worker install');
 });
 
