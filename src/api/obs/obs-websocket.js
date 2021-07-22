@@ -48,7 +48,7 @@ export const OBSWebsocketProvider = ({ children }) => {
 								connect();
 							}
 						},
-						5000
+						50000
 					);
 				});
 
