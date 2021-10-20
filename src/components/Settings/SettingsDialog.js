@@ -1,13 +1,55 @@
 import React from 'react';
-import styled from 'styled-components';
-import { Dialog, AppBar, Toolbar, DialogContent, DialogActions, Button, TextField, IconButton, Typography, Grid, Avatar } from '@material-ui/core';
+import styled, { css } from 'styled-components';
+import { Dialog, AppBar, Toolbar, DialogContent, DialogActions, Button, TextField, IconButton, Typography, Avatar } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
 import { Close } from '@material-ui/icons';
 
 import { useSettings } from './SettingsContext';
 import { useGoogleAuth } from '../Google/GoogleAuthContext';
 
+const FlexRow = styled.div`
+	position: relative;
+	display: flex;
+	flex-direction: row;
+	${p => p.$fillHeight ? css`
+		flex-grow: 1;
+		overflow-y: hidden;
+	` : ''};
+	${p => p.$height ? css`
+		height: ${p.$height};
+	` : ''};
+	${p => p.$minHeight ? css`
+		min-height: ${p.$minHeight};
+	` : ''}
+
+	> :not(:last-child) {
+		margin-right: ${p => p.theme.grid(3)};
+	}
+`;
+
+const FlexColumn = styled.div`
+	position: relative;
+	display: flex;
+	flex-direction: column;
+	${p => p.$fixedHeight ? css`
+		overflow-y: hidden;
+	` : ''}
+	${p => p.$fixedHeight ? css`
+		height: ${p.$fixedHeight === true ? '100%' : p.$fixedHeight};
+	` : ''}
+
+	> :not(:last-child) {
+		margin-bottom: ${p => p.theme.grid(3)};
+	}
+`;
+
 const StyledTextField = styled(TextField)`
+	height: 100%;
+	> .MuiInputBase-root {
+		height: 100%;
+		align-items: initial;
+		overflow-y: auto;
+	}
 	& textarea {
 		font-family: monospace;
 	}
@@ -25,6 +67,11 @@ const useStyles = makeStyles((theme) => ({
 		width: theme.spacing(3),
 		height: theme.spacing(3),
 		marginRight: theme.spacing(2),
+	},
+	content: {
+		position: 'relative',
+		paddingTop: theme.spacing(2),
+		overflowY: 'none',
 	},
 }));
 
@@ -71,18 +118,24 @@ export const SettingsDialog = ({
 					</IconButton>
 				</Toolbar>
 			</AppBar>
-			<DialogContent>
-				<Grid container spacing={3}>
-					<Grid container spacing={3} item xs={12} direction="row">
-						{loginResult ? (
+			<DialogContent className={classes.content}>
+				<FlexColumn
+					aria-label='Column'
+					$fixedHeight
+				>
+					<FlexRow
+						aria-label='Google login row'
+						$height='auto'
+					>
+						{loginResult?.profileObj ? (
 							<>
-								<Grid item>
+								<div>
 									<Avatar
 										alt={loginResult.profileObj.name}
 										src={loginResult.profileObj.imageUrl}
 									/>
-								</Grid>
-								<Grid item>
+								</div>
+								<div>
 									<Button
 										variant="contained"
 										onClick={signOut}
@@ -90,10 +143,10 @@ export const SettingsDialog = ({
 										<Avatar src="https://developers.google.com/identity/sign-in/g-normal.png" className={classes.small} />
 										<span>Sign out from {loginResult.profileObj.email}</span>
 									</Button>
-								</Grid>
+								</div>
 							</>
 						) : (
-							<Grid item>
+							<div>
 								<Button
 									variant="contained"
 									onClick={signIn}
@@ -101,10 +154,14 @@ export const SettingsDialog = ({
 									<Avatar src="https://developers.google.com/identity/sign-in/g-normal.png" className={classes.small} />
 									<span>Sign in with Google</span>
 								</Button>
-							</Grid>
+							</div>
 						)}
-					</Grid>
-					<Grid item xs={12}>
+					</FlexRow>
+
+					<FlexRow
+						aria-label='Settings text area row'
+						$fillHeight
+					>
 						<StyledTextField
 							id="settings"
 							type="text"
@@ -116,11 +173,11 @@ export const SettingsDialog = ({
 							}}
 							value={value}
 							onChange={handleChange}
-						>
-						</StyledTextField>
-					</Grid>
-				</Grid>
+						/>
+					</FlexRow>
+				</FlexColumn>
 			</DialogContent>
+
 			<DialogActions>
 				<Button
 					color="primary"

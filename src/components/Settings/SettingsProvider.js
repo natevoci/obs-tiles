@@ -5,7 +5,7 @@ import { SettingsContext } from './SettingsContext';
 
 export const SettingsProvider = ({ children }) => {
 	const [configUrl, setConfigUrl] = React.useState(
-		window.localStorage.getItem(`configUrl`) || 'https://drive.google.com/uc?export=download&id=1FGGPaVHqOb6c_nbDMowcbFM3rgrFaoB1'
+		window.localStorage.getItem(`configUrl`) || ''
 	);
 
 	const [configUrlJSON, setConfigUrlJSON] = React.useState(
