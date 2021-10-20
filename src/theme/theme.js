@@ -20,6 +20,11 @@ const muiTheme = createMuiTheme({
 			main: variables.secondary,
 		},
 	},
+	typography: {
+		button: {
+			textTransform: 'none',
+		},
+	},
 });
 
 export const ThemeProvider = ({ children, theme }) => (
