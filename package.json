@@ -13,6 +13,7 @@
   "dependencies": {
     "@material-ui/core": "^4.11.4",
     "@material-ui/icons": "^4.11.2",
+    "@parcel/babel-preset-env": "^2.0.0",
     "components": "^0.1.0",
     "json5": "^2.2.0",
     "obs-websocket-js": "^4.0.2",
@@ -26,17 +27,17 @@
     "@babel/plugin-transform-runtime": "^7.14.5",
     "@babel/preset-env": "^7.14.2",
     "@babel/preset-react": "^7.13.13",
-    "@parcel/packager-raw-url": "2.0.0-beta.3.1",
+    "@parcel/packager-raw-url": "^2.0.0-nightly",
     "@parcel/reporter-bundle-analyzer": "^2.0.0-nightly.1694",
-    "@parcel/transformer-image": "2.0.0-beta.3.1",
-    "@parcel/transformer-webmanifest": "2.0.0-beta.3.1",
+    "@parcel/transformer-image": "^2.0.0",
+    "@parcel/transformer-webmanifest": "^2.0.0",
     "babel-eslint": "^10.1.0",
     "babel-plugin-root-import": "^6.6.0",
     "cross-env": "^7.0.3",
     "eslint": "^7.31.0",
     "eslint-plugin-react": "^7.24.0",
     "eslint-plugin-react-hooks": "^4.2.0",
-    "parcel": "2.0.0-beta.3.1",
+    "parcel": "^2.0.0",
     "parcel-plugin-eslint": "^1.0.8-2"
   }
 }
