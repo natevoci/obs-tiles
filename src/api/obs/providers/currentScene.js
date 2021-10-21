@@ -3,10 +3,16 @@ import { createProvider } from '../createProvider';
 export const currentScene = (obs) => createProvider({
 	init: (onChanged) => {
 		obs.send('GetCurrentScene', {}, data => {
-			onChanged(data.name);
+			onChanged({
+				name: data.name,
+				sources: data.sources,
+			});
 		});
 		obs.on('SwitchScenes', data => {
-			onChanged(data.sceneName);
+			onChanged({
+				name: data.sceneName,
+				sources: data.sources,
+			});
 		});
 	}
 });

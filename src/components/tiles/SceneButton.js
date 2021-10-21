@@ -76,8 +76,8 @@ export const SceneButton = ({
 	
 	const transition = obs.useDataProvider('transition');
 	
-	const isPrevScene = currentScene === scene && transition?.fromScene === scene;
-	const isCurrentScene = transition?.toScene === scene || currentScene === scene;
+	const isPrevScene = currentScene?.name === scene && transition?.fromScene === scene;
+	const isCurrentScene = transition?.toScene === scene || currentScene?.name === scene;
 	
 	const imageData = obs.useDataProvider('sceneImage', {
 		scene,
