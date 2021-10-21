@@ -4,13 +4,13 @@ import {
 	ThemeProvider as StyledThemeProvider,
 } from 'styled-components';
 import {
-	createMuiTheme,
+	createTheme,
 	ThemeProvider as MUIThemeProvider,
 } from '@material-ui/core/styles';
 
 import variables from './variables';
 
-const muiTheme = createMuiTheme({
+const muiTheme = createTheme({
 	palette: {
 		primary: {
 			main: variables.primary,
