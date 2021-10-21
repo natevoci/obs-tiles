@@ -19,7 +19,7 @@ export const OBSWebsocketProvider = ({ children }) => {
 			if (!connections[name]) {
 				const connSettings = settings.connections[name];
 				if (!connSettings) {
-					throw new Error(`Missing connection information for {name}`);
+					throw new Error(`Missing connection information for '${name}'. Available connections (${Object.keys(settings.connections).join(', ')})`);
 				}
 
 				const connection = {};
@@ -148,7 +148,7 @@ export const OBSWebsocketProvider = ({ children }) => {
 						if (!provider && connection.public.connected) {
 							const factory = factories[name];
 							if (!factory) {
-								console.error(`obs provider named '${name}' not found.`);
+								console.error(`obs provider named '${name}' not found. Available providers (${Object.keys(factories).join(', ')})`);
 								return undefined;
 							}
 							provider = factory(connection.public, args);
@@ -163,7 +163,7 @@ export const OBSWebsocketProvider = ({ children }) => {
 				connection.public.action = (name, args) => {
 					const factory = actions[name];
 					if (!factory) {
-						console.error(`obs action named '${name}' not found.`);
+						console.error(`obs action named '${name}' not found. Available actions (${Object.keys(actions).join(', ')})`);
 					}
 					const action = factory(connection.public);
 					if (action) {
@@ -175,7 +175,7 @@ export const OBSWebsocketProvider = ({ children }) => {
 			}
 			return connections[name];
 		},
-		[],
+		[settings?.connections],
 	);
 
 	return (
