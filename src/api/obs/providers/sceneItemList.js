@@ -8,11 +8,10 @@ export const sceneItemList = (obs, {
 			obs.send(
 				'GetSceneItemList',
 				{
-					sourceName: scene,
+					sceneName: scene,
 				},
 				data => {
 					data.sceneItems.reverse(); // The items seem to come in reverse order
-					console.log("item order", data.sceneItems);
 					onChanged({
 						sceneName: data.sceneName,
 						sceneItems: data.sceneItems,
