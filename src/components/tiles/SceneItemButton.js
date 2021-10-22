@@ -33,14 +33,13 @@ export const SceneItemButton = ({
 		item,
 	});
 	
-	const sceneItemList = obs.useDataProvider('sceneItemList', {
-		scene
-	});
-
 	const sceneItemId = sceneItemProperties?.itemId;
-
 	const isVisible = sceneItemProperties?.visible;
-	const isSelected = click === 'moveToTop' ? (sceneItemId && sceneItemId === sceneItemList?.sceneItems?.[0]?.itemId) : isVisible;
+
+	const sceneList = obs.useDataProvider('sceneList');
+	const sceneItemList = sceneList?.scenes?.[scene]?.sources;
+	const visibleSceneItems = sceneItemList?.filter?.(item => item.render);
+	const isSelected = click === 'moveToTop' ? (sceneItemId && visibleSceneItems?.length && sceneItemId === visibleSceneItems?.[0]?.id) : isVisible;
 	
 	const imageData = obs.useDataProvider('sceneImage', {
 		scene: item,
@@ -64,12 +63,12 @@ export const SceneItemButton = ({
 				}
 			},
 			moveToTop: () => {
-				const items = sceneItemList.sceneItems
-					.filter((item) => item.itemId !== sceneItemProperties.itemId)
-					.map((item) => ({ id: item.itemId }));
+				const items = sceneItemList
+					.filter((item) => item.id !== sceneItemId)
+					.map((item) => ({ id: item.id }));
 
 				const insertPosition = 0;
-				items.splice(insertPosition, 0, { id: sceneItemProperties.itemId });
+				items.splice(insertPosition, 0, { id: sceneItemId });
 
 				obs.send('ReorderSceneItems', {
 					scene,
@@ -77,7 +76,7 @@ export const SceneItemButton = ({
 				});
 			},
 		}),
-		[scene, item, sceneItemList, sceneItemProperties],
+		[scene, item, sceneItemList, sceneItemProperties, sceneItemId],
 	);
 
 	const buttonEventListeners = useClickHandler({

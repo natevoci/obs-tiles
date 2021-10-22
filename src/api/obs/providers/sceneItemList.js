@@ -12,10 +12,7 @@ export const sceneItemList = (obs, {
 				},
 				data => {
 					data.sceneItems.reverse(); // The items seem to come in reverse order
-					onChanged({
-						sceneName: data.sceneName,
-						sceneItems: data.sceneItems,
-					});
+					onChanged(data.sceneItems);
 				},
 			);
 		};
@@ -39,6 +36,5 @@ export const sceneItemList = (obs, {
 				fn();
 			}
 		});
-
 	}
 });
