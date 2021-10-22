@@ -19,22 +19,28 @@ export const SelectionIndicator = styled.div`
 	height: 100%;
 	border: 1px solid ${p => p.theme.sceneBorder};
 	box-shadow: 0 0 15px 10px ${p => p.theme.selectionHighlight};
-	opacity: ${p => !p.$isVisible ? 0.0 : p.$isPrevScene ? 0.6 : 1.0};
-	z-index: ${p => !p.$isVisible || p.$isPrevScene ? 5 : 10};
+	opacity: ${p => !p.$isSelected ? 0.0 : p.$isDeselecting ? 0.6 : 1.0};
+	z-index: ${p => !p.$isSelected || p.$isDeselecting ? 5 : 10};
 	pointer-events: none;
 	transition: box-shadow 0.25s ease-in-out 0s, opacity 0.5s ease-in-out 0s;
 `;
 
-export const Connecting = styled.p`
+export const TextOverlay = styled.div`
 	position: absolute;
-	text-align: center;
+	width: ${p => p.$size*16}px;
+	height: ${p => p.$size*9}px;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: center;
 	font-size: ${p => p.theme.fontSize.small};
-	top: 20%;
+
+	> p:not(:first-child) {
+		margin-top: ${p => p.theme.fontSize.small};
+	}
 `;
 
 export const StyledCircularProgress = styled(CircularProgress)`
-	position: absolute;
-	top: 40%;
 	z-index: 10;
 `;
 
@@ -89,13 +95,11 @@ export const SceneButton = ({
 		<>
 			<SelectionIndicator
 				data-elementtype='SelectionIndicator'
-				$isVisible={isCurrentScene || isPrevScene}
-				$isPrevScene={isPrevScene}
+				$isSelected={isCurrentScene || isPrevScene}
+				$isDeselecting={isPrevScene}
 			/>
 			<SceneWrapper
 				data-elementtype='SceneWrapper'
-				$isCurrentScene={isCurrentScene || isPrevScene}
-				$isPrevScene={isPrevScene}
 				onClick={() => {
 					if (obs.connected) {
 						obs.action('setCurrentScene', {scene});
@@ -105,14 +109,18 @@ export const SceneButton = ({
 					}
 				}}
 			>
-				{!obs.connected ? (
-					<>
-						<Connecting>{obs.failedConnection ?? 'Connecting...'}</Connecting>
-						{obs.connecting ? (
-							<StyledCircularProgress />
-						) : null}
-					</>
-				) : null}
+				<TextOverlay
+					$size={size}
+				>
+					{!obs.connected ? (
+						<>
+							{obs.failedConnection ?? 'Connecting...'}
+							{obs.connecting ? (
+								<StyledCircularProgress />
+							) : null}
+						</>
+					) : null}
+				</TextOverlay>
 				<StyledImg
 					src={imageData}
 					$size={size}

@@ -196,6 +196,7 @@ This loads a tile for a scene item (known as a "source" in OBS), with a preview 
   "sceneItem": {
     "scene": 'My scene name',
     "item": 'Source 1',
+    "click": "toggleVisible"
   },
   "title": 'Custom title',
   "tileSize": 12,
@@ -206,6 +207,8 @@ This loads a tile for a scene item (known as a "source" in OBS), with a preview 
 | -------- | ----- |
 | `sceneItem.scene` | The name of the scene. Must match the scene name in OBS. This is supplied to determine in which scene the source's visibility will be toggled. |
 | `sceneItem.item` | The name of the source in the scene. Must match the source name in OBS. |
+| `sceneItem.click` | The action when clicked. Supports "toggleVisible" (default) or "moveToTop". |
+| `sceneItem.longpress` | The action when held for longer than 600ms. Supports "toggleVisible" (default) or "moveToTop". |
 | `title` | (optional) Override the title displayed below the tile. |
 | `tileSize` | (optional) Override the size of the tile. |
 
@@ -430,6 +433,56 @@ For this to work correctly it requires setting up the [source-toggler](https://o
   ]
 }
 ```
+
+
+Another approach to switching is to keep all the sources active and toggle which one is on top. The advantages of this approach are that it doesn't require the source-toggler script, and since all the sources stay active the thumbnail previews also stay active.
+
+To achieve this you just set the `"click"` property of each sceneItem to `"moveToTop"`.
+
+
+```js
+{
+  "connections": {
+    "liveStream": {
+      "address": "192.168.1.56:4444"
+    }
+  },
+  "tileSize": 12,
+  "tiles": [
+    {
+      "group": "Cameras",
+      "connection": "liveStream",
+      "direction": "row",
+      "tiles": [
+        {
+          "sceneItem": {
+            "scene": "Cameras",
+            "item": "NDI - AuditoriumCamcorder",
+            "click": "moveToTop"
+          }
+          "title": "Camcorder",
+        },
+        {
+          "sceneItem": {
+            "scene": "Cameras",
+            "item": "VLC - Tablet camera",
+            "click": "moveToTop"
+          },
+          "title": "Tablet"
+        },
+        {
+          "sceneItem": {
+            "scene": "Cameras",
+            "item": "Front Camera",
+            "click": "moveToTop"
+          }
+        }
+      ]
+    }
+  ]
+}
+```
+
 
 ## Build instructions
 ### For development

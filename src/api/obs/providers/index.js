@@ -3,6 +3,7 @@ export * from './isStreaming';
 export * from './isRecording';
 export * from './sceneImage';
 export * from './stats';
+export * from './sceneItemList';
 export * from './sceneItemProperties';
 export * from './transition';
 export * from './videoInfo';
