@@ -79,11 +79,22 @@ export const SceneButton = ({
 	const obs = useObs({ connection });
 
 	const currentScene = obs.useDataProvider('currentScene');
-	
+
 	const transition = obs.useDataProvider('transition');
 	
-	const isPrevScene = currentScene?.name === scene && transition?.fromScene === scene;
-	const isCurrentScene = transition?.toScene === scene || currentScene?.name === scene;
+	// Note: the new api doesn't seem to provide the fromScene and toScene
+	//       so there's no way to show which scene is being transitioned
+	//       to at the moment.
+	const isPrevScene = obs.v4 ? (
+		currentScene?.name === scene && transition?.fromScene === scene
+	) : (
+		currentScene?.name === scene
+	);
+	const isCurrentScene = obs.v4 ? (
+		transition?.toScene === scene || currentScene?.name === scene
+	) : (
+		currentScene?.name === scene
+	);
 	
 	const imageData = obs.useDataProvider('sceneImage', {
 		scene,

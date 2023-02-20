@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useCallback } from 'react';
 import styled from 'styled-components';
 import { Button as MUIButton } from '@material-ui/core';
 
@@ -29,52 +29,68 @@ const StyledButton = ({
 	);
 }
 
+const ToggleStreamingButton = ({
+	obs,
+	tileSize,
+	recordWhenStreaming = 'false',
+}) => {
+	const {
+		isStarted,
+		isStopped,
+		isStarting,
+		isStopping,
+		isLoading,
+	} = obs.useDataProvider('isStreaming');
+
+	const clickHandler = useCallback(
+		() => {
+			if (isStarted) {
+				obs.action('stopStreaming', { recordWhenStreaming });
+			}
+			else if (isStopped) {
+				obs.action('startStreaming', { recordWhenStreaming });
+			}
+		},
+		[isStarted, isStopped],
+	);
+
+	return (
+		<StyledButton
+			tileSize={tileSize}
+			label={isStarted ? 'Stop Streaming' : isStopped ? 'Start Streaming' : isStarting ? 'Starting...' : isStopping ? 'Stopping' : '...'}
+			color={isStarted ? 'secondary' : isStopped ? 'primary' : 'inherit'}
+			disabled={isStarting || isStopping || isLoading}
+			onClick={clickHandler}
+		/>
+	);
+};
+
+const ToggleRecordingButton = ({
+	obs,
+	tileSize,
+}) => {
+	const {
+		isStarted,
+		isStopped,
+		isStarting,
+		isStopping,
+		isLoading,
+	} = obs.useDataProvider('isRecording');
+
+	return (
+		<StyledButton
+			tileSize={tileSize}
+			label={isStarted ? 'Stop Recording' : isStopped ? 'Start Recording' : isStarting ? 'Starting...' : isStopping ? 'Stopping' : '...'}
+			color={isStarted ? 'secondary' : isStopped ? 'primary' : 'inherit'}
+			disabled={isStarting || isStopping || isLoading}
+			onClick={isStarted ? () => obs.action('stopRecording') : isStopped ? () => obs.action('startRecording') : undefined}
+		/>
+	);
+};
+
 const ButtonComponents = {
-	'toggleStreaming': ({
-		obs,
-		tileSize,
-	}) => {
-		const {
-			isStarted,
-			isStopped,
-			isStarting,
-			isStopping,
-			isLoading,
-		} = obs.useDataProvider('isStreaming');
-
-		return (
-			<StyledButton
-				tileSize={tileSize}
-				label={isStarted ? 'Stop Streaming' : isStopped ? 'Start Streaming' : isStarting ? 'Starting...' : isStopping ? 'Stopping' : '...'}
-				color={isStarted ? 'secondary' : isStopped ? 'primary' : 'inherit'}
-				disabled={isStarting || isStopping || isLoading}
-				onClick={isStarted ? () => obs.action('stopStreaming') : isStopped ? () => obs.action('startStreaming') : undefined}
-			/>
-		);
-	},
-
-	'toggleRecording': ({
-		obs,
-		tileSize,
-	}) => {
-		const {
-			isStarted,
-			isStopped,
-			isStarting,
-			isStopping,
-			isLoading,
-		} = obs.useDataProvider('isRecording');
-
-		return (
-			<StyledButton
-				tileSize={tileSize}
-				label={isStarted ? 'Stop Recording' : isStopped ? 'Start Recording' : isStarting ? 'Starting...' : isStopping ? 'Stopping' : '...'}
-				color={isStarted ? 'secondary' : isStopped ? 'primary' : 'inherit'}
-				disabled={isStarting || isStopping || isLoading}
-				onClick={isStarted ? () => obs.action('stopRecording') : isStopped ? () => obs.action('startRecording') : undefined}
-			/>
-		);
-	},
+	'toggleStreaming': ToggleStreamingButton,
+	'toggleRecording': ToggleRecordingButton,
 };
 
 export const Button = ({

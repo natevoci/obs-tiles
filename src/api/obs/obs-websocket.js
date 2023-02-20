@@ -1,5 +1,6 @@
 import * as React from 'react';
-import OBSWebSocket from 'obs-websocket-js';
+import OBSWebSocket4 from 'obs-websocket-js';
+import OBSWebSocket5 from 'obs-websocket-js-5';
 
 import { useSettings } from '~/components/Settings/SettingsContext';
 import { useForceUpdate } from '~/hooks';
@@ -22,35 +23,42 @@ export const OBSWebsocketProvider = ({ children }) => {
 					throw new Error(`Missing connection information for '${name}'. Available connections (${Object.keys(settings.connections).join(', ')})`);
 				}
 
+				const v4 = connSettings.address.endsWith(':4444')
+
 				const connection = {};
-				connection.instance = new OBSWebSocket();
+				connection.instance = v4 ? new OBSWebSocket4() : new OBSWebSocket5();
 				connection.shouldBeConnected = false;
 				connection.public = {};
+				connection.public.v4 = v4;
 				connection.public.name = name;
 				connection.public.connected = false;
 				connection.public.connecting = false;
 				connection.public.failed = false;
 				connection.public.failedConnection = false;
 				
-				connection.instance.on('error', (err) => {
-					console.error(`error for connection '${name}'`, err);
-					connection.public.failed = err;
-				});
+				const configureInstance = () => {
+					connection.instance.on('error', (err) => {
+						console.error(`error for connection '${name}'`, err);
+						connection.public.failed = err;
+					});
 
-				connection.instance.on('ConnectionClosed', () => {
-					console.log(`Connection closed`);
-					connection.public.connected = false;
-					forceUpdate();
+					connection.instance.on('ConnectionClosed', () => {
+						console.log(`Connection closed`);
+						connection.public.connected = false;
+						forceUpdate();
 
-					setTimeout(
-						() => {
-							if (!connection.public.connected && connection.shouldBeConnected) {
-								connect();
-							}
-						},
-						50000
-					);
-				});
+						setTimeout(
+							() => {
+								if (!connection.public.connected && connection.shouldBeConnected) {
+									connect();
+								}
+							},
+							50000
+						);
+					});
+				};
+
+				configureInstance();
 
 				const connect = () => {
 					connection.shouldBeConnected = true;
@@ -58,14 +66,26 @@ export const OBSWebsocketProvider = ({ children }) => {
 					forceUpdate();
 
 					const password = window.localStorage.getItem(`password-${connSettings.address}`);
-					connection.instance.connect({
-						address: connSettings.address,
-						password: password || '',
-					}).then(() => {
+					(
+						connection.public.v4 ? (
+							connection.instance.connect({
+								address: connSettings.address,
+								password: password || '',
+							})
+						) : (
+							connection.instance.connect(
+								`ws://${connSettings.address}`,
+								password || '',
+							)
+						)
+					).then(() => {
 						connection.public.connected = true;
 					}).catch(err => {
 						connection.public.connected = false;
-						if (err.error === 'Authentication Failed.') {
+						if (
+							(connection.public.v4 && err.error === 'Authentication Failed.') ||
+							(!connection.public.v4 && err.code === 4009)
+						) {
 							const password = prompt(`Please enter the password for ${connSettings.address}:`);
 							if (password !== null) {
 								window.localStorage.setItem(`password-${connSettings.address}`, password);
@@ -73,7 +93,7 @@ export const OBSWebsocketProvider = ({ children }) => {
 								return;
 							}
 						}
-						console.error(`Error connecting to '${name}' connection:`, err.error);
+						console.error(`Error connecting to '${name}' connection:`, err);
 						connection.public.failedConnection = err.error;
 					}).then(() => {
 						connection.public.connecting = false;
@@ -103,19 +123,36 @@ export const OBSWebsocketProvider = ({ children }) => {
 				// for details of request names and args
 				connection.public.send = (requestName, args, onSucceeded, onFailed) => {
 					if (connection.instance) {
-						connection.instance.sendCallback(requestName, args, (err, data) => {
-							if (err) {
+						if (connection.public.v4) {
+							connection.instance.sendCallback(requestName, args, (err, data) => {
+								if (err) {
+									if (onFailed) {
+										onFailed(err);
+									}
+									else {
+										console.debug(`Error calling '${requestName}'`, err, connection);
+									}
+								}
+								else {
+									onSucceeded?.(data);
+								}
+							});
+						}
+						else {
+							connection.instance.call(
+								requestName,
+								args,
+							).then(data => {
+								onSucceeded?.(data);
+							}).catch(err => {
 								if (onFailed) {
 									onFailed(err);
 								}
 								else {
-									console.debug(`Error calling '${requestName}'`, err, connection);
+									console.debug(`Error calling '${requestName}'`, requestName, args, err, connection);
 								}
-							}
-							else {
-								onSucceeded?.(data);
-							}
-						});
+							});
+						}
 					}
 				}
 

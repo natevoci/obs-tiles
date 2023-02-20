@@ -17,6 +17,7 @@
     "components": "^0.1.0",
     "json5": "^2.2.0",
     "obs-websocket-js": "^4.0.2",
+    "obs-websocket-js-5": "npm:obs-websocket-js@5",
     "react": "^17.0.2",
     "react-dom": "^17.0.2",
     "react-google-login": "^5.2.2",

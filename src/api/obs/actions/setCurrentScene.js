@@ -1,7 +1,14 @@
 export const setCurrentScene = (obs) => ({
 	scene
 }) => {
-	obs.send('SetCurrentScene', {
-		'scene-name': scene,
-	});
+	if (obs.v4) {
+		obs.send('SetCurrentScene', {
+			'scene-name': scene,
+		});
+	}
+	else {
+		obs.send('SetCurrentProgramScene', {
+			'sceneName': scene,
+		});
+	}
 };

@@ -1,3 +1,4 @@
+export * from './previewScene';
 export * from './currentScene';
 export * from './isStreaming';
 export * from './isRecording';

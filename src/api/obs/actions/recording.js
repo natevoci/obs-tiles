@@ -1,11 +1,26 @@
 export const startRecording = (obs) => () => {
-	obs.send('StartRecording');
+	if (obs.v4) {
+		obs.send('StartRecording');
+	}
+	else {
+		obs.send('StartRecord');
+	}
 };
 
 export const stopRecording = (obs) => () => {
-	obs.send('StopRecording');
+	if (obs.v4) {
+		obs.send('StopRecording');
+	}
+	else {
+		obs.send('StopRecord');
+	}
 };
 
 export const startStopRecording = (obs) => () => {
-	obs.send('StartStopRecording');
+	if (obs.v4) {
+		obs.send('StartStopRecording');
+	}
+	else {
+		obs.send('ToggleRecording');
+	}
 };

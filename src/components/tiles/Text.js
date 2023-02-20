@@ -21,29 +21,32 @@ const TextComponents = {
 	'stats': ({
 		obs,
 		tileSize,
+		refreshTime = 3000,
 	}) => {
 		const size = parseInt(tileSize);
 
-		const stats = obs.useDataProvider('stats');
+		const stats = obs.useDataProvider('stats', { refreshTime });
 		const videoInfo = obs.useDataProvider('videoInfo');
 
 		if (!stats) {
 			return null;
 		}
 
-		const fps = stats['fps'] || 0;
+		const fps = stats['activeFps'] || 0;
 		const fpsPerc = videoInfo?.fps > 0 ? 100 * fps / videoInfo?.fps : 0;
-		const cpuUsage = stats['cpu-usage'] || 0;
-		const memoryUsage = stats['memory-usage'] || 0;
-		const freeDiskSpace = stats['free-disk-space'] || 0;
-		const outputSkippedFrames = stats['output-skipped-frames'] || 0;
+		const cpuUsage = stats['cpuUsage'] || 0;
+		const memoryUsage = stats['memoryUsage'] || 0;
+		const freeDiskSpace = stats['availableDiskSpace'] || 0;
+		const outputSkippedFrames = stats['outputSkippedFrames'] || 0;
 
 		return (
 			<StyledText
 				$size={size}
 			>
 				<Paragraph $size={size}>FPS: {fps.toFixed(2)}</Paragraph>
-				<LinearProgress variant='determinate' value={Math.round(fpsPerc)} color={fpsPerc > 80 ? 'primary' : 'secondary'} />
+				{videoInfo?.fps > 0 ? (
+					<LinearProgress variant='determinate' value={Math.round(fpsPerc)} color={fpsPerc > 80 ? 'primary' : 'secondary'} />
+				) : null}
 				<Paragraph $size={size}>CPU: {cpuUsage.toFixed(0)}%</Paragraph>
 				<LinearProgress variant='determinate' value={Math.round(cpuUsage)} color={cpuUsage < 80 ? 'primary' : 'secondary'} />
 				<Paragraph $size={size}>Memory: {formatMB(memoryUsage)}</Paragraph>

@@ -6,10 +6,25 @@ export const videoInfo = (obs, {
 	attach: (onChanged) => {
 		let timeout;
 		const fn = () => {
-			obs.send('GetVideoInfo', {}, data => {
-				onChanged(data);
-				timeout = setTimeout(fn, refreshTime);
-			});
+			if (obs.v4) {
+				obs.send('GetVideoInfo', {}, data => {
+					onChanged(data);
+					timeout = setTimeout(fn, refreshTime);
+				});
+			}
+			else {
+				obs.send('GetVideoSettings', {}, ({
+					fpsNumerator,
+					fpsDenominator,
+					...data
+				}) => {
+					onChanged({
+						fps: data.fpsNumerator / data.fpsDenominator,
+						...data,
+					});
+					timeout = setTimeout(fn, refreshTime);
+				});
+			}
 		};
 
 		fn();

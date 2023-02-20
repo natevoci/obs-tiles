@@ -33,13 +33,17 @@ export const SceneItemButton = ({
 		item,
 	});
 	
-	const sceneItemId = sceneItemProperties?.itemId;
-	const isVisible = sceneItemProperties?.visible;
+	const sceneItemId = obs.v4 ? sceneItemProperties?.itemId : sceneItemProperties?.sceneItemId;
+	const isVisible = obs.v4 ? sceneItemProperties?.visible : sceneItemProperties?.sceneItemEnabled;
 
 	const sceneList = obs.useDataProvider('sceneList');
-	const sceneItemList = sceneList?.scenes?.[scene]?.sources;
-	const visibleSceneItems = sceneItemList?.filter?.(item => item.render);
-	const isSelected = click === 'moveToTop' ? (sceneItemId && visibleSceneItems?.length && sceneItemId === visibleSceneItems?.[0]?.id) : isVisible;
+	const sceneItemListV4 = sceneList?.scenes?.[scene]?.sources;
+	const sceneItemListV5 = obs.useDataProvider('sceneItemList', { scene });
+	const sceneItemList = obs.v4 ? sceneItemListV4 : sceneItemListV5;
+	const visibleSceneItems = sceneItemList?.filter?.(item => obs.v4 ? item.render : item.sceneItemEnabled);
+	const isSelected = click === 'moveToTop' ? (
+		sceneItemId && visibleSceneItems?.length && sceneItemId === (obs.v4 ? visibleSceneItems?.[0]?.id : visibleSceneItems?.[0]?.sceneItemId)
+	) : isVisible;
 	
 	const imageData = obs.useDataProvider('sceneImage', {
 		scene: item,
@@ -52,28 +56,46 @@ export const SceneItemButton = ({
 		() => ({
 			toggleVisible: () => {
 				if (obs.connected) {
-					obs.send('SetSceneItemProperties', {
-						'scene-name': scene,
-						item,
-						visible: !sceneItemProperties?.visible,
-					});
+					if (obs.v4) {
+						obs.send('SetSceneItemProperties', {
+							'scene-name': scene,
+							item,
+							visible: !sceneItemProperties?.visible,
+						});
+					}
+					else {
+						obs.send('SetSceneItemEnabled', {
+							'sceneName': scene,
+							'sceneItemId': sceneItemId,
+							'sceneItemEnabled': !isVisible,
+						});
+					}
 				}
 				else {
 					obs.reconnect();
 				}
 			},
 			moveToTop: () => {
-				const items = sceneItemList
-					.filter((item) => item.id !== sceneItemId)
-					.map((item) => ({ id: item.id }));
-
-				const insertPosition = 0;
-				items.splice(insertPosition, 0, { id: sceneItemId });
-
-				obs.send('ReorderSceneItems', {
-					scene,
-					items,
-				});
+				if (obs.v4) {
+					const items = sceneItemList
+						.filter((item) => item.id !== sceneItemId)
+						.map((item) => ({ id: item.id }));
+	
+					const insertPosition = 0;
+					items.splice(insertPosition, 0, { id: sceneItemId });
+	
+					obs.send('ReorderSceneItems', {
+						scene,
+						items,
+					});
+				}
+				else {
+					obs.send('SetSceneItemIndex', {
+						sceneName: scene,
+						sceneItemId: sceneItemId,
+						sceneItemIndex: sceneItemList.length - 1,
+					});
+				}
 			},
 		}),
 		[scene, item, sceneItemList, sceneItemProperties, sceneItemId],

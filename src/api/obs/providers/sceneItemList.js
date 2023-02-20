@@ -19,22 +19,49 @@ export const sceneItemList = (obs, {
 
 		fn();
 
-		obs.on('SceneItemAdded', data => {
-			if (data.sceneName === scene) {
-				fn();
-			}
-		});
+		if (obs.v4) {
+			obs.on('SceneItemAdded', data => {
+				if (data.sceneName === scene) {
+					fn();
+				}
+			});
+	
+			obs.on('SceneItemRemoved', data => {
+				if (data.sceneName === scene) {
+					fn();
+				}
+			});
+	
+			obs.on('SourceOrderChanged', data => {
+				if (data.sceneName === scene) {
+					fn();
+				}
+			});
+		}
+		else {
+			obs.on('SceneItemAdded', data => {
+				if (data.sceneName === scene) {
+					fn();
+				}
+			});
+	
+			obs.on('SceneItemRemoved', data => {
+				if (data.sceneName === scene) {
+					fn();
+				}
+			});
+	
+			obs.on('SceneItemListReindexed', data => {
+				if (data.sceneName === scene) {
+					fn();
+				}
+			});
 
-		obs.on('SceneItemRemoved', data => {
-			if (data.sceneName === scene) {
-				fn();
-			}
-		});
-
-		obs.on('SourceOrderChanged', data => {
-			if (data.sceneName === scene) {
-				fn();
-			}
-		});
+			obs.on('SceneItemEnableStateChanged', data => {
+				if (data.sceneName === scene) {
+					fn();
+				}
+			});
+		}
 	}
 });
