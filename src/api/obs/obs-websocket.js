@@ -1,5 +1,5 @@
 import * as React from 'react';
-import OBSWebSocket from 'obs-websocket-js';
+import OBSWebSocketClient from './websocket-client';
 
 import { useSettings } from '~/components/Settings/SettingsContext';
 import { useForceUpdate } from '~/hooks';
@@ -23,7 +23,7 @@ export const OBSWebsocketProvider = ({ children }) => {
 				}
 
 				const connection = {};
-				connection.instance = new OBSWebSocket();
+				connection.instance = new OBSWebSocketClient();
 				connection.shouldBeConnected = false;
 				connection.public = {};
 				connection.public.name = name;
