@@ -1,5 +1,5 @@
 import React from 'react';
-import * as json5 from 'json5';
+import json5 from 'json5';
 
 import { SettingsContext } from './SettingsContext';
 
