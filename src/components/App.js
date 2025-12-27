@@ -2,7 +2,6 @@ import * as React from 'react';
 
 import { OBSWebsocketProvider } from '~/api/obs';
 import { SettingsProvider } from "~/components/Settings/SettingsProvider";
-import { GoogleAuthProvider } from "~/components/Google/GoogleAuthProvider";
 import { ThemeProvider } from "~/theme/theme";
 
 import { Layout } from "./Layout";
@@ -13,12 +12,10 @@ export const App = () => {
 	return (
 		<ThemeProvider>
 			<SettingsProvider>
-				<GoogleAuthProvider>
-					<OBSWebsocketProvider>
-						<Layout>
-						</Layout>
-					</OBSWebsocketProvider>
-				</GoogleAuthProvider>
+				<OBSWebsocketProvider>
+					<Layout>
+					</Layout>
+				</OBSWebsocketProvider>
 			</SettingsProvider>
 		</ThemeProvider>
 	);

@@ -1,11 +1,10 @@
 import React from 'react';
 import styled, { css } from 'styled-components';
-import { Dialog, AppBar, Toolbar, DialogContent, DialogActions, Button, TextField, IconButton, Typography, Avatar } from '@material-ui/core';
+import { Dialog, AppBar, Toolbar, DialogContent, DialogActions, Button, TextField, IconButton, Typography } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
 import { Close } from '@material-ui/icons';
 
 import { useSettings } from './SettingsContext';
-import { useGoogleAuth } from '../Google/GoogleAuthContext';
 
 const FlexRow = styled.div`
 	position: relative;
@@ -82,12 +81,6 @@ export const SettingsDialog = ({
 	const {settingsJSON, setSettingsJSON} = useSettings();
 	const [value, setValue] = React.useState(settingsJSON);
 
-	const {
-		signIn,
-		signOut,
-		loginResult,
-	} = useGoogleAuth();
-
 	const handleChange = React.useCallback(
 		(event) => {
 			setValue(event.target.value);
@@ -123,41 +116,6 @@ export const SettingsDialog = ({
 					aria-label='Column'
 					$fixedHeight
 				>
-					<FlexRow
-						aria-label='Google login row'
-						$height='auto'
-					>
-						{loginResult?.profileObj ? (
-							<>
-								<div>
-									<Avatar
-										alt={loginResult.profileObj.name}
-										src={loginResult.profileObj.imageUrl}
-									/>
-								</div>
-								<div>
-									<Button
-										variant="contained"
-										onClick={signOut}
-									>
-										<Avatar src="https://developers.google.com/identity/sign-in/g-normal.png" className={classes.small} />
-										<span>Sign out from {loginResult.profileObj.email}</span>
-									</Button>
-								</div>
-							</>
-						) : (
-							<div>
-								<Button
-									variant="contained"
-									onClick={signIn}
-								>
-									<Avatar src="https://developers.google.com/identity/sign-in/g-normal.png" className={classes.small} />
-									<span>Sign in with Google</span>
-								</Button>
-							</div>
-						)}
-					</FlexRow>
-
 					<FlexRow
 						aria-label='Settings text area row'
 						$fillHeight
