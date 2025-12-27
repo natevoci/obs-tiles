@@ -2,7 +2,7 @@ import React from 'react';
 import styled from 'styled-components';
 
 import { SettingsButton } from '../Settings/SettingsButton';
-import OBSLogo from 'url:/src/assets/obslogo.png';
+import OBSLogo from '/src/assets/obslogo.png?url';
 
 const Wrapper = styled.div`
 	height: ${p => p.theme.grid(8)};
