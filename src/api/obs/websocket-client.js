@@ -1,29 +1,32 @@
 /**
  * Native OBS WebSocket Client for OBS 4.9.1
  * Implements the OBS WebSocket protocol directly without external dependencies
+ * Based on the working old-Socket.js implementation
  */
 
 import { getAuthResponse } from './auth';
 
-const MESSAGE_ID_PREFIX = 'msg-';
 let messageIdCounter = 0;
 
 /**
- * OBS WebSocket Client class
+ * OBSWebSocketClient class
  * Provides a complete WebSocket implementation for communicating with OBS Studio via the obs-websocket plugin
  */
 export class OBSWebSocketClient {
 	constructor() {
 		this.socket = null;
 		this.isConnected = false;
-		this.isAuthenticated = false;
-		this.messageCallbacks = new Map();
 		this.eventListeners = new Map();
-		this.pendingRequests = new Map();
 		this.address = null;
 		this.password = null;
-		this.connectionPromise = null;
-		this.resolveConnection = null;
+	}
+
+	/**
+	 * Generate unique message ID
+	 * @private
+	 */
+	_generateMessageId() {
+		return String(messageIdCounter++);
 	}
 
 	/**
@@ -33,36 +36,63 @@ export class OBSWebSocketClient {
 	 * @param {string} options.password - OBS server password
 	 * @returns {Promise<void>}
 	 */
-	connect(options) {
+	async connect(options) {
+		const { address, password } = options;
+		this.address = address;
+		this.password = password || '';
+
+		try {
+			await this._connect(address, false);
+			await this._authenticate(this.password);
+		} catch (err) {
+			if (this.socket) {
+				this.socket.close();
+			}
+			this.isConnected = false;
+			this._emit('error', err);
+			throw err;
+		}
+	}
+
+	/**
+	 * Opens a WebSocket connection without authentication
+	 * @private
+	 */
+	async _connect(address, secure) {
 		return new Promise((resolve, reject) => {
-			const { address, password } = options;
-			this.address = address;
-			this.password = password || '';
-			this.resolveConnection = resolve;
+			let settled = false;
 
 			try {
-				const wsUrl = `ws://${address}`;
+				const wsUrl = (secure ? 'wss://' : 'ws://') + address;
 				this.socket = new WebSocket(wsUrl);
 
-				this.socket.onopen = () => {
-					this.isConnected = true;
-				};
-
+				// Set up message handler BEFORE onopen to ensure we don't miss any messages
 				this.socket.onmessage = (event) => {
 					this._handleMessage(JSON.parse(event.data));
 				};
 
 				this.socket.onerror = (error) => {
-					const err = new Error('WebSocket error');
-					err.error = error.message;
-					this._emit('error', err);
-					reject(err);
+					if (settled) {
+						this._emit('error', new Error('WebSocket error: ' + error.message));
+						return;
+					}
+					settled = true;
+					reject(new Error('WebSocket connection failed: ' + error.message));
+				};
+
+				this.socket.onopen = () => {
+					if (settled) {
+						return;
+					}
+					this.isConnected = true;
+					settled = true;
+					this._emit('ConnectionOpened');
+					resolve();
 				};
 
 				this.socket.onclose = () => {
 					this.isConnected = false;
-					this.isAuthenticated = false;
-					this._emit('ConnectionClosed', {});
+					this._emit('ConnectionClosed');
 				};
 			} catch (error) {
 				reject(error);
@@ -71,47 +101,97 @@ export class OBSWebSocketClient {
 	}
 
 	/**
-	 * Disconnect from OBS WebSocket server
+	 * Authenticate to OBS WebSocket server
+	 * Must already have an active connection before calling this method
+	 * @private
 	 */
-	disconnect() {
-		if (this.socket) {
-			this.socket.close();
-			this.socket = null;
+	async _authenticate(password = '') {
+		if (!this.isConnected) {
+			throw new Error('Not connected');
 		}
-		this.isConnected = false;
-		this.messageCallbacks.clear();
-		this.pendingRequests.clear();
+
+		try {
+			// First, get authentication requirements
+			const authData = await this.send('GetAuthRequired');
+
+			if (!authData['authRequired']) {
+				this._emit('AuthenticationSuccess');
+				return;
+			}
+
+			// Authentication is required, send Authenticate request
+			const challenge = authData.challenge;
+			const salt = authData.salt;
+
+			const authResponse = await getAuthResponse(password, challenge, salt);
+			await this.send('Authenticate', { auth: authResponse });
+
+			this._emit('AuthenticationSuccess');
+		} catch (err) {
+			this._emit('AuthenticationFailure');
+			throw err;
+		}
 	}
 
 	/**
-	 * Send a request to OBS and get a callback when response arrives
+	 * Send a request to OBS and wait for response
+	 * @param {string} requestType - The type of request (e.g., 'GetVersion', 'GetCurrentScene')
+	 * @param {Object} requestData - The request data/parameters
+	 * @returns {Promise<Object>} - Response data
+	 */
+	send(requestType, requestData = {}) {
+		return new Promise((resolve, reject) => {
+			if (!this.isConnected) {
+				reject(new Error('Not connected'));
+				return;
+			}
+
+			const messageId = this._generateMessageId();
+			const message = {
+				'request-type': requestType,
+				'message-id': messageId,
+				...requestData
+			};
+
+			// Register a one-time listener for this messageId
+			const handler = (err, data) => {
+				if (err) {
+					reject(err);
+				} else {
+					resolve(data);
+				}
+			};
+
+			this.once(`obs:internal:message:id-${messageId}`, handler);
+
+			try {
+				this.socket.send(JSON.stringify(message));
+			} catch (error) {
+				// Remove the handler if send fails
+				this.removeListener(`obs:internal:message:id-${messageId}`, handler);
+				reject(error);
+			}
+		});
+	}
+
+	/**
+	 * Send a request to OBS with callback
 	 * @param {string} requestType - The type of request (e.g., 'GetVersion', 'GetCurrentScene')
 	 * @param {Object} requestData - The request data/parameters
 	 * @param {Function} callback - Callback function(error, data)
 	 */
 	sendCallback(requestType, requestData, callback) {
-		if (!this.isConnected || !this.isAuthenticated) {
-			callback(new Error('Not connected or not authenticated'), null);
-			return;
+		// Allow the `requestData` argument to be omitted
+		if (callback === undefined && typeof requestData === 'function') {
+			callback = requestData;
+			requestData = {};
 		}
 
-		const messageId = MESSAGE_ID_PREFIX + (messageIdCounter++);
-		const message = {
-			'request-type': requestType,
-			'message-id': messageId,
-			...requestData
-		};
-
-		this.messageCallbacks.set(messageId, callback);
-		this.pendingRequests.set(messageId, { requestType, requestData });
-
-		try {
-			this.socket.send(JSON.stringify(message));
-		} catch (error) {
-			this.messageCallbacks.delete(messageId);
-			this.pendingRequests.delete(messageId);
-			callback(error, null);
-		}
+		this.send(requestType, requestData).then((response) => {
+			callback(null, response);
+		}).catch(error => {
+			callback(error);
+		});
 	}
 
 	/**
@@ -127,14 +207,43 @@ export class OBSWebSocketClient {
 	}
 
 	/**
+	 * Register a one-time event listener
+	 * @param {string} eventType - Event type to listen for
+	 * @param {Function} listener - Listener function
+	 */
+	once(eventType, listener) {
+		const wrapper = (...args) => {
+			listener(...args);
+			this.removeListener(eventType, wrapper);
+		};
+		this.on(eventType, wrapper);
+	}
+
+	/**
+	 * Remove an event listener
+	 * @param {string} eventType - Event type
+	 * @param {Function} listener - Listener function to remove
+	 */
+	removeListener(eventType, listener) {
+		if (!this.eventListeners.has(eventType)) {
+			return;
+		}
+		const listeners = this.eventListeners.get(eventType);
+		const index = listeners.indexOf(listener);
+		if (index > -1) {
+			listeners.splice(index, 1);
+		}
+	}
+
+	/**
 	 * Emit an event to all registered listeners
 	 * @private
 	 */
-	_emit(eventType, data) {
+	_emit(eventType, ...args) {
 		const listeners = this.eventListeners.get(eventType) || [];
 		listeners.forEach(listener => {
 			try {
-				listener(data);
+				listener(...args);
 			} catch (error) {
 				console.error(`Error in event listener for ${eventType}:`, error);
 			}
@@ -151,99 +260,32 @@ export class OBSWebSocketClient {
 		const status = message.status;
 
 		// Check if this is a response to a request
-		if (messageId && messageId.startsWith(MESSAGE_ID_PREFIX)) {
-			const callback = this.messageCallbacks.get(messageId);
-			if (callback) {
-				this.messageCallbacks.delete(messageId);
-				this.pendingRequests.delete(messageId);
+		if (messageId) {
+			let err = null;
+			let data = null;
 
-				if (status === 'ok') {
-					callback(null, message);
-				} else {
-					const error = new Error(message.error || 'Request failed');
-					error.error = message.error;
-					callback(error, null);
-				}
+			if (status === 'error') {
+				err = message;
+			} else {
+				data = message;
 			}
+
+			// Emit the message with ID for promise/callback resolution
+			this._emit(`obs:internal:message:id-${messageId}`, err, data);
 		}
 		// Check if this is an event notification
 		else if (updateType) {
-			// First, handle authentication if needed
-			if (updateType === 'Hello') {
-				this._handleHelloMessage(message);
-			} else {
-				// Emit the event with the original message data
-				this._emit(updateType, message);
-			}
+			// Emit the event with the original message data
+			this._emit(updateType, message);
 		}
 	}
 
 	/**
-	 * Handle the initial Hello message from OBS (authentication challenge)
-	 * @private
+	 * Disconnect from OBS WebSocket server
 	 */
-	_handleHelloMessage(message) {
-		const authRequired = message['auth-required'];
-
-		if (!authRequired) {
-			// No authentication required, we're ready to go
-			this.isAuthenticated = true;
-			this._resolveConnectionIfReady();
-			return;
-		}
-
-		// Authentication is required
-		const challenge = message.challenge;
-		const salt = message.salt;
-
-		try {
-			getAuthResponse(this.password, challenge, salt).then(authResponse => {
-				this._sendAuthenticateMessage(authResponse);
-				// Wait for the Authenticate response to confirm success
-			}).catch(error => {
-				this._emit('error', new Error('Authentication failed: ' + error.message));
-			});
-		} catch (error) {
-			this._emit('error', new Error('Authentication failed: ' + error.message));
-		}
-	}
-
-	/**
-	 * Send authentication message
-	 * @private
-	 */
-	_sendAuthenticateMessage(authResponse) {
-		const message = {
-			'request-type': 'Authenticate',
-			'message-id': MESSAGE_ID_PREFIX + (messageIdCounter++)
-		};
-
-		if (authResponse) {
-			message.auth = authResponse;
-		}
-
-		// Register callback to wait for authentication response
-		const messageId = message['message-id'];
-		this.messageCallbacks.set(messageId, (err, data) => {
-			if (err) {
-				this._emit('error', new Error('Authentication failed: ' + err.message));
-			} else {
-				this.isAuthenticated = true;
-				this._resolveConnectionIfReady();
-			}
-		});
-
-		this.socket.send(JSON.stringify(message));
-	}
-
-	/**
-	 * Resolve connection promise if authentication is complete
-	 * @private
-	 */
-	_resolveConnectionIfReady() {
-		if (this.isConnected && this.isAuthenticated && this.resolveConnection) {
-			this.resolveConnection();
-			this.resolveConnection = null;
+	disconnect() {
+		if (this.socket) {
+			this.socket.close();
 		}
 	}
 }
