@@ -15,25 +15,25 @@ export const OBSWebsocketProvider = ({ children }) => {
 	const forceUpdate = useForceUpdate();
 
 	const getConnection = React.useCallback(
-		(name) => {
-			if (!connections[name]) {
-				const connSettings = settings.connections[name];
+		(connectionName) => {
+			if (!connections[connectionName]) {
+				const connSettings = settings.connections[connectionName];
 				if (!connSettings) {
-					throw new Error(`Missing connection information for '${name}'. Available connections (${Object.keys(settings.connections).join(', ')})`);
+					throw new Error(`Missing connection information for '${connectionName}'. Available connections (${Object.keys(settings.connections).join(', ')})`);
 				}
 
 				const connection = {};
 				connection.instance = new OBSWebSocketClient();
 				connection.shouldBeConnected = false;
 				connection.public = {};
-				connection.public.name = name;
+				connection.public.name = connectionName;
 				connection.public.connected = false;
 				connection.public.connecting = false;
 				connection.public.failed = false;
 				connection.public.failedConnection = false;
 				
 				connection.instance.on('error', (err) => {
-					console.error(`error for connection '${name}'`, err);
+					console.error(`error for connection '${connectionName}'`, err);
 					connection.public.failed = err;
 				});
 
@@ -73,7 +73,7 @@ export const OBSWebsocketProvider = ({ children }) => {
 								return;
 							}
 						}
-						console.error(`Error connecting to '${name}' connection:`, err.error);
+						console.error(`Error connecting to '${connectionName}' connection:`, err.error);
 						connection.public.failedConnection = err.error;
 					}).then(() => {
 						connection.public.connecting = false;
@@ -171,9 +171,9 @@ export const OBSWebsocketProvider = ({ children }) => {
 					}
 				};
 
-				connections[name] = connection;
+				connections[connectionName] = connection;
 			}
-			return connections[name];
+			return connections[connectionName];
 		},
 		[settings?.connections],
 	);

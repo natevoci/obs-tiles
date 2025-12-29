@@ -10,7 +10,7 @@ export const currentScene = (obs) => createProvider({
 		});
 		obs.on('SwitchScenes', data => {
 			onChanged({
-				name: data.sceneName,
+				name: data['scene-name'],
 				sources: data.sources,
 			});
 		});

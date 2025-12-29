@@ -5,7 +5,7 @@ export const sceneList = (obs) => createProvider({
 		const fn = () => {
 			obs.send('GetSceneList', {}, data => {
 				onChanged({
-					currentScene: data.currentScene,
+					currentScene: data['current-scene'],
 					scenes: data.scenes.reduce(
 						(prev, curr) => {
 							prev[curr.name] = curr;

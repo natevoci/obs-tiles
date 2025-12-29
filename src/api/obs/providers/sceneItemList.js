@@ -20,19 +20,19 @@ export const sceneItemList = (obs, {
 		fn();
 
 		obs.on('SceneItemAdded', data => {
-			if (data.sceneName === scene) {
+			if (data['scene-name'] === scene) {
 				fn();
 			}
 		});
 
 		obs.on('SceneItemRemoved', data => {
-			if (data.sceneName === scene) {
+			if (data['scene-name'] === scene) {
 				fn();
 			}
 		});
 
 		obs.on('SourceOrderChanged', data => {
-			if (data.sceneName === scene) {
+			if (data['scene-name'] === scene) {
 				fn();
 			}
 		});
