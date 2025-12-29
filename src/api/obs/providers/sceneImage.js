@@ -1,4 +1,5 @@
 import { createProvider } from '../createProvider';
+import { camelCaseKeys } from '../util/camelCaseKeys';
 
 export const sceneImage = (obs, {
 	scene,
@@ -19,8 +20,9 @@ export const sceneImage = (obs, {
 						height: tileSize*9,
 					},
 					data => {
-						if (attached && data?.img) {
-							onChanged(data.img);
+						const normalized = camelCaseKeys(data);
+						if (attached && normalized.img) {
+							onChanged(normalized.img);
 							timeout = setTimeout(fn, refreshTime);
 						}
 					},

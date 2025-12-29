@@ -1,17 +1,20 @@
 import { createProvider } from '../createProvider';
+import { camelCaseKeys } from '../util/camelCaseKeys';
 
 export const currentScene = (obs) => createProvider({
 	init: (onChanged) => {
 		obs.send('GetCurrentScene', {}, data => {
+			const normalized = camelCaseKeys(data);
 			onChanged({
-				name: data.name,
-				sources: data.sources,
+				name: normalized.name,
+				sources: normalized.sources,
 			});
 		});
 		obs.on('SwitchScenes', data => {
+			const normalized = camelCaseKeys(data);
 			onChanged({
-				name: data['scene-name'],
-				sources: data.sources,
+				name: normalized.sceneName,
+				sources: normalized.sources,
 			});
 		});
 	}

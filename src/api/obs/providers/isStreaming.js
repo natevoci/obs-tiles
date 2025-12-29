@@ -1,4 +1,5 @@
 import { createProvider } from '../createProvider';
+import { camelCaseKeys } from '../util/camelCaseKeys';
 
 export const isStreaming = (obs) => createProvider({
 	init: (onChanged) => {
@@ -13,7 +14,8 @@ export const isStreaming = (obs) => createProvider({
 		};
 
 		obs.send('GetStreamingStatus', {}, data => {
-			setData(data.streaming ? 'started' : 'stopped');
+			const normalized = camelCaseKeys(data);
+			setData(normalized.streaming ? 'started' : 'stopped');
 		});
 		obs.on('StreamStarting', () => {
 			setData('starting');

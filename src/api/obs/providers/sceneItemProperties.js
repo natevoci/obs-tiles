@@ -1,4 +1,5 @@
 import { createProvider } from '../createProvider';
+import { camelCaseKeys } from '../util/camelCaseKeys';
 
 export const sceneItemProperties = (
 	obs,
@@ -16,7 +17,8 @@ export const sceneItemProperties = (
 					'item': item,
 				},
 				data => {
-					onChanged(data);
+					const normalized = camelCaseKeys(data);
+					onChanged(normalized);
 				},
 			);
 		} 

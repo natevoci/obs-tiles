@@ -9,6 +9,37 @@ import { getAuthResponse } from './auth';
 let messageIdCounter = 0;
 
 /**
+ * Create a data wrapper with a Proxy that warns about undefined property access
+ * @private
+ * @param {Object} data - The data object to wrap
+ * @param {string} context - Context description (e.g., "SwitchScenes event", "GetSceneList request")
+ * @returns {Proxy} - A Proxy wrapper that logs warnings for undefined properties
+ */
+function createDataProxy(data, context) {
+	return new Proxy(data || {}, {
+		get(target, prop) {
+			const value = target[prop];
+			
+			// Only warn about undefined properties (not methods or existing properties)
+			if (value === undefined && typeof prop === 'string' && !(prop in Object.prototype)) {
+				const availableKeys = Object.keys(target);
+				const keysStr = availableKeys.length > 0 
+					? availableKeys.join(', ')
+					: '(no properties)';
+				
+				console.warn(
+					`[obs-websocket] Undefined property access in "${context}"\n` +
+					`  Property: ${prop}\n` +
+					`  Available: ${keysStr}`
+				);
+			}
+			
+			return value;
+		}
+	});
+}
+
+/**
  * OBSWebSocketClient class
  * Provides a complete WebSocket implementation for communicating with OBS Studio via the obs-websocket plugin
  */
@@ -188,7 +219,8 @@ export class OBSWebSocketClient {
 		}
 
 		this.send(requestType, requestData).then((response) => {
-			callback(null, response);
+			const wrappedData = createDataProxy(response, `${requestType} request`);
+			callback(null, wrappedData);
 		}).catch(error => {
 			callback(error);
 		});
@@ -275,8 +307,9 @@ export class OBSWebSocketClient {
 		}
 		// Check if this is an event notification
 		else if (updateType) {
-			// Emit the event with the original message data
-			this._emit(updateType, message);
+			// Wrap event data with proxy for undefined property warnings
+			const wrappedData = createDataProxy(message, `${updateType} event`);
+			this._emit(updateType, wrappedData);
 		}
 	}
 

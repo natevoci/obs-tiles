@@ -1,4 +1,5 @@
 import { createProvider } from '../createProvider';
+import { camelCaseKeys } from '../util/camelCaseKeys';
 
 export const sceneItemList = (obs, {
 	scene,
@@ -11,8 +12,9 @@ export const sceneItemList = (obs, {
 					sceneName: scene,
 				},
 				data => {
-					data.sceneItems.reverse(); // The items seem to come in reverse order
-					onChanged(data.sceneItems);
+					const normalized = camelCaseKeys(data);
+					normalized.sceneItems.reverse(); // The items seem to come in reverse order
+					onChanged(normalized.sceneItems);
 				},
 			);
 		};
@@ -20,19 +22,22 @@ export const sceneItemList = (obs, {
 		fn();
 
 		obs.on('SceneItemAdded', data => {
-			if (data['scene-name'] === scene) {
+			const normalized = camelCaseKeys(data);
+			if (normalized.sceneName === scene) {
 				fn();
 			}
 		});
 
 		obs.on('SceneItemRemoved', data => {
-			if (data['scene-name'] === scene) {
+			const normalized = camelCaseKeys(data);
+			if (normalized.sceneName === scene) {
 				fn();
 			}
 		});
 
 		obs.on('SourceOrderChanged', data => {
-			if (data['scene-name'] === scene) {
+			const normalized = camelCaseKeys(data);
+			if (normalized.sceneName === scene) {
 				fn();
 			}
 		});

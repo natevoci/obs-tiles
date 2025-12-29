@@ -1,12 +1,14 @@
 import { createProvider } from '../createProvider';
+import { camelCaseKeys } from '../util/camelCaseKeys';
 
 export const sceneList = (obs) => createProvider({
 	init: (onChanged) => {
 		const fn = () => {
 			obs.send('GetSceneList', {}, data => {
+				const normalized = camelCaseKeys(data);
 				onChanged({
-					currentScene: data['current-scene'],
-					scenes: data.scenes.reduce(
+					currentScene: normalized.currentScene,
+					scenes: normalized.scenes.reduce(
 						(prev, curr) => {
 							prev[curr.name] = curr;
 							return prev;

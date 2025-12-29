@@ -1,4 +1,5 @@
 import { createProvider } from '../createProvider';
+import { camelCaseKeys } from '../util/camelCaseKeys';
 
 export const stats = (obs, {
 	refreshTime = 3000,
@@ -7,7 +8,8 @@ export const stats = (obs, {
 		let timeout;
 		const fn = () => {
 			obs.send('GetStats', {}, data => {
-				onChanged(data.stats);
+				const normalized = camelCaseKeys(data);
+				onChanged(normalized.stats);
 				timeout = setTimeout(fn, refreshTime);
 			});
 		};

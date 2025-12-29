@@ -1,4 +1,5 @@
 import { createProvider } from '../createProvider';
+import { camelCaseKeys } from '../util/camelCaseKeys';
 
 export const videoInfo = (obs, {
 	refreshTime = 60000,
@@ -7,7 +8,8 @@ export const videoInfo = (obs, {
 		let timeout;
 		const fn = () => {
 			obs.send('GetVideoInfo', {}, data => {
-				onChanged(data);
+				const normalized = camelCaseKeys(data);
+				onChanged(normalized);
 				timeout = setTimeout(fn, refreshTime);
 			});
 		};

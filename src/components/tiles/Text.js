@@ -31,12 +31,12 @@ const TextComponents = {
 			return null;
 		}
 
-		const fps = stats['fps'] || 0;
+		const fps = stats.fps || 0;
 		const fpsPerc = videoInfo?.fps > 0 ? 100 * fps / videoInfo?.fps : 0;
-		const cpuUsage = stats['cpu-usage'] || 0;
-		const memoryUsage = stats['memory-usage'] || 0;
-		const freeDiskSpace = stats['free-disk-space'] || 0;
-		const outputSkippedFrames = stats['output-skipped-frames'] || 0;
+		const cpuUsage = stats.cpuUsage || 0;
+		const memoryUsage = stats.memoryUsage || 0;
+		const freeDiskSpace = stats.freeDiskSpace || 0;
+		const outputSkippedFrames = stats.outputSkippedFrames || 0;
 
 		return (
 			<StyledText
