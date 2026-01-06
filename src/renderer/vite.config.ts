@@ -1,5 +1,6 @@
 import { defineConfig } from 'vite'
 import react from '@vitejs/plugin-react'
+import tsconfigPaths from 'vite-tsconfig-paths'
 import { fileURLToPath } from 'url'
 import { dirname } from 'path'
 import path from 'path'
@@ -8,15 +9,18 @@ const __filename = fileURLToPath(import.meta.url)
 const __dirname = dirname(__filename)
 
 export default defineConfig({
-	plugins: [react({ include: '**/*.{ts,tsx,js,jsx}' })],
+	plugins: [
+		react({ include: '**/*.{ts,tsx,js,jsx}' }),
+		tsconfigPaths(),
+	],
 	resolve: {
 		alias: {
-			'~': path.resolve(__dirname, './src'),
+			'~': __dirname,
 		},
 	},
 	esbuild: {
 		loader: 'tsx',
-		include: /src\/.*\.tsx?$/,
+		include: /.*\.tsx?$/,
 		exclude: [],
 	},
 	optimizeDeps: {
@@ -32,10 +36,9 @@ export default defineConfig({
 	server: {
 		port: 3000,
 		open: true,
-		appType: 'spa',
 	},
 	build: {
-		outDir: 'dist',
+		outDir: '../../dist',
 		sourcemap: false,
 		rollupOptions: {
 			output: {
