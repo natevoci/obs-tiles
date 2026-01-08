@@ -3,7 +3,6 @@ import react from '@vitejs/plugin-react'
 import tsconfigPaths from 'vite-tsconfig-paths'
 import { fileURLToPath } from 'url'
 import { dirname } from 'path'
-import path from 'path'
 
 const __filename = fileURLToPath(import.meta.url)
 const __dirname = dirname(__filename)
@@ -43,9 +42,14 @@ export default defineConfig({
 		rollupOptions: {
 			output: {
 				assetFileNames: (assetInfo) => {
-					let extType = assetInfo.name.split('.').at(1)
+					const names = assetInfo.names || [];
+					const assetName = names.find(name => {
+						const ext = name.split('.').pop() || "";
+						return /png|jpe?g|gif|svg|webp|woff|woff2|ttf|otf|eot|css|js|json/.test(ext);
+					}) || names.at(-1) || assetInfo.name || "";
+					const extType = assetName.split('.').pop() || "";
 					if (/png|jpe?g|gif|svg|webp|woff|woff2|ttf|otf|eot/.test(extType)) {
-						extType = 'assets'
+						return `assets/[name]-[hash][extname]`
 					}
 					return `${extType}/[name]-[hash][extname]`
 				}
