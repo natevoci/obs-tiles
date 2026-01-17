@@ -64,7 +64,8 @@
       "target": [
         "nsis",
         "portable"
-      ]
+      ],
+      "icon": "src/renderer/assets/512px-OBS_Studio_Logo.png"
     }
   }
 }
