@@ -4,3 +4,4 @@
 /node_modules
 /parcel-bundle-reports
 /yarn-error.log
+/src/renderer/version.ts
