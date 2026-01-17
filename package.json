@@ -60,12 +60,21 @@
       "dist",
       "node_modules"
     ],
+    "extraFiles": [
+      "portable.json"
+    ],
     "win": {
       "target": [
-        "nsis",
-        "portable"
+        "nsis"
       ],
       "icon": "src/renderer/assets/512px-OBS_Studio_Logo.png"
+    },
+    "nsis": {
+      "oneClick": false,
+      "allowToChangeInstallationDirectory": true,
+      "createDesktopShortcut": true,
+      "createStartMenuShortcut": true,
+      "shortcutName": "obs-tiles"
     }
   }
 }
