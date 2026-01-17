@@ -1,7 +1,7 @@
 {
   "name": "obs-tiles",
   "version": "4.0.0",
-  "description": "Web app for controlling OBS Studio through obs-websocket",
+  "description": "OBS Tiles",
   "author": "Nate",
   "license": "MIT",
   "type": "module",
@@ -10,12 +10,12 @@
     "clean": "rimraf dist",
     "generate-version": "node scripts/generate-version.js",
     "dev": "yarn generate-version && electron-vite dev",
-    "build": "yarn clean && yarn generate-version && electron-vite build",
+    "build": "yarn generate-version && electron-vite build",
     "web": "yarn generate-version && vite serve src/renderer",
     "preview": "vite preview",
     "type-check": "tsc --noEmit",
     "lint": "eslint src/**/*.{ts,tsx,js,jsx}",
-    "package": "yarn build && electron-builder"
+    "package": "yarn clean && yarn build && electron-builder"
   },
   "dependencies": {
     "@material-ui/core": "^4.11.4",
