@@ -90,6 +90,7 @@ function createWindow() {
     y: windowState.y,
     width: windowState.width,
     height: windowState.height,
+    autoHideMenuBar: true,
     webPreferences: {
       preload: path.join(__dirname, '../preload/index.mjs'),
       contextIsolation: true,
