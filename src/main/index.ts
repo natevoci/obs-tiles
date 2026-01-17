@@ -8,6 +8,7 @@ const __filename = fileURLToPath(import.meta.url)
 const __dirname = dirname(__filename)
 
 const isDev = process.env.NODE_ENV === 'development'
+const basePath = isDev ? process.cwd() : path.join(process.resourcesPath, '..')
 
 let mainWindow: BrowserWindow | null = null
 let portableConfig: any = null
@@ -15,9 +16,7 @@ let portableConfig: any = null
 // Configure portable mode: check if app is running in portable mode
 function setupPortableMode() {
   // In dev mode, check project root. In production, check app directory.
-  const portableConfigPath = isDev 
-    ? path.join(process.cwd(), 'portable.json')
-    : path.join(process.resourcesPath, '..', 'portable.json')
+  const portableConfigPath = path.join(basePath, 'portable.json')
   
   console.log('Checking for portable config at:', portableConfigPath)
   
@@ -27,8 +26,11 @@ function setupPortableMode() {
       portableConfig = JSON.parse(configContent)
       
       // Use custom data directory if specified, otherwise use default 'data' subfolder
-      const portableDataDir = portableConfig.dataDir || path.join(process.resourcesPath, '..', 'data')
-      app.setPath('userData', portableDataDir)
+      // If dataDir is relative, resolve it relative to basePath
+      const portableDataDir = portableConfig.dataDir || 'data';
+      const portableDataDirFull = path.isAbsolute(portableDataDir) ? portableDataDir : path.join(basePath, portableDataDir)
+      console.log('Setting userData path to:', portableDataDirFull)
+      app.setPath('userData', portableDataDirFull)
     } catch (error) {
       console.error('Error reading portable.json:', error)
     }
@@ -38,16 +40,67 @@ function setupPortableMode() {
 // Setup portable mode before app is ready
 setupPortableMode()
 
+// Load window state from storage
+function loadWindowState() {
+  const stateFile = path.join(app.getPath('userData'), 'windowState.json')
+  const defaultState = { width: 1200, height: 800 }
+  
+  if (fs.existsSync(stateFile)) {
+    try {
+      const state = JSON.parse(fs.readFileSync(stateFile, 'utf-8'))
+      return state
+    } catch (error) {
+      console.error('Error reading window state:', error)
+      return defaultState
+    }
+  }
+  
+  return defaultState
+}
+
+// Save window state to storage
+function saveWindowState(window: BrowserWindow) {
+  if (!window) return
+  
+  const bounds = window.getBounds()
+  const state = {
+    x: bounds.x,
+    y: bounds.y,
+    width: bounds.width,
+    height: bounds.height,
+    isMaximized: window.isMaximized(),
+  }
+  
+  const stateFile = path.join(app.getPath('userData'), 'windowState.json')
+  
+  // Ensure directory exists
+  const dir = path.dirname(stateFile)
+  if (!fs.existsSync(dir)) {
+    fs.mkdirSync(dir, { recursive: true })
+  }
+  
+  fs.writeFileSync(stateFile, JSON.stringify(state, null, 2))
+}
+
 function createWindow() {
+  const windowState = loadWindowState()
+  
   mainWindow = new BrowserWindow({
-    width: 1200,
-    height: 800,
+    x: windowState.x,
+    y: windowState.y,
+    width: windowState.width,
+    height: windowState.height,
     webPreferences: {
       preload: path.join(__dirname, '../preload/index.mjs'),
       contextIsolation: true,
       nodeIntegration: false,
     },
   })
+
+  // Restore maximized state if it was maximized before
+  if (windowState.isMaximized) {
+    mainWindow.maximize()
+  }
 
   // Set window title from portable.json if available
   if (portableConfig?.title) {
@@ -60,6 +113,11 @@ function createWindow() {
   } else {
     mainWindow.loadFile(path.join(__dirname, '../renderer/index.html'))
   }
+
+  // Save window state on close
+  mainWindow.on('close', () => {
+    saveWindowState(mainWindow!)
+  })
 
   mainWindow.on('closed', () => {
     mainWindow = null
