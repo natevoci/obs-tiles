@@ -49,5 +49,19 @@
     "typescript": "^5.0.0",
     "vite": "^5.0.0",
     "vite-tsconfig-paths": "^6.0.3"
+  },
+  "build": {
+    "appId": "com.obs-tiles.app",
+    "productName": "obs-tiles",
+    "files": [
+      "dist",
+      "node_modules"
+    ],
+    "win": {
+      "target": [
+        "nsis",
+        "portable"
+      ]
+    }
   }
 }
