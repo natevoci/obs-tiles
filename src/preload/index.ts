@@ -1,4 +1,9 @@
 // src/preload/index.ts
-// This is a minimal preload script for security isolation.
-// Since we're keeping WebSocket in the renderer, we don't need to expose many APIs.
-// Add any needed Electron features here (window controls, etc.) via contextBridge if desired.
+const { contextBridge, ipcRenderer } = require('electron')
+
+// Expose IPC method so renderer can fetch portable config on demand
+contextBridge.exposeInMainWorld('ipcRenderer', {
+  getPortableConfig: () => {
+    return ipcRenderer.invoke('get-portable-config')
+  },
+})

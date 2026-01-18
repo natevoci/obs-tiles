@@ -1,4 +1,4 @@
-import { app, BrowserWindow } from 'electron'
+import { app, BrowserWindow, ipcMain } from 'electron'
 import { fileURLToPath } from 'url'
 import { dirname } from 'path'
 import path from 'path'
@@ -16,7 +16,7 @@ let portableConfig: any = null
 // Configure portable mode: check if app is running in portable mode
 function setupPortableMode() {
   // In dev mode, check project root. In production, check app directory.
-  const portableConfigPath = path.join(basePath, 'portable.json')
+  const portableConfigPath = path.join(basePath, isDev ? 'portable.dev.json' : 'portable.json')
   
   console.log('Checking for portable config at:', portableConfigPath)
   
@@ -92,7 +92,7 @@ function createWindow() {
     height: windowState.height,
     autoHideMenuBar: true,
     webPreferences: {
-      preload: path.join(__dirname, '../preload/index.mjs'),
+      preload: path.join(__dirname, '../preload/index.js'),
       contextIsolation: true,
       nodeIntegration: false,
     },
@@ -137,4 +137,9 @@ app.on('activate', () => {
   if (mainWindow === null) {
     createWindow()
   }
+})
+
+// IPC handlers
+ipcMain.handle('get-portable-config', () => {
+  return portableConfig
 })

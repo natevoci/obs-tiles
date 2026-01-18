@@ -92,7 +92,7 @@ export const SettingsDialog = ({
 	onClose,
 }: SettingsDialogProps) => {
 	const classes = useStyles()
-	const {settingsJSON, setSettingsJSON} = useSettings()
+	const {settingsJSON, setSettingsJSON, isConfigFromPortable} = useSettings()
 	const [value, setValue] = React.useState(settingsJSON)
 
 	const handleChange = React.useCallback(
@@ -112,6 +112,7 @@ export const SettingsDialog = ({
 				<Toolbar>
 					<Typography variant="h6" className={classes.title}>
 						Settings
+						{isConfigFromPortable && <span style={{ marginLeft: '1em', fontSize: '0.8em', fontStyle: 'italic' }}>(loaded from portable.json)</span>}
 					</Typography>
 					<IconButton
 						edge="start"
@@ -126,6 +127,13 @@ export const SettingsDialog = ({
 				</Toolbar>
 			</AppBar>
 			<DialogContent className={classes.content}>
+				{isConfigFromPortable && (
+					<div style={{ marginBottom: '1em', padding: '1em', backgroundColor: '#e3f2fd', borderRadius: '4px', border: '1px solid #90caf9' }}>
+						<Typography variant="body2" color="primary">
+							Configuration is loaded from <code>portable.json</code> and cannot be edited.
+						</Typography>
+					</div>
+				)}
 				<FlexColumn
 					aria-label='Column'
 					$fixedHeight
@@ -145,29 +153,32 @@ export const SettingsDialog = ({
 							}}
 							value={value}
 							onChange={handleChange}
+							disabled={isConfigFromPortable}
 						/>
 					</FlexRow>
 				</FlexColumn>
 			</DialogContent>
 
 			<DialogActions>
+				{!isConfigFromPortable && (
+					<Button
+						color="primary"
+						variant="contained"
+						onClick={() => {
+							setSettingsJSON(value)
+							onClose()
+						}}
+					>
+						Save
+					</Button>
+				)}
 				<Button
-					color="primary"
 					variant="contained"
 					onClick={() => {
-						setSettingsJSON(value)
 						onClose()
 					}}
 				>
-					Save
-				</Button>
-				<Button
-					variant="contained"
-					onClick={() => {
-						onClose()
-					}}
-				>
-					Cancel
+					{isConfigFromPortable ? 'Close' : 'Cancel'}
 				</Button>
 			</DialogActions>
 		</Dialog>

@@ -1,5 +1,7 @@
 /// <reference lib="webworker" />
 
+const isDev = self.location.hostname === 'localhost';
+
 (self as unknown as ServiceWorkerGlobalScope).addEventListener('install', () => {
 	console.log('service-worker install')
 })
@@ -18,6 +20,13 @@
 
 self.addEventListener('fetch', event => {
 	if ((event as any).request.url.startsWith(self.location.origin)) {
+		// In development, skip caching and always fetch fresh
+		if (isDev) {
+			(event as any).respondWith(fetch((event as any).request))
+			return
+		}
+
+		// In production, use cache-first strategy
 		(event as any).respondWith(
 			caches.open('obs-tiles-static').then(cache => {
 				const r = cache.match((event as any).request).then(response => {

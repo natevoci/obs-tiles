@@ -3,6 +3,18 @@ import json5 from 'json5'
 
 import { SettingsContext } from './SettingsContext'
 
+declare global {
+	interface Window {
+		ipcRenderer: {
+			getPortableConfig: () => Promise<{
+				title?: string
+				dataDir?: string
+				config?: any
+			} | undefined>
+		}
+	}
+}
+
 const DEFAULT_SETTINGS = {
 	connections: {
 		main: {
@@ -47,24 +59,47 @@ interface SettingsProviderProps {
 }
 
 export const SettingsProvider = ({ children }: SettingsProviderProps) => {
-	const [settingsJSON, setSettingsJSON] = React.useState(
-		window.localStorage.getItem(`settingsCurrent`) || JSON.stringify(
-			DEFAULT_SETTINGS,
-			null,
-			2,
-		),
-	)
+	const [hasPortableConfig, setHasPortableConfig] = React.useState<boolean>(false)
+	
+	const [settingsJSON, setSettingsJSON] = React.useState('')
+	
+	// Fetch portable config on mount
+	React.useEffect(() => {
+		if (window.ipcRenderer) {
+			window.ipcRenderer.getPortableConfig().then((portableConfig) => {
+				const config = portableConfig?.config;
+				if (config) {
+					setHasPortableConfig(true)
+					setSettingsJSON(JSON.stringify(config, null, 2))
+				}
+			}).catch((error) => {
+				console.error('Failed to get portable config:', error)
+			})
+		}
+		else {
+			setSettingsJSON(window.localStorage.getItem(`settingsCurrent`) || JSON.stringify(DEFAULT_SETTINGS, null, 2))
+		}
+	}, [])
+
+	// Don't allow changing settings if they come from portable.json
+	const handleSetSettingsJSON = (value: string) => {
+		if (!hasPortableConfig) {
+			window.localStorage.setItem(`settingsCurrent`, value)
+			setSettingsJSON(value)
+		}
+	}
+
+	if (!settingsJSON) {
+		return null
+	}
 
 	return (
 		<SettingsContext.Provider
 			value={{
 				settingsJSON,
-				setSettingsJSON: (value) => {
-					window.localStorage.setItem(`settingsCurrent`, value)
-					setSettingsJSON(value)
-				},
-
+				setSettingsJSON: handleSetSettingsJSON,
 				settings: json5.parse(settingsJSON || '{}'),
+				isConfigFromPortable: hasPortableConfig,
 			}}
 		>
 			{children}
