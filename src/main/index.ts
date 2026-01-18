@@ -180,10 +180,14 @@ function createWindow() {
     mainWindow.maximize()
   }
 
-  // Set window title from settings
-  if (appSettings.title) {
-    mainWindow.setTitle(appSettings.title)
-  }
+  // Load the window title when the HTML page loads
+  mainWindow.webContents.on('page-title-updated', (event) => {
+    event.preventDefault()
+    if (appSettings.title) {
+      console.log('Setting window title to:', appSettings.title)
+      mainWindow?.setTitle(appSettings.title)
+    }
+  })
 
   if (isDev) {
     mainWindow.loadURL('http://localhost:5173')
