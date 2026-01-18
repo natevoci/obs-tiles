@@ -47,14 +47,6 @@ interface SettingsProviderProps {
 }
 
 export const SettingsProvider = ({ children }: SettingsProviderProps) => {
-	const [configUrl, setConfigUrl] = React.useState(
-		window.localStorage.getItem(`configUrl`) || ''
-	)
-
-	const [configUrlJSON, setConfigUrlJSON] = React.useState(
-		window.localStorage.getItem(`configUrlJSON`) || null
-	)
-
 	const [settingsJSON, setSettingsJSON] = React.useState(
 		window.localStorage.getItem(`settingsCurrent`) || JSON.stringify(
 			DEFAULT_SETTINGS,
@@ -66,18 +58,6 @@ export const SettingsProvider = ({ children }: SettingsProviderProps) => {
 	return (
 		<SettingsContext.Provider
 			value={{
-				configUrl,
-				setConfigUrl: (value) => {
-					window.localStorage.setItem(`configUrl`, value)
-					setConfigUrl(value)
-				},
-
-				configUrlJSON: configUrlJSON,
-				setConfigUrlJSON: (value) => {
-					window.localStorage.setItem(`configUrlJSON`, value)
-					setConfigUrlJSON(value)
-				},
-
 				settingsJSON,
 				setSettingsJSON: (value) => {
 					window.localStorage.setItem(`settingsCurrent`, value)
