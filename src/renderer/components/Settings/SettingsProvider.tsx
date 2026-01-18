@@ -2,56 +2,19 @@ import React, { ReactNode } from 'react'
 import json5 from 'json5'
 
 import { SettingsContext } from './SettingsContext'
+import { DEFAULT_CONFIG } from '../../../shared/defaults'
 
 declare global {
 	interface Window {
 		ipcRenderer: {
-			getPortableConfig: () => Promise<{
-				title?: string
-				dataDir?: string
-				config?: any
-			} | undefined>
+			getSettings: () => Promise<{
+				title: string
+				dataDir: string
+			}>
+			getConfig: () => Promise<any>
+			saveConfig: (config: any) => Promise<boolean>
 		}
 	}
-}
-
-const DEFAULT_SETTINGS = {
-	connections: {
-		main: {
-			address: '<enter address>:4444',
-		}
-	},
-	connection: 'main',
-	tileSize: 10,
-	direction: 'column',
-	tiles: [
-		{
-			group: 'Scenes',
-			direction: 'row',
-			tiles: [
-				{
-					scene: 'Scene 1',
-				},
-				{
-					scene: 'Scene 2',
-				},
-				{
-					direction: 'column',
-					tiles: [
-						{
-							button: 'toggleStreaming',
-						},
-						{
-							button: 'toggleRecording',
-						},
-						{
-							text: 'stats',
-						},
-					],
-				},
-			],
-		},
-	]
 }
 
 interface SettingsProviderProps {
@@ -59,33 +22,42 @@ interface SettingsProviderProps {
 }
 
 export const SettingsProvider = ({ children }: SettingsProviderProps) => {
-	const [hasPortableConfig, setHasPortableConfig] = React.useState<boolean>(false)
-	
 	const [settingsJSON, setSettingsJSON] = React.useState('')
 	
-	// Fetch portable config on mount
+	// Fetch config on mount
 	React.useEffect(() => {
 		if (window.ipcRenderer) {
-			window.ipcRenderer.getPortableConfig().then((portableConfig) => {
-				const config = portableConfig?.config;
+			window.ipcRenderer.getConfig().then((config) => {
 				if (config) {
-					setHasPortableConfig(true)
 					setSettingsJSON(JSON.stringify(config, null, 2))
+				} else {
+					setSettingsJSON(JSON.stringify(DEFAULT_CONFIG, null, 2))
 				}
 			}).catch((error) => {
-				console.error('Failed to get portable config:', error)
+				console.error('Failed to get config:', error)
+				setSettingsJSON(JSON.stringify(DEFAULT_CONFIG, null, 2))
 			})
 		}
 		else {
-			setSettingsJSON(window.localStorage.getItem(`settingsCurrent`) || JSON.stringify(DEFAULT_SETTINGS, null, 2))
+			setSettingsJSON(window.localStorage.getItem(`settingsCurrent`) || JSON.stringify(DEFAULT_CONFIG, null, 2))
 		}
 	}, [])
 
-	// Don't allow changing settings if they come from portable.json
 	const handleSetSettingsJSON = (value: string) => {
-		if (!hasPortableConfig) {
+		setSettingsJSON(value)
+		
+		// Save to file via IPC if available
+		if (window.ipcRenderer) {
+			try {
+				const config = json5.parse(value)
+				window.ipcRenderer.saveConfig(config).catch((error) => {
+					console.error('Failed to save config:', error)
+				})
+			} catch (error) {
+				console.error('Failed to parse config for saving:', error)
+			}
+		} else {
 			window.localStorage.setItem(`settingsCurrent`, value)
-			setSettingsJSON(value)
 		}
 	}
 
@@ -99,7 +71,6 @@ export const SettingsProvider = ({ children }: SettingsProviderProps) => {
 				settingsJSON,
 				setSettingsJSON: handleSetSettingsJSON,
 				settings: json5.parse(settingsJSON || '{}'),
-				isConfigFromPortable: hasPortableConfig,
 			}}
 		>
 			{children}

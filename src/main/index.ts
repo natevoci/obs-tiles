@@ -3,6 +3,7 @@ import { fileURLToPath } from 'url'
 import { dirname } from 'path'
 import path from 'path'
 import fs from 'fs'
+import { DEFAULT_CONFIG } from '../shared/defaults'
 
 const __filename = fileURLToPath(import.meta.url)
 const __dirname = dirname(__filename)
@@ -11,29 +12,105 @@ const isDev = process.env.NODE_ENV === 'development'
 const basePath = isDev ? process.cwd() : path.join(process.resourcesPath, '..')
 
 let mainWindow: BrowserWindow | null = null
-let portableConfig: any = null
 
-// Configure portable mode: check if app is running in portable mode
-function setupPortableMode() {
-  // In dev mode, check project root. In production, check app directory.
-  const portableConfigPath = path.join(basePath, isDev ? 'portable.dev.json' : 'portable.json')
+// Default settings for settings.json
+const DEFAULT_SETTINGS = {
+  title: 'obs-tiles',
+  dataDir: 'data'
+}
+
+interface Settings {
+  title: string
+  dataDir: string
+}
+
+let appSettings: Settings = { ...DEFAULT_SETTINGS }
+let dataDir: string = ''
+
+// Load or create settings.json
+function loadSettings(): Settings {
+  const settingsPath = path.join(basePath, 'settings.json')
   
-  console.log('Checking for portable config at:', portableConfigPath)
+  console.log('Loading settings from:', settingsPath)
   
-  if (fs.existsSync(portableConfigPath)) {
+  if (fs.existsSync(settingsPath)) {
     try {
-      const configContent = fs.readFileSync(portableConfigPath, 'utf-8')
-      portableConfig = JSON.parse(configContent)
-      
-      // Use custom data directory if specified, otherwise use default 'data' subfolder
-      // If dataDir is relative, resolve it relative to basePath
-      const portableDataDir = portableConfig.dataDir || 'data';
-      const portableDataDirFull = path.isAbsolute(portableDataDir) ? portableDataDir : path.join(basePath, portableDataDir)
-      console.log('Setting userData path to:', portableDataDirFull)
-      app.setPath('userData', portableDataDirFull)
+      const content = fs.readFileSync(settingsPath, 'utf-8')
+      return { ...DEFAULT_SETTINGS, ...JSON.parse(content) }
     } catch (error) {
-      console.error('Error reading portable.json:', error)
+      console.error('Error reading settings.json:', error)
+      return { ...DEFAULT_SETTINGS }
     }
+  } else {
+    // Create default settings file
+    try {
+      fs.writeFileSync(settingsPath, JSON.stringify(DEFAULT_SETTINGS, null, 2))
+      console.log('Created default settings.json')
+    } catch (error) {
+      console.error('Error creating settings.json:', error)
+    }
+    return { ...DEFAULT_SETTINGS }
+  }
+}
+
+// Setup portable mode (always enabled now)
+function setupPortableMode() {
+  appSettings = loadSettings()
+  
+  // Use custom data directory if specified, otherwise use default 'data' subfolder
+  // If dataDir is relative, resolve it relative to basePath
+  const configuredDataDir = appSettings.dataDir || 'data'
+  dataDir = path.isAbsolute(configuredDataDir) ? configuredDataDir : path.join(basePath, configuredDataDir)
+  
+  console.log('Setting userData path to:', dataDir)
+  app.setPath('userData', dataDir)
+}
+
+// Load config from data directory
+function loadConfig(): any {
+  const configPath = path.join(dataDir, 'config.json')
+  
+  console.log('Loading config from:', configPath)
+  
+  if (fs.existsSync(configPath)) {
+    try {
+      const content = fs.readFileSync(configPath, 'utf-8')
+      return JSON.parse(content)
+    } catch (error) {
+      console.error('Error reading config.json:', error)
+      return { ...DEFAULT_CONFIG }
+    }
+  }
+  
+  // Create default config file
+  ensureDataDir()
+  try {
+    fs.writeFileSync(configPath, JSON.stringify(DEFAULT_CONFIG, null, 2))
+    console.log('Created default config.json')
+  } catch (error) {
+    console.error('Error creating config.json:', error)
+  }
+  return { ...DEFAULT_CONFIG }
+}
+
+// Save config to data directory
+function saveConfig(config: any): boolean {
+  const configPath = path.join(dataDir, 'config.json')
+  
+  ensureDataDir()
+  try {
+    fs.writeFileSync(configPath, JSON.stringify(config, null, 2))
+    return true
+  } catch (error) {
+    console.error('Error saving config.json:', error)
+    return false
+  }
+}
+
+// Ensure data directory exists
+function ensureDataDir() {
+  if (!fs.existsSync(dataDir)) {
+    fs.mkdirSync(dataDir, { recursive: true })
   }
 }
 
@@ -103,9 +180,9 @@ function createWindow() {
     mainWindow.maximize()
   }
 
-  // Set window title from portable.json if available
-  if (portableConfig?.title) {
-    mainWindow.setTitle(portableConfig.title)
+  // Set window title from settings
+  if (appSettings.title) {
+    mainWindow.setTitle(appSettings.title)
   }
 
   if (isDev) {
@@ -140,6 +217,14 @@ app.on('activate', () => {
 })
 
 // IPC handlers
-ipcMain.handle('get-portable-config', () => {
-  return portableConfig
+ipcMain.handle('get-settings', () => {
+  return appSettings
+})
+
+ipcMain.handle('get-config', () => {
+  return loadConfig()
+})
+
+ipcMain.handle('save-config', (_event, config: any) => {
+  return saveConfig(config)
 })

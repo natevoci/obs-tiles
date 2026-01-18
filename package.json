@@ -60,12 +60,10 @@
       "dist",
       "node_modules"
     ],
-    "extraFiles": [
-      "portable.json"
-    ],
     "win": {
       "target": [
-        "nsis"
+        "nsis",
+        "zip"
       ],
       "icon": "src/renderer/assets/512px-OBS_Studio_Logo.png"
     },
@@ -74,7 +72,8 @@
       "allowToChangeInstallationDirectory": true,
       "createDesktopShortcut": true,
       "createStartMenuShortcut": true,
-      "shortcutName": "obs-tiles"
+      "shortcutName": "obs-tiles",
+      "include": "build/installer.nsh"
     }
   }
 }
