@@ -1,11 +1,18 @@
 import * as React from 'react'
 import OBSWebSocketClient from './websocket-client'
+import { Dialog, DialogTitle, DialogContent, DialogActions, Button, TextField } from '@material-ui/core'
 
 import { useSettings } from '~/components/Settings/SettingsContext'
 import { useForceUpdate } from '~/hooks'
 
 import * as factories from './providers'
 import * as actions from './actions'
+
+interface PasswordPromptState {
+	open: boolean
+	address: string
+	resolve: ((password: string | null) => void) | null
+}
 
 interface ConnectionPublic {
 	name: string
@@ -38,6 +45,31 @@ export const OBSWebsocketProvider = ({ children }: OBSWebsocketProviderProps) =>
 	const { current: connections } = React.useRef<Record<string, Connection>>({})
 	const { settings } = useSettings()
 	const forceUpdate = useForceUpdate()
+
+	// Password prompt state
+	const [passwordPrompt, setPasswordPrompt] = React.useState<PasswordPromptState>({
+		open: false,
+		address: '',
+		resolve: null,
+	})
+	const [passwordInput, setPasswordInput] = React.useState('')
+
+	const promptForPassword = (address: string): Promise<string | null> => {
+		return new Promise((resolve) => {
+			setPasswordInput('')
+			setPasswordPrompt({ open: true, address, resolve })
+		})
+	}
+
+	const handlePasswordSubmit = () => {
+		passwordPrompt.resolve?.(passwordInput)
+		setPasswordPrompt({ open: false, address: '', resolve: null })
+	}
+
+	const handlePasswordCancel = () => {
+		passwordPrompt.resolve?.(null)
+		setPasswordPrompt({ open: false, address: '', resolve: null })
+	}
 
 	const getConnection = React.useCallback(
 		(connectionName: string): Connection => {
@@ -97,10 +129,10 @@ export const OBSWebsocketProvider = ({ children }: OBSWebsocketProviderProps) =>
 						password: password || '',
 					}).then(() => {
 						connection.public.connected = true
-					}).catch(err => {
+					}).catch(async (err) => {
 						connection.public.connected = false
 						if (err.error === 'Authentication Failed.') {
-							const password = prompt(`Please enter the password for ${connSettings.address}:`)
+							const password = await promptForPassword(connSettings.address)
 							if (password !== null) {
 								window.localStorage.setItem(`password-${connSettings.address}`, password)
 								connect()
@@ -214,6 +246,32 @@ export const OBSWebsocketProvider = ({ children }: OBSWebsocketProviderProps) =>
 			}}
 		>
 			{children}
+			<Dialog open={passwordPrompt.open} onClose={handlePasswordCancel}>
+				<DialogTitle>Password Required</DialogTitle>
+				<DialogContent>
+					<p style={{ marginBottom: 16 }}>Enter password for {passwordPrompt.address}:</p>
+					<TextField
+						autoFocus
+						variant="outlined"
+						label="Password"
+						type="password"
+						fullWidth
+						value={passwordInput}
+						onChange={(e) => setPasswordInput(e.target.value)}
+						onKeyPress={(e) => {
+							if (e.key === 'Enter') {
+								handlePasswordSubmit()
+							}
+						}}
+					/>
+				</DialogContent>
+				<DialogActions>
+					<Button onClick={handlePasswordCancel}>Cancel</Button>
+					<Button onClick={handlePasswordSubmit} color="primary">
+						Connect
+					</Button>
+				</DialogActions>
+			</Dialog>
 		</obsContext.Provider>
 	)
 }
