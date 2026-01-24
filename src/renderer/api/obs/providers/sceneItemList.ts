@@ -1,7 +1,8 @@
 import { createProvider } from '../createProvider'
 import { camelCaseKeys } from '../util/camelCaseKeys'
+import { ConnectionPublic } from '../types'
 
-export const sceneItemList = (obs: any, {
+export const sceneItemList = (obs: ConnectionPublic, {
 	scene,
 }: { scene: string }) => createProvider({
 	init: (onChanged) => {

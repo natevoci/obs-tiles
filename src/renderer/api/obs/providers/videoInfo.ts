@@ -1,7 +1,8 @@
 import { createProvider } from '../createProvider'
 import { camelCaseKeys } from '../util/camelCaseKeys'
+import { ConnectionPublic } from '../types'
 
-export const videoInfo = (obs: any, {
+export const videoInfo = (obs: ConnectionPublic, {
 	refreshTime = 60000,
 } = {}) => createProvider({
 	attach: (onChanged) => {

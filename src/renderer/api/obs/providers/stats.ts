@@ -1,7 +1,8 @@
 import { createProvider } from '../createProvider'
 import { camelCaseKeys } from '../util/camelCaseKeys'
+import { ConnectionPublic } from '../types'
 
-export const stats = (obs: any, {
+export const stats = (obs: ConnectionPublic, {
 	refreshTime = 3000,
 } = {}) => createProvider({
 	attach: (onChanged) => {

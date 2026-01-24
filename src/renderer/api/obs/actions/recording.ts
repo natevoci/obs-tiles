@@ -1,11 +1,13 @@
-export const startRecording = (obs: any) => () => {
+import { ConnectionPublic } from '../types'
+
+export const startRecording = (obs: ConnectionPublic) => () => {
 	obs.send('StartRecording')
 }
 
-export const stopRecording = (obs: any) => () => {
+export const stopRecording = (obs: ConnectionPublic) => () => {
 	obs.send('StopRecording')
 }
 
-export const startStopRecording = (obs: any) => () => {
+export const startStopRecording = (obs: ConnectionPublic) => () => {
 	obs.send('StartStopRecording')
 }

@@ -1,11 +1,13 @@
-export const startStreaming = (obs: any) => () => {
+import { ConnectionPublic } from '../types'
+
+export const startStreaming = (obs: ConnectionPublic) => () => {
 	obs.send('StartStreaming')
 }
 
-export const stopStreaming = (obs: any) => () => {
+export const stopStreaming = (obs: ConnectionPublic) => () => {
 	obs.send('StopStreaming')
 }
 
-export const startStopStreaming = (obs: any) => () => {
+export const startStopStreaming = (obs: ConnectionPublic) => () => {
 	obs.send('StartStopStreaming')
 }

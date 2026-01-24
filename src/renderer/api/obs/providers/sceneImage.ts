@@ -1,7 +1,8 @@
 import { createProvider } from '../createProvider'
 import { camelCaseKeys } from '../util/camelCaseKeys'
+import { ConnectionPublic } from '../types'
 
-export const sceneImage = (obs: any, {
+export const sceneImage = (obs: ConnectionPublic, {
 	scene,
 	tileSize,
 	refreshTime = 1000,

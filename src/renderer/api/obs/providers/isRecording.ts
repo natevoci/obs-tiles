@@ -1,7 +1,8 @@
 import { createProvider } from '../createProvider'
 import { camelCaseKeys } from '../util/camelCaseKeys'
+import { ConnectionPublic } from '../types'
 
-export const isRecording = (obs: any) => createProvider({
+export const isRecording = (obs: ConnectionPublic) => createProvider({
 	init: (onChanged) => {
 		const setData = (data: string) => {
 			onChanged({

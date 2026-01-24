@@ -1,8 +1,9 @@
 import { createProvider } from '../createProvider'
 import { camelCaseKeys } from '../util/camelCaseKeys'
+import { ConnectionPublic } from '../types'
 
 export const sceneItemProperties = (
-	obs: any,
+	obs: ConnectionPublic,
 	{
 		scene,
 		item,

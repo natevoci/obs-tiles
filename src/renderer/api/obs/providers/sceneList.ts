@@ -1,7 +1,8 @@
 import { createProvider } from '../createProvider'
 import { camelCaseKeys } from '../util/camelCaseKeys'
+import { ConnectionPublic } from '../types'
 
-export const sceneList = (obs: any) => createProvider({
+export const sceneList = (obs: ConnectionPublic) => createProvider({
 	init: (onChanged) => {
 		const fn = () => {
 			obs.send('GetSceneList', {}, (data: any) => {

@@ -7,25 +7,12 @@ import { useForceUpdate } from '~/hooks'
 
 import * as factories from './providers'
 import * as actions from './actions'
+import { ConnectionPublic } from './types'
 
 interface PasswordPromptState {
 	open: boolean
 	address: string
 	resolve: ((password: string | null) => void) | null
-}
-
-interface ConnectionPublic {
-	name: string
-	connected: boolean
-	connecting: boolean
-	failed: any
-	failedConnection: string | boolean
-	disconnect: () => void
-	reconnect: () => void
-	send: (requestName: string, args?: any, onSucceeded?: Function, onFailed?: Function) => void
-	on: (event: string, listener: Function) => void
-	useDataProvider: (name: string, args?: any) => any
-	action: (name: string, args?: any) => void
 }
 
 interface Connection {
