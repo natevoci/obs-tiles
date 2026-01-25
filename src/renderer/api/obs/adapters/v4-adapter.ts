@@ -98,13 +98,16 @@ export class V4Adapter implements OBSAdapter {
 		return new Promise((resolve, reject) => {
 			try {
 				const wsUrl = `ws://${address}`
+				console.debug('[v4-adapter] Connecting to:', wsUrl)
 				this.socket = new WebSocket(wsUrl)
 
 				const onError = (_error: Event) => {
+					console.debug('[v4-adapter] Connection error')
 					reject(new Error('WebSocket connection failed'))
 				}
 
 				const onOpen = () => {
+					console.debug('[v4-adapter] Connection opened')
 					this.socket?.removeEventListener('error', onError)
 					this._connected = true
 					this._emit('ConnectionOpened', {})
@@ -119,6 +122,7 @@ export class V4Adapter implements OBSAdapter {
 				})
 
 				this.socket.addEventListener('close', () => {
+					console.debug('[v4-adapter] Connection closed')
 					this._connected = false
 					this._emit('ConnectionClosed', {})
 				})
@@ -130,14 +134,18 @@ export class V4Adapter implements OBSAdapter {
 
 	private async _authenticate(password: string): Promise<void> {
 		const authData = await this._sendRaw('GetAuthRequired', {})
+		console.debug('[v4-adapter] Auth required:', authData.authRequired)
 
 		if (!authData.authRequired) {
+			console.debug('[v4-adapter] No auth required, identified')
 			this._emit('Identified', {})
 			return
 		}
 
+		console.debug('[v4-adapter] Authenticating...')
 		const authResponse = await getAuthResponse(password, authData.challenge, authData.salt)
 		await this._sendRaw('Authenticate', { auth: authResponse })
+		console.debug('[v4-adapter] Authenticated successfully')
 		this._emit('Identified', {})
 	}
 
@@ -445,6 +453,7 @@ export class V4Adapter implements OBSAdapter {
 				'message-id': messageId,
 				...requestData,
 			}
+			console.debug('[v4-adapter] Sending request:', requestType, messageId, requestData)
 
 			this.pendingRequests.set(messageId, { resolve, reject })
 
@@ -467,8 +476,10 @@ export class V4Adapter implements OBSAdapter {
 			if (pending) {
 				this.pendingRequests.delete(messageId)
 				if (message.status === 'error') {
+					console.debug('[v4-adapter] Request failed:', messageId, message.error)
 					pending.reject(message)
 				} else {
+					console.debug('[v4-adapter] Request success:', messageId)
 					pending.resolve(camelCaseKeys(message))
 				}
 			}
@@ -478,6 +489,7 @@ export class V4Adapter implements OBSAdapter {
 		// Handle events
 		if (updateType) {
 			const normalizedData = this._normalizeEventData(updateType, camelCaseKeys(message))
+			console.debug('[v4-adapter] Event received:', updateType, '->', V4_TO_V5_EVENT_MAP[updateType] || updateType)
 			
 			// Emit with original v4 event name (for backward compatibility)
 			this._emit(updateType, normalizedData)

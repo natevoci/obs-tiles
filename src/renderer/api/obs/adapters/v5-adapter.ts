@@ -111,13 +111,16 @@ export class V5Adapter implements OBSAdapter {
 
 				this.socket.addEventListener('message', async (event) => {
 					const message = JSON.parse(event.data)
+					console.debug('[v5-adapter] Received message:', message.op, message.d)
 					
 					// Handle Hello message (first message from server)
 					if (message.op === OpCode.Hello) {
 						this.helloData = message.d
+						console.debug('[v5-adapter] Hello received, auth required:', !!this.helloData.authentication)
 						try {
 							await this._identify()
 						} catch (err) {
+							console.debug('[v5-adapter] Identify error:', err)
 							reject(err)
 						}
 						return
@@ -125,6 +128,7 @@ export class V5Adapter implements OBSAdapter {
 
 					// Handle Identified message (auth success)
 					if (message.op === OpCode.Identified) {
+						console.debug('[v5-adapter] Identified successfully')
 						this._connected = true
 						this._emit('ConnectionOpened', {})
 						this._emit('Identified', message.d)
@@ -136,6 +140,7 @@ export class V5Adapter implements OBSAdapter {
 				})
 
 				this.socket.addEventListener('close', (event) => {
+					console.debug('[v5-adapter] WebSocket closed:', event.code, event.reason)
 					this._connected = false
 					this._emit('ConnectionClosed', {})
 					
@@ -164,9 +169,14 @@ export class V5Adapter implements OBSAdapter {
 		// Handle authentication if required
 		if (this.helloData.authentication) {
 			const { challenge, salt } = this.helloData.authentication
+			console.debug('[v5-adapter] Auth challenge:', challenge)
+			console.debug('[v5-adapter] Auth salt:', salt)
+			console.debug('[v5-adapter] Password provided:', this.password ? 'yes' : 'no')
 			identifyData.authentication = await getAuthResponse(this.password, challenge, salt)
+			console.debug('[v5-adapter] Auth response generated')
 		}
 
+		console.debug('[v5-adapter] Sending Identify')
 		this._sendOp(OpCode.Identify, identifyData)
 	}
 
@@ -413,6 +423,7 @@ export class V5Adapter implements OBSAdapter {
 			}
 
 			const requestId = this.generateRequestId()
+			console.debug('[v5-adapter] Sending request:', requestType, requestId, requestData)
 
 			this.pendingRequests.set(requestId, { resolve, reject })
 
@@ -450,8 +461,10 @@ export class V5Adapter implements OBSAdapter {
 			this.pendingRequests.delete(requestId)
 			
 			if (requestStatus.result === true) {
+				console.debug('[v5-adapter] Request success:', requestId, responseData)
 				pending.resolve(responseData || {})
 			} else {
+				console.debug('[v5-adapter] Request failed:', requestId, requestStatus)
 				pending.reject({
 					code: requestStatus.code,
 					message: requestStatus.comment,
@@ -462,6 +475,7 @@ export class V5Adapter implements OBSAdapter {
 
 	private _handleEvent(data: any): void {
 		const { eventType, eventData } = data
+		console.debug('[v5-adapter] Event received:', eventType, eventData)
 		this._emit(eventType, eventData || {})
 	}
 }
