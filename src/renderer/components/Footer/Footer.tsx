@@ -1,6 +1,7 @@
 import styled from 'styled-components'
 
 import { SettingsButton } from '../Settings/SettingsButton'
+import { useSettings } from '../Settings/SettingsContext'
 import OBSLogo from '~/assets/obslogo.png?url'
 import { APP_VERSION } from '../../version'
 
@@ -29,12 +30,17 @@ const Version = styled.span`
 	opacity: 0.7;
 `
 
-export const Footer = () => (
-	<Wrapper>
-		<LogoContainer>
-			<Logo src={OBSLogo} alt="OBS logo" />
-			<Version>v{APP_VERSION}</Version>
-		</LogoContainer>
-		<SettingsButton />
-	</Wrapper>
-)
+export const Footer = () => {
+	const { configs, currentConfigIndex } = useSettings()
+	const configName = configs[currentConfigIndex]?.name || ''
+	
+	return (
+		<Wrapper>
+			<LogoContainer>
+				<Logo src={OBSLogo} alt="OBS logo" />
+				<Version>v{APP_VERSION} — {configName}</Version>
+			</LogoContainer>
+			<SettingsButton />
+		</Wrapper>
+	)
+}

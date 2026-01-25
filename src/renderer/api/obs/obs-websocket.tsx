@@ -30,9 +30,38 @@ interface OBSWebsocketProviderProps {
 }
 
 export const OBSWebsocketProvider = ({ children }: OBSWebsocketProviderProps) => {
-	const { current: connections } = React.useRef<Record<string, Connection>>({})
+	const connectionsRef = React.useRef<Record<string, Connection>>({})
 	const { settings } = useSettings()
 	const forceUpdate = useForceUpdate()
+	
+	// Track settings to detect changes and reconnect
+	const prevSettingsRef = React.useRef<string>('')
+	
+	React.useEffect(() => {
+		const settingsKey = JSON.stringify(settings)
+		
+		// Skip if this is the initial mount or settings haven't changed
+		if (prevSettingsRef.current === '' || prevSettingsRef.current === settingsKey) {
+			prevSettingsRef.current = settingsKey
+			return
+		}
+		
+		prevSettingsRef.current = settingsKey
+		
+		// Settings changed - disconnect all existing connections and clear cache
+		console.log('[obs-websocket] Settings changed, reconnecting...')
+		const connections = connectionsRef.current
+		for (const name of Object.keys(connections)) {
+			const connection = connections[name]
+			if (connection.adapter) {
+				connection.shouldBeConnected = false
+				connection.adapter.disconnect()
+			}
+		}
+		// Clear the connections cache so they get recreated with new settings
+		connectionsRef.current = {}
+		forceUpdate()
+	}, [settings, forceUpdate])
 
 	// Password prompt state
 	const [passwordPrompt, setPasswordPrompt] = React.useState<PasswordPromptState>({
@@ -61,6 +90,7 @@ export const OBSWebsocketProvider = ({ children }: OBSWebsocketProviderProps) =>
 
 	const getConnection = React.useCallback(
 		(connectionName: string): Connection => {
+			const connections = connectionsRef.current
 			if (!connections[connectionName]) {
 				const connSettings = settings.connections[connectionName]
 				if (!connSettings) {
