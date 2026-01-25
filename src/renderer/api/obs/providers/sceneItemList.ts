@@ -1,45 +1,37 @@
 import { createProvider } from '../createProvider'
-import { camelCaseKeys } from '../util/camelCaseKeys'
 import { ConnectionPublic } from '../types'
 
 export const sceneItemList = (obs: ConnectionPublic, {
 	scene,
 }: { scene: string }) => createProvider({
 	init: (onChanged) => {
-		const fn = () => {
-			obs.send(
-				'GetSceneItemList',
-				{
-					sceneName: scene,
-				},
-				(data: any) => {
-					const normalized = camelCaseKeys(data)
-					normalized.sceneItems.reverse()
-					onChanged(normalized.sceneItems)
-				},
-			)
+		const fetchSceneItems = () => {
+			if (obs.adapter) {
+				obs.adapter.getSceneItemList(scene).then((sceneItems) => {
+					// Reverse for display order
+					onChanged([...sceneItems].reverse())
+				})
+			}
 		}
 
-		fn()
+		fetchSceneItems()
 
-		obs.on('SceneItemAdded', (data: any) => {
-			const normalized = camelCaseKeys(data)
-			if (normalized.sceneName === scene) {
-				fn()
+		// Unified event names
+		obs.on('SceneItemCreated', (data: any) => {
+			if (data.sceneName === scene) {
+				fetchSceneItems()
 			}
 		})
 
 		obs.on('SceneItemRemoved', (data: any) => {
-			const normalized = camelCaseKeys(data)
-			if (normalized.sceneName === scene) {
-				fn()
+			if (data.sceneName === scene) {
+				fetchSceneItems()
 			}
 		})
 
-		obs.on('SourceOrderChanged', (data: any) => {
-			const normalized = camelCaseKeys(data)
-			if (normalized.sceneName === scene) {
-				fn()
+		obs.on('SceneItemListReindexed', (data: any) => {
+			if (data.sceneName === scene) {
+				fetchSceneItems()
 			}
 		})
 	}

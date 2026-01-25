@@ -1,35 +1,46 @@
 import { createProvider } from '../createProvider'
-import { camelCaseKeys } from '../util/camelCaseKeys'
 import { ConnectionPublic } from '../types'
+import { StreamStateChangedEvent } from '../abstraction/types'
 
 export const isStreaming = (obs: ConnectionPublic) => createProvider({
 	init: (onChanged) => {
-		const setData = (data: string) => {
+		const setData = (state: string) => {
 			onChanged({
-				isStarted: data === 'started',
-				isStopped: data === 'stopped',
-				isStarting: data === 'starting',
-				isStopping: data === 'stopping',
-				isLoading: !data,
+				isStarted: state === 'started',
+				isStopped: state === 'stopped',
+				isStarting: state === 'starting',
+				isStopping: state === 'stopping',
+				isLoading: !state,
 			})
 		}
 
-		obs.send('GetStreamingStatus', {}, (data: any) => {
-			const normalized = camelCaseKeys(data)
-			setData(normalized.streaming ? 'started' : 'stopped')
+		// Get initial status
+		if (obs.adapter) {
+			obs.adapter.getStreamStatus().then((status) => {
+				setData(status.outputActive ? 'started' : 'stopped')
+			}).catch(() => {
+				setData('stopped')
+			})
+		}
+
+		// Unified event name
+		obs.on('StreamStateChanged', (data: StreamStateChangedEvent) => {
+			switch (data.outputState) {
+				case 'OBS_WEBSOCKET_OUTPUT_STARTING':
+					setData('starting')
+					break
+				case 'OBS_WEBSOCKET_OUTPUT_STARTED':
+					setData('started')
+					break
+				case 'OBS_WEBSOCKET_OUTPUT_STOPPING':
+					setData('stopping')
+					break
+				case 'OBS_WEBSOCKET_OUTPUT_STOPPED':
+					setData('stopped')
+					break
+			}
 		})
-		obs.on('StreamStarting', () => {
-			setData('starting')
-		})
-		obs.on('StreamStarted', () => {
-			setData('started')
-		})
-		obs.on('StreamStopping', () => {
-			setData('stopping')
-		})
-		obs.on('StreamStopped', () => {
-			setData('stopped')
-		})
+
 		setData('')
 	},
 })

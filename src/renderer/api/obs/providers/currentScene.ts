@@ -1,21 +1,22 @@
 import { createProvider } from '../createProvider'
-import { camelCaseKeys } from '../util/camelCaseKeys'
 import { ConnectionPublic } from '../types'
 
 export const currentScene = (obs: ConnectionPublic) => createProvider({
 	init: (onChanged) => {
-		obs.send('GetCurrentScene', {}, (data: any) => {
-			const normalized = camelCaseKeys(data)
-			onChanged({
-				name: normalized.name,
-				sources: normalized.sources,
+		if (obs.adapter) {
+			obs.adapter.getCurrentProgramScene().then((data) => {
+				onChanged({
+					name: data.sceneName,
+					sceneUuid: data.sceneUuid,
+				})
 			})
-		})
-		obs.on('SwitchScenes', (data: any) => {
-			const normalized = camelCaseKeys(data)
+		}
+		// Listen for unified event name (both v4 and v5 adapters emit this)
+		obs.on('CurrentProgramSceneChanged', (data: any) => {
 			onChanged({
-				name: normalized.sceneName,
-				sources: normalized.sources,
+				name: data.sceneName,
+				sceneUuid: data.sceneUuid,
+				sources: data.sources,
 			})
 		})
 	}

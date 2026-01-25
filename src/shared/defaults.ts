@@ -2,7 +2,9 @@
 export const DEFAULT_CONFIG = {
   connections: {
     main: {
-      address: 'localhost:4444',
+      address: 'localhost:4455',
+      // apiVersion: 'auto' | 'v4' | 'v5' - auto-detect by default
+      apiVersion: 'auto',
     }
   },
   connection: 'main',

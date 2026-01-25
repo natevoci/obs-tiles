@@ -1,5 +1,4 @@
 import { createProvider } from '../createProvider'
-import { camelCaseKeys } from '../util/camelCaseKeys'
 import { ConnectionPublic } from '../types'
 
 export const sceneImage = (obs: ConnectionPublic, {
@@ -10,35 +9,30 @@ export const sceneImage = (obs: ConnectionPublic, {
 	attach: (onChanged) => {
 		let timeout: NodeJS.Timeout | undefined
 		let attached = true
-		const fn = () => {
-			if (obs.connected) {
-				obs.send(
-					'TakeSourceScreenshot',
-					{
-						sourceName: scene,
-						embedPictureFormat: 'jpg',
-						width: tileSize*16,
-						height: tileSize*9,
-					},
-					(data: any) => {
-						const normalized = camelCaseKeys(data)
-						if (attached && normalized.img) {
-							onChanged(normalized.img)
-							timeout = setTimeout(fn, refreshTime)
-						}
-					},
-					(err: any) => {
-						console.error(`Error loading snapshot`, {
-							connection: obs.name,
-							scene,
-						}, err)
-						onChanged(null)
+
+		const fetchScreenshot = () => {
+			if (obs.connected && obs.adapter) {
+				obs.adapter.getSourceScreenshot(
+					scene,
+					'jpg',
+					tileSize * 16,
+					tileSize * 9
+				).then((imageData) => {
+					if (attached && imageData) {
+						onChanged(imageData)
+						timeout = setTimeout(fetchScreenshot, refreshTime)
 					}
-				)
+				}).catch((err) => {
+					console.error(`Error loading snapshot`, {
+						connection: obs.name,
+						scene,
+					}, err)
+					onChanged(null)
+				})
 			}
 		}
 
-		fn()
+		fetchScreenshot()
 
 		return () => {
 			if (timeout) {

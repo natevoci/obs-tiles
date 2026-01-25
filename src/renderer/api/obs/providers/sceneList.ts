@@ -1,68 +1,50 @@
 import { createProvider } from '../createProvider'
-import { camelCaseKeys } from '../util/camelCaseKeys'
 import { ConnectionPublic } from '../types'
 
 export const sceneList = (obs: ConnectionPublic) => createProvider({
 	init: (onChanged) => {
-		const fn = () => {
-			obs.send('GetSceneList', {}, (data: any) => {
-				const normalized = camelCaseKeys(data)
-				onChanged({
-					currentScene: normalized.currentScene,
-					scenes: normalized.scenes.reduce(
-						(prev: Record<string, any>, curr: any) => {
-							prev[curr.name] = curr
-							return prev
-						},
-						{},
-					)
+		const fetchSceneList = () => {
+			if (obs.adapter) {
+				obs.adapter.getSceneList().then((data) => {
+					onChanged({
+						currentScene: data.currentProgramSceneName,
+						scenes: data.scenes.reduce(
+							(prev: Record<string, any>, curr: any) => {
+								prev[curr.sceneName] = curr
+								return prev
+							},
+							{},
+						)
+					})
 				})
-			})
+			}
 		}
 
-		fn()
+		fetchSceneList()
 
-		obs.on('SwitchScenes', () => {
-			console.log('SwitchScenes')
-			fn()
+		// Unified event names
+		obs.on('CurrentProgramSceneChanged', () => {
+			fetchSceneList()
 		})
 
-		obs.on('ScenesChanged', () => {
-			console.log('ScenesChanged')
-			fn()
+		obs.on('SceneListChanged', () => {
+			fetchSceneList()
 		})
 
-		obs.on('SceneItemAdded', () => {
-			fn()
+		obs.on('SceneItemCreated', () => {
+			fetchSceneList()
 		})
 
 		obs.on('SceneItemRemoved', () => {
-			fn()
+			fetchSceneList()
 		})
 
-		obs.on('SceneItemVisibilityChanged', () => {
-			console.log('SceneItemVisibilityChanged')
-			fn()
+		obs.on('SceneItemEnableStateChanged', () => {
+			fetchSceneList()
 		})
 
-		obs.on('SourceOrderChanged', () => {
-			console.log('SourceOrderChanged')
-			fn()
-		})
-
-		obs.on('SourceRenamed', () => {
-			console.log('SourceRenamed')
-			fn()
-		})
-
-		obs.on('SourceCreated', () => {
-			console.log('SourceCreated')
-			fn()
-		})
-
-		obs.on('SourceDestroyed', () => {
-			console.log('SourceDestroyed')
-			fn()
+		obs.on('SceneItemListReindexed', () => {
+			fetchSceneList()
 		})
 	}
 })

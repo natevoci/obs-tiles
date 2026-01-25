@@ -1,5 +1,4 @@
 import * as React from 'react'
-import OBSWebSocketClient from './websocket-client'
 import { Dialog, DialogTitle, DialogContent, DialogActions, Button, TextField } from '@material-ui/core'
 
 import { useSettings } from '~/components/Settings/SettingsContext'
@@ -8,6 +7,8 @@ import { useForceUpdate } from '~/hooks'
 import * as factories from './providers'
 import * as actions from './actions'
 import { ConnectionPublic } from './types'
+import { OBSAdapter, OBSAdapterVersion } from './abstraction/adapter'
+import { createAdapter } from './adapters'
 
 interface PasswordPromptState {
 	open: boolean
@@ -16,7 +17,7 @@ interface PasswordPromptState {
 }
 
 interface Connection {
-	instance: OBSWebSocketClient
+	adapter: OBSAdapter | null
 	shouldBeConnected: boolean
 	public: ConnectionPublic
 	providers: Record<string, any>
@@ -67,7 +68,7 @@ export const OBSWebsocketProvider = ({ children }: OBSWebsocketProviderProps) =>
 				}
 
 				const connection: Connection = {
-					instance: new OBSWebSocketClient(),
+					adapter: null,
 					shouldBeConnected: false,
 					public: {
 						name: connectionName,
@@ -75,75 +76,104 @@ export const OBSWebsocketProvider = ({ children }: OBSWebsocketProviderProps) =>
 						connecting: false,
 						failed: false,
 						failedConnection: false,
+						apiVersion: undefined,
 						disconnect: () => {},
 						reconnect: () => {},
 						send: () => {},
 						on: () => {},
 						useDataProvider: () => undefined,
 						action: () => {},
+						adapter: undefined,
 					},
 					providers: {},
 				}
-				
-				connection.instance.on('error', (err: any) => {
-					console.error(`error for connection '${connectionName}'`, err)
-					connection.public.failed = err
-				})
 
-				connection.instance.on('ConnectionClosed', () => {
-					console.log(`Connection closed`)
-					connection.public.connected = false
-					forceUpdate()
-
-					setTimeout(
-						() => {
-							if (!connection.public.connected && connection.shouldBeConnected) {
-								connect()
-							}
-						},
-						50000
-					)
-				})
-
-				const connect = () => {
+				const connect = async () => {
 					connection.shouldBeConnected = true
 					connection.public.connecting = true
+					connection.public.failed = false
+					connection.public.failedConnection = false
 					forceUpdate()
 
 					const password = window.localStorage.getItem(`password-${connSettings.address}`)
-					connection.instance.connect({
-						address: connSettings.address,
-						password: password || '',
-					}).then(() => {
+					
+					// Determine API version from config
+					const apiVersionConfig = connSettings.apiVersion || 'auto'
+					let forceVersion: OBSAdapterVersion | 'auto' = 'auto'
+					if (apiVersionConfig === 'v4') forceVersion = 4
+					else if (apiVersionConfig === 'v5') forceVersion = 5
+
+					try {
+						const adapter = await createAdapter({
+							address: connSettings.address,
+							password: password || undefined,
+							forceVersion,
+						})
+
+						connection.adapter = adapter
+						connection.public.adapter = adapter
 						connection.public.connected = true
-					}).catch(async (err) => {
+						connection.public.apiVersion = adapter.version
+						console.log(`[obs-websocket] Connected to ${connectionName} using v${adapter.version} API`)
+
+						// Set up reconnection on disconnect
+						adapter.on('ConnectionClosed', () => {
+							console.log(`[obs-websocket] Connection closed for ${connectionName}`)
+							connection.public.connected = false
+							connection.public.adapter = undefined
+							connection.adapter = null
+							forceUpdate()
+
+							setTimeout(() => {
+								if (!connection.public.connected && connection.shouldBeConnected) {
+									connect()
+								}
+							}, 5000)
+						})
+
+						adapter.on('ConnectionError', (err: any) => {
+							console.error(`[obs-websocket] Error for ${connectionName}:`, err)
+							connection.public.failed = err
+						})
+
+					} catch (err: any) {
 						connection.public.connected = false
-						if (err.error === 'Authentication Failed.') {
-							const password = await promptForPassword(connSettings.address)
-							if (password !== null) {
-								window.localStorage.setItem(`password-${connSettings.address}`, password)
+						
+						// Check for authentication failure
+						// v4: error contains 'Authentication Failed'
+						// v5: WebSocket closes with code 4009 and reason 'Authentication failed.'
+						const errorMsg = err?.error || err?.message || String(err)
+						const isAuthError = 
+							errorMsg.toLowerCase().includes('authentication failed') || 
+							err?.code === 401 || 
+							err?.code === 4009
+						
+						if (isAuthError) {
+							const newPassword = await promptForPassword(connSettings.address)
+							if (newPassword !== null) {
+								window.localStorage.setItem(`password-${connSettings.address}`, newPassword)
 								connect()
 								return
 							}
 						}
-						console.error(`Error connecting to '${connectionName}' connection:`, err.error)
-						connection.public.failedConnection = err.error
-					}).then(() => {
+						
+						console.error(`[obs-websocket] Error connecting to '${connectionName}':`, errorMsg)
+						connection.public.failedConnection = errorMsg
+					} finally {
 						connection.public.connecting = false
 						forceUpdate()
-					})
+					}
 				}
 
-				window.setTimeout(
-					() => {
-						connect()
-					},
-					0,
-				)
+				window.setTimeout(() => connect(), 0)
 
 				connection.public.disconnect = () => {
 					connection.shouldBeConnected = false
-					connection.instance.disconnect()
+					if (connection.adapter) {
+						connection.adapter.disconnect()
+					}
+					connection.adapter = null
+					connection.public.adapter = undefined
 					connection.public.connected = false
 				}
 
@@ -151,26 +181,25 @@ export const OBSWebsocketProvider = ({ children }: OBSWebsocketProviderProps) =>
 					connect()
 				}
 
+				// Legacy send method for backward compatibility
 				connection.public.send = (requestName, args, onSucceeded, onFailed) => {
-					if (connection.instance) {
-						connection.instance.sendCallback(requestName, args, (err: any, data: any) => {
-							if (err) {
+					if (connection.adapter) {
+						connection.adapter.sendRaw(requestName, args)
+							.then((data) => onSucceeded?.(data))
+							.catch((err) => {
 								if (onFailed) {
 									onFailed(err)
+								} else {
+									console.debug(`Error calling '${requestName}'`, err)
 								}
-								else {
-									console.debug(`Error calling '${requestName}'`, err, connection)
-								}
-							}
-							else {
-								onSucceeded?.(data)
-							}
-						})
+							})
 					}
 				}
 
-				connection.public.on = (...args: any[]) => {
-					(connection.instance.on as any)(...args)
+				connection.public.on = (event: string, listener: Function) => {
+					if (connection.adapter) {
+						connection.adapter.on(event, listener as any)
+					}
 				}
 
 				const useDataProvider = (name: string, args?: any) => {

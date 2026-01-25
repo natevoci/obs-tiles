@@ -1,5 +1,4 @@
 import { createProvider } from '../createProvider'
-import { camelCaseKeys } from '../util/camelCaseKeys'
 import { ConnectionPublic } from '../types'
 
 export const videoInfo = (obs: ConnectionPublic, {
@@ -7,15 +6,17 @@ export const videoInfo = (obs: ConnectionPublic, {
 } = {}) => createProvider({
 	attach: (onChanged) => {
 		let timeout: NodeJS.Timeout | undefined
-		const fn = () => {
-			obs.send('GetVideoInfo', {}, (data: any) => {
-				const normalized = camelCaseKeys(data)
-				onChanged(normalized)
-				timeout = setTimeout(fn, refreshTime)
-			})
+
+		const fetchVideoSettings = () => {
+			if (obs.adapter) {
+				obs.adapter.getVideoSettings().then((videoData) => {
+					onChanged(videoData)
+					timeout = setTimeout(fetchVideoSettings, refreshTime)
+				})
+			}
 		}
 
-		fn()
+		fetchVideoSettings()
 
 		return () => {
 			if (timeout) {

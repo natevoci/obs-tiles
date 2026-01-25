@@ -1,13 +1,13 @@
 import { ConnectionPublic } from '../types'
 
 export const startStreaming = (obs: ConnectionPublic) => () => {
-	obs.send('StartStreaming')
+	obs.adapter?.startStream()
 }
 
 export const stopStreaming = (obs: ConnectionPublic) => () => {
-	obs.send('StopStreaming')
+	obs.adapter?.stopStream()
 }
 
 export const startStopStreaming = (obs: ConnectionPublic) => () => {
-	obs.send('StartStopStreaming')
+	obs.adapter?.toggleStream()
 }

@@ -1,35 +1,57 @@
 import { createProvider } from '../createProvider'
-import { camelCaseKeys } from '../util/camelCaseKeys'
 import { ConnectionPublic } from '../types'
+import { RecordStateChangedEvent } from '../abstraction/types'
 
 export const isRecording = (obs: ConnectionPublic) => createProvider({
 	init: (onChanged) => {
-		const setData = (data: string) => {
+		const setData = (state: string) => {
 			onChanged({
-				isStarted: data === 'started',
-				isStopped: data === 'stopped',
-				isStarting: data === 'starting',
-				isStopping: data === 'stopping',
-				isLoading: !data,
+				isStarted: state === 'started',
+				isStopped: state === 'stopped',
+				isStarting: state === 'starting',
+				isStopping: state === 'stopping',
+				isPaused: state === 'paused',
+				isLoading: !state,
 			})
 		}
 
-		obs.send('GetStreamingStatus', {}, (data: any) => {
-			const normalized = camelCaseKeys(data)
-			setData(normalized.recording ? 'started' : 'stopped')
+		// Get initial status
+		if (obs.adapter) {
+			obs.adapter.getRecordStatus().then((status) => {
+				if (status.outputPaused) {
+					setData('paused')
+				} else {
+					setData(status.outputActive ? 'started' : 'stopped')
+				}
+			}).catch(() => {
+				setData('stopped')
+			})
+		}
+
+		// Unified event name
+		obs.on('RecordStateChanged', (data: RecordStateChangedEvent) => {
+			switch (data.outputState) {
+				case 'OBS_WEBSOCKET_OUTPUT_STARTING':
+					setData('starting')
+					break
+				case 'OBS_WEBSOCKET_OUTPUT_STARTED':
+					setData('started')
+					break
+				case 'OBS_WEBSOCKET_OUTPUT_STOPPING':
+					setData('stopping')
+					break
+				case 'OBS_WEBSOCKET_OUTPUT_STOPPED':
+					setData('stopped')
+					break
+				case 'OBS_WEBSOCKET_OUTPUT_PAUSED':
+					setData('paused')
+					break
+				case 'OBS_WEBSOCKET_OUTPUT_RESUMED':
+					setData('started')
+					break
+			}
 		})
-		obs.on('RecordingStarting', () => {
-			setData('starting')
-		})
-		obs.on('RecordingStarted', () => {
-			setData('started')
-		})
-		obs.on('RecordingStopping', () => {
-			setData('stopping')
-		})
-		obs.on('RecordingStopped', () => {
-			setData('stopped')
-		})
+
 		setData('')
 	},
 })

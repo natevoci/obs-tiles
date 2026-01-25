@@ -1,5 +1,4 @@
 import { createProvider } from '../createProvider'
-import { camelCaseKeys } from '../util/camelCaseKeys'
 import { ConnectionPublic } from '../types'
 
 export const stats = (obs: ConnectionPublic, {
@@ -7,15 +6,17 @@ export const stats = (obs: ConnectionPublic, {
 } = {}) => createProvider({
 	attach: (onChanged) => {
 		let timeout: NodeJS.Timeout | undefined
-		const fn = () => {
-			obs.send('GetStats', {}, (data: any) => {
-				const normalized = camelCaseKeys(data)
-				onChanged(normalized.stats)
-				timeout = setTimeout(fn, refreshTime)
-			})
+
+		const fetchStats = () => {
+			if (obs.adapter) {
+				obs.adapter.getStats().then((statsData) => {
+					onChanged(statsData)
+					timeout = setTimeout(fetchStats, refreshTime)
+				})
+			}
 		}
 
-		fn()
+		fetchStats()
 
 		return () => {
 			if (timeout) {

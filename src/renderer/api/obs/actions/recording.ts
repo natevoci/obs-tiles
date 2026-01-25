@@ -1,13 +1,13 @@
 import { ConnectionPublic } from '../types'
 
 export const startRecording = (obs: ConnectionPublic) => () => {
-	obs.send('StartRecording')
+	obs.adapter?.startRecord()
 }
 
 export const stopRecording = (obs: ConnectionPublic) => () => {
-	obs.send('StopRecording')
+	obs.adapter?.stopRecord()
 }
 
 export const startStopRecording = (obs: ConnectionPublic) => () => {
-	obs.send('StartStopRecording')
+	obs.adapter?.toggleRecord()
 }
