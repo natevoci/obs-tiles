@@ -1,6 +1,6 @@
 import styled from 'styled-components'
 
-import { Header } from './Header/Header'
+import { Footer } from './Footer/Footer'
 import { Content } from './Content'
 
 const Wrapper = styled.div`
@@ -22,7 +22,7 @@ export const Layout = () => {
 	return (
 		<Wrapper>
 			<Content />
-			<Header />
+			<Footer />
 		</Wrapper>
 	)
 }

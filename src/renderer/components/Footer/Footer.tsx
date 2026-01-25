@@ -29,7 +29,7 @@ const Version = styled.span`
 	opacity: 0.7;
 `
 
-export const Header = () => (
+export const Footer = () => (
 	<Wrapper>
 		<LogoContainer>
 			<Logo src={OBSLogo} alt="OBS logo" />
