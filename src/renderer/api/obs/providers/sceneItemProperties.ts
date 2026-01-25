@@ -25,6 +25,9 @@ export const sceneItemProperties = (
 					if (foundItem) {
 						itemId = foundItem.sceneItemId
 					}
+					else {
+						console.warn(`Scene item "${item}" not found in scene "${scene}"`)
+					}
 				}
 
 				if (itemId !== undefined) {

@@ -50,10 +50,9 @@ export const SceneItemButton = ({
 	const sceneItemId = sceneItemProperties?.itemId
 	const isVisible = sceneItemProperties?.visible
 
-	const sceneList = obs.useDataProvider('sceneList')
-	const sceneItemList = sceneList?.scenes?.[scene]?.sources
-	const visibleSceneItems = sceneItemList?.filter?.((item: any) => item.render)
-	const isSelected = click === 'moveToTop' ? (sceneItemId && visibleSceneItems?.length && sceneItemId === visibleSceneItems?.[0]?.id) : isVisible
+	const sceneItemList = obs.useDataProvider('sceneItemList', { scene })
+	const visibleSceneItems = sceneItemList?.filter?.((item: any) => item.sceneItemEnabled)
+	const isSelected = click === 'moveToTop' ? (sceneItemId && visibleSceneItems?.length && sceneItemId === visibleSceneItems?.[0]?.sceneItemId) : isVisible
 	
 	const imageData = obs.useDataProvider('sceneImage', {
 		scene: item,
@@ -76,9 +75,11 @@ export const SceneItemButton = ({
 				}
 			},
 			moveToTop: () => {
+				if (!sceneItemList) return
+				
 				const items = sceneItemList
-					.filter((item: any) => item.id !== sceneItemId)
-					.map((item: any) => ({ id: item.id }))
+					.filter((item: any) => item.sceneItemId !== sceneItemId)
+					.map((item: any) => ({ id: item.sceneItemId }))
 
 				const insertPosition = 0
 				items.splice(insertPosition, 0, { id: sceneItemId })
