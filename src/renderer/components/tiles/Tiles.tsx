@@ -44,16 +44,126 @@ const TileWrapper = styled.div<TilesGroupProps>`
 	margin-bottom: ${(p: any) => p.theme.grid(1)};
 `
 
-interface TileConfig {
-	group?: string
-	tiles?: TileConfig[]
-	button?: string
-	scene?: string
-	sceneItem?: string
-	text?: string
-	direction?: string
-	wrap?: boolean
-	[key: string]: any
+
+// Base config for all tiles
+interface BaseTileConfig {
+	title?: string;
+	connection?: string;
+	tileSize?: string | number;
+}
+
+// Specific tile configs
+export interface GroupTileConfig extends BaseTileConfig {
+	group: string;
+	tiles: TileConfig[];
+	direction?: string;
+	wrap?: boolean;
+}
+
+export interface SceneButtonTileConfig extends BaseTileConfig {
+	scene: string;
+}
+
+export interface SceneItemButtonTileConfig extends BaseTileConfig {
+	sceneItem: {
+		scene: string
+		item: string
+		click?: string
+		longPress?: string
+	}
+}
+
+export interface ButtonTileConfig extends BaseTileConfig {
+	button: string;
+}
+
+export interface TextTileConfig extends BaseTileConfig {
+	text: string;
+}
+
+type TileConfig =
+	| GroupTileConfig
+	| SceneButtonTileConfig
+	| SceneItemButtonTileConfig
+	| ButtonTileConfig
+	| TextTileConfig;
+
+
+// Common props for all tile types
+const COMMON_TILE_PROPS = ['title', 'connection', 'tileSize'];
+
+function warnExtraProps(tile: any, allowed: string[], typeName: string) {
+	if (typeof tile !== 'object' || tile == null) return;
+	const extras = Object.keys(tile).filter(
+		key => !allowed.includes(key)
+	);
+	if (extras.length > 0) {
+		console.warn(
+			`[Tiles] Extra properties in ${typeName}:`,
+			extras,
+			'\nTile:', tile
+		);
+	}
+}
+
+function isGroupTileConfig(tile: TileConfig): tile is GroupTileConfig {
+	const valid =
+		typeof tile === 'object' &&
+		'tiles' in tile &&
+		Array.isArray((tile as any).tiles) &&
+		typeof (tile as any).group === 'string';
+	if (valid) {
+		warnExtraProps(tile, ['group', 'tiles', 'direction', 'wrap', ...COMMON_TILE_PROPS], 'GroupTileConfig');
+	}
+	return valid;
+}
+
+function isSceneButtonTileConfig(tile: TileConfig): tile is SceneButtonTileConfig {
+	const valid =
+		typeof tile === 'object' &&
+		'scene' in tile &&
+		typeof (tile as any).scene === 'string' &&
+		!('sceneItem' in tile);
+	if (valid) {
+		warnExtraProps(tile, ['scene', ...COMMON_TILE_PROPS], 'SceneButtonTileConfig');
+	}
+	return valid;
+}
+
+function isSceneItemButtonTileConfig(tile: TileConfig): tile is SceneItemButtonTileConfig {
+	const valid =
+		typeof tile === 'object' &&
+		'sceneItem' in tile &&
+		typeof (tile as any).sceneItem === 'object' &&
+		(tile as any).sceneItem !== null;
+	if (valid) {
+		warnExtraProps(tile, ['sceneItem', ...COMMON_TILE_PROPS], 'SceneItemButtonTileConfig');
+	}
+	return valid;
+}
+
+function isButtonTileConfig(tile: TileConfig): tile is ButtonTileConfig {
+	const valid =
+		typeof tile === 'object' &&
+		'button' in tile &&
+		typeof (tile as any).button === 'string' &&
+		!!(tile as any).button;
+	if (valid) {
+		warnExtraProps(tile, ['button', ...COMMON_TILE_PROPS], 'ButtonTileConfig');
+	}
+	return valid;
+}
+
+function isTextTileConfig(tile: TileConfig): tile is TextTileConfig {
+	const valid =
+		typeof tile === 'object' &&
+		'text' in tile &&
+		typeof (tile as any).text === 'string' &&
+		!!(tile as any).text;
+	if (valid) {
+		warnExtraProps(tile, ['text', ...COMMON_TILE_PROPS], 'TextTileConfig');
+	}
+	return valid;
 }
 
 interface TilesProps {
@@ -73,59 +183,48 @@ export const Tiles = ({
 	wrap,
 }: TilesProps) => {
 	const tileComponents = tiles.map((tile) => {
-		if (!tile) {
-			return null
-		}
+		if (!tile) return null;
 
 		const inheritableProps = {
 			connection,
 			tileSize,
-		}
+		};
 
-		if (tile.group) {
+		if (isGroupTileConfig(tile)) {
 			return (
-				<TilesGroupWrapper
-					key={tile.group}
-					data-elementtype='TilesGroupWrapper'
-				>
+				<TilesGroupWrapper key={tile.group} data-elementtype='TilesGroupWrapper'>
 					<h3>{tile.group}</h3>
 					<Tiles {...inheritableProps} {...tile} tiles={tile.tiles} />
 				</TilesGroupWrapper>
-			)
+			);
 		}
 
-		if (tile.tiles) {
-			return (
-				<Tiles key={JSON.stringify(tile)} {...inheritableProps} {...tile} tiles={tile.tiles} />
-			)
-		}
-
-		if (tile.button) {
-			return (
-				<Button key={tile.button} {...inheritableProps} {...tile} button={tile.button} />
-			)
-		}
-
-		if (tile.scene) {
+		if (isSceneButtonTileConfig(tile)) {
 			return (
 				<SceneButton key={tile.scene} connection={connection} tileSize={String(tileSize)} scene={tile.scene} title={tile.title} />
-			)
+			);
 		}
 
-		if (tile.sceneItem) {
+		if (isSceneItemButtonTileConfig(tile)) {
 			return (
-				<SceneItemButton key={tile.sceneItem} connection={connection} tileSize={String(tileSize)} sceneItem={tile.sceneItem as any} title={tile.title} />
-			)
+				<SceneItemButton key={tile.sceneItem.item ?? JSON.stringify(tile.sceneItem)} connection={connection} tileSize={String(tileSize)} sceneItem={tile.sceneItem} title={tile.title} />
+			);
 		}
 
-		if (tile.text) {
+		if (isButtonTileConfig(tile)) {
+			return (
+				<Button key={tile.button} {...inheritableProps} {...tile} button={tile.button} />
+			);
+		}
+
+		if (isTextTileConfig(tile)) {
 			return (
 				<Text key={tile.text} {...inheritableProps} {...tile} text={tile.text} />
-			)
+			);
 		}
 
-		return null
-	})
+		return null;
+	});
 	
 	return (
 		<TilesGroup

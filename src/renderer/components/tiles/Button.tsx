@@ -3,6 +3,7 @@ import styled from 'styled-components'
 import { Button as MUIButton } from '@material-ui/core'
 
 import { useObs, useIsStreaming, useIsRecording } from '~/api/obs'
+import type { ButtonTileConfig } from './Tiles';
 
 interface StyledMUIButtonProps {
 	$size: number
@@ -87,16 +88,11 @@ const ButtonComponents: Record<string, (props: any) => React.ReactElement | null
 	},
 }
 
-interface ButtonProps {
-	connection?: string
-	button: string
-	[key: string]: any
-}
 
 export const Button = ({
 	connection,
 	...props
-}: ButtonProps) => {
+}: ButtonTileConfig) => {
 	const obs = useObs({ connection })
 
 	const component = ButtonComponents[props.button]

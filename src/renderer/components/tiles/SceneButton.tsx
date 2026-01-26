@@ -2,6 +2,7 @@ import styled from 'styled-components'
 import { CircularProgress } from '@material-ui/core'
 
 import { useObs, useCurrentScene, useTransition, useSceneImage } from '~/api/obs'
+import type { SceneButtonTileConfig } from './Tiles';
 
 export const SceneWrapper = styled.div`
 	display: flex;
@@ -84,20 +85,14 @@ export const Paragraph = styled.p`
 	background-color: ${p => p.theme.sceneTextBackground};
 `
 
-interface SceneButtonProps {
-	connection?: string
-	scene: string
-	title?: string
-	tileSize?: string
-}
 
 export const SceneButton = ({
 	connection,
 	scene,
 	title,
 	tileSize = '10',
-}: SceneButtonProps) => {
-	const size = parseInt(tileSize)
+}: SceneButtonTileConfig) => {
+	const size = parseInt(String(tileSize));
 
 	const obs = useObs({ connection })
 

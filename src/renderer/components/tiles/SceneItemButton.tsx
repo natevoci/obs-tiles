@@ -1,7 +1,5 @@
-import React from 'react'
-
-import { useObs, useSceneItemProperties, useSceneItemList, useSceneImage } from '~/api/obs'
-
+import React from 'react';
+import { useObs, useSceneItemProperties, useSceneItemList, useSceneImage } from '~/api/obs';
 import {
 	SceneWrapper,
 	SelectionIndicator,
@@ -10,22 +8,9 @@ import {
 	StyledImg,
 	ImgOverlay,
 	Paragraph,
-} from './SceneButton'
-import { useClickHandler } from './useClickHandler'
-
-interface SceneItemConfig {
-	scene: string
-	item: string
-	click?: string
-	longPress?: string
-}
-
-interface SceneItemButtonProps {
-	connection?: string
-	sceneItem: SceneItemConfig
-	title?: string
-	tileSize?: string
-}
+} from './SceneButton';
+import { useClickHandler } from './useClickHandler';
+import type { SceneItemButtonTileConfig } from './Tiles';
 
 export const SceneItemButton = ({
 	connection,
@@ -37,27 +22,26 @@ export const SceneItemButton = ({
 	},
 	title,
 	tileSize = '10',
-}: SceneItemButtonProps) => {
-	const size = parseInt(tileSize)
-
-	const obs = useObs({ connection })
-
-	const sceneItemProperties = useSceneItemProperties(obs, { scene, item })
+}: SceneItemButtonTileConfig) => {
+	const size = parseInt(String(tileSize));
 	
-	const sceneItemId = sceneItemProperties?.sceneItemId
-	const isVisible = sceneItemProperties?.sceneItemEnabled ?? false
+	const obs = useObs({ connection });
 
-	const sceneItemList = useSceneItemList(obs, { scene })
-	const visibleSceneItems = sceneItemList?.filter((item) => item.sceneItemEnabled)
-	const isSelected = click === 'moveToTop' 
+	const sceneItemProperties = useSceneItemProperties(obs, { scene, item });
+	const sceneItemId = sceneItemProperties?.sceneItemId;
+	const isVisible = sceneItemProperties?.sceneItemEnabled ?? false;
+
+	const sceneItemList = useSceneItemList(obs, { scene });
+	const visibleSceneItems = sceneItemList?.filter((item) => item.sceneItemEnabled);
+	const isSelected = click === 'moveToTop'
 		? Boolean(sceneItemId && visibleSceneItems?.length && sceneItemId === visibleSceneItems[0]?.sceneItemId)
-		: isVisible
-	
+		: isVisible;
+
 	const imageData = useSceneImage(obs, {
 		scene: item,
 		tileSize: Math.min(size, 20),
 		refreshTime: isSelected ? 40 : 100,
-	})
+	});
 
 	const handlers = React.useMemo(
 		() => ({

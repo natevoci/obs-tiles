@@ -3,6 +3,7 @@ import styled from 'styled-components'
 import { LinearProgress } from '@material-ui/core'
 
 import { useObs } from '~/api/obs'
+import type { TextTileConfig } from './Tiles';
 
 interface ParagraphProps {
 	$size: number
@@ -62,16 +63,11 @@ const TextComponents: Record<string, (props: any) => React.ReactElement | null> 
 	},
 }
 
-interface TextProps {
-	connection?: string
-	text: string
-	[key: string]: any
-}
 
 export const Text = ({
 	connection,
 	...props
-}: TextProps) => {
+}: TextTileConfig) => {
 	const obs = useObs({ connection })
 
 	const component = TextComponents[props.text]
