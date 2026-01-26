@@ -1,5 +1,19 @@
 import { createProvider } from '../createProvider'
 import { ConnectionPublic } from '../types'
+import { SceneItem } from '../abstraction/types'
+
+// ============================================================================
+// Types
+// ============================================================================
+
+export interface CurrentSceneData {
+	name: string
+	sceneUuid?: string
+}
+
+// ============================================================================
+// Provider
+// ============================================================================
 
 export const currentScene = (obs: ConnectionPublic) => createProvider({
 	init: (onChanged) => {
@@ -16,8 +30,18 @@ export const currentScene = (obs: ConnectionPublic) => createProvider({
 			onChanged({
 				name: data.sceneName,
 				sceneUuid: data.sceneUuid,
-				sources: data.sources,
 			})
 		})
 	}
 })
+
+// ============================================================================
+// Typed Hook
+// ============================================================================
+
+/**
+ * Get the current program scene
+ */
+export const useCurrentScene = (obs: ConnectionPublic): CurrentSceneData | undefined => {
+	return obs.useDataProvider('currentScene')
+}

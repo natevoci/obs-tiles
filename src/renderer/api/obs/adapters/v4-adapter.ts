@@ -267,6 +267,29 @@ export class V4Adapter implements OBSAdapter {
 		})
 	}
 
+	async setSceneItemIndex(sceneName: string, sceneItemId: number, sceneItemIndex: number): Promise<void> {
+		// v4 uses ReorderSceneItems which requires the full list of items in desired order
+		// First get the current list of items
+		const items = await this.getSceneItemList(sceneName)
+		
+		// Remove the target item from the list
+		const filteredItems = items.filter(item => item.sceneItemId !== sceneItemId)
+		
+		// Insert it at the desired index
+		const v4Index = Math.max(0, Math.min(sceneItemIndex, filteredItems.length))
+		const reorderedItems = [
+            ...filteredItems.slice(0, v4Index).map(item => ({ id: item.sceneItemId })),
+			{ id: sceneItemId },
+			...filteredItems.slice(v4Index).map(item => ({ id: item.sceneItemId })),
+		]
+		
+        // Note: v4's ReorderSceneItems uses 0 = first/top, v5 uses 0 = bottom
+		await this._sendRaw('ReorderSceneItems', {
+			scene: sceneName,
+			items: reorderedItems.reverse(), // Reverse for v4 ordering
+		})
+	}
+
 	// =========================================================================
 	// Recording
 	// =========================================================================

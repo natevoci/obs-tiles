@@ -2,7 +2,7 @@ import React from 'react'
 import styled from 'styled-components'
 import { Button as MUIButton } from '@material-ui/core'
 
-import { useObs } from '~/api/obs'
+import { useObs, useIsStreaming, useIsRecording } from '~/api/obs'
 
 interface StyledMUIButtonProps {
 	$size: number
@@ -45,12 +45,12 @@ const ButtonComponents: Record<string, (props: any) => React.ReactElement | null
 		tileSize,
 	}) => {
 		const {
-			isStarted,
-			isStopped,
-			isStarting,
-			isStopping,
-			isLoading,
-		} = obs.useDataProvider('isStreaming')
+			isStarted = false,
+			isStopped = false,
+			isStarting = false,
+			isStopping = false,
+			isLoading = true,
+		} = useIsStreaming(obs)
 
 		return (
 			<StyledButton
@@ -68,12 +68,12 @@ const ButtonComponents: Record<string, (props: any) => React.ReactElement | null
 		tileSize,
 	}) => {
 		const {
-			isStarted,
-			isStopped,
-			isStarting,
-			isStopping,
-			isLoading,
-		} = obs.useDataProvider('isRecording')
+			isStarted = false,
+			isStopped = false,
+			isStarting = false,
+			isStopping = false,
+			isLoading = true,
+		} = useIsRecording(obs)
 
 		return (
 			<StyledButton

@@ -1,5 +1,10 @@
 import { createProvider } from '../createProvider'
 import { ConnectionPublic } from '../types'
+import { Stats } from '../abstraction/types'
+
+// ============================================================================
+// Provider
+// ============================================================================
 
 export const stats = (obs: ConnectionPublic, {
 	refreshTime = 3000,
@@ -25,3 +30,17 @@ export const stats = (obs: ConnectionPublic, {
 		}
 	}
 })
+
+// ============================================================================
+// Typed Hook
+// ============================================================================
+
+/**
+ * Get OBS stats (CPU, memory, FPS, etc.)
+ */
+export const useStats = (
+	obs: ConnectionPublic,
+	args?: { refreshTime?: number }
+): Stats | undefined => {
+	return obs.useDataProvider('stats', args)
+}

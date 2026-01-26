@@ -1,5 +1,10 @@
 import { createProvider } from '../createProvider'
 import { ConnectionPublic } from '../types'
+import { SceneItemProperties } from '../abstraction/types'
+
+// ============================================================================
+// Provider
+// ============================================================================
 
 export const sceneItemProperties = (
 	obs: ConnectionPublic,
@@ -61,3 +66,17 @@ export const sceneItemProperties = (
 		})
 	}
 })
+
+// ============================================================================
+// Typed Hook
+// ============================================================================
+
+/**
+ * Get properties for a specific scene item
+ */
+export const useSceneItemProperties = (
+	obs: ConnectionPublic,
+	args: { scene: string; item?: string; sceneItemId?: number }
+): SceneItemProperties | undefined => {
+	return obs.useDataProvider('sceneItemProperties', args)
+}

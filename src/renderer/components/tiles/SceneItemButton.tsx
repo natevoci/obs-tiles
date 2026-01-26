@@ -1,6 +1,6 @@
 import React from 'react'
 
-import { useObs } from '~/api/obs'
+import { useObs, useSceneItemProperties, useSceneItemList, useSceneImage } from '~/api/obs'
 
 import {
 	SceneWrapper,
@@ -42,19 +42,18 @@ export const SceneItemButton = ({
 
 	const obs = useObs({ connection })
 
-	const sceneItemProperties = obs.useDataProvider('sceneItemProperties', {
-		scene,
-		item,
-	})
+	const sceneItemProperties = useSceneItemProperties(obs, { scene, item })
 	
-	const sceneItemId = sceneItemProperties?.itemId
-	const isVisible = sceneItemProperties?.visible
+	const sceneItemId = sceneItemProperties?.sceneItemId
+	const isVisible = sceneItemProperties?.sceneItemEnabled ?? false
 
-	const sceneItemList = obs.useDataProvider('sceneItemList', { scene })
-	const visibleSceneItems = sceneItemList?.filter?.((item: any) => item.sceneItemEnabled)
-	const isSelected = click === 'moveToTop' ? (sceneItemId && visibleSceneItems?.length && sceneItemId === visibleSceneItems?.[0]?.sceneItemId) : isVisible
+	const sceneItemList = useSceneItemList(obs, { scene })
+	const visibleSceneItems = sceneItemList?.filter((item) => item.sceneItemEnabled)
+	const isSelected = click === 'moveToTop' 
+		? Boolean(sceneItemId && visibleSceneItems?.length && sceneItemId === visibleSceneItems[0]?.sceneItemId)
+		: isVisible
 	
-	const imageData = obs.useDataProvider('sceneImage', {
+	const imageData = useSceneImage(obs, {
 		scene: item,
 		tileSize: Math.min(size, 20),
 		refreshTime: isSelected ? 40 : 100,
@@ -62,35 +61,28 @@ export const SceneItemButton = ({
 
 	const handlers = React.useMemo(
 		() => ({
-			toggleVisible: () => {
-				if (obs.connected) {
-					obs.send('SetSceneItemProperties', {
-						'scene-name': scene,
-						item,
-						visible: !sceneItemProperties?.visible,
-					})
+			toggleVisible: async () => {
+				if (obs.connected && obs.adapter && sceneItemId !== undefined) {
+					await obs.adapter.setSceneItemEnabled(
+						scene,
+						sceneItemId,
+						!sceneItemProperties?.sceneItemEnabled
+					)
 				}
-				else {
+				else if (!obs.connected) {
 					obs.reconnect()
 				}
 			},
-			moveToTop: () => {
-				if (!sceneItemList) return
+			moveToTop: async () => {
+				if (!obs.adapter || !sceneItemList || sceneItemId === undefined) return
 				
-				const items = sceneItemList
-					.filter((item: any) => item.sceneItemId !== sceneItemId)
-					.map((item: any) => ({ id: item.sceneItemId }))
-
-				const insertPosition = 0
-				items.splice(insertPosition, 0, { id: sceneItemId })
-
-				obs.send('ReorderSceneItems', {
-					scene,
-					items,
-				})
+				// In v5, higher index = closer to front/top
+				// Move to the highest index to bring to front
+				const topIndex = sceneItemList.length - 1
+				await obs.adapter.setSceneItemIndex(scene, sceneItemId, topIndex)
 			},
 		}),
-		[scene, item, sceneItemList, sceneItemProperties, sceneItemId],
+		[scene, item, sceneItemList, sceneItemProperties, sceneItemId, obs],
 	)
 
 	const buttonEventListeners = useClickHandler({
@@ -130,7 +122,7 @@ export const SceneItemButton = ({
 					) : null}
 				</TextOverlay>
 				<StyledImg
-					src={imageData}
+					src={imageData ?? undefined}
 					$size={size}
 				/>
 				<ImgOverlay

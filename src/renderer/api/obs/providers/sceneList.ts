@@ -1,5 +1,19 @@
 import { createProvider } from '../createProvider'
 import { ConnectionPublic } from '../types'
+import { Scene } from '../abstraction/types'
+
+// ============================================================================
+// Types
+// ============================================================================
+
+export interface SceneListData {
+	currentScene: string
+	scenes: Record<string, Scene>
+}
+
+// ============================================================================
+// Provider
+// ============================================================================
 
 export const sceneList = (obs: ConnectionPublic) => createProvider({
 	init: (onChanged) => {
@@ -48,3 +62,14 @@ export const sceneList = (obs: ConnectionPublic) => createProvider({
 		})
 	}
 })
+
+// ============================================================================
+// Typed Hook
+// ============================================================================
+
+/**
+ * Get the list of all scenes
+ */
+export const useSceneList = (obs: ConnectionPublic): SceneListData | undefined => {
+	return obs.useDataProvider('sceneList')
+}

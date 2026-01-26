@@ -144,6 +144,14 @@ export interface OBSAdapter {
 	 */
 	setSceneItemLocked(sceneName: string, sceneItemId: number, locked: boolean): Promise<void>
 
+	/**
+	 * Set the index (z-order) of a scene item
+	 * @param sceneName - Name of the scene
+	 * @param sceneItemId - ID of the scene item
+	 * @param sceneItemIndex - New index for the item (0 = bottom in v5, top in v4)
+	 */
+	setSceneItemIndex(sceneName: string, sceneItemId: number, sceneItemIndex: number): Promise<void>
+
 	// =========================================================================
 	// Recording
 	// =========================================================================

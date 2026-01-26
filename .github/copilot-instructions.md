@@ -76,22 +76,23 @@ Providers and components use unified v5-style event names. The v4 adapter maps l
 
 ### Using the Adapter
 
-**Providers and actions should use adapter methods instead of raw `send()`:**
+**Always use adapter methods for OBS requests:**
 
 ```typescript
-// OLD (v4 only):
-obs.send('SetCurrentScene', { 'scene-name': sceneName })
-
-// NEW (version-agnostic):
+// Scene switching
 obs.adapter?.setCurrentProgramScene(sceneName)
+
+// Scene item visibility
+obs.adapter?.setSceneItemEnabled(sceneName, sceneItemId, true)
+
+// Scene item reordering
+obs.adapter?.setSceneItemIndex(sceneName, sceneItemId, newIndex)
 ```
 
 ```typescript
-// OLD (v4 events):
-obs.on('SwitchScenes', (data) => { ... })
-
-// NEW (unified events):
+// Events use unified v5-style names:
 obs.on('CurrentProgramSceneChanged', (data) => { ... })
+obs.on('SceneItemEnableStateChanged', (data) => { ... })
 ```
 
 ## CRITICAL: Two-Level Property Naming Convention
@@ -102,9 +103,9 @@ obs.on('CurrentProgramSceneChanged', (data) => { ... })
 **Conversion**: Happens automatically at the provider layer using `camelCaseKeys()` utility (`src/renderer/api/obs/util/camelCaseKeys.ts`). All providers normalize kebab-case API responses to camelCase before passing to React components.
 
 **Golden Rule**: 
-- Use kebab-case ONLY in raw WebSocket requests for v4 (check OBS docs for exact format)
+- Use kebab-case ONLY in adapter implementations for v4 (internal to adapters)
 - Use camelCase EVERYWHERE in React components and normalized data
-- **Prefer adapter methods** over raw `send()` calls - they handle version differences automatically
+- **Always use adapter methods** - they handle version differences automatically
 
 ## Key Files and Purposes
 
@@ -255,28 +256,10 @@ This catches typos, property naming mismatches, and API version issues.
 
 Ensure OBS Studio is running with WebSocket plugin v4.9.1+ on `localhost:4444` or v5.x on `localhost:4455`.
 
-```javascript
-import { OBSWebSocketClient } from '~/api/obs/websocket-client';
-
-const client = new OBSWebSocketClient();
-await client.connect({ address: 'localhost:4444', password: 'your-password' });
-
-// Request example
-client.send('GetSceneList', {}, (data) => {
-  console.log(data);  // Shows raw kebab-case response
-});
-
-// Event example
-client.on('SwitchScenes', (data) => {
-  console.log(data['scene-name']);  // Raw API returns kebab-case
-});
-```
-
-**Preferred: Using the Adapter (version-agnostic)**
-
 ```typescript
 import { createAdapter } from '~/api/obs/adapters/factory';
 
+// Create adapter with auto-detection
 const adapter = await createAdapter({ address: 'localhost:4455', apiVersion: 'auto' });
 await adapter.connect('localhost:4455', 'your-password');
 
@@ -288,6 +271,10 @@ console.log(scenes.currentProgramSceneName);
 adapter.on('CurrentProgramSceneChanged', (data) => {
   console.log(data.sceneName);
 });
+
+// Scene item control
+await adapter.setSceneItemEnabled('MyScene', 1, true);
+await adapter.setSceneItemIndex('MyScene', 1, 0); // Move to back
 ```
 
 ## Project Structure
@@ -357,12 +344,11 @@ The app always runs in portable mode - all data is stored relative to the execut
 
 ## Summary
 
-1. **Always**: Use kebab-case in raw WebSocket requests, camelCase everywhere else
-2. **Prefer**: Adapter methods over raw `send()` for version-agnostic code
-3. **Always**: Providers call `camelCaseKeys(data)` on all API responses (v4 only)
-4. **Check**: OBS docs for exact parameter names (they're inconsistent)
-5. **Debug**: Enable console to see Proxy warnings about undefined properties
-6. **Electron vs Web**: Use `window.ipcRenderer` to detect mode; config via IPC (Electron) or localStorage (Web)
-7. **v4 Reference**: https://github.com/obsproject/obs-websocket/blob/4.x-compat/docs/generated/protocol.md
-8. **v5 Reference**: https://github.com/obsproject/obs-websocket/blob/master/docs/generated/protocol.md
+1. **Always**: Use adapter methods for all OBS WebSocket communication
+2. **Always**: Providers call `camelCaseKeys(data)` on all API responses (v4 only)
+3. **Check**: OBS docs for exact parameter names (they're inconsistent between v4/v5)
+4. **Debug**: Enable console to see Proxy warnings about undefined properties
+5. **Electron vs Web**: Use `window.ipcRenderer` to detect mode; config via IPC (Electron) or localStorage (Web)
+6. **v4 Reference**: https://github.com/obsproject/obs-websocket/blob/4.x-compat/docs/generated/protocol.md
+7. **v5 Reference**: https://github.com/obsproject/obs-websocket/blob/master/docs/generated/protocol.md
 

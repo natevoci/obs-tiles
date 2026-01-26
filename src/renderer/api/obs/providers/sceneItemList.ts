@@ -1,5 +1,10 @@
 import { createProvider } from '../createProvider'
 import { ConnectionPublic } from '../types'
+import { SceneItem } from '../abstraction/types'
+
+// ============================================================================
+// Provider
+// ============================================================================
 
 export const sceneItemList = (obs: ConnectionPublic, {
 	scene,
@@ -36,3 +41,17 @@ export const sceneItemList = (obs: ConnectionPublic, {
 		})
 	}
 })
+
+// ============================================================================
+// Typed Hook
+// ============================================================================
+
+/**
+ * Get the list of scene items for a specific scene
+ */
+export const useSceneItemList = (
+	obs: ConnectionPublic,
+	args: { scene: string }
+): SceneItem[] | undefined => {
+	return obs.useDataProvider('sceneItemList', args)
+}

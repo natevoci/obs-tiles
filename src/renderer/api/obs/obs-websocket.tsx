@@ -109,7 +109,6 @@ export const OBSWebsocketProvider = ({ children }: OBSWebsocketProviderProps) =>
 						apiVersion: undefined,
 						disconnect: () => {},
 						reconnect: () => {},
-						send: () => {},
 						on: () => {},
 						useDataProvider: () => undefined,
 						action: () => {},
@@ -209,21 +208,6 @@ export const OBSWebsocketProvider = ({ children }: OBSWebsocketProviderProps) =>
 
 				connection.public.reconnect = () => {
 					connect()
-				}
-
-				// Legacy send method for backward compatibility
-				connection.public.send = (requestName, args, onSucceeded, onFailed) => {
-					if (connection.adapter) {
-						connection.adapter.sendRaw(requestName, args)
-							.then((data) => onSucceeded?.(data))
-							.catch((err) => {
-								if (onFailed) {
-									onFailed(err)
-								} else {
-									console.debug(`Error calling '${requestName}'`, err)
-								}
-							})
-					}
 				}
 
 				connection.public.on = (event: string, listener: Function) => {

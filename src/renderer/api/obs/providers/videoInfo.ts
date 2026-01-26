@@ -1,5 +1,10 @@
 import { createProvider } from '../createProvider'
 import { ConnectionPublic } from '../types'
+import { VideoSettings } from '../abstraction/types'
+
+// ============================================================================
+// Provider
+// ============================================================================
 
 export const videoInfo = (obs: ConnectionPublic, {
 	refreshTime = 60000,
@@ -25,3 +30,17 @@ export const videoInfo = (obs: ConnectionPublic, {
 		}
 	}
 })
+
+// ============================================================================
+// Typed Hook
+// ============================================================================
+
+/**
+ * Get video settings (resolution, FPS)
+ */
+export const useVideoInfo = (
+	obs: ConnectionPublic,
+	args?: { refreshTime?: number }
+): VideoSettings | undefined => {
+	return obs.useDataProvider('videoInfo', args)
+}

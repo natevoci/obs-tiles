@@ -1,7 +1,7 @@
 import styled from 'styled-components'
 import { CircularProgress } from '@material-ui/core'
 
-import { useObs } from '~/api/obs'
+import { useObs, useCurrentScene, useTransition, useSceneImage } from '~/api/obs'
 
 export const SceneWrapper = styled.div`
 	display: flex;
@@ -101,14 +101,14 @@ export const SceneButton = ({
 
 	const obs = useObs({ connection })
 
-	const currentScene = obs.useDataProvider('currentScene')
+	const currentScene = useCurrentScene(obs)
 	
-	const transition = obs.useDataProvider('transition')
+	const transition = useTransition(obs)
 	
-	const isPrevScene = currentScene?.name === scene && transition?.fromScene === scene
-	const isCurrentScene = transition?.toScene === scene || currentScene?.name === scene
+	const isPrevScene = currentScene?.name === scene && transition?.fromSceneName === scene
+	const isCurrentScene = transition?.toSceneName === scene || currentScene?.name === scene
 	
-	const imageData = obs.useDataProvider('sceneImage', {
+	const imageData = useSceneImage(obs, {
 		scene,
 		tileSize: Math.min(size, 20),
 		refreshTime: isCurrentScene ? 40 : 100,
@@ -145,7 +145,7 @@ export const SceneButton = ({
 					) : null}
 				</TextOverlay>
 				<StyledImg
-					src={imageData}
+					src={imageData ?? undefined}
 					$size={size}
 				/>
 				<ImgOverlay

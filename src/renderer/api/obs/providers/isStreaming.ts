@@ -2,6 +2,22 @@ import { createProvider } from '../createProvider'
 import { ConnectionPublic } from '../types'
 import { StreamStateChangedEvent } from '../abstraction/types'
 
+// ============================================================================
+// Types
+// ============================================================================
+
+export interface StreamingState {
+	isStarted: boolean
+	isStopped: boolean
+	isStarting: boolean
+	isStopping: boolean
+	isLoading: boolean
+}
+
+// ============================================================================
+// Provider
+// ============================================================================
+
 export const isStreaming = (obs: ConnectionPublic) => createProvider({
 	init: (onChanged) => {
 		const setData = (state: string) => {
@@ -44,3 +60,14 @@ export const isStreaming = (obs: ConnectionPublic) => createProvider({
 		setData('')
 	},
 })
+
+// ============================================================================
+// Typed Hook
+// ============================================================================
+
+/**
+ * Get streaming state
+ */
+export const useIsStreaming = (obs: ConnectionPublic): StreamingState => {
+	return obs.useDataProvider('isStreaming')
+}

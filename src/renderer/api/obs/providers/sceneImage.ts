@@ -1,6 +1,10 @@
 import { createProvider } from '../createProvider'
 import { ConnectionPublic } from '../types'
 
+// ============================================================================
+// Provider
+// ============================================================================
+
 export const sceneImage = (obs: ConnectionPublic, {
 	scene,
 	tileSize,
@@ -42,3 +46,17 @@ export const sceneImage = (obs: ConnectionPublic, {
 		}
 	}
 })
+
+// ============================================================================
+// Typed Hook
+// ============================================================================
+
+/**
+ * Get a screenshot/thumbnail of a scene or source
+ */
+export const useSceneImage = (
+	obs: ConnectionPublic,
+	args: { scene: string; tileSize: number; refreshTime?: number }
+): string | null | undefined => {
+	return obs.useDataProvider('sceneImage', args)
+}

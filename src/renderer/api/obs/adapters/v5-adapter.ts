@@ -281,6 +281,14 @@ export class V5Adapter implements OBSAdapter {
 		})
 	}
 
+	async setSceneItemIndex(sceneName: string, sceneItemId: number, sceneItemIndex: number): Promise<void> {
+		await this._sendRequest('SetSceneItemIndex', {
+			sceneName,
+			sceneItemId,
+			sceneItemIndex,
+		})
+	}
+
 	// =========================================================================
 	// Recording
 	// =========================================================================

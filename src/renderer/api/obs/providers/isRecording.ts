@@ -2,6 +2,23 @@ import { createProvider } from '../createProvider'
 import { ConnectionPublic } from '../types'
 import { RecordStateChangedEvent } from '../abstraction/types'
 
+// ============================================================================
+// Types
+// ============================================================================
+
+export interface RecordingState {
+	isStarted: boolean
+	isStopped: boolean
+	isStarting: boolean
+	isStopping: boolean
+	isPaused: boolean
+	isLoading: boolean
+}
+
+// ============================================================================
+// Provider
+// ============================================================================
+
 export const isRecording = (obs: ConnectionPublic) => createProvider({
 	init: (onChanged) => {
 		const setData = (state: string) => {
@@ -55,3 +72,14 @@ export const isRecording = (obs: ConnectionPublic) => createProvider({
 		setData('')
 	},
 })
+
+// ============================================================================
+// Typed Hook
+// ============================================================================
+
+/**
+ * Get recording state
+ */
+export const useIsRecording = (obs: ConnectionPublic): RecordingState => {
+	return obs.useDataProvider('isRecording')
+}

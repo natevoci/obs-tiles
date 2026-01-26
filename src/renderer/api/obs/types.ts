@@ -10,8 +10,6 @@ export interface ConnectionPublic {
 	apiVersion?: OBSAdapterVersion
 	disconnect: () => void
 	reconnect: () => void
-	/** @deprecated Use adapter methods instead. Raw send for backward compatibility */
-	send: (requestName: string, args?: any, onSucceeded?: Function, onFailed?: Function) => void
 	on: (event: string, listener: Function) => void
 	useDataProvider: (name: string, args?: any) => any
 	action: (name: string, args?: any) => void
