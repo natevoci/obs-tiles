@@ -47,19 +47,19 @@ export const sceneItemProperties = (
 		fetchProperties()
 
 		// Unified event names
-		obs.on('SceneItemEnableStateChanged', (data: any) => {
+		obs.adapter?.on('SceneItemEnableStateChanged', (data: any) => {
 			if (data.sceneName === scene && (data.sceneItemId === sceneItemId || !sceneItemId)) {
 				fetchProperties()
 			}
 		})
 
-		obs.on('SceneItemLockStateChanged', (data: any) => {
+		obs.adapter?.on('SceneItemLockStateChanged', (data: any) => {
 			if (data.sceneName === scene && (data.sceneItemId === sceneItemId || !sceneItemId)) {
 				fetchProperties()
 			}
 		})
 
-		obs.on('SceneItemTransformChanged', (data: any) => {
+		obs.adapter?.on('SceneItemTransformChanged', (data: any) => {
 			if (data.sceneName === scene && (data.sceneItemId === sceneItemId || !sceneItemId)) {
 				fetchProperties()
 			}

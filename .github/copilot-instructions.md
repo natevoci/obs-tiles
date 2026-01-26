@@ -89,10 +89,18 @@ obs.adapter?.setSceneItemEnabled(sceneName, sceneItemId, true)
 obs.adapter?.setSceneItemIndex(sceneName, sceneItemId, newIndex)
 ```
 
+**Event subscriptions should only be used in providers (not components):**
+
+Providers subscribe to events and expose type-safe data to components via typed hooks.
+
 ```typescript
-// Events use unified v5-style names:
-obs.on('CurrentProgramSceneChanged', (data) => { ... })
-obs.on('SceneItemEnableStateChanged', (data) => { ... })
+// INSIDE PROVIDERS ONLY - use adapter.on for event subscriptions:
+adapter.on('CurrentProgramSceneChanged', (data) => { ... })
+adapter.on('SceneItemEnableStateChanged', (data) => { ... })
+
+// COMPONENTS use typed hooks instead:
+const currentScene = useCurrentScene(obs)  // Type: CurrentSceneData | undefined
+const sceneList = useSceneList(obs)        // Type: SceneListData | undefined
 ```
 
 ## CRITICAL: Two-Level Property Naming Convention
@@ -267,7 +275,7 @@ await adapter.connect('localhost:4455', 'your-password');
 const scenes = await adapter.getSceneList();
 console.log(scenes.currentProgramSceneName);
 
-// Version-agnostic events
+// Event subscriptions (used by providers, not components directly)
 adapter.on('CurrentProgramSceneChanged', (data) => {
   console.log(data.sceneName);
 });
@@ -345,10 +353,11 @@ The app always runs in portable mode - all data is stored relative to the execut
 ## Summary
 
 1. **Always**: Use adapter methods for all OBS WebSocket communication
-2. **Always**: Providers call `camelCaseKeys(data)` on all API responses (v4 only)
-3. **Check**: OBS docs for exact parameter names (they're inconsistent between v4/v5)
-4. **Debug**: Enable console to see Proxy warnings about undefined properties
-5. **Electron vs Web**: Use `window.ipcRenderer` to detect mode; config via IPC (Electron) or localStorage (Web)
+2. **Always**: Event subscriptions (`adapter.on`) belong in providers only - components use typed hooks
+3. **Always**: Providers call `camelCaseKeys(data)` on all API responses (v4 only)
+4. **Check**: OBS docs for exact parameter names (they're inconsistent between v4/v5)
+5. **Debug**: Enable console to see Proxy warnings about undefined properties
+6. **Electron vs Web**: Use `window.ipcRenderer` to detect mode; config via IPC (Electron) or localStorage (Web)
 6. **v4 Reference**: https://github.com/obsproject/obs-websocket/blob/4.x-compat/docs/generated/protocol.md
 7. **v5 Reference**: https://github.com/obsproject/obs-websocket/blob/master/docs/generated/protocol.md
 

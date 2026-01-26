@@ -46,7 +46,7 @@ export const isRecording = (obs: ConnectionPublic) => createProvider({
 		}
 
 		// Unified event name
-		obs.on('RecordStateChanged', (data: RecordStateChangedEvent) => {
+		obs.adapter?.on('RecordStateChanged', (data: RecordStateChangedEvent) => {
 			switch (data.outputState) {
 				case 'OBS_WEBSOCKET_OUTPUT_STARTING':
 					setData('starting')

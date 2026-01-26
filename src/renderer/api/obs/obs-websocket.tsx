@@ -109,7 +109,6 @@ export const OBSWebsocketProvider = ({ children }: OBSWebsocketProviderProps) =>
 						apiVersion: undefined,
 						disconnect: () => {},
 						reconnect: () => {},
-						on: () => {},
 						useDataProvider: () => undefined,
 						action: () => {},
 						adapter: undefined,
@@ -208,12 +207,6 @@ export const OBSWebsocketProvider = ({ children }: OBSWebsocketProviderProps) =>
 
 				connection.public.reconnect = () => {
 					connect()
-				}
-
-				connection.public.on = (event: string, listener: Function) => {
-					if (connection.adapter) {
-						connection.adapter.on(event, listener as any)
-					}
 				}
 
 				const useDataProvider = (name: string, args?: any) => {

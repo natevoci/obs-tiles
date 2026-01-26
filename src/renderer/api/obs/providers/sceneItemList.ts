@@ -22,19 +22,19 @@ export const sceneItemList = (obs: ConnectionPublic, {
 		fetchSceneItems()
 
 		// Unified event names
-		obs.on('SceneItemCreated', (data: any) => {
+		obs.adapter?.on('SceneItemCreated', (data: any) => {
 			if (data.sceneName === scene) {
 				fetchSceneItems()
 			}
 		})
 
-		obs.on('SceneItemRemoved', (data: any) => {
+		obs.adapter?.on('SceneItemRemoved', (data: any) => {
 			if (data.sceneName === scene) {
 				fetchSceneItems()
 			}
 		})
 
-		obs.on('SceneItemListReindexed', (data: any) => {
+		obs.adapter?.on('SceneItemListReindexed', (data: any) => {
 			if (data.sceneName === scene) {
 				fetchSceneItems()
 			}

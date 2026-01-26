@@ -37,27 +37,27 @@ export const sceneList = (obs: ConnectionPublic) => createProvider({
 		fetchSceneList()
 
 		// Unified event names
-		obs.on('CurrentProgramSceneChanged', () => {
+		obs.adapter?.on('CurrentProgramSceneChanged', () => {
 			fetchSceneList()
 		})
 
-		obs.on('SceneListChanged', () => {
+		obs.adapter?.on('SceneListChanged', () => {
 			fetchSceneList()
 		})
 
-		obs.on('SceneItemCreated', () => {
+		obs.adapter?.on('SceneItemCreated', () => {
 			fetchSceneList()
 		})
 
-		obs.on('SceneItemRemoved', () => {
+		obs.adapter?.on('SceneItemRemoved', () => {
 			fetchSceneList()
 		})
 
-		obs.on('SceneItemEnableStateChanged', () => {
+		obs.adapter?.on('SceneItemEnableStateChanged', () => {
 			fetchSceneList()
 		})
 
-		obs.on('SceneItemListReindexed', () => {
+		obs.adapter?.on('SceneItemListReindexed', () => {
 			fetchSceneList()
 		})
 	}

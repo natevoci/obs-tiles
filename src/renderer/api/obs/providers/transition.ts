@@ -9,10 +9,10 @@ import { TransitionEvent } from '../abstraction/types'
 export const transition = (obs: ConnectionPublic) => createProvider({
 	init: (onChanged) => {
 		// Unified event names
-		obs.on('SceneTransitionStarted', (data: any) => {
+		obs.adapter?.on('SceneTransitionStarted', (data: any) => {
 			onChanged(data)
 		})
-		obs.on('SceneTransitionEnded', () => {
+		obs.adapter?.on('SceneTransitionEnded', () => {
 			onChanged(null)
 		})
 	},

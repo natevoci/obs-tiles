@@ -26,7 +26,7 @@ export const currentScene = (obs: ConnectionPublic) => createProvider({
 			})
 		}
 		// Listen for unified event name (both v4 and v5 adapters emit this)
-		obs.on('CurrentProgramSceneChanged', (data: any) => {
+		obs.adapter?.on('CurrentProgramSceneChanged', (data: any) => {
 			onChanged({
 				name: data.sceneName,
 				sceneUuid: data.sceneUuid,

@@ -10,7 +10,6 @@ export interface ConnectionPublic {
 	apiVersion?: OBSAdapterVersion
 	disconnect: () => void
 	reconnect: () => void
-	on: (event: string, listener: Function) => void
 	useDataProvider: (name: string, args?: any) => any
 	action: (name: string, args?: any) => void
 	/** The underlying adapter for direct access to typed methods */

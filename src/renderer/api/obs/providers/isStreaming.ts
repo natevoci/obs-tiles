@@ -40,7 +40,7 @@ export const isStreaming = (obs: ConnectionPublic) => createProvider({
 		}
 
 		// Unified event name
-		obs.on('StreamStateChanged', (data: StreamStateChangedEvent) => {
+		obs.adapter?.on('StreamStateChanged', (data: StreamStateChangedEvent) => {
 			switch (data.outputState) {
 				case 'OBS_WEBSOCKET_OUTPUT_STARTING':
 					setData('starting')
