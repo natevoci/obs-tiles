@@ -25,6 +25,21 @@ interface Connection {
 
 const obsContext = React.createContext<{ getConnection: (name: string) => Connection | null }>({ getConnection: () => null })
 
+/**
+ * Recursively check if any tiles in the config contain audioInput tiles
+ * This is used to determine if we need to subscribe to InputVolumeMeters events
+ */
+function hasAudioInputTiles(tiles: any[]): boolean {
+	if (!Array.isArray(tiles)) return false
+	
+	for (const tile of tiles) {
+		if (!tile) continue
+		if (tile.audioInput) return true
+		if (tile.tiles && hasAudioInputTiles(tile.tiles)) return true
+	}
+	return false
+}
+
 interface OBSWebsocketProviderProps {
 	children: React.ReactNode
 }
@@ -131,11 +146,19 @@ export const OBSWebsocketProvider = ({ children }: OBSWebsocketProviderProps) =>
 					if (apiVersionConfig === 'v4') forceVersion = 4
 					else if (apiVersionConfig === 'v5') forceVersion = 5
 
+					// Check if we need to subscribe to InputVolumeMeters events
+					const subscribeVolumeMeters = hasAudioInputTiles(settings.tiles || [])
+					if (subscribeVolumeMeters) {
+						console.log('[obs-websocket] AudioInput tiles detected, will subscribe to InputVolumeMeters')
+					}
+
 					try {
+						console.debug(`[obs-websocket] Connecting to '${connectionName}' at ${connSettings.address} (forceVersion=${forceVersion})`)
 						const adapter = await createAdapter({
 							address: connSettings.address,
 							password: password || undefined,
 							forceVersion,
+							subscribeVolumeMeters,
 						})
 
 						connection.adapter = adapter

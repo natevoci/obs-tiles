@@ -38,6 +38,13 @@ export const DEFAULT_CONFIG = [
               },
             ],
           },
+          {
+            audioInput: {
+              inputName: "Mic/Aux",
+              maxVolume: 1.0
+            },
+            title: "Microphone"
+          },
         ],
       },
     ]

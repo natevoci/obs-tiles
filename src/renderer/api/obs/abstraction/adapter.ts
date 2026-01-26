@@ -50,6 +50,10 @@ export type OBSEventType =
 	// Outputs
 	| 'StreamStateChanged'
 	| 'RecordStateChanged'
+	// Inputs
+	| 'InputVolumeChanged'
+	| 'InputMuteStateChanged'
+	| 'InputVolumeMeters'
 	// Transitions
 	| 'SceneTransitionStarted'
 	| 'SceneTransitionEnded'
@@ -211,6 +215,43 @@ export interface OBSAdapter {
 	toggleStream(): Promise<void>
 
 	// =========================================================================
+	// Inputs (Audio)
+	// =========================================================================
+
+	/**
+	 * Get the volume of an input
+	 * @param inputName - Name of the input
+	 */
+	getInputVolume(inputName: string): Promise<{ inputVolumeMul: number; inputVolumeDb: number }>
+
+	/**
+	 * Set the volume of an input
+	 * @param inputName - Name of the input
+	 * @param inputVolumeMul - Volume multiplier (0.0 to 20.0, where 1.0 = 0dB)
+	 * @param inputVolumeDb - Volume in dB (alternative to multiplier)
+	 */
+	setInputVolume(inputName: string, inputVolumeMul?: number, inputVolumeDb?: number): Promise<void>
+
+	/**
+	 * Get the mute state of an input
+	 * @param inputName - Name of the input
+	 */
+	getInputMute(inputName: string): Promise<{ inputMuted: boolean }>
+
+	/**
+	 * Set the mute state of an input
+	 * @param inputName - Name of the input
+	 * @param inputMuted - Whether the input should be muted
+	 */
+	setInputMute(inputName: string, inputMuted: boolean): Promise<void>
+
+	/**
+	 * Toggle the mute state of an input
+	 * @param inputName - Name of the input
+	 */
+	toggleInputMute(inputName: string): Promise<{ inputMuted: boolean }>
+
+	// =========================================================================
 	// Stats & Info
 	// =========================================================================
 
@@ -297,4 +338,6 @@ export interface AdapterConnectionOptions {
 	password?: string
 	/** Force a specific API version instead of auto-detecting */
 	forceVersion?: OBSAdapterVersion | 'auto'
+	/** Subscribe to high-volume InputVolumeMeters events (v5 only) */
+	subscribeVolumeMeters?: boolean
 }

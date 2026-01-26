@@ -73,6 +73,7 @@ export class V5Adapter implements OBSAdapter {
 	private pendingRequests: Map<string, { resolve: Function; reject: Function }> = new Map()
 	private helloData: any = null
 	private password: string = ''
+	private subscribeVolumeMeters: boolean = false
 
 	get connected(): boolean {
 		return this._connected
@@ -86,8 +87,10 @@ export class V5Adapter implements OBSAdapter {
 	// Connection
 	// =========================================================================
 
-	async connect(address: string, password?: string): Promise<void> {
+	async connect(address: string, password?: string, options?: { subscribeVolumeMeters?: boolean }): Promise<void> {
+		console.debug('[v5-adapter] Starting connection to', address)
 		this.password = password || ''
+		this.subscribeVolumeMeters = options?.subscribeVolumeMeters ?? false
 		await this._openSocket(address)
 	}
 
@@ -160,10 +163,18 @@ export class V5Adapter implements OBSAdapter {
 	}
 
 	private async _identify(): Promise<void> {
+		// Build event subscriptions
+		let eventSubscriptions = EventSubscription.All | EventSubscription.SceneItemTransformChanged
+		
+		// Add high-volume InputVolumeMeters subscription if requested
+		if (this.subscribeVolumeMeters) {
+			eventSubscriptions |= EventSubscription.InputVolumeMeters
+			console.debug('[v5-adapter] Including InputVolumeMeters subscription')
+		}
+		
 		const identifyData: any = {
 			rpcVersion: this.helloData.rpcVersion || 1,
-			// Subscribe to all standard events
-			eventSubscriptions: EventSubscription.All | EventSubscription.SceneItemTransformChanged,
+			eventSubscriptions,
 		}
 
 		// Handle authentication if required
@@ -335,6 +346,44 @@ export class V5Adapter implements OBSAdapter {
 
 	async toggleStream(): Promise<void> {
 		await this._sendRequest('ToggleStream', {})
+	}
+
+	// =========================================================================
+	// Inputs (Audio)
+	// =========================================================================
+
+	async getInputVolume(inputName: string): Promise<{ inputVolumeMul: number; inputVolumeDb: number }> {
+		const data = await this._sendRequest('GetInputVolume', { inputName })
+		return {
+			inputVolumeMul: data.inputVolumeMul,
+			inputVolumeDb: data.inputVolumeDb,
+		}
+	}
+
+	async setInputVolume(inputName: string, inputVolumeMul?: number, inputVolumeDb?: number): Promise<void> {
+		await this._sendRequest('SetInputVolume', {
+			inputName,
+			...(inputVolumeMul !== undefined && { inputVolumeMul }),
+			...(inputVolumeDb !== undefined && { inputVolumeDb }),
+		})
+	}
+
+	async getInputMute(inputName: string): Promise<{ inputMuted: boolean }> {
+		const data = await this._sendRequest('GetInputMute', { inputName })
+		return {
+			inputMuted: data.inputMuted,
+		}
+	}
+
+	async setInputMute(inputName: string, inputMuted: boolean): Promise<void> {
+		await this._sendRequest('SetInputMute', { inputName, inputMuted })
+	}
+
+	async toggleInputMute(inputName: string): Promise<{ inputMuted: boolean }> {
+		const data = await this._sendRequest('ToggleInputMute', { inputName })
+		return {
+			inputMuted: data.inputMuted,
+		}
 	}
 
 	// =========================================================================

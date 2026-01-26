@@ -1,5 +1,6 @@
 import styled from 'styled-components'
 
+import { AudioInputTile } from './AudioInputTile'
 import { Button } from './Button'
 import { SceneButton } from './SceneButton'
 import { SceneItemButton } from './SceneItemButton'
@@ -81,12 +82,20 @@ export interface TextTileConfig extends BaseTileConfig {
 	text: string;
 }
 
+export interface AudioInputTileConfig extends BaseTileConfig {
+	audioInput: {
+		inputName: string
+		maxVolume?: number
+	}
+}
+
 type TileConfig =
 	| GroupTileConfig
 	| SceneButtonTileConfig
 	| SceneItemButtonTileConfig
 	| ButtonTileConfig
-	| TextTileConfig;
+	| TextTileConfig
+	| AudioInputTileConfig;
 
 
 // Common props for all tile types
@@ -166,6 +175,19 @@ function isTextTileConfig(tile: TileConfig): tile is TextTileConfig {
 	return valid;
 }
 
+function isAudioInputTileConfig(tile: TileConfig): tile is AudioInputTileConfig {
+	const valid =
+		typeof tile === 'object' &&
+		'audioInput' in tile &&
+		typeof (tile as any).audioInput === 'object' &&
+		(tile as any).audioInput !== null &&
+		typeof (tile as any).audioInput.inputName === 'string';
+	if (valid) {
+		warnExtraProps(tile, ['audioInput', ...COMMON_TILE_PROPS], 'AudioInputTileConfig');
+	}
+	return valid;
+}
+
 interface TilesProps {
 	tiles?: TileConfig[]
 	connection?: string
@@ -220,6 +242,18 @@ export const Tiles = ({
 		if (isTextTileConfig(tile)) {
 			return (
 				<Text key={tile.text} {...inheritableProps} {...tile} text={tile.text} />
+			);
+		}
+
+		if (isAudioInputTileConfig(tile)) {
+			return (
+				<AudioInputTile 
+					key={tile.audioInput.inputName} 
+					connection={connection} 
+					tileSize={String(tileSize)} 
+					audioInput={tile.audioInput} 
+					title={tile.title} 
+				/>
 			);
 		}
 

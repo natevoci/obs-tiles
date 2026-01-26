@@ -17,22 +17,27 @@ import { V5Adapter } from './v5-adapter'
  */
 const VERSION_DETECTION_TIMEOUT = 2000
 
+window.addEventListener("beforeunload", function() {
+	// pause the deugger to prevent indefinite reloads if vite HMR is enabled.
+	debugger;
+}, false)
+
 /**
  * Create an OBS WebSocket adapter with auto-detection or forced version
  */
 export async function createAdapter(options: AdapterConnectionOptions): Promise<OBSAdapter> {
-	const { address, password, forceVersion = 'auto' } = options
+	const { address, password, forceVersion = 'auto', subscribeVolumeMeters = false } = options
 
 	if (forceVersion === 4) {
 		return createV4Adapter(address, password)
 	}
 
 	if (forceVersion === 5) {
-		return createV5Adapter(address, password)
+		return createV5Adapter(address, password, subscribeVolumeMeters)
 	}
 
 	// Auto-detect version
-	return detectAndCreateAdapter(address, password)
+	return detectAndCreateAdapter(address, password, subscribeVolumeMeters)
 }
 
 async function createV4Adapter(address: string, password?: string): Promise<OBSAdapter> {
@@ -41,16 +46,16 @@ async function createV4Adapter(address: string, password?: string): Promise<OBSA
 	return adapter
 }
 
-async function createV5Adapter(address: string, password?: string): Promise<OBSAdapter> {
+async function createV5Adapter(address: string, password?: string, subscribeVolumeMeters: boolean = false): Promise<OBSAdapter> {
 	const adapter = new V5Adapter()
-	await adapter.connect(address, password)
+	await adapter.connect(address, password, { subscribeVolumeMeters })
 	return adapter
 }
 
 /**
  * Auto-detect the OBS WebSocket version by checking the first message
  */
-async function detectAndCreateAdapter(address: string, password?: string): Promise<OBSAdapter> {
+async function detectAndCreateAdapter(address: string, password?: string, subscribeVolumeMeters: boolean = false): Promise<OBSAdapter> {
 	return new Promise((resolve, reject) => {
 		const wsUrl = `ws://${address}`
 		let socket: WebSocket | null = null
@@ -69,7 +74,7 @@ async function detectAndCreateAdapter(address: string, password?: string): Promi
 
 			try {
 				if (version === 5) {
-					resolve(await createV5Adapter(address, password))
+					resolve(await createV5Adapter(address, password, subscribeVolumeMeters))
 				} else {
 					resolve(await createV4Adapter(address, password))
 				}

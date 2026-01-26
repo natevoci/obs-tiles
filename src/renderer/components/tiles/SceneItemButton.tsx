@@ -1,14 +1,6 @@
 import React from 'react';
 import { useObs, useSceneItemProperties, useSceneItemList, useSceneImage } from '~/api/obs';
-import {
-	SceneWrapper,
-	SelectionIndicator,
-	TextOverlay,
-	StyledCircularProgress,
-	StyledImg,
-	ImgOverlay,
-	Paragraph,
-} from './SceneButton';
+import { TileWrapper, TileImage, StyledCircularProgress } from './TileWrapper';
 import { useClickHandler } from './useClickHandler';
 import type { SceneItemButtonTileConfig } from './Tiles';
 
@@ -76,44 +68,30 @@ export const SceneItemButton = ({
 		delay: 600,
 	})
 
-	return (
+	const overlay = !obs.connected ? (
 		<>
-			<SelectionIndicator
-				data-elementtype='SelectionIndicator'
-				$isSelected={isSelected}
-			/>
-			<SceneWrapper
-				data-elementtype='SceneWrapper'
-				{...buttonEventListeners}
-			>
-				<TextOverlay
-					$size={size}
-				>
-					{!obs.connected ? (
-						<>
-							{obs.failedConnection ?? 'Connecting...'}
-							{obs.connecting ? (
-								<StyledCircularProgress />
-							) : null}
-						</>
-					) : !isVisible ? (
-						<>
-							<p>Disabled</p>
-							{click !== 'toggleVisible' && longPress === 'toggleVisible' ? (
-								<p><em>Hold to enable</em></p>
-							) : null}
-						</>
-					) : null}
-				</TextOverlay>
-				<StyledImg
-					src={imageData ?? undefined}
-					$size={size}
-				/>
-				<ImgOverlay
-					$size={size}
-				/>
-				<Paragraph>{title ?? item}</Paragraph>
-			</SceneWrapper>
+			{obs.failedConnection ?? 'Connecting...'}
+			{obs.connecting ? <StyledCircularProgress /> : null}
 		</>
+	) : !isVisible ? (
+		<>
+			<p>Disabled</p>
+			{click !== 'toggleVisible' && longPress === 'toggleVisible' ? (
+				<p><em>Hold to enable</em></p>
+			) : null}
+		</>
+	) : null
+
+	return (
+		<TileWrapper
+			size={size}
+			label={title ?? item}
+			isSelected={isSelected}
+			eventHandlers={buttonEventListeners}
+			elementType='SceneWrapper'
+			overlay={overlay}
+		>
+			<TileImage src={imageData ?? undefined} $size={size} />
+		</TileWrapper>
 	)
 }

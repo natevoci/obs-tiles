@@ -54,6 +54,9 @@ const V4_TO_V5_EVENT_MAP: Record<string, OBSEventType> = {
 	'TransitionVideoEnd': 'SceneTransitionVideoEnded',
 	'SwitchTransition': 'CurrentSceneTransitionChanged',
 	'TransitionDurationChanged': 'CurrentSceneTransitionDurationChanged',
+	// Input events
+	'SourceVolumeChanged': 'InputVolumeChanged',
+	'SourceMuteStateChanged': 'InputMuteStateChanged',
 }
 
 /**
@@ -90,6 +93,7 @@ export class V4Adapter implements OBSAdapter {
 	// =========================================================================
 
 	async connect(address: string, password?: string): Promise<void> {
+		console.debug('[v4-adapter] Starting connection to', address)
 		await this._openSocket(address)
 		await this._authenticate(password || '')
 	}
@@ -118,6 +122,7 @@ export class V4Adapter implements OBSAdapter {
 				this.socket.addEventListener('open', onOpen)
 
 				this.socket.addEventListener('message', (event) => {
+					console.debug('[v4-adapter] Message received:', event.data)
 					this._handleMessage(JSON.parse(event.data))
 				})
 
@@ -127,6 +132,7 @@ export class V4Adapter implements OBSAdapter {
 					this._emit('ConnectionClosed', {})
 				})
 			} catch (error) {
+				console.debug('[v4-adapter] Connection exception', error)
 				reject(error)
 			}
 		})
@@ -344,6 +350,57 @@ export class V4Adapter implements OBSAdapter {
 
 	async toggleStream(): Promise<void> {
 		await this._sendRaw('StartStopStreaming', {})
+	}
+
+	// =========================================================================
+	// Inputs (Audio)
+	// =========================================================================
+
+	async getInputVolume(inputName: string): Promise<{ inputVolumeMul: number; inputVolumeDb: number }> {
+		const data = await this._sendRaw('GetVolume', { source: inputName })
+		const normalized = camelCaseKeys(data)
+		
+		// v4 returns 'volume' as multiplier and 'volume-db' as dB
+		return {
+			inputVolumeMul: normalized.volume,
+			inputVolumeDb: normalized.volumeDb ?? (20 * Math.log10(normalized.volume || 0.0001)),
+		}
+	}
+
+	async setInputVolume(inputName: string, inputVolumeMul?: number, inputVolumeDb?: number): Promise<void> {
+		// v4 SetVolume takes 'volume' as multiplier
+		// If dB is provided, convert to multiplier
+		let volume = inputVolumeMul
+		if (volume === undefined && inputVolumeDb !== undefined) {
+			volume = Math.pow(10, inputVolumeDb / 20)
+		}
+		
+		await this._sendRaw('SetVolume', {
+			source: inputName,
+			volume: volume ?? 1.0,
+		})
+	}
+
+	async getInputMute(inputName: string): Promise<{ inputMuted: boolean }> {
+		const data = await this._sendRaw('GetMute', { source: inputName })
+		const normalized = camelCaseKeys(data)
+		
+		return {
+			inputMuted: normalized.muted,
+		}
+	}
+
+	async setInputMute(inputName: string, inputMuted: boolean): Promise<void> {
+		await this._sendRaw('SetMute', {
+			source: inputName,
+			mute: inputMuted,
+		})
+	}
+
+	async toggleInputMute(inputName: string): Promise<{ inputMuted: boolean }> {
+		await this._sendRaw('ToggleMute', { source: inputName })
+		// v4 ToggleMute doesn't return the new state, so we need to get it
+		return this.getInputMute(inputName)
 	}
 
 	// =========================================================================
@@ -597,6 +654,20 @@ export class V4Adapter implements OBSAdapter {
 			case 'TransitionVideoEnd':
 				return {
 					transitionName: data.name,
+				}
+
+			// Input volume/mute events
+			case 'SourceVolumeChanged':
+				return {
+					inputName: data.sourceName,
+					inputVolumeMul: data.volume,
+					inputVolumeDb: data.volumeDb ?? (20 * Math.log10(data.volume || 0.0001)),
+				}
+
+			case 'SourceMuteStateChanged':
+				return {
+					inputName: data.sourceName,
+					inputMuted: data.muted,
 				}
 
 			default:
