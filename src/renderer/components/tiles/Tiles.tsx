@@ -119,8 +119,7 @@ function isGroupTileConfig(tile: TileConfig): tile is GroupTileConfig {
 	const valid =
 		typeof tile === 'object' &&
 		'tiles' in tile &&
-		Array.isArray((tile as any).tiles) &&
-		typeof (tile as any).group === 'string';
+		Array.isArray((tile as any).tiles);
 	if (valid) {
 		warnExtraProps(tile, ['group', 'tiles', 'direction', 'wrap', ...COMMON_TILE_PROPS], 'GroupTileConfig');
 	}

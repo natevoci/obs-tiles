@@ -227,7 +227,9 @@ export const SettingsDialog = ({
 			finalConfigs = [...localConfigs]
 			finalConfigs[localConfigIndex] = parsed
 		} catch (e) {
-			// Invalid JSON, use existing local configs
+			// Show error and keep dialog open to allow correction
+			alert(`Invalid JSON: ${e instanceof Error ? e.message : 'Unknown error'}`)
+			return
 		}
 		// Commit all changes to the provider
 		saveAllConfigs(finalConfigs, localConfigIndex)
