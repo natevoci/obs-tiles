@@ -1,14 +1,5 @@
 import React from 'react'
-
-export interface ConfigItem {
-	name: string
-	connections: Record<string, any>
-	connection: string
-	tileSize: number
-	direction: string
-	tiles: any[]
-	[key: string]: any
-}
+import { ConfigItem } from '../../../shared/types'
 
 interface SettingsContextType {
 	// All configs

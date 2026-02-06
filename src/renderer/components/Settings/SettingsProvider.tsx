@@ -1,8 +1,9 @@
 import React, { ReactNode } from 'react'
 import json5 from 'json5'
 
-import { SettingsContext, ConfigItem } from './SettingsContext'
+import { SettingsContext } from './SettingsContext'
 import { DEFAULT_CONFIG } from '../../../shared/defaults'
+import type { ConfigItem, ConfigFileFormat } from '../../../shared/types'
 
 declare global {
 	interface Window {
@@ -22,23 +23,34 @@ interface SettingsProviderProps {
 }
 
 /**
- * Convert legacy single-config format to new array format
+ * Convert legacy formats to new ConfigFileFormat
  */
-function normalizeConfig(config: any): ConfigItem[] {
+function normalizeConfig(config: any): ConfigFileFormat {
 	if (!config) {
 		return DEFAULT_CONFIG
 	}
 	
-	// Already in new array format
-	if (Array.isArray(config)) {
-		return config
+	// Already in new format
+	if (config.configs && Array.isArray(config.configs) && typeof config.currentConfigIndex === 'number') {
+		return config as ConfigFileFormat
 	}
 	
-	// Legacy single-object format - convert to array
-	return [{
-		name: 'Default',
-		...config,
-	}]
+	// Old array format - convert to new format
+	if (Array.isArray(config)) {
+		return {
+			configs: config,
+			currentConfigIndex: 0
+		}
+	}
+	
+	// Legacy single-object format - convert to new format
+	return {
+		configs: [{
+			name: 'Default',
+			...config,
+		}],
+		currentConfigIndex: 0
+	}
 }
 
 export const SettingsProvider = ({ children }: SettingsProviderProps) => {
@@ -49,7 +61,6 @@ export const SettingsProvider = ({ children }: SettingsProviderProps) => {
 	React.useEffect(() => {
 		const loadConfig = async () => {
 			let rawConfig: any
-			let savedIndex = 0
 			
 			if (window.ipcRenderer) {
 				try {
@@ -66,12 +77,24 @@ export const SettingsProvider = ({ children }: SettingsProviderProps) => {
 						console.error('Failed to parse stored config:', e)
 					}
 				}
-				savedIndex = parseInt(window.localStorage.getItem('currentConfigIndex') || '0', 10)
 			}
 			
 			const normalized = normalizeConfig(rawConfig)
-			setConfigs(normalized)
-			setCurrentConfigIndex(Math.min(savedIndex, normalized.length - 1))
+			setConfigs(normalized.configs)
+			setCurrentConfigIndex(Math.min(normalized.currentConfigIndex, normalized.configs.length - 1))
+			
+			// If we converted from old format, save the new format
+			const wasOldFormat = rawConfig && (Array.isArray(rawConfig) || (!rawConfig.configs && !Array.isArray(rawConfig)))
+			if (wasOldFormat) {
+				console.log('Converting old config format to new format')
+				if (window.ipcRenderer) {
+					window.ipcRenderer.saveConfig(normalized).catch((error) => {
+						console.error('Failed to save converted config:', error)
+					})
+				} else {
+					window.localStorage.setItem('settingsCurrent', JSON.stringify(normalized))
+				}
+			}
 		}
 		
 		loadConfig()
@@ -79,18 +102,21 @@ export const SettingsProvider = ({ children }: SettingsProviderProps) => {
 
 	const saveConfigs = React.useCallback((newConfigs: ConfigItem[], newIndex?: number) => {
 		setConfigs(newConfigs)
+		const indexToSave = newIndex !== undefined ? newIndex : currentConfigIndex
+		
+		const configToSave: ConfigFileFormat = {
+			configs: newConfigs,
+			currentConfigIndex: indexToSave
+		}
 		
 		if (window.ipcRenderer) {
-			window.ipcRenderer.saveConfig(newConfigs).catch((error) => {
+			window.ipcRenderer.saveConfig(configToSave).catch((error) => {
 				console.error('Failed to save config:', error)
 			})
 		} else {
-			window.localStorage.setItem('settingsCurrent', JSON.stringify(newConfigs))
-			if (newIndex !== undefined) {
-				window.localStorage.setItem('currentConfigIndex', String(newIndex))
-			}
+			window.localStorage.setItem('settingsCurrent', JSON.stringify(configToSave))
 		}
-	}, [])
+	}, [currentConfigIndex])
 
 	const handleSetSettingsJSON = React.useCallback((value: string) => {
 		try {
@@ -105,14 +131,24 @@ export const SettingsProvider = ({ children }: SettingsProviderProps) => {
 
 	const selectConfig = React.useCallback((index: number) => {
 		setCurrentConfigIndex(index)
-		if (!window.ipcRenderer) {
-			window.localStorage.setItem('currentConfigIndex', String(index))
+		// Save the entire config with the new index
+		const configToSave: ConfigFileFormat = {
+			configs,
+			currentConfigIndex: index
 		}
-	}, [])
+		
+		if (window.ipcRenderer) {
+			window.ipcRenderer.saveConfig(configToSave).catch((error) => {
+				console.error('Failed to save config:', error)
+			})
+		} else {
+			window.localStorage.setItem('settingsCurrent', JSON.stringify(configToSave))
+		}
+	}, [configs])
 
 	const addConfig = React.useCallback((name: string) => {
 		const newConfig: ConfigItem = {
-			...DEFAULT_CONFIG[0],
+			...DEFAULT_CONFIG.configs[0],
 			name,
 		}
 		const newConfigs = [...configs, newConfig]
