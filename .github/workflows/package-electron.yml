@@ -21,12 +21,13 @@ jobs:
       - name: Check if release exists
         id: check_release
         run: |
-          $release = gh release view ${{ steps.version.outputs.VERSION }} 2>$null
+          gh release view ${{ steps.version.outputs.VERSION }} --json tagName 2>$null
           if ($LASTEXITCODE -eq 0) {
             echo "EXISTS=true" | Out-File -FilePath $env:GITHUB_OUTPUT -Encoding utf8 -Append
           } else {
             echo "EXISTS=false" | Out-File -FilePath $env:GITHUB_OUTPUT -Encoding utf8 -Append
           }
+          exit 0
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
