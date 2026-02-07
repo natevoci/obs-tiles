@@ -1,2 +1,0 @@
-self.addEventListener("install",(()=>{console.log("server-worker install")})),self.addEventListener("activate",(function(e){console.log("server-worker activate"),e.waitUntil(caches.keys().then((e=>Promise.all(e.map((e=>caches.delete(e)))))))})),self.addEventListener("fetch",(e=>{e.request.url.startsWith(self.location.origin)&&e.respondWith(caches.open("obs-tiles-static").then((t=>t.match(e.request).then((s=>s||fetch(e.request).then((s=>(t.put(e.request,s.clone()),s))))))))}));
-//# sourceMappingURL=service-worker.js.map
