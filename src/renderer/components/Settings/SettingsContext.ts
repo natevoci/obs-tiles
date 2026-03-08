@@ -17,6 +17,7 @@ interface SettingsContextType {
 	deleteConfig: (index: number) => void
 	renameConfig: (index: number, newName: string) => void
 	saveAllConfigs: (configs: ConfigItem[], selectedIndex: number) => void
+	updateCurrentConfig: (updater: (config: ConfigItem) => ConfigItem) => void
 }
 
 export const SettingsContext = React.createContext<SettingsContextType>({} as SettingsContextType)

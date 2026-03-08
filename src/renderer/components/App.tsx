@@ -1,6 +1,7 @@
 import { OBSWebsocketProvider } from '~/api/obs'
 import { SettingsProvider } from "~/components/Settings/SettingsProvider"
 import { ThemeProvider } from "~/theme/theme.tsx"
+import { EditModeProvider } from "~/components/EditMode/EditModeContext"
 
 import { Layout } from "./Layout"
 
@@ -11,8 +12,10 @@ export const App = () => {
 		<ThemeProvider>
 			<SettingsProvider>
 				<OBSWebsocketProvider>
-					<Layout>
-					</Layout>
+					<EditModeProvider>
+						<Layout>
+						</Layout>
+					</EditModeProvider>
 				</OBSWebsocketProvider>
 			</SettingsProvider>
 		</ThemeProvider>

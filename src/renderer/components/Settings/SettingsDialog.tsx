@@ -14,9 +14,11 @@ import {
 	MenuItem,
 	FormControl,
 	InputLabel,
+	ButtonGroup,
 } from '@material-ui/core'
 import { makeStyles } from '@material-ui/core/styles'
 import { Close, Add, Delete, Edit } from '@material-ui/icons'
+import { ConfigVisualEditor } from './ConfigVisualEditor'
 
 import { useSettings } from './SettingsContext'
 
@@ -140,6 +142,29 @@ export const SettingsDialog = ({
 	const [renameDialogOpen, setRenameDialogOpen] = React.useState(false)
 	const [newConfigDialogOpen, setNewConfigDialogOpen] = React.useState(false)
 	const [dialogInputValue, setDialogInputValue] = React.useState('')
+	const [editorMode, setEditorMode] = React.useState<'text' | 'visual'>('visual')
+
+	// Parsed config for the visual editor (null when JSON is invalid)
+	const parsedConfig = React.useMemo(() => {
+		try { return JSON.parse(value) } catch { return null }
+	}, [value])
+
+	const handleVisualChange = React.useCallback((config: any) => {
+		setValue(JSON.stringify(config, null, 2))
+	}, [])
+
+	const handleToggleMode = React.useCallback((mode: 'text' | 'visual') => {
+		if (mode === 'visual') {
+			try {
+				JSON.parse(value)
+				setEditorMode('visual')
+			} catch (e) {
+				alert('Fix JSON errors before switching to the visual editor.')
+			}
+		} else {
+			setEditorMode('text')
+		}
+	}, [value])
 
 	// Update text area when switching configs (save current edits to local state first)
 	const updateLocalConfigFromTextArea = React.useCallback(() => {
@@ -294,23 +319,52 @@ export const SettingsDialog = ({
 						>
 							<Delete />
 						</IconButton>
+						<ButtonGroup size="small" variant="outlined" style={{ marginLeft: 'auto' }}>
+							<Button
+								variant={editorMode === 'text' ? 'contained' : 'outlined'}
+								color={editorMode === 'text' ? 'primary' : 'default'}
+								onClick={() => handleToggleMode('text')}
+							>
+								Text
+							</Button>
+							<Button
+								variant={editorMode === 'visual' ? 'contained' : 'outlined'}
+								color={editorMode === 'visual' ? 'primary' : 'default'}
+								onClick={() => handleToggleMode('visual')}
+							>
+								Visual
+							</Button>
+						</ButtonGroup>
 					</ConfigRow>
 					<FlexRow
 						aria-label='Settings text area row'
 						$fillHeight
 					>
-						<StyledTextField
-							id="settings"
-							type="text"
-							multiline
-							fullWidth
-							variant={'filled'}
-							InputProps={{
-								disableUnderline: true
-							}}
-							value={value}
-							onChange={handleChange}
-						/>
+						{editorMode === 'text' ? (
+							<StyledTextField
+								id="settings"
+								type="text"
+								multiline
+								fullWidth
+								variant={'filled'}
+								InputProps={{
+									disableUnderline: true
+								}}
+								value={value}
+								onChange={handleChange}
+							/>
+						) : (
+							parsedConfig != null ? (
+								<ConfigVisualEditor
+									config={parsedConfig}
+									onChange={handleVisualChange}
+								/>
+							) : (
+								<div style={{ padding: 16, color: 'red' }}>
+									Invalid JSON — switch back to Text mode to fix the error.
+								</div>
+							)
+						)}
 					</FlexRow>
 				</FlexColumn>
 			</DialogContent>

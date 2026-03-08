@@ -1,7 +1,10 @@
 import styled from 'styled-components'
+import { IconButton, Tooltip } from '@material-ui/core'
+import { Edit, HighlightOff } from '@material-ui/icons'
 
 import { SettingsButton } from '../Settings/SettingsButton'
 import { useSettings } from '../Settings/SettingsContext'
+import { useEditMode } from '../EditMode/EditModeContext'
 import OBSLogo from '~/assets/obslogo.png?url'
 import { APP_VERSION } from '../../version'
 
@@ -30,17 +33,38 @@ const Version = styled.span`
 	opacity: 0.7;
 `
 
+const RightActions = styled.div`
+	display: flex;
+	align-items: center;
+	gap: 4px;
+	color: ${p => p.theme.text};
+`
+
 export const Footer = () => {
 	const { configs, currentConfigIndex } = useSettings()
 	const configName = configs[currentConfigIndex]?.name || ''
-	
+
+	const { isEditMode, setEditMode } = useEditMode()
+
 	return (
 		<Wrapper>
 			<LogoContainer>
 				<Logo src={OBSLogo} alt="OBS logo" />
 				<Version>v{APP_VERSION} — {configName}</Version>
 			</LogoContainer>
-			<SettingsButton />
+			<RightActions>
+				<Tooltip title={isEditMode ? 'Exit Inline Edit' : 'Inline Edit'}>
+					<IconButton
+						size="small"
+						color="inherit"
+						onClick={() => setEditMode(!isEditMode)}
+						style={{ color: isEditMode ? '#538c61' : p => p.theme.text }}
+					>
+						{isEditMode ? <HighlightOff /> : <Edit />}
+					</IconButton>
+				</Tooltip>
+				<SettingsButton />
+			</RightActions>
 		</Wrapper>
 	)
 }

@@ -8,6 +8,7 @@ import { Scene } from '../abstraction/types'
 
 export interface SceneListData {
 	currentScene: string
+	currentPreviewSceneName?: string
 	scenes: Record<string, Scene>
 }
 
@@ -22,6 +23,7 @@ export const sceneList = (obs: ConnectionPublic) => createProvider({
 				obs.adapter.getSceneList().then((data) => {
 					onChanged({
 						currentScene: data.currentProgramSceneName,
+						currentPreviewSceneName: data.currentPreviewSceneName,
 						scenes: data.scenes.reduce(
 							(prev: Record<string, any>, curr: any) => {
 								prev[curr.sceneName] = curr
@@ -38,6 +40,10 @@ export const sceneList = (obs: ConnectionPublic) => createProvider({
 
 		// Unified event names
 		obs.adapter?.on('CurrentProgramSceneChanged', () => {
+			fetchSceneList()
+		})
+
+		obs.adapter?.on('CurrentPreviewSceneChanged', () => {
 			fetchSceneList()
 		})
 
@@ -68,7 +74,10 @@ export const sceneList = (obs: ConnectionPublic) => createProvider({
 // ============================================================================
 
 /**
- * Get the list of all scenes
+ * Get the list of all scenes.
+ * `currentScene` is the current program scene name.
+ * `currentPreviewSceneName` is set when Studio Mode is active (v5 only).
+ * `scenes` is an object mapping scene names to their details.
  */
 export const useSceneList = (obs: ConnectionPublic): SceneListData | undefined => {
 	return obs.useDataProvider('sceneList')

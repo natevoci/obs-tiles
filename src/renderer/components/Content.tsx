@@ -1,8 +1,9 @@
-import React from 'react'
 import styled from 'styled-components'
 
 import { useSettings } from './Settings/SettingsContext'
 import { Tiles } from './tiles/Tiles'
+import { useEditMode } from './EditMode/EditModeContext'
+import { EditableTiles } from './EditMode/EditableTiles'
 
 const Main = styled.main`
 	padding: ${p => p.theme.grid(1)};
@@ -16,15 +17,21 @@ export const Content = () => {
 		},
 	} = useSettings()
 
+	const { isEditMode } = useEditMode()
+
 	return (
 		<Main
 			data-elementtype='Main'
 		>
-			<Tiles
-				tileSize='10'
-				direction='row'
-				{...tileSettings}
-			/>
+			{isEditMode ? (
+				<EditableTiles />
+			) : (
+				<Tiles
+					{...tileSettings}
+					tileSize={tileSettings.tileSize ?? '10'}
+					direction={tileSettings.direction ?? 'row'}
+				/>
+			)}
 		</Main>
 	)
 }

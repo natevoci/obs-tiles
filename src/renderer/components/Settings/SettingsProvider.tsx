@@ -178,6 +178,15 @@ export const SettingsProvider = ({ children }: SettingsProviderProps) => {
 		setCurrentConfigIndex(selectedIndex)
 	}, [saveConfigs])
 
+	const updateCurrentConfig = React.useCallback((updater: (config: ConfigItem) => ConfigItem) => {
+		setConfigs(prevConfigs => {
+			const newConfigs = [...prevConfigs]
+			newConfigs[currentConfigIndex] = updater(newConfigs[currentConfigIndex])
+			saveConfigs(newConfigs)
+			return newConfigs
+		})
+	}, [currentConfigIndex, saveConfigs])
+
 	if (configs.length === 0) {
 		return null
 	}
@@ -198,6 +207,7 @@ export const SettingsProvider = ({ children }: SettingsProviderProps) => {
 				deleteConfig,
 				renameConfig,
 				saveAllConfigs,
+				updateCurrentConfig,
 			}}
 		>
 			{children}
