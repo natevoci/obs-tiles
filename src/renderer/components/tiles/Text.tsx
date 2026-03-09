@@ -30,6 +30,8 @@ const TextComponents: Record<string, (props: any) => React.ReactElement | null> 
 	'stats': ({
 		obs,
 		tileSize,
+		statsLines,
+		customText,
 	}) => {
 		const size = parseInt(tileSize)
 
@@ -40,6 +42,15 @@ const TextComponents: Record<string, (props: any) => React.ReactElement | null> 
 			return null
 		}
 
+		// Default all lines to shown unless explicitly disabled
+		const show = {
+			fps:           statsLines?.fps           !== false,
+			cpu:           statsLines?.cpu           !== false,
+			memory:        statsLines?.memory        !== false,
+			freeDisk:      statsLines?.freeDisk      !== false,
+			skippedFrames: statsLines?.skippedFrames !== false,
+		}
+
 		const fps = stats.fps || 0
 		const fpsPerc = videoInfo?.fps > 0 ? 100 * fps / videoInfo?.fps : 0
 		const cpuUsage = stats.cpuUsage || 0
@@ -47,17 +58,40 @@ const TextComponents: Record<string, (props: any) => React.ReactElement | null> 
 		const freeDiskSpace = stats.freeDiskSpace || 0
 		const outputSkippedFrames = stats.outputSkippedFrames || 0
 
+		const anyVisible = Object.values(show).some(Boolean) || Boolean(customText)
+
+		// Guard against a fully empty tile — keep a minimum footprint for the
+		// edit-mode overlay controls.
+		if (!anyVisible) {
+			return <StyledText $size={size}><Paragraph $size={size}>&nbsp;</Paragraph></StyledText>
+		}
+
 		return (
-			<StyledText
-				$size={size}
-			>
-				<Paragraph $size={size}>FPS: {fps.toFixed(2)}</Paragraph>
-				<LinearProgress variant='determinate' value={Math.round(fpsPerc)} color={fpsPerc > 80 ? 'primary' : 'secondary'} />
-				<Paragraph $size={size}>CPU: {cpuUsage.toFixed(0)}%</Paragraph>
-				<LinearProgress variant='determinate' value={Math.round(cpuUsage)} color={cpuUsage < 80 ? 'primary' : 'secondary'} />
-				<Paragraph $size={size}>Memory: {formatMB(memoryUsage)}</Paragraph>
-				<Paragraph $size={size}>Free Disk: {formatMB(freeDiskSpace)}</Paragraph>
-				<Paragraph $size={size}>Skipped Frames: {outputSkippedFrames}</Paragraph>
+			<StyledText $size={size}>
+				{show.fps && (
+					<>
+						<Paragraph $size={size}>FPS: {fps.toFixed(2)}</Paragraph>
+						<LinearProgress variant='determinate' value={Math.round(fpsPerc)} color={fpsPerc > 80 ? 'primary' : 'secondary'} />
+					</>
+				)}
+				{show.cpu && (
+					<>
+						<Paragraph $size={size}>CPU: {cpuUsage.toFixed(0)}%</Paragraph>
+						<LinearProgress variant='determinate' value={Math.round(cpuUsage)} color={cpuUsage < 80 ? 'primary' : 'secondary'} />
+					</>
+				)}
+				{show.memory && (
+					<Paragraph $size={size}>Memory: {formatMB(memoryUsage)}</Paragraph>
+				)}
+				{show.freeDisk && (
+					<Paragraph $size={size}>Free Disk: {formatMB(freeDiskSpace)}</Paragraph>
+				)}
+				{show.skippedFrames && (
+					<Paragraph $size={size}>Skipped Frames: {outputSkippedFrames}</Paragraph>
+				)}
+				{customText && (
+					<Paragraph $size={size}>{customText}</Paragraph>
+				)}
 			</StyledText>
 		)
 	},

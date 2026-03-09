@@ -507,7 +507,7 @@ const EditableLeafTile = ({
 		if ('scene' in tile) return <SceneButton {...common} scene={tile.scene} title={tile.title} viewType={tile.viewType} />
 		if ('sceneItem' in tile) return <SceneItemButton {...common} sceneItem={tile.sceneItem} title={tile.title} viewType={tile.viewType} />
 		if ('button' in tile) return <ButtonTile {...common} button={tile.button} title={tile.title} />
-		if ('text' in tile) return <TextTile {...common} text={tile.text} />
+		if ('text' in tile) return <TextTile {...common} text={tile.text} statsLines={tile.statsLines} customText={tile.customText} />
 		if ('audioInput' in tile) return <AudioInputTile {...common} audioInput={tile.audioInput} title={tile.title} viewType={tile.viewType} />
 		return null
 	}

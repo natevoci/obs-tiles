@@ -84,6 +84,20 @@ export interface ButtonTileConfig extends BaseTileConfig {
 
 export interface TextTileConfig extends BaseTileConfig {
 	text: string;
+	/**
+	 * For text='stats': which stat lines to display.
+	 * All lines are shown by default when this property is omitted.
+	 * Set a key to false to hide that line.
+	 */
+	statsLines?: {
+		fps?: boolean
+		cpu?: boolean
+		memory?: boolean
+		freeDisk?: boolean
+		skippedFrames?: boolean
+	}
+	/** Optional custom text rendered below the main tile content. */
+	customText?: string
 }
 
 export interface AudioInputTileConfig extends BaseTileConfig {
@@ -175,7 +189,7 @@ function isTextTileConfig(tile: TileConfig): tile is TextTileConfig {
 		typeof (tile as any).text === 'string' &&
 		!!(tile as any).text;
 	if (valid) {
-		warnExtraProps(tile, ['text', ...COMMON_TILE_PROPS], 'TextTileConfig');
+		warnExtraProps(tile, ['text', 'statsLines', 'customText', ...COMMON_TILE_PROPS], 'TextTileConfig');
 	}
 	return valid;
 }

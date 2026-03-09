@@ -355,6 +355,11 @@ function ButtonForm({ draft, setDraft }: FormProps) {
 }
 
 function TextForm({ draft, setDraft }: FormProps) {
+	const sl = draft.statsLines ?? {}
+	const patchSL = (partial: any) => setDraft({ ...draft, statsLines: { ...sl, ...partial } })
+	// Helper: true unless explicitly false
+	const shown = (key: string) => sl[key] !== false
+
 	return (
 		<FormSection>
 			<TextField
@@ -363,6 +368,38 @@ function TextForm({ draft, setDraft }: FormProps) {
 				onChange={(e) => setDraft({ ...draft, text: e.target.value || undefined })}
 				variant="outlined" size="small" fullWidth
 				helperText={`e.g. "stats"`}
+			/>
+			{draft.text === 'stats' && (
+				<>
+					<Typography variant="caption" color="textSecondary">Visible lines</Typography>
+					{([
+						['fps',           'FPS'],
+						['cpu',           'CPU'],
+						['memory',        'Memory'],
+						['freeDisk',      'Free Disk'],
+						['skippedFrames', 'Skipped Frames'],
+					] as [string, string][]).map(([key, label]) => (
+						<FormControlLabel
+							key={key}
+							control={
+								<Checkbox
+									checked={shown(key)}
+									onChange={(e) => patchSL({ [key]: e.target.checked ? undefined : false })}
+									size="small"
+								/>
+							}
+							label={label}
+						/>
+					))}
+				</>
+			)}
+			<TextField
+				label="Custom Text (optional)"
+				value={draft.customText ?? ''}
+				onChange={(e) => setDraft({ ...draft, customText: e.target.value || undefined })}
+				variant="outlined" size="small" fullWidth
+				multiline
+				rows={2}
 			/>
 			<TextField
 				label="Tile Size"
