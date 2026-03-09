@@ -1,4 +1,4 @@
-import { useObs, useCurrentScene, useTransition, useSceneImage } from '~/api/obs'
+import { useObs, useCurrentScene, useTransition, useSceneImage, useSceneList } from '~/api/obs'
 import { TileWrapper, TileImage, StyledCircularProgress } from './TileWrapper'
 import { CheckboxTile } from './CheckboxTile'
 import type { SceneButtonTileConfig } from './Tiles';
@@ -19,11 +19,19 @@ export const SceneButton = ({
 	const obs = useObs({ connection })
 
 	const currentScene = useCurrentScene(obs)
+	const sceneList = useSceneList(obs)
 	
 	const transition = useTransition(obs)
 	
 	const isPrevScene = currentScene?.name === scene && transition?.fromSceneName === scene
 	const isCurrentScene = transition?.toSceneName === scene || currentScene?.name === scene
+
+	// Suppress the selection overlay when this tile is configured to show the live
+	// program or preview scene — those tiles act as monitors, not scene-switchers,
+	// so a permanent glow would be misleading.
+	const isProgramScene = scene === sceneList?.currentScene
+	const isPreviewScene = scene === sceneList?.currentPreviewSceneName
+	const suppressOverlay = isProgramScene || isPreviewScene
 	
 	const imageData = useSceneImage(obs, {
 		scene,
@@ -62,8 +70,8 @@ export const SceneButton = ({
 			size={size}
 			label={title ?? scene}
 			onClick={handleClick}
-			isSelected={isCurrentScene || isPrevScene}
-			isDeselecting={isPrevScene}
+			isSelected={!suppressOverlay && (isCurrentScene || isPrevScene)}
+			isDeselecting={!suppressOverlay && isPrevScene}
 			elementType='SceneWrapper'
 			overlay={overlay}
 		>
