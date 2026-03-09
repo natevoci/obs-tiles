@@ -64,7 +64,7 @@ const Label = styled.p<SizeProps>`
 	text-align: center;
 	font-size: ${p => p.theme.fontSize.large};
 	width: 100%;
-	height: ${p => p.$size * 2.5}px;
+	height: 25px;
 	background-color: ${p => p.theme.sceneTextBackground};
 `
 

@@ -222,25 +222,45 @@ export const Tiles = ({
 
 		if (isSceneButtonTileConfig(tile)) {
 			return (
-				<SceneButton key={tile.scene} connection={connection} tileSize={String(tileSize)} scene={tile.scene} title={tile.title} />
+				<SceneButton
+					key={tile.scene}
+					{...inheritableProps}
+					connection={connection}
+					{...tile}
+				/>
 			);
 		}
 
 		if (isSceneItemButtonTileConfig(tile)) {
 			return (
-				<SceneItemButton key={tile.sceneItem.item ?? JSON.stringify(tile.sceneItem)} connection={connection} tileSize={String(tileSize)} sceneItem={tile.sceneItem} title={tile.title} />
+				<SceneItemButton
+					key={tile.sceneItem.item ?? JSON.stringify(tile.sceneItem)}
+					{...inheritableProps}
+					connection={connection}
+					{...tile}
+				/>
 			);
 		}
 
 		if (isButtonTileConfig(tile)) {
 			return (
-				<Button key={tile.button} {...inheritableProps} {...tile} button={tile.button} />
+				<Button
+					key={tile.button}
+					{...inheritableProps}
+					{...tile}
+					button={tile.button}
+				/>
 			);
 		}
 
 		if (isTextTileConfig(tile)) {
 			return (
-				<Text key={tile.text} {...inheritableProps} {...tile} text={tile.text} />
+				<Text
+					key={tile.text}
+					{...inheritableProps}
+					{...tile}
+					text={tile.text}
+				/>
 			);
 		}
 
@@ -248,8 +268,9 @@ export const Tiles = ({
 			return (
 				<AudioInputTile 
 					key={tile.audioInput.inputName} 
+					{...inheritableProps}
 					connection={connection} 
-					tileSize={String(tileSize)} 
+					tileSize={tile.tileSize} 
 					audioInput={tile.audioInput} 
 					title={tile.title} 
 				/>
