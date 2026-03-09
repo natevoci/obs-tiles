@@ -138,7 +138,16 @@ const DndCtx = React.createContext<DndContextValue>({
 // ============================================================================
 
 const EditRoot = styled.div`
+	position: relative;
 	padding: 8px;
+`
+
+const RootMenuButton = styled.div`
+	position: absolute;
+	top: 4px;
+	right: 4px;
+	z-index: 10;
+	pointer-events: all;
 `
 
 interface DragWrapperProps {
@@ -301,6 +310,7 @@ interface TileMenuProps {
 	tilePath: number[]
 	tile: any
 	isGroup?: boolean
+	isRoot?: boolean
 	onClose: () => void
 	onOpenProperties: () => void
 	onOpenAdd: () => void
@@ -311,6 +321,7 @@ const TileMenu = ({
 	tilePath,
 	tile,
 	isGroup,
+	isRoot,
 	onClose,
 	onOpenProperties,
 	onOpenAdd,
@@ -341,11 +352,18 @@ const TileMenu = ({
 
 	const handlePasteInto = () => {
 		if (!clipboard) return
-		updateCurrentConfig((config) => {
-			const group = getTileAt(config.tiles, tilePath)
-			const updatedGroup = { ...group, tiles: [...(group.tiles || []), clipboard] }
-			return { ...config, tiles: replaceTileAt(config.tiles, tilePath, updatedGroup) }
-		})
+		if (isRoot) {
+			updateCurrentConfig((config) => ({
+				...config,
+				tiles: [...config.tiles, clipboard],
+			}))
+		} else {
+			updateCurrentConfig((config) => {
+				const group = getTileAt(config.tiles, tilePath)
+				const updatedGroup = { ...group, tiles: [...(group.tiles || []), clipboard] }
+				return { ...config, tiles: replaceTileAt(config.tiles, tilePath, updatedGroup) }
+			})
+		}
 		setClipboard(null)
 		onClose()
 	}
@@ -362,13 +380,17 @@ const TileMenu = ({
 
 	const handleSizeChange = (_: any, value: number | number[]) => {
 		const size = Array.isArray(value) ? value[0] : value
-		updateCurrentConfig((config) => ({
-			...config,
-			tiles: replaceTileAt(config.tiles, tilePath, {
-				...tile,
-				tileSize: String(size),
-			}),
-		}))
+		if (isRoot) {
+			updateCurrentConfig((config) => ({ ...config, tileSize: size }))
+		} else {
+			updateCurrentConfig((config) => ({
+				...config,
+				tiles: replaceTileAt(config.tiles, tilePath, {
+					...tile,
+					tileSize: String(size),
+				}),
+			}))
+		}
 	}
 
 	return (
@@ -383,31 +405,37 @@ const TileMenu = ({
 				<ListItemIcon><SettingsIcon fontSize="small" /></ListItemIcon>
 				Properties
 			</MenuItem>
-			{isGroup && (
+			{(isGroup || isRoot) && (
 				<MenuItem onClick={() => { onOpenAdd(); onClose() }}>
 					<ListItemIcon><AddCircleOutline fontSize="small" /></ListItemIcon>
 					Add…
 				</MenuItem>
 			)}
-			{isGroup && clipboard && (
+			{(isGroup || isRoot) && clipboard && (
 				<MenuItem onClick={handlePasteInto}>
 					<ListItemIcon><FileCopy fontSize="small" /></ListItemIcon>
 					Paste into group
 				</MenuItem>
 			)}
-			<MuiDivider />
-			<MenuItem onClick={handleCut}>
-				<ListItemIcon><CallSplit fontSize="small" /></ListItemIcon>
-				Cut
-			</MenuItem>
-			<MenuItem onClick={handlePaste} disabled={!clipboard}>
-				<ListItemIcon><FileCopy fontSize="small" /></ListItemIcon>
-				Paste after
-			</MenuItem>
-			<MenuItem onClick={handleDelete}>
-				<ListItemIcon><Delete fontSize="small" /></ListItemIcon>
-				Delete
-			</MenuItem>
+			{!isRoot && <MuiDivider />}
+			{!isRoot && (
+				<MenuItem onClick={handleCut}>
+					<ListItemIcon><CallSplit fontSize="small" /></ListItemIcon>
+					Cut
+				</MenuItem>
+			)}
+			{!isRoot && (
+				<MenuItem onClick={handlePaste} disabled={!clipboard}>
+					<ListItemIcon><FileCopy fontSize="small" /></ListItemIcon>
+					Paste after
+				</MenuItem>
+			)}
+			{!isRoot && (
+				<MenuItem onClick={handleDelete}>
+					<ListItemIcon><Delete fontSize="small" /></ListItemIcon>
+					Delete
+				</MenuItem>
+			)}
 			<MuiDivider />
 			<SliderMenuItem onClick={(e) => e.stopPropagation()}>
 				<Typography variant="caption" display="block" gutterBottom>
@@ -524,11 +552,12 @@ const EditableLeafTile = ({
 							size="small"
 							style={{ color: 'white', background: 'rgba(0,0,0,0.5)', margin: 2 }}
 							draggable={false}
-							onDragStart={(e) => e.preventDefault()}						onClick={(e) => {
-							e.stopPropagation()
-							const rect = (e.currentTarget as HTMLElement).getBoundingClientRect()
-							setMenuAnchor({ top: rect.bottom, left: rect.left })
-						}}
+							onDragStart={(e) => e.preventDefault()}
+                            onClick={(e) => {
+                                e.stopPropagation()
+                                const rect = (e.currentTarget as HTMLElement).getBoundingClientRect()
+                                setMenuAnchor({ top: rect.bottom, left: rect.left })
+                            }}
 						>
 							<MoreVert fontSize="small" />
 						</IconButton>
@@ -780,6 +809,19 @@ export const EditableTiles = () => {
 	const { settings, updateCurrentConfig } = useSettings()
 	const [dragPath, setDragPath] = React.useState<number[] | null>(null)
 	const [dropTarget, setDropTarget] = React.useState<DropTarget | null>(null)
+	const [rootMenuAnchor, setRootMenuAnchor] = React.useState<MenuPosition | null>(null)
+	const [rootPropsOpen, setRootPropsOpen] = React.useState(false)
+	const [rootAddOpen, setRootAddOpen] = React.useState(false)
+
+	// Synthetic tile representing root-level settings (used by TileMenu / TilePropertiesDialog)
+	const rootTile = {
+		group: '',
+		tiles: settings.tiles ?? [],
+		tileSize: settings.tileSize,
+		direction: settings.direction,
+		connection: settings.connection,
+		wrap: (settings as any).wrap,
+	}
 
 	const startDrag = React.useCallback((path: number[]) => {
 		setDragPath(path)
@@ -838,7 +880,24 @@ export const EditableTiles = () => {
 
 	return (
 		<DndCtx.Provider value={dndValue}>
-			<EditRoot>
+			<EditRoot
+				onContextMenu={(e) => {
+					e.preventDefault()
+					setRootMenuAnchor({ top: e.clientY, left: e.clientX })
+				}}
+			>
+				<RootMenuButton>
+					<IconButton
+						size="small"
+						style={{ background: 'rgba(0,0,0,0.4)', color: 'white' }}
+						onClick={(e) => {
+							const rect = (e.currentTarget as HTMLElement).getBoundingClientRect()
+							setRootMenuAnchor({ top: rect.bottom, left: rect.left })
+						}}
+					>
+						<MoreVert fontSize="small" />
+					</IconButton>
+				</RootMenuButton>
 				<EditableGroup
 					tiles={settings.tiles ?? []}
 					containerPath={[]}
@@ -848,6 +907,45 @@ export const EditableTiles = () => {
 					wrap={(settings as any).wrap}
 				/>
 			</EditRoot>
+
+			<TileMenu
+				anchorPosition={rootMenuAnchor}
+				tile={rootTile}
+				tilePath={[]}
+				isRoot
+				onClose={() => setRootMenuAnchor(null)}
+				onOpenProperties={() => setRootPropsOpen(true)}
+				onOpenAdd={() => setRootAddOpen(true)}
+			/>
+
+			<TilePropertiesDialog
+				open={rootPropsOpen}
+				tile={rootTile}
+				connection={settings.connection}
+				onSave={(updated) => {
+					updateCurrentConfig((config) => ({
+						...config,
+						tileSize: updated.tileSize ?? config.tileSize,
+						direction: updated.direction ?? config.direction,
+						connection: updated.connection ?? config.connection,
+						wrap: updated.wrap,
+					}))
+					setRootPropsOpen(false)
+				}}
+				onClose={() => setRootPropsOpen(false)}
+			/>
+
+			<AddTileDialog
+				open={rootAddOpen}
+				connection={settings.connection}
+				onAdd={(newTile) => {
+					updateCurrentConfig((config) => ({
+						...config,
+						tiles: [...config.tiles, newTile],
+					}))
+				}}
+				onClose={() => setRootAddOpen(false)}
+			/>
 		</DndCtx.Provider>
 	)
 }
