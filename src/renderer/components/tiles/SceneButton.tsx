@@ -1,7 +1,6 @@
-import styled from 'styled-components'
-
 import { useObs, useCurrentScene, useTransition, useSceneImage } from '~/api/obs'
 import { TileWrapper, TileImage, StyledCircularProgress } from './TileWrapper'
+import { CheckboxTile } from './CheckboxTile'
 import type { SceneButtonTileConfig } from './Tiles';
 
 // Legacy exports for backwards compatibility (deprecated - use TileWrapper instead)
@@ -13,6 +12,7 @@ export const SceneButton = ({
 	scene,
 	title,
 	tileSize = '10',
+	viewType = 'preview',
 }: SceneButtonTileConfig) => {
 	const size = parseInt(String(tileSize));
 
@@ -45,6 +45,17 @@ export const SceneButton = ({
 			{obs.connecting ? <StyledCircularProgress /> : null}
 		</>
 	) : null
+
+	if (viewType === 'checkbox') {
+		return (
+			<CheckboxTile
+				size={size}
+				label={title ?? scene}
+				checked={isCurrentScene}
+				eventHandlers={{ onClick: handleClick }}
+			/>
+		)
+	}
 
 	return (
 		<TileWrapper

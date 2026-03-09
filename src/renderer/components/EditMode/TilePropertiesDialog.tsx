@@ -51,6 +51,10 @@ const FormSection = styled.div`
 const DIRECTIONS = ['row', 'column']
 const CLICK_ACTIONS = ['toggleVisible', 'moveToTop']
 const BUTTON_TYPES = ['toggleStreaming', 'toggleRecording']
+const VIEW_TYPES: { value: string; label: string }[] = [
+	{ value: 'preview', label: 'Preview (tile)' },
+	{ value: 'checkbox', label: 'Checkbox' },
+]
 
 // ---------------------------------------------------------------------------
 // Helper: detect tile type
@@ -245,6 +249,13 @@ function SceneForm({ draft, setDraft, connection }: FormProps) {
 	return (
 		<FormSection>
 			<ScenePicker connection={connection} value={draft.scene ?? ''} onChange={(v) => setDraft({ ...draft, scene: v })} />
+			<FormControl variant="outlined" size="small" fullWidth>
+				<InputLabel>View Type</InputLabel>
+				<Select label="View Type" value={draft.viewType ?? 'preview'}
+					onChange={(e) => setDraft({ ...draft, viewType: e.target.value === 'preview' ? undefined : e.target.value })}>
+					{VIEW_TYPES.map((vt) => <MenuItem key={vt.value} value={vt.value}>{vt.label}</MenuItem>)}
+				</Select>
+			</FormControl>
 			<TextField
 				label="Title (optional)"
 				value={draft.title ?? ''}
@@ -290,6 +301,13 @@ function SceneItemForm({ draft, setDraft, connection }: FormProps) {
 				<Select label="Long Press Action" value={si.longPress ?? 'toggleVisible'}
 					onChange={(e) => patchSI({ longPress: e.target.value as string })}>
 					{CLICK_ACTIONS.map((a) => <MenuItem key={a} value={a}>{a}</MenuItem>)}
+				</Select>
+			</FormControl>
+			<FormControl variant="outlined" size="small" fullWidth>
+				<InputLabel>View Type</InputLabel>
+				<Select label="View Type" value={draft.viewType ?? 'preview'}
+					onChange={(e) => setDraft({ ...draft, viewType: e.target.value === 'preview' ? undefined : e.target.value })}>
+					{VIEW_TYPES.map((vt) => <MenuItem key={vt.value} value={vt.value}>{vt.label}</MenuItem>)}
 				</Select>
 			</FormControl>
 			<TextField
@@ -375,6 +393,13 @@ function AudioInputForm({ draft, setDraft }: FormProps) {
 				onChange={(e) => patchAI({ maxVolume: e.target.value !== '' ? Number(e.target.value) : undefined })}
 				variant="outlined" size="small" fullWidth
 			/>
+			<FormControl variant="outlined" size="small" fullWidth>
+				<InputLabel>View Type</InputLabel>
+				<Select label="View Type" value={draft.viewType ?? 'preview'}
+					onChange={(e) => setDraft({ ...draft, viewType: e.target.value === 'preview' ? undefined : e.target.value })}>
+					{VIEW_TYPES.map((vt) => <MenuItem key={vt.value} value={vt.value}>{vt.label}</MenuItem>)}
+				</Select>
+			</FormControl>
 			<TextField
 				label="Title (optional)"
 				value={draft.title ?? ''}

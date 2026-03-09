@@ -1,6 +1,7 @@
 import React from 'react';
 import { useObs, useSceneItemProperties, useSceneItemList, useSceneImage } from '~/api/obs';
 import { TileWrapper, TileImage, StyledCircularProgress } from './TileWrapper';
+import { CheckboxTile } from './CheckboxTile';
 import { useClickHandler } from './useClickHandler';
 import type { SceneItemButtonTileConfig } from './Tiles';
 
@@ -14,6 +15,7 @@ export const SceneItemButton = ({
 	},
 	title,
 	tileSize = '10',
+	viewType = 'preview',
 }: SceneItemButtonTileConfig) => {
 	const size = parseInt(String(tileSize));
 	
@@ -67,6 +69,17 @@ export const SceneItemButton = ({
 		handlers,
 		delay: 600,
 	})
+
+	if (viewType === 'checkbox') {
+		return (
+			<CheckboxTile
+				size={size}
+				label={title ?? item}
+				checked={isSelected}
+				eventHandlers={buttonEventListeners}
+			/>
+		)
+	}
 
 	const overlay = !obs.connected ? (
 		<>

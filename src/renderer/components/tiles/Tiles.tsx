@@ -63,6 +63,8 @@ export interface GroupTileConfig extends BaseTileConfig {
 
 export interface SceneButtonTileConfig extends BaseTileConfig {
 	scene: string;
+	/** Display mode: 'preview' (default tile) or 'checkbox' (compact checkbox row) */
+	viewType?: 'preview' | 'checkbox';
 }
 
 export interface SceneItemButtonTileConfig extends BaseTileConfig {
@@ -72,6 +74,8 @@ export interface SceneItemButtonTileConfig extends BaseTileConfig {
 		click?: string
 		longPress?: string
 	}
+	/** Display mode: 'preview' (default tile) or 'checkbox' (compact checkbox row) */
+	viewType?: 'preview' | 'checkbox';
 }
 
 export interface ButtonTileConfig extends BaseTileConfig {
@@ -87,6 +91,8 @@ export interface AudioInputTileConfig extends BaseTileConfig {
 		inputName: string
 		maxVolume?: number
 	}
+	/** Display mode: 'preview' (default tile) or 'checkbox' (compact checkbox row) */
+	viewType?: 'preview' | 'checkbox';
 }
 
 type TileConfig =
@@ -133,7 +139,7 @@ function isSceneButtonTileConfig(tile: TileConfig): tile is SceneButtonTileConfi
 		typeof (tile as any).scene === 'string' &&
 		!('sceneItem' in tile);
 	if (valid) {
-		warnExtraProps(tile, ['scene', ...COMMON_TILE_PROPS], 'SceneButtonTileConfig');
+		warnExtraProps(tile, ['scene', 'viewType', ...COMMON_TILE_PROPS], 'SceneButtonTileConfig');
 	}
 	return valid;
 }
@@ -145,7 +151,7 @@ function isSceneItemButtonTileConfig(tile: TileConfig): tile is SceneItemButtonT
 		typeof (tile as any).sceneItem === 'object' &&
 		(tile as any).sceneItem !== null;
 	if (valid) {
-		warnExtraProps(tile, ['sceneItem', ...COMMON_TILE_PROPS], 'SceneItemButtonTileConfig');
+		warnExtraProps(tile, ['sceneItem', 'viewType', ...COMMON_TILE_PROPS], 'SceneItemButtonTileConfig');
 	}
 	return valid;
 }
@@ -182,7 +188,7 @@ function isAudioInputTileConfig(tile: TileConfig): tile is AudioInputTileConfig 
 		(tile as any).audioInput !== null &&
 		typeof (tile as any).audioInput.inputName === 'string';
 	if (valid) {
-		warnExtraProps(tile, ['audioInput', ...COMMON_TILE_PROPS], 'AudioInputTileConfig');
+		warnExtraProps(tile, ['audioInput', 'viewType', ...COMMON_TILE_PROPS], 'AudioInputTileConfig');
 	}
 	return valid;
 }
@@ -248,7 +254,6 @@ export const Tiles = ({
 					key={tile.button}
 					{...inheritableProps}
 					{...tile}
-					button={tile.button}
 				/>
 			);
 		}
@@ -259,7 +264,6 @@ export const Tiles = ({
 					key={tile.text}
 					{...inheritableProps}
 					{...tile}
-					text={tile.text}
 				/>
 			);
 		}
@@ -269,10 +273,7 @@ export const Tiles = ({
 				<AudioInputTile 
 					key={tile.audioInput.inputName} 
 					{...inheritableProps}
-					connection={connection} 
-					tileSize={tile.tileSize} 
-					audioInput={tile.audioInput} 
-					title={tile.title} 
+					{...tile}
 				/>
 			);
 		}

@@ -6,6 +6,7 @@ import { VolumeUp, VolumeOff } from '@material-ui/icons'
 import { useObs } from '~/api/obs'
 import { useInputVolume, useInputMute, useInputVolumeMeters } from '~/api/obs/providers'
 import { TileWrapper, TileContentArea, StyledCircularProgress } from './TileWrapper'
+import { CheckboxTile } from './CheckboxTile'
 import type { AudioInputTileConfig } from './Tiles'
 
 // ============================================================================
@@ -150,6 +151,7 @@ export const AudioInputTile = ({
 	audioInput,
 	title,
 	tileSize = '10',
+	viewType = 'preview',
 }: AudioInputTileConfig) => {
 	const size = parseInt(String(tileSize))
 	const { inputName } = audioInput
@@ -308,6 +310,22 @@ export const AudioInputTile = ({
 			</ControlsArea>
 		</>
 	) : null
+
+	if (viewType === 'checkbox') {
+		return (
+			<CheckboxTile
+				size={size}
+				label={title ?? inputName}
+				checked={!isMuted}
+				eventHandlers={{ onClick: handleMuteToggle }}
+				icon={
+					<MuteIcon $muted={isMuted}>
+						{isMuted ? <VolumeOff /> : <VolumeUp />}
+					</MuteIcon>
+				}
+			/>
+		)
+	}
 
 	return (
 		<TileWrapper
