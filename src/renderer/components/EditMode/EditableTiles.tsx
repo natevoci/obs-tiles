@@ -24,6 +24,10 @@ import {
 	SettingsApplications as SettingsIcon,
 	FileCopy,
 	CallSplit,
+	ArrowBack,
+	ArrowForward,
+	ArrowUpward,
+	ArrowDownward,
 } from '@material-ui/icons'
 
 import { useSettings } from '../Settings/SettingsContext'
@@ -84,6 +88,21 @@ function replaceTileAt(rootTiles: any[], path: number[], newTile: any): any[] {
 	return rootTiles.map((t, i) => {
 		if (i !== path[0]) return t
 		return { ...t, tiles: replaceTileAt(t.tiles, path.slice(1), newTile) }
+	})
+}
+
+/** Swap the tile at path with its neighbor at offset +1 or -1 within its parent */
+function moveTileAt(rootTiles: any[], path: number[], delta: 1 | -1): any[] {
+	const idx = path[path.length - 1]
+	const newIdx = idx + delta
+	if (path.length === 1) {
+		const result = [...rootTiles]
+		;[result[idx], result[newIdx]] = [result[newIdx], result[idx]]
+		return result
+	}
+	return rootTiles.map((t, i) => {
+		if (i !== path[0]) return t
+		return { ...t, tiles: moveTileAt(t.tiles, path.slice(1), delta) }
 	})
 }
 
@@ -416,6 +435,8 @@ interface EditableLeafProps {
 	tilePath: number[]
 	inheritedConnection?: string
 	inheritedTileSize?: string | number
+	parentDirection?: string
+	siblingCount?: number
 }
 
 const EditableLeafTile = ({
@@ -423,6 +444,8 @@ const EditableLeafTile = ({
 	tilePath,
 	inheritedConnection,
 	inheritedTileSize,
+	parentDirection,
+	siblingCount = 1,
 }: EditableLeafProps) => {
 	const { dragPath, startDrag, endDrag } = React.useContext(DndCtx)
 	const [hovered, setHovered] = React.useState(false)
@@ -433,6 +456,20 @@ const EditableLeafTile = ({
 	const isDragging = dragPath?.join(',') === tilePath.join(',')
 	const effectiveConnection = tile.connection ?? inheritedConnection
 	const effectiveTileSize = tile.tileSize ?? inheritedTileSize
+
+	const tileIndex = tilePath[tilePath.length - 1]
+	const isColumn = parentDirection === 'column'
+	const BackIcon = isColumn ? ArrowUpward : ArrowBack
+	const FwdIcon = isColumn ? ArrowDownward : ArrowForward
+	const isFirst = tileIndex === 0
+	const isLast = tileIndex === siblingCount - 1
+
+	const handleMove = (delta: 1 | -1) => {
+		updateCurrentConfig((config) => ({
+			...config,
+			tiles: moveTileAt(config.tiles, tilePath, delta),
+		}))
+	}
 
 	const renderContent = () => {
 		const common = {
@@ -468,8 +505,26 @@ const EditableLeafTile = ({
 							size="small"
 							style={{ color: 'white', background: 'rgba(0,0,0,0.5)', margin: 2 }}
 							draggable={false}
+							onDragStart={(e) => e.preventDefault()}							disabled={isFirst}
+							onClick={(e) => { e.stopPropagation(); handleMove(-1) }}
+						>
+							<BackIcon fontSize="small" />
+						</IconButton>
+						<IconButton
+							size="small"
+							style={{ color: 'white', background: 'rgba(0,0,0,0.5)', margin: 2 }}
+							draggable={false}
 							onDragStart={(e) => e.preventDefault()}
-						onClick={(e) => {
+							disabled={isLast}
+							onClick={(e) => { e.stopPropagation(); handleMove(1) }}
+						>
+							<FwdIcon fontSize="small" />
+						</IconButton>
+						<IconButton
+							size="small"
+							style={{ color: 'white', background: 'rgba(0,0,0,0.5)', margin: 2 }}
+							draggable={false}
+							onDragStart={(e) => e.preventDefault()}						onClick={(e) => {
 							e.stopPropagation()
 							const rect = (e.currentTarget as HTMLElement).getBoundingClientRect()
 							setMenuAnchor({ top: rect.bottom, left: rect.left })
@@ -516,6 +571,8 @@ interface EditableGroupTileProps {
 	tilePath: number[]
 	inheritedConnection?: string
 	inheritedTileSize?: string | number
+	parentDirection?: string
+	siblingCount?: number
 }
 
 const EditableGroupTile = ({
@@ -523,6 +580,8 @@ const EditableGroupTile = ({
 	tilePath,
 	inheritedConnection,
 	inheritedTileSize,
+	parentDirection,
+	siblingCount = 1,
 }: EditableGroupTileProps) => {
 	const { dragPath, startDrag, endDrag } = React.useContext(DndCtx)
 	const [menuAnchor, setMenuAnchor] = React.useState<MenuPosition | null>(null)
@@ -533,6 +592,20 @@ const EditableGroupTile = ({
 	const isDragging = dragPath?.join(',') === tilePath.join(',')
 	const effectiveConnection = tile.connection ?? inheritedConnection
 	const effectiveTileSize = tile.tileSize ?? inheritedTileSize
+
+	const tileIndex = tilePath[tilePath.length - 1]
+	const isColumn = parentDirection === 'column'
+	const BackIcon = isColumn ? ArrowUpward : ArrowBack
+	const FwdIcon = isColumn ? ArrowDownward : ArrowForward
+	const isFirst = tileIndex === 0
+	const isLast = tileIndex === siblingCount - 1
+
+	const handleMove = (delta: 1 | -1) => {
+		updateCurrentConfig((config) => ({
+			...config,
+			tiles: moveTileAt(config.tiles, tilePath, delta),
+		}))
+	}
 
 	return (
 		<>
@@ -555,6 +628,24 @@ const EditableGroupTile = ({
 						<h3>{tile.group || '(group)'}</h3>
 					</div>
 					<GroupHeaderActions>
+						<IconButton
+							size="small"
+							draggable={false}
+							onDragStart={(e) => e.preventDefault()}
+							disabled={isFirst}
+							onClick={(e) => { e.stopPropagation(); handleMove(-1) }}
+						>
+							<BackIcon fontSize="small" />
+						</IconButton>
+						<IconButton
+							size="small"
+							draggable={false}
+							onDragStart={(e) => e.preventDefault()}
+							disabled={isLast}
+							onClick={(e) => { e.stopPropagation(); handleMove(1) }}
+						>
+							<FwdIcon fontSize="small" />
+						</IconButton>
 						<IconButton
 							size="small"
 							draggable={false}
@@ -659,6 +750,8 @@ const EditableGroup = ({
 							tilePath={[...containerPath, i]}
 							inheritedConnection={inheritedConnection}
 							inheritedTileSize={inheritedTileSize}
+							parentDirection={direction}
+							siblingCount={tiles.length}
 						/>
 					) : (
 						<EditableLeafTile
@@ -666,6 +759,8 @@ const EditableGroup = ({
 							tilePath={[...containerPath, i]}
 							inheritedConnection={inheritedConnection}
 							inheritedTileSize={inheritedTileSize}
+							parentDirection={direction}
+							siblingCount={tiles.length}
 						/>
 					)}
 					{dragPath && (
