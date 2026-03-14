@@ -4,6 +4,15 @@
 
 ### 2026-03-14
 
+**fix(Button, Text): tiles visible when OBS is not connected**
+
+- `toggleStreaming` and `toggleRecording` buttons now render in a disabled state when disconnected instead of disappearing (removed early `return null` guard)
+- Fixed crash: `useIsStreaming`/`useIsRecording` return `undefined` before OBS connects; added `?? {}` to destructuring sites so defaults apply without throwing "Cannot read properties of undefined"
+- Corrected return types on `useIsStreaming` and `useIsRecording` to `StreamingState | undefined` / `RecordingState | undefined`
+- Stats text tile renders dash placeholders (`FPS: —`, `CPU: —`, etc.) when disconnected, preserving layout footprint
+- `customText` in stats tiles is shown even when disconnected
+- Fixed property access order: `stats.fps` etc. now only accessed after the `!stats` guard
+
 **fix(CheckboxTile): unchecked checkbox visible on black background**
 
 - MUI v4 default unchecked checkbox color (`rgba(0,0,0,0.54)`) was invisible against the black tile background

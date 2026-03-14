@@ -38,10 +38,6 @@ const TextComponents: Record<string, (props: any) => React.ReactElement | null> 
 		const stats = obs.useDataProvider('stats')
 		const videoInfo = obs.useDataProvider('videoInfo')
 
-		if (!stats) {
-			return null
-		}
-
 		// Default all lines to shown unless explicitly disabled
 		const show = {
 			fps:           statsLines?.fps           !== false,
@@ -51,13 +47,6 @@ const TextComponents: Record<string, (props: any) => React.ReactElement | null> 
 			skippedFrames: statsLines?.skippedFrames !== false,
 		}
 
-		const fps = stats.fps || 0
-		const fpsPerc = videoInfo?.fps > 0 ? 100 * fps / videoInfo?.fps : 0
-		const cpuUsage = stats.cpuUsage || 0
-		const memoryUsage = stats.memoryUsage || 0
-		const freeDiskSpace = stats.freeDiskSpace || 0
-		const outputSkippedFrames = stats.outputSkippedFrames || 0
-
 		const anyVisible = Object.values(show).some(Boolean) || Boolean(customText)
 
 		// Guard against a fully empty tile — keep a minimum footprint for the
@@ -65,6 +54,27 @@ const TextComponents: Record<string, (props: any) => React.ReactElement | null> 
 		if (!anyVisible) {
 			return <StyledText $size={size}><Paragraph $size={size}>&nbsp;</Paragraph></StyledText>
 		}
+
+		// OBS not connected yet — show dash placeholders so tiles remain visible
+		if (!stats) {
+			return (
+				<StyledText $size={size}>
+					{show.fps && <Paragraph $size={size}>FPS: —</Paragraph>}
+					{show.cpu && <Paragraph $size={size}>CPU: —</Paragraph>}
+					{show.memory && <Paragraph $size={size}>Memory: —</Paragraph>}
+					{show.freeDisk && <Paragraph $size={size}>Free Disk: —</Paragraph>}
+					{show.skippedFrames && <Paragraph $size={size}>Skipped Frames: —</Paragraph>}
+					{customText && <Paragraph $size={size}>{customText}</Paragraph>}
+				</StyledText>
+			)
+		}
+
+		const fps = stats.fps || 0
+		const fpsPerc = videoInfo?.fps > 0 ? 100 * fps / videoInfo?.fps : 0
+		const cpuUsage = stats.cpuUsage || 0
+		const memoryUsage = stats.memoryUsage || 0
+		const freeDiskSpace = stats.freeDiskSpace || 0
+		const outputSkippedFrames = stats.outputSkippedFrames || 0
 
 		return (
 			<StyledText $size={size}>
@@ -105,10 +115,6 @@ export const Text = ({
 	const obs = useObs({ connection })
 
 	const component = TextComponents[props.text]
-
-	if (!obs.connected) {
-		return null
-	}
 
 	return component ? React.createElement(component, {
 		obs,

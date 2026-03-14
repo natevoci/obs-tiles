@@ -51,12 +51,12 @@ const ButtonComponents: Record<string, (props: any) => React.ReactElement | null
 			isStarting = false,
 			isStopping = false,
 			isLoading = true,
-		} = useIsStreaming(obs)
+		} = useIsStreaming(obs) ?? {}
 
 		return (
 			<StyledButton
 				tileSize={tileSize}
-				label={isStarted ? 'Stop Streaming' : isStopped ? 'Start Streaming' : isStarting ? 'Starting...' : isStopping ? 'Stopping' : '...'}
+				label={isStarted ? 'Stop Streaming' : (isStopped || isLoading) ? 'Start Streaming' : isStarting ? 'Starting...' : isStopping ? 'Stopping' : '...'}
 				color={isStarted ? 'secondary' : isStopped ? 'primary' : 'inherit'}
 				disabled={isStarting || isStopping || isLoading}
 				onClick={isStarted ? () => obs.action('stopStreaming') : isStopped ? () => obs.action('startStreaming') : undefined}
@@ -74,12 +74,12 @@ const ButtonComponents: Record<string, (props: any) => React.ReactElement | null
 			isStarting = false,
 			isStopping = false,
 			isLoading = true,
-		} = useIsRecording(obs)
+		} = useIsRecording(obs) ?? {}
 
 		return (
 			<StyledButton
 				tileSize={tileSize}
-				label={isStarted ? 'Stop Recording' : isStopped ? 'Start Recording' : isStarting ? 'Starting...' : isStopping ? 'Stopping' : '...'}
+				label={isStarted ? 'Stop Recording' : (isStopped || isLoading) ? 'Start Recording' : isStarting ? 'Starting...' : isStopping ? 'Stopping' : '...'}
 				color={isStarted ? 'secondary' : isStopped ? 'primary' : 'inherit'}
 				disabled={isStarting || isStopping || isLoading}
 				onClick={isStarted ? () => obs.action('stopRecording') : isStopped ? () => obs.action('startRecording') : undefined}
@@ -96,10 +96,6 @@ export const Button = ({
 	const obs = useObs({ connection })
 
 	const component = ButtonComponents[props.button]
-
-	if (!obs.connected) {
-		return null;
-	}
 
 	return component ? React.createElement(component, {
 		obs,

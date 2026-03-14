@@ -80,6 +80,6 @@ export const isRecording = (obs: ConnectionPublic) => createProvider({
 /**
  * Get recording state
  */
-export const useIsRecording = (obs: ConnectionPublic): RecordingState => {
+export const useIsRecording = (obs: ConnectionPublic): RecordingState | undefined => {
 	return obs.useDataProvider('isRecording')
 }

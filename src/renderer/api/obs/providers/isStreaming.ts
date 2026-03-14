@@ -68,6 +68,6 @@ export const isStreaming = (obs: ConnectionPublic) => createProvider({
 /**
  * Get streaming state
  */
-export const useIsStreaming = (obs: ConnectionPublic): StreamingState => {
+export const useIsStreaming = (obs: ConnectionPublic): StreamingState | undefined => {
 	return obs.useDataProvider('isStreaming')
 }
