@@ -48,6 +48,16 @@ const iconSlotStyle: React.CSSProperties = {
 	flexShrink: 0,
 }
 
+/**
+ * MUI Checkbox with an explicit unchecked color so it is visible against the
+ * black tile background (MUI v4 default unchecked color is near-black).
+ */
+const StyledCheckbox = styled(Checkbox)`
+	&.MuiCheckbox-root:not(.Mui-checked) {
+		color: ${p => p.theme.sceneBorder};
+	}
+`
+
 // ============================================================================
 // Component
 // ============================================================================
@@ -79,7 +89,7 @@ export const CheckboxTile = ({ size, label, checked, eventHandlers, icon }: Chec
             {icon !== undefined ? (
                 <div style={iconSlotStyle}>{icon}</div>
             ) : (
-                <Checkbox
+                <StyledCheckbox
                     checked={checked}
                     color="primary"
                     size="small"

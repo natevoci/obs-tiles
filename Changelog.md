@@ -4,6 +4,11 @@
 
 ### 2026-03-14
 
+**fix(CheckboxTile): unchecked checkbox visible on black background**
+
+- MUI v4 default unchecked checkbox color (`rgba(0,0,0,0.54)`) was invisible against the black tile background
+- Replaced bare `Checkbox` with a `StyledCheckbox` wrapper that applies `theme.sceneBorder` (#909090) as the unchecked color
+
 **fix: Electron-only debugger pause on page unload**
 
 - The `beforeunload` debugger breakpoint (used to prevent runaway Vite HMR reloads) now only triggers in Electron, not in the web build
