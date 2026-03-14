@@ -11,6 +11,41 @@
 - **Protocol**: OBS WebSocket v4.9.1 and v5.x (auto-detected or configured)
 - **Auth**: SHA256-based WebSocket authentication with React dialog prompt
 
+---
+
+## Changelog Maintenance
+
+**After every code change, update `Changelog.md`.**
+
+- Add an entry under the current date (ISO format `YYYY-MM-DD`) at the top of the _Feature History_ section.
+- Follow the existing format: `**feat/fix/refactor: Short description**` followed by bullet points for the details.
+- If a new architectural pattern is introduced, add a summary under the relevant sub-section (or create a new sub-section).
+- Do not skip this step. Keeping the changelog current is as important as the code change itself.
+
+---
+
+## Self-Improving Instructions
+
+When a follow-up message contains phrases like:
+- "you forgot to …"
+- "always do …" / "always use …"
+- "never do …" / "never use …"
+- "remember to …"
+- "make sure you …"
+
+…treat it as a lesson that should be captured permanently. After applying the correction:
+1. Identify which `.github/instructions/*.instructions.md` file is most relevant to the topic.
+2. Add a concise rule or note to that file so the same mistake is not repeated.
+3. If no existing scoped file fits, add the rule to this file under a new section.
+
+**Keep instructions files lean.** Reference actual source files rather than duplicating code samples — code blocks in instructions files go stale and take up context. For example:
+> See `path/to/file.ts` for an example of the `MyFunction()` pattern.
+
+is better than pasting a full code block.
+
+---
+
+
 ## Deployment Modes
 
 | Mode | Command | Description |
@@ -22,98 +57,9 @@
 
 ## OBS WebSocket API Version Support
 
-The app supports both OBS WebSocket v4.9.1 and v5.x through an **adapter abstraction layer**.
+The app supports both OBS WebSocket v4.9.1 and v5.x through an **adapter abstraction layer**. The `apiVersion` field per connection in `config.json` accepts `"auto"` (default), `"v4"`, or `"v5"`.
 
-### API Version Configuration
-
-In `config.json`, each connection can specify an `apiVersion`:
-
-```json
-{
-  "connections": {
-    "main": {
-      "address": "localhost:4455",
-      "apiVersion": "auto"  // "auto" | "v4" | "v5"
-    }
-  }
-}
-```
-
-- `"auto"` (default): Auto-detects version on connect (v5 sends Hello immediately, v4 waits)
-- `"v4"`: Force v4.9.1 protocol (port 4444 default)
-- `"v5"`: Force v5.x protocol (port 4455 default)
-
-### Adapter Architecture
-
-```
-src/renderer/api/obs/
-├── abstraction/
-│   ├── types.ts      (unified data types - v5-style camelCase)
-│   ├── adapter.ts    (OBSAdapter interface)
-│   └── index.ts
-├── adapters/
-│   ├── v4-adapter.ts (translates v4 kebab-case → unified interface)
-│   ├── v5-adapter.ts (native v5 implementation)
-│   ├── factory.ts    (createAdapter with auto-detection)
-│   └── index.ts
-```
-
-### Unified Event Names
-
-Providers and components use unified v5-style event names. The v4 adapter maps legacy events:
-
-| v4 Event                               | Unified Event                 |
-|----------------------------------------|-------------------------------|
-| `SwitchScenes`                         | `CurrentProgramSceneChanged`  |
-| `RecordingStarted`, `RecordingStopped` | `RecordStateChanged`          |
-| `StreamStarted`, `StreamStopped`       | `StreamStateChanged`          |
-| `TransitionBegin`                      | `SceneTransitionStarted`      |
-| `TransitionEnd`                        | `SceneTransitionEnded`        |
-| `SceneItemAdded`                       | `SceneItemCreated`            |
-| `SceneItemVisibilityChanged`           | `SceneItemEnableStateChanged` |
-| `SceneItemLockChanged`                 | `SceneItemLockStateChanged`   |
-| `SourceOrderChanged`                   | `SceneItemListReindexed`      |
-
-### Using the Adapter
-
-**Always use adapter methods for OBS requests:**
-
-```typescript
-// Scene switching
-obs.adapter?.setCurrentProgramScene(sceneName)
-
-// Scene item visibility
-obs.adapter?.setSceneItemEnabled(sceneName, sceneItemId, true)
-
-// Scene item reordering
-obs.adapter?.setSceneItemIndex(sceneName, sceneItemId, newIndex)
-```
-
-**Event subscriptions should only be used in providers (not components):**
-
-Providers subscribe to events and expose type-safe data to components via typed hooks.
-
-```typescript
-// INSIDE PROVIDERS ONLY - use adapter.on for event subscriptions:
-adapter.on('CurrentProgramSceneChanged', (data) => { ... })
-adapter.on('SceneItemEnableStateChanged', (data) => { ... })
-
-// COMPONENTS use typed hooks instead:
-const currentScene = useCurrentScene(obs)  // Type: CurrentSceneData | undefined
-const sceneList = useSceneList(obs)        // Type: SceneListData | undefined
-```
-
-## CRITICAL: Two-Level Property Naming Convention
-
-**API Protocol Level**: kebab-case (`scene-name`, `item-id`, `source-name`, `message-id`)
-**JavaScript Level**: camelCase (`sceneName`, `itemId`, `sourceName`, `messageId`)
-
-**Conversion**: Happens automatically at the provider layer using `camelCaseKeys()` utility (`src/renderer/api/obs/util/camelCaseKeys.ts`). All providers normalize kebab-case API responses to camelCase before passing to React components.
-
-**Golden Rule**: 
-- Use kebab-case ONLY in adapter implementations for v4 (internal to adapters)
-- Use camelCase EVERYWHERE in React components and normalized data
-- **Always use adapter methods** - they handle version differences automatically
+> Detailed adapter architecture, event name mapping, naming conventions, and protocol rules are in `.github/instructions/obs-api.instructions.md`.
 
 ## Key Files and Purposes
 
@@ -132,30 +78,18 @@ const sceneList = useSceneList(obs)        // Type: SceneListData | undefined
 - **createProvider.ts**: Provider factory wrapper with TypeScript generic types
 - **version.ts**: Auto-generated version file (from package.json)
 
-### Abstraction Layer (`src/renderer/api/obs/abstraction/`)
-- **types.ts**: Unified data types (Scene, SceneItem, Stats, etc.) using v5-style camelCase
-- **adapter.ts**: OBSAdapter interface defining the version-agnostic API contract
-
-### Version Adapters (`src/renderer/api/obs/adapters/`)
-- **v4-adapter.ts**: Implements OBSAdapter for v4.9.1 protocol, translates kebab-case to camelCase
-- **v5-adapter.ts**: Implements OBSAdapter for v5.x protocol with OpCode-based messaging
-- **factory.ts**: Creates appropriate adapter with optional auto-detection
-
-### Data Providers (`src/renderer/api/obs/providers/`)
-All providers use adapter methods and unified event names:
-- currentScene.ts, sceneList.ts, sceneItemList.ts, sceneItemProperties.ts
-- transition.ts, stats.ts, videoInfo.ts, sceneImage.ts
-- isRecording.ts, isStreaming.ts
+### OBS API Layer (`src/renderer/api/obs/`)
+- `abstraction/` — `OBSAdapter` interface and unified types (v5-style camelCase)
+- `adapters/` — v4 and v5 implementations + auto-detecting factory
+- `providers/` — subscribe to adapter events, expose data via typed hooks
+- `actions/` — fire-and-forget OBS requests (one file per domain)
+- See `.github/instructions/obs-api.instructions.md` for full conventions.
 
 ### Components (`src/renderer/components/`)
-- SceneButton, SceneItemButton, Text, Button, Tiles
-- Access normalized camelCase data from providers
-- Settings panel for configuration (dialog-based)
-- Password prompt dialog for WebSocket auth (replaces browser prompt for Electron compatibility)
-
-### API Actions (`src/renderer/api/obs/actions/`)
-- setCurrentScene.ts, recording.ts, streaming.ts
-- Use adapter methods (e.g., `obs.adapter?.setCurrentProgramScene()`)
+- `tiles/` — tile UI components (SceneButton, SceneItemButton, AudioInputTile, etc.)
+- `Settings/` — settings dialog, visual config editor, SettingsProvider
+- `EditMode/` — edit mode overlay, tile movement, properties dialog
+- See `.github/instructions/tiles.instructions.md` for tile authoring conventions.
 
 ## Configuration System
 
@@ -195,37 +129,12 @@ User configuration stored in `%dataDir%/config.json`:
 
 The `SettingsProvider` auto-detects mode via `window.ipcRenderer` availability.
 
-## OBS WebSocket 4.9.1 Protocol Reference
+## OBS Protocol References
 
-**Docs**: https://github.com/obsproject/obs-websocket/blob/4.x-compat/docs/generated/protocol.md
+- v4 docs: https://github.com/obsproject/obs-websocket/blob/4.x-compat/docs/generated/protocol.md
+- v5 docs: https://github.com/obsproject/obs-websocket/blob/master/docs/generated/protocol.md
 
-### Request Parameter Examples
-
-| Request | Parameters | Notes |
-|---------|-----------|-------|
-| GetSceneList | (none) | Returns: `current-scene`, `scenes` |
-| GetSceneItemList | `sceneName` | camelCase parameter (v4.9+) |
-| TakeSourceScreenshot | `sourceName`, `embedPictureFormat` | camelCase parameters |
-| SetCurrentScene | `'scene-name'` | kebab-case parameter |
-| SetSceneItemProperties | `'scene-name'`, `'item'` | kebab-case parameters |
-| ReorderSceneItems | `scene`, `items` | plain property names |
-
-Always check the OBS docs for exact parameter format—they vary inconsistently.
-
-## OBS WebSocket 5.x Protocol Reference
-
-**Docs**: https://github.com/obsproject/obs-websocket/blob/master/docs/generated/protocol.md
-
-### Key Differences from v4
-
-| Feature            | v4.9.1                             | v5.x                                                               |
-|--------------------|------------------------------------|--------------------------------------------------------------------|
-| Default Port       | 4444                               | 4455                                                               |
-| Property Naming    | kebab-case                         | camelCase                                                          |
-| Message Format     | `request-type`, `message-id`       | OpCode-based (0=Hello, 1=Identify, 6=Request, 7=Response, 5=Event) |
-| Authentication     | `GetAuthRequired` + `Authenticate` | Hello message contains auth challenge                              |
-| Event Subscription | All events by default              | Bitmask subscription in Identify message                           |
-| Scene Item IDs     | String `item` names                | Numeric `sceneItemId`                                              |
+Parameter naming is inconsistent — always verify in the docs. See `.github/instructions/obs-api.instructions.md` for the v4/v5 differences table.
 
 ## Build & Development
 
@@ -259,31 +168,6 @@ The Proxy wrapper logs warnings to console when code accesses undefined properti
 ```
 
 This catches typos, property naming mismatches, and API version issues.
-
-## Testing WebSocket Connection
-
-Ensure OBS Studio is running with WebSocket plugin v4.9.1+ on `localhost:4444` or v5.x on `localhost:4455`.
-
-```typescript
-import { createAdapter } from '~/api/obs/adapters/factory';
-
-// Create adapter with auto-detection
-const adapter = await createAdapter({ address: 'localhost:4455', apiVersion: 'auto' });
-await adapter.connect('localhost:4455', 'your-password');
-
-// Version-agnostic requests
-const scenes = await adapter.getSceneList();
-console.log(scenes.currentProgramSceneName);
-
-// Event subscriptions (used by providers, not components directly)
-adapter.on('CurrentProgramSceneChanged', (data) => {
-  console.log(data.sceneName);
-});
-
-// Scene item control
-await adapter.setSceneItemEnabled('MyScene', 1, true);
-await adapter.setSceneItemIndex('MyScene', 1, 0); // Move to back
-```
 
 ## Project Structure
 
@@ -332,32 +216,10 @@ src/
     └── installer.nsh          (NSIS installer customization)
 ```
 
-## Packaging & Installation
-
-### Windows Installer (NSIS)
-The package script creates both an NSIS installer and ZIP:
-```bash
-yarn package   # Creates installer in dist/
-```
-
-Features:
-- Preserves user data (`settings.json`, `data/` folder) during reinstall/upgrade
-- Custom installation directory support
-- Desktop and Start Menu shortcuts
-
-### Portable Mode
-The app always runs in portable mode - all data is stored relative to the executable:
-- `settings.json` - Application settings (title, data directory)
-- `data/` folder - User configuration, window state, Electron cache
-
 ## Summary
 
-1. **Always**: Use adapter methods for all OBS WebSocket communication
-2. **Always**: Event subscriptions (`adapter.on`) belong in providers only - components use typed hooks
-3. **Always**: Providers call `camelCaseKeys(data)` on all API responses (v4 only)
-4. **Check**: OBS docs for exact parameter names (they're inconsistent between v4/v5)
-5. **Debug**: Enable console to see Proxy warnings about undefined properties
-6. **Electron vs Web**: Use `window.ipcRenderer` to detect mode; config via IPC (Electron) or localStorage (Web)
-6. **v4 Reference**: https://github.com/obsproject/obs-websocket/blob/4.x-compat/docs/generated/protocol.md
-7. **v5 Reference**: https://github.com/obsproject/obs-websocket/blob/master/docs/generated/protocol.md
+1. **OBS API layer**: See `.github/instructions/obs-api.instructions.md` — adapter methods, provider/action patterns, camelCase rules, event names.
+2. **Tiles**: See `.github/instructions/tiles.instructions.md` — adding tile types, TileWrapper, viewType, click hooks.
+3. **Electron**: See `.github/instructions/electron.instructions.md` — IPC channels, portable paths, `window.ipcRenderer` detection.
+4. **Changelog**: Update `Changelog.md` after every code change.
 
