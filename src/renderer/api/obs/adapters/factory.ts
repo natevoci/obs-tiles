@@ -18,8 +18,9 @@ import { V5Adapter } from './v5-adapter'
 const VERSION_DETECTION_TIMEOUT = 2000
 
 window.addEventListener("beforeunload", function() {
-	// pause the deugger to prevent indefinite reloads if vite HMR is enabled.
-	debugger;
+	// pause the debugger to prevent indefinite reloads if vite HMR is enabled.
+	// Only applies in Electron; skipped in web mode.
+	if (window.ipcRenderer) debugger;
 }, false)
 
 /**
