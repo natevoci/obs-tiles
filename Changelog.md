@@ -2,6 +2,22 @@
 
 ## Feature History
 
+### 2026-03-15
+
+**refactor(settings): terminology, IPC, and dialog overhaul**
+
+- Renamed `DEFAULT_CONFIG` → `DEFAULT_SETTINGS` in `src/shared/defaults.ts`; added top-level `title: 'obs-tiles'` field
+- Added `title?: string` to `ConfigFileFormat` interface in `src/shared/types.ts`
+- **Electron main** (`src/main/index.ts`): removed `settings.json` next to exe; hard-coded `dataDir = path.join(basePath, 'data')`; renamed `loadConfig`/`saveConfig` → `loadSettings`/`saveSettings` (file: `data/settings.json`); removed `get-config` IPC handler; renamed `save-config` → `save-settings`; window title now sourced from the stored blob's `title` field
+- **Preload** (`src/preload/index.ts`): removed `getConfig()` bridge; renamed `saveConfig` → `saveSettings`
+- **SettingsProvider** (`src/renderer/components/Settings/SettingsProvider.tsx`): updated `Window` type declaration; load/save now via `getSettings()`/`saveSettings()`; localStorage key `'settingsCurrent'` → `'settings'`; `DEFAULT_CONFIG` → `DEFAULT_SETTINGS`; added `title` state; added `saveFullSettings(settings: ConfigFileFormat)` method; `buildBlob` helper includes `title` in every persisted blob; context value exposes `title`, `currentConfig` (was `settings`), and `saveFullSettings`
+- **SettingsContext** (`src/renderer/components/Settings/SettingsContext.ts`): renamed `settings: ConfigItem` → `currentConfig: ConfigItem`; added `title: string` and `saveFullSettings` to context type
+- **Callers** updated: `Content.tsx`, `obs-websocket.tsx`, `EditableTiles.tsx` all use `currentConfig` instead of `settings`
+- **ConfigVisualEditor** stripped to connections-only: removed all tile node types (`root-settings`, `tiles-group`, `tile-group`, `tile-scene`, `tile-sceneItem`, `tile-button`, `tile-text`, `tile-audioInput`); added inline Add/Delete connection buttons; tree now shows only `connections-group` and `connection` nodes
+- **SettingsDialog** rewritten with tree + tabbed layout: left panel tree has a "Settings" node (global title field) and a "Configs" group with per-config children; right panel for a config shows a Connections tab (using stripped ConfigVisualEditor) and a JSON text editor tab; per-config header has Rename/Delete icon buttons; Save/Cancel footer unchanged; local state pattern preserved (edits held until Save)
+- Removed `normalizeSettings()` and the `wasOldFormat` migration block — legacy config formats are no longer supported
+- `load()` now directly uses `rawSettings ?? { ...DEFAULT_SETTINGS }` with no conversion path
+
 ### 2026-03-14
 
 **fix(Button, Text): tiles visible when OBS is not connected**

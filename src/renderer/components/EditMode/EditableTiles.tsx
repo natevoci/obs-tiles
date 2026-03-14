@@ -326,7 +326,7 @@ const TileMenu = ({
 	onOpenProperties,
 	onOpenAdd,
 }: TileMenuProps) => {
-	const { settings, updateCurrentConfig } = useSettings()
+	const { currentConfig, updateCurrentConfig } = useSettings()
 	const { clipboard, setClipboard } = useEditMode()
 
 	const handleCut = () => {
@@ -376,7 +376,7 @@ const TileMenu = ({
 		onClose()
 	}
 
-	const currentSize = Number(tile.tileSize || settings.tileSize || 10)
+	const currentSize = Number(tile.tileSize || currentConfig.tileSize || 10)
 
 	const handleSizeChange = (_: any, value: number | number[]) => {
 		const size = Array.isArray(value) ? value[0] : value
@@ -806,7 +806,7 @@ const EditableGroup = ({
 // ============================================================================
 
 export const EditableTiles = () => {
-	const { settings, updateCurrentConfig } = useSettings()
+	const { currentConfig, updateCurrentConfig } = useSettings()
 	const [dragPath, setDragPath] = React.useState<number[] | null>(null)
 	const [dropTarget, setDropTarget] = React.useState<DropTarget | null>(null)
 	const [rootMenuAnchor, setRootMenuAnchor] = React.useState<MenuPosition | null>(null)
@@ -816,11 +816,11 @@ export const EditableTiles = () => {
 	// Synthetic tile representing root-level settings (used by TileMenu / TilePropertiesDialog)
 	const rootTile = {
 		group: '',
-		tiles: settings.tiles ?? [],
-		tileSize: settings.tileSize,
-		direction: settings.direction,
-		connection: settings.connection,
-		wrap: (settings as any).wrap,
+		tiles: currentConfig.tiles ?? [],
+		tileSize: currentConfig.tileSize,
+		direction: currentConfig.direction,
+		connection: currentConfig.connection,
+		wrap: (currentConfig as any).wrap,
 	}
 
 	const startDrag = React.useCallback((path: number[]) => {
@@ -899,12 +899,12 @@ export const EditableTiles = () => {
 					</IconButton>
 				</RootMenuButton>
 				<EditableGroup
-					tiles={settings.tiles ?? []}
+					tiles={currentConfig.tiles ?? []}
 					containerPath={[]}
-					inheritedConnection={settings.connection}
-					inheritedTileSize={settings.tileSize}
-					direction={settings.direction}
-					wrap={(settings as any).wrap}
+					inheritedConnection={currentConfig.connection}
+					inheritedTileSize={currentConfig.tileSize}
+					direction={currentConfig.direction}
+					wrap={(currentConfig as any).wrap}
 				/>
 			</EditRoot>
 
@@ -921,7 +921,7 @@ export const EditableTiles = () => {
 			<TilePropertiesDialog
 				open={rootPropsOpen}
 				tile={rootTile}
-				connection={settings.connection}
+				connection={currentConfig.connection}
 				onSave={(updated) => {
 					updateCurrentConfig((config) => ({
 						...config,
@@ -937,7 +937,7 @@ export const EditableTiles = () => {
 
 			<AddTileDialog
 				open={rootAddOpen}
-				connection={settings.connection}
+				connection={currentConfig.connection}
 				onAdd={(newTile) => {
 					updateCurrentConfig((config) => ({
 						...config,

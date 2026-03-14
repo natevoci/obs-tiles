@@ -1,75 +1,113 @@
 import React from 'react'
-import styled, { css } from 'styled-components'
-import { 
-	Dialog, 
-	AppBar, 
-	Toolbar, 
-	DialogContent, 
-	DialogActions, 
-	Button, 
-	TextField, 
-	IconButton, 
+import styled from 'styled-components'
+import {
+	Dialog,
+	AppBar,
+	Toolbar,
+	DialogContent,
+	DialogActions,
+	Button,
+	TextField,
+	IconButton,
 	Typography,
-	Select,
-	MenuItem,
-	FormControl,
-	InputLabel,
-	ButtonGroup,
+	Tabs,
+	Tab,
+	Tooltip,
 } from '@material-ui/core'
 import { makeStyles } from '@material-ui/core/styles'
-import { Close, Add, Delete, Edit } from '@material-ui/icons'
+import { Close, Add, Delete, Edit, ExpandMore, ChevronRight, Settings as SettingsIcon } from '@material-ui/icons'
 import { ConfigVisualEditor } from './ConfigVisualEditor'
-
 import { useSettings } from './SettingsContext'
+import type { ConfigItem } from '../../../shared/types'
+import { DEFAULT_SETTINGS } from '../../../shared/defaults'
 
-interface FlexRowProps {
-	$fillHeight?: boolean
-	$height?: string
-	$minHeight?: string
-}
+// ---------------------------------------------------------------------------
+// Styled components
+// ---------------------------------------------------------------------------
 
-const FlexRow = styled.div<FlexRowProps>`
-	position: relative;
+const DialogBody = styled.div`
 	display: flex;
 	flex-direction: row;
-	${p => p.$fillHeight ? css`
-		flex-grow: 1;
-		overflow-y: hidden;
-	` : ''};
-	${p => p.$height ? css`
-		height: ${p.$height};
-	` : ''};
-	${p => p.$minHeight ? css`
-		min-height: ${p.$minHeight};
-	` : ''}
-
-	> :not(:last-child) {
-		margin-right: ${p => p.theme.grid(3)};
-	}
+	flex: 1;
+	overflow: hidden;
+	height: 100%;
 `
 
-interface FlexColumnProps {
-	$fixedHeight?: boolean | string
-}
-
-const FlexColumn = styled.div<FlexColumnProps>`
-	position: relative;
+const LeftPanel = styled.div`
+	width: 220px;
+	flex-shrink: 0;
 	display: flex;
 	flex-direction: column;
-	${p => p.$fixedHeight ? css`
-		overflow-y: hidden;
-	` : ''}
-	${p => p.$fixedHeight ? css`
-		height: ${p.$fixedHeight === true ? '100%' : p.$fixedHeight};
-	` : ''}
+	border-right: 1px solid ${(p) => p.theme.palette?.divider ?? '#ddd'};
+	overflow-y: auto;
+`
 
-	> :not(:last-child) {
-		margin-bottom: ${p => p.theme.grid(2)};
-	}
+const RightPanel = styled.div`
+	flex: 1;
+	display: flex;
+	flex-direction: column;
+	overflow: hidden;
+`
+
+const RightPanelHeader = styled.div`
+	display: flex;
+	align-items: center;
+	gap: 4px;
+	padding: 8px 16px;
+	border-bottom: 1px solid ${(p) => p.theme.palette?.divider ?? '#ddd'};
+	flex-shrink: 0;
+`
+
+const RightPanelContent = styled.div`
+	flex: 1;
+	overflow: hidden;
+	display: flex;
+	flex-direction: column;
+`
+
+const TreeRow = styled.div<{ $depth: number; $selected: boolean }>`
+	display: flex;
+	align-items: center;
+	padding: 6px 8px 6px ${(p) => 8 + p.$depth * 16}px;
+	cursor: pointer;
+	user-select: none;
+	background: ${(p) => p.$selected ? 'rgba(255,255,255,0.12)' : 'transparent'};
+	&:hover { background: rgba(255,255,255,0.07); }
+`
+
+const TreeLabel = styled.span`
+	font-size: 13px;
+	flex: 1;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	white-space: nowrap;
+`
+
+const TreeIcon = styled.div`
+	width: 18px;
+	height: 18px;
+	flex-shrink: 0;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+`
+
+const SettingsFormSection = styled.div`
+	display: flex;
+	flex-direction: column;
+	gap: 16px;
+	padding: 20px;
+`
+
+const TabContent = styled.div`
+	flex: 1;
+	overflow: hidden;
+	display: flex;
+	flex-direction: column;
 `
 
 const StyledTextField = styled(TextField)`
-	height: 100%;
+	flex: 1;
 	> .MuiInputBase-root {
 		height: 100%;
 		align-items: initial;
@@ -80,356 +118,361 @@ const StyledTextField = styled(TextField)`
 	}
 `
 
-const ConfigRow = styled.div`
-	display: flex;
-	align-items: center;
-	gap: 8px;
-	margin-bottom: 16px;
-`
-
-const ConfigSelect = styled(FormControl)`
-	flex: 1;
-	min-width: 200px;
-	margin-top: 8px !important;
+const EmptyHint = styled.div`
+	padding: 20px;
+	color: ${(p) => p.theme.palette?.text?.secondary ?? '#888'};
+	font-size: 13px;
 `
 
 const useStyles = makeStyles((theme) => ({
-	appBar: {
-		position: 'relative',
-	},
-	title: {
-		marginLeft: theme.spacing(2),
-		flex: 1,
-	},
-	small: {
-		width: theme.spacing(3),
-		height: theme.spacing(3),
-		marginRight: theme.spacing(2),
-	},
+	appBar: { position: 'relative' },
+	title: { marginLeft: theme.spacing(2), flex: 1 },
 	content: {
 		position: 'relative',
-		paddingTop: theme.spacing(2),
-		overflowY: 'hidden',
+		padding: 0,
+		display: 'flex',
+		flexDirection: 'column',
+		overflow: 'hidden',
+		flex: 1,
 	},
 }))
+
+// ---------------------------------------------------------------------------
+// Types for selected tree node
+// ---------------------------------------------------------------------------
+
+type SelectedNode = 'settings' | 'configs-group' | number
+
+// ---------------------------------------------------------------------------
+// SettingsDialog
+// ---------------------------------------------------------------------------
 
 interface SettingsDialogProps {
 	onClose: () => void
 }
 
-export const SettingsDialog = ({
-	onClose,
-}: SettingsDialogProps) => {
+export const SettingsDialog = ({ onClose }: SettingsDialogProps) => {
 	const classes = useStyles()
-	const { 
-		configs: savedConfigs, 
-		currentConfigIndex: savedConfigIndex, 
-		saveAllConfigs,
+	const {
+		title: savedTitle,
+		configs: savedConfigs,
+		currentConfigIndex: savedConfigIndex,
+		saveFullSettings,
 	} = useSettings()
-	
-	// Local state - copy of configs that we edit locally until Save
-	const [localConfigs, setLocalConfigs] = React.useState(() => 
-		savedConfigs.map(c => ({ ...c }))
+
+	// Local state â€” edits are held locally until Save
+	const [localTitle, setLocalTitle] = React.useState(savedTitle)
+	const [localConfigs, setLocalConfigs] = React.useState<ConfigItem[]>(() =>
+		savedConfigs.map((c) => ({ ...c })),
 	)
 	const [localConfigIndex, setLocalConfigIndex] = React.useState(savedConfigIndex)
-	
-	// Get the current config's JSON for the text area
-	const currentConfigJSON = React.useMemo(() => 
-		JSON.stringify(localConfigs[localConfigIndex], null, 2),
-		[localConfigs, localConfigIndex]
+
+	// Tree selection
+	const [selected, setSelected] = React.useState<SelectedNode>('settings')
+	const [configsExpanded, setConfigsExpanded] = React.useState(true)
+
+	// Per-config right panel
+	const [activeTab, setActiveTab] = React.useState<'connections' | 'json'>('connections')
+	const [jsonValue, setJsonValue] = React.useState(() =>
+		JSON.stringify(savedConfigs[savedConfigIndex], null, 2),
 	)
-	const [value, setValue] = React.useState(currentConfigJSON)
-	const [renameDialogOpen, setRenameDialogOpen] = React.useState(false)
-	const [newConfigDialogOpen, setNewConfigDialogOpen] = React.useState(false)
-	const [dialogInputValue, setDialogInputValue] = React.useState('')
-	const [editorMode, setEditorMode] = React.useState<'text' | 'visual'>('visual')
 
-	// Parsed config for the visual editor (null when JSON is invalid)
-	const parsedConfig = React.useMemo(() => {
-		try { return JSON.parse(value) } catch { return null }
-	}, [value])
-
-	const handleVisualChange = React.useCallback((config: any) => {
-		setValue(JSON.stringify(config, null, 2))
-	}, [])
-
-	const handleToggleMode = React.useCallback((mode: 'text' | 'visual') => {
-		if (mode === 'visual') {
+	// Flush JSON text area into localConfigs (used before switching config / saving)
+	const flushJson = React.useCallback(
+		(configIndex: number): boolean => {
 			try {
-				JSON.parse(value)
-				setEditorMode('visual')
-			} catch (e) {
-				alert('Fix JSON errors before switching to the visual editor.')
+				const parsed = JSON.parse(jsonValue)
+				setLocalConfigs((prev) => {
+					const next = [...prev]
+					next[configIndex] = parsed
+					return next
+				})
+				return true
+			} catch {
+				return false
 			}
-		} else {
-			setEditorMode('text')
-		}
-	}, [value])
+		},
+		[jsonValue],
+	)
 
-	// Update text area when switching configs (save current edits to local state first)
-	const updateLocalConfigFromTextArea = React.useCallback(() => {
-		try {
-			const parsed = JSON.parse(value)
-			setLocalConfigs(prev => {
-				const updated = [...prev]
-				updated[localConfigIndex] = parsed
-				return updated
+	// When selected changes to a config node, sync JSON text area
+	const handleSelectNode = React.useCallback(
+		(node: SelectedNode) => {
+			// If leaving a config node in json tab, try to flush edits
+			if (typeof selected === 'number' && activeTab === 'json') {
+				flushJson(selected)
+			}
+			setSelected(node)
+			if (typeof node === 'number') {
+				setJsonValue(JSON.stringify(localConfigs[node], null, 2))
+			}
+		},
+		[selected, activeTab, flushJson, localConfigs],
+	)
+
+	const handleConnectionsChange = React.useCallback(
+		(configIndex: number, newConfig: any) => {
+			setLocalConfigs((prev) => {
+				const next = [...prev]
+				next[configIndex] = newConfig
+				return next
 			})
-		} catch (e) {
-			// Invalid JSON, ignore
-		}
-	}, [value, localConfigIndex])
-
-	// Update text area value when config index changes
-	React.useEffect(() => {
-		setValue(JSON.stringify(localConfigs[localConfigIndex], null, 2))
-	}, [localConfigIndex, localConfigs])
-
-	const handleChange = React.useCallback(
-		(event: React.ChangeEvent<HTMLInputElement>) => {
-			setValue(event.target.value)
 		},
 		[],
 	)
 
-	const handleConfigSelect = (event: React.ChangeEvent<{ value: unknown }>) => {
-		// Save current text area edits to local state
-		updateLocalConfigFromTextArea()
-		setLocalConfigIndex(event.target.value as number)
-	}
+	const handleNewConfig = React.useCallback(() => {
+		const name = window.prompt('New config name:')?.trim()
+		if (!name) return
+		const newConfig: ConfigItem = { ...DEFAULT_SETTINGS.configs[0], name }
+		setLocalConfigs((prev) => {
+			const next = [...prev, newConfig]
+			const newIdx = next.length - 1
+			setSelected(newIdx)
+			setJsonValue(JSON.stringify(newConfig, null, 2))
+			return next
+		})
+	}, [])
 
-	const handleNewConfig = () => {
-		setDialogInputValue('')
-		setNewConfigDialogOpen(true)
-	}
-
-	const handleNewConfigConfirm = () => {
-		if (dialogInputValue.trim()) {
-			// Save current text area edits first
-			updateLocalConfigFromTextArea()
-			// Create new config based on default structure
-			const newConfig = {
-				...localConfigs[0],
-				name: dialogInputValue.trim(),
-			}
-			const newConfigs = [...localConfigs, newConfig]
-			setLocalConfigs(newConfigs)
-			setLocalConfigIndex(newConfigs.length - 1)
-		}
-		setNewConfigDialogOpen(false)
-	}
-
-	const handleRename = () => {
-		setDialogInputValue(localConfigs[localConfigIndex]?.name || '')
-		setRenameDialogOpen(true)
-	}
-
-	const handleRenameConfirm = () => {
-		if (dialogInputValue.trim()) {
-			setLocalConfigs(prev => {
-				const updated = [...prev]
-				updated[localConfigIndex] = { ...updated[localConfigIndex], name: dialogInputValue.trim() }
-				return updated
+	const handleRename = React.useCallback(
+		(configIndex: number) => {
+			const newName = window.prompt('Rename config:', localConfigs[configIndex]?.name)?.trim()
+			if (!newName) return
+			setLocalConfigs((prev) => {
+				const next = [...prev]
+				next[configIndex] = { ...next[configIndex], name: newName }
+				return next
 			})
-		}
-		setRenameDialogOpen(false)
-	}
+		},
+		[localConfigs],
+	)
 
-	const handleDelete = () => {
-		if (localConfigs.length > 1 && window.confirm(`Delete config "${localConfigs[localConfigIndex]?.name}"?`)) {
-			const newConfigs = localConfigs.filter((_, i) => i !== localConfigIndex)
-			const newIndex = Math.min(localConfigIndex, newConfigs.length - 1)
-			setLocalConfigs(newConfigs)
-			setLocalConfigIndex(newIndex)
-		}
-	}
+	const handleDelete = React.useCallback(
+		(configIndex: number) => {
+			if (localConfigs.length <= 1) return
+			if (!window.confirm(`Delete config "${localConfigs[configIndex]?.name}"?`)) return
+			setLocalConfigs((prev) => {
+				const next = prev.filter((_, i) => i !== configIndex)
+				const newActive = Math.min(localConfigIndex, next.length - 1)
+				setLocalConfigIndex(newActive)
+				setSelected(newActive)
+				setJsonValue(JSON.stringify(next[newActive], null, 2))
+				return next
+			})
+		},
+		[localConfigs, localConfigIndex],
+	)
 
 	const handleSave = () => {
-		// Save current text area edits first
 		let finalConfigs = localConfigs
-		try {
-			const parsed = JSON.parse(value)
-			finalConfigs = [...localConfigs]
-			finalConfigs[localConfigIndex] = parsed
-		} catch (e) {
-			// Show error and keep dialog open to allow correction
-			alert(`Invalid JSON: ${e instanceof Error ? e.message : 'Unknown error'}`)
-			return
+		// Flush JSON edits if on the JSON tab
+		if (typeof selected === 'number' && activeTab === 'json') {
+			try {
+				const parsed = JSON.parse(jsonValue)
+				finalConfigs = [...localConfigs]
+				finalConfigs[selected] = parsed
+			} catch (e) {
+				alert(`Invalid JSON: ${e instanceof Error ? e.message : 'Unknown error'}`)
+				return
+			}
 		}
-		// Commit all changes to the provider
-		saveAllConfigs(finalConfigs, localConfigIndex)
+		saveFullSettings({
+			title: localTitle,
+			configs: finalConfigs,
+			currentConfigIndex: localConfigIndex,
+		})
 		onClose()
 	}
 
+	// ---------------------------------------------------------------------------
+	// Render helpers
+	// ---------------------------------------------------------------------------
+
+	const renderTree = () => (
+		<>
+			{/* Settings node */}
+			<TreeRow
+				$depth={0}
+				$selected={selected === 'settings'}
+				onClick={() => handleSelectNode('settings')}
+			>
+				<TreeIcon>
+					<SettingsIcon style={{ width: 16, height: 16, opacity: 0.7 }} />
+				</TreeIcon>
+				<TreeLabel>Settings</TreeLabel>
+			</TreeRow>
+
+			{/* Configs group */}
+			<TreeRow
+				$depth={0}
+				$selected={selected === 'configs-group'}
+				onClick={() => {
+					handleSelectNode('configs-group')
+					setConfigsExpanded((v) => !v)
+				}}
+			>
+				<TreeIcon>
+					{configsExpanded
+						? <ExpandMore style={{ width: 18, height: 18, opacity: 0.7 }} />
+						: <ChevronRight style={{ width: 18, height: 18, opacity: 0.7 }} />
+					}
+				</TreeIcon>
+				<TreeLabel>Configs</TreeLabel>
+				<Tooltip title="New config">
+					<IconButton
+						size="small"
+						onClick={(e) => { e.stopPropagation(); handleNewConfig() }}
+						style={{ padding: 2 }}
+					>
+						<Add style={{ width: 16, height: 16 }} />
+					</IconButton>
+				</Tooltip>
+			</TreeRow>
+
+			{/* Per-config items */}
+			{configsExpanded && localConfigs.map((cfg, idx) => (
+				<TreeRow
+					key={idx}
+					$depth={1}
+					$selected={selected === idx}
+					onClick={() => handleSelectNode(idx)}
+				>
+					<TreeIcon />
+					<TreeLabel title={cfg.name}>{cfg.name}</TreeLabel>
+				</TreeRow>
+			))}
+		</>
+	)
+
+	const renderRightPanel = () => {
+		if (selected === 'settings') {
+			return (
+				<>
+					<RightPanelHeader>
+						<Typography variant="subtitle1" style={{ fontWeight: 600 }}>
+							Settings
+						</Typography>
+					</RightPanelHeader>
+					<RightPanelContent>
+						<SettingsFormSection>
+							<TextField
+								label="Window title"
+								value={localTitle}
+								onChange={(e) => setLocalTitle(e.target.value)}
+								variant="outlined"
+								size="small"
+								fullWidth
+							/>
+						</SettingsFormSection>
+					</RightPanelContent>
+				</>
+			)
+		}
+
+		if (selected === 'configs-group') {
+			return (
+				<>
+					<RightPanelHeader>
+						<Typography variant="subtitle1" style={{ fontWeight: 600 }}>Configs</Typography>
+					</RightPanelHeader>
+					<RightPanelContent>
+						<EmptyHint>
+							Select a config to edit its connections and settings, or create a new one with the + button.
+						</EmptyHint>
+					</RightPanelContent>
+				</>
+			)
+		}
+
+		// Config node
+		const configIndex = selected as number
+		const config = localConfigs[configIndex]
+		if (!config) return null
+
+		return (
+			<>
+				<RightPanelHeader>
+					<Typography variant="subtitle1" style={{ fontWeight: 600, flex: 1 }}>
+						{config.name}
+					</Typography>
+					<Tooltip title="Rename">
+						<IconButton size="small" onClick={() => handleRename(configIndex)}>
+							<Edit fontSize="small" />
+						</IconButton>
+					</Tooltip>
+					<Tooltip title="Delete">
+						<span>
+							<IconButton
+								size="small"
+								onClick={() => handleDelete(configIndex)}
+								disabled={localConfigs.length <= 1}
+							>
+								<Delete fontSize="small" />
+							</IconButton>
+						</span>
+					</Tooltip>
+				</RightPanelHeader>
+
+				<Tabs
+					value={activeTab}
+					onChange={(_, v) => setActiveTab(v)}
+					indicatorColor="primary"
+					textColor="primary"
+					style={{ flexShrink: 0, borderBottom: '1px solid rgba(255,255,255,0.12)' }}
+				>
+					<Tab value="connections" label="Connections" />
+					<Tab value="json" label="JSON" />
+				</Tabs>
+
+				<TabContent>
+					{activeTab === 'connections' ? (
+						<ConfigVisualEditor
+							config={config}
+							onChange={(newConfig) => handleConnectionsChange(configIndex, newConfig)}
+						/>
+					) : (
+						<StyledTextField
+							multiline
+							fullWidth
+							variant="filled"
+							InputProps={{ disableUnderline: true }}
+							value={jsonValue}
+							onChange={(e) => setJsonValue(e.target.value)}
+							style={{ flex: 1, height: '100%' }}
+						/>
+					)}
+				</TabContent>
+			</>
+		)
+	}
+
 	return (
-		<Dialog
-			open
-			fullScreen
-			onClose={onClose}
-		>
+		<Dialog open fullScreen onClose={onClose}>
 			<AppBar className={classes.appBar}>
 				<Toolbar>
 					<Typography variant="h6" className={classes.title}>
 						Settings
 					</Typography>
-					<IconButton
-						edge="start"
-						color="inherit"
-						onClick={() => {
-							onClose()
-						}}
-						aria-label="close"
-					>
+					<IconButton edge="start" color="inherit" onClick={onClose} aria-label="close">
 						<Close />
 					</IconButton>
 				</Toolbar>
 			</AppBar>
 			<DialogContent className={classes.content}>
-				<FlexColumn
-					aria-label='Column'
-					$fixedHeight
-				>
-					<ConfigRow>
-						<ConfigSelect variant="outlined" size="small">
-							<InputLabel id="config-select-label">Configuration</InputLabel>
-							<Select
-								labelId="config-select-label"
-								value={localConfigIndex}
-								onChange={handleConfigSelect}
-								label="Configuration"
-							>
-								{localConfigs.map((config, index) => (
-									<MenuItem key={index} value={index}>
-										{config.name}
-									</MenuItem>
-								))}
-							</Select>
-						</ConfigSelect>
-						<IconButton size="small" onClick={handleNewConfig} title="New Config">
-							<Add />
-						</IconButton>
-						<IconButton size="small" onClick={handleRename} title="Rename Config">
-							<Edit />
-						</IconButton>
-						<IconButton 
-							size="small" 
-							onClick={handleDelete} 
-							title="Delete Config"
-							disabled={localConfigs.length <= 1}
-						>
-							<Delete />
-						</IconButton>
-						<ButtonGroup size="small" variant="outlined" style={{ marginLeft: 'auto' }}>
-							<Button
-								variant={editorMode === 'text' ? 'contained' : 'outlined'}
-								color={editorMode === 'text' ? 'primary' : 'default'}
-								onClick={() => handleToggleMode('text')}
-							>
-								Text
-							</Button>
-							<Button
-								variant={editorMode === 'visual' ? 'contained' : 'outlined'}
-								color={editorMode === 'visual' ? 'primary' : 'default'}
-								onClick={() => handleToggleMode('visual')}
-							>
-								Visual
-							</Button>
-						</ButtonGroup>
-					</ConfigRow>
-					<FlexRow
-						aria-label='Settings text area row'
-						$fillHeight
-					>
-						{editorMode === 'text' ? (
-							<StyledTextField
-								id="settings"
-								type="text"
-								multiline
-								fullWidth
-								variant={'filled'}
-								InputProps={{
-									disableUnderline: true
-								}}
-								value={value}
-								onChange={handleChange}
-							/>
-						) : (
-							parsedConfig != null ? (
-								<ConfigVisualEditor
-									config={parsedConfig}
-									onChange={handleVisualChange}
-								/>
-							) : (
-								<div style={{ padding: 16, color: 'red' }}>
-									Invalid JSON — switch back to Text mode to fix the error.
-								</div>
-							)
-						)}
-					</FlexRow>
-				</FlexColumn>
+				<DialogBody>
+					<LeftPanel>{renderTree()}</LeftPanel>
+					<RightPanel>{renderRightPanel()}</RightPanel>
+				</DialogBody>
 			</DialogContent>
-
 			<DialogActions>
-				<Button
-					color="primary"
-					variant="contained"
-					onClick={handleSave}
-				>
+				<Button color="primary" variant="contained" onClick={handleSave}>
 					Save
 				</Button>
-				<Button
-					variant="contained"
-					onClick={() => {
-						onClose()
-					}}
-				>
+				<Button variant="contained" onClick={onClose}>
 					Cancel
 				</Button>
 			</DialogActions>
-
-			{/* New Config Dialog */}
-			<Dialog open={newConfigDialogOpen} onClose={() => setNewConfigDialogOpen(false)}>
-				<DialogContent>
-					<TextField
-						autoFocus
-						margin="dense"
-						label="Config Name"
-						fullWidth
-						variant="outlined"
-						value={dialogInputValue}
-						onChange={(e) => setDialogInputValue(e.target.value)}
-						onKeyPress={(e) => e.key === 'Enter' && handleNewConfigConfirm()}
-					/>
-				</DialogContent>
-				<DialogActions>
-					<Button onClick={() => setNewConfigDialogOpen(false)}>Cancel</Button>
-					<Button onClick={handleNewConfigConfirm} color="primary" variant="contained">
-						Create
-					</Button>
-				</DialogActions>
-			</Dialog>
-
-			{/* Rename Dialog */}
-			<Dialog open={renameDialogOpen} onClose={() => setRenameDialogOpen(false)}>
-				<DialogContent>
-					<TextField
-						autoFocus
-						margin="dense"
-						label="Config Name"
-						fullWidth
-						variant="outlined"
-						value={dialogInputValue}
-						onChange={(e) => setDialogInputValue(e.target.value)}
-						onKeyPress={(e) => e.key === 'Enter' && handleRenameConfirm()}
-					/>
-				</DialogContent>
-				<DialogActions>
-					<Button onClick={() => setRenameDialogOpen(false)}>Cancel</Button>
-					<Button onClick={handleRenameConfirm} color="primary" variant="contained">
-						Rename
-					</Button>
-				</DialogActions>
-			</Dialog>
 		</Dialog>
 	)
 }
+

@@ -1,22 +1,24 @@
 import React from 'react'
-import { ConfigItem } from '../../../shared/types'
+import { ConfigItem, ConfigFileFormat } from '../../../shared/types'
 
 interface SettingsContextType {
+	// Global settings
+	title: string
+
 	// All configs
 	configs: ConfigItem[]
 	currentConfigIndex: number
-	
-	// Current config helpers
-	settingsJSON: string
-	setSettingsJSON: (value: string) => void
-	settings: ConfigItem
-	
+
+	// Current config
+	currentConfig: ConfigItem
+
 	// Config management
 	selectConfig: (index: number) => void
 	addConfig: (name: string) => void
 	deleteConfig: (index: number) => void
 	renameConfig: (index: number, newName: string) => void
 	saveAllConfigs: (configs: ConfigItem[], selectedIndex: number) => void
+	saveFullSettings: (settings: ConfigFileFormat) => void
 	updateCurrentConfig: (updater: (config: ConfigItem) => ConfigItem) => void
 }
 

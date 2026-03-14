@@ -1,6 +1,6 @@
-// Default config for config.json
-// Config is now stored as an object with configs array and currentConfigIndex
-export const DEFAULT_CONFIG = {
+// Default settings for data/settings.json
+export const DEFAULT_SETTINGS = {
+  title: 'obs-tiles',
   currentConfigIndex: 0,
   configs: [
     {

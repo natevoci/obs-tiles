@@ -3,7 +3,7 @@ import { fileURLToPath } from 'url'
 import { dirname } from 'path'
 import path from 'path'
 import fs from 'fs'
-import { DEFAULT_CONFIG } from '../shared/defaults'
+import { DEFAULT_SETTINGS } from '../shared/defaults'
 
 const __filename = fileURLToPath(import.meta.url)
 const __dirname = dirname(__filename)
@@ -11,101 +11,11 @@ const __dirname = dirname(__filename)
 const isDev = process.env.NODE_ENV === 'development'
 const basePath = isDev ? process.cwd() : path.join(process.resourcesPath, '..')
 
+// All user data lives in <basePath>/data
+const dataDir = path.join(basePath, 'data')
+app.setPath('userData', dataDir)
+
 let mainWindow: BrowserWindow | null = null
-
-// Default settings for settings.json
-const DEFAULT_SETTINGS = {
-  title: 'obs-tiles',
-  dataDir: 'data'
-}
-
-interface Settings {
-  title: string
-  dataDir: string
-}
-
-let appSettings: Settings = { ...DEFAULT_SETTINGS }
-let dataDir: string = ''
-
-// Load or create settings.json
-function loadSettings(): Settings {
-  const settingsPath = path.join(basePath, 'settings.json')
-  
-  console.log('Loading settings from:', settingsPath)
-  
-  if (fs.existsSync(settingsPath)) {
-    try {
-      const content = fs.readFileSync(settingsPath, 'utf-8')
-      return { ...DEFAULT_SETTINGS, ...JSON.parse(content) }
-    } catch (error) {
-      console.error('Error reading settings.json:', error)
-      return { ...DEFAULT_SETTINGS }
-    }
-  } else {
-    // Create default settings file
-    try {
-      fs.writeFileSync(settingsPath, JSON.stringify(DEFAULT_SETTINGS, null, 2))
-      console.log('Created default settings.json')
-    } catch (error) {
-      console.error('Error creating settings.json:', error)
-    }
-    return { ...DEFAULT_SETTINGS }
-  }
-}
-
-// Setup portable mode (always enabled now)
-function setupPortableMode() {
-  appSettings = loadSettings()
-  
-  // Use custom data directory if specified, otherwise use default 'data' subfolder
-  // If dataDir is relative, resolve it relative to basePath
-  const configuredDataDir = appSettings.dataDir || 'data'
-  dataDir = path.isAbsolute(configuredDataDir) ? configuredDataDir : path.join(basePath, configuredDataDir)
-  
-  console.log('Setting userData path to:', dataDir)
-  app.setPath('userData', dataDir)
-}
-
-// Load config from data directory
-function loadConfig(): any {
-  const configPath = path.join(dataDir, 'config.json')
-  
-  console.log('Loading config from:', configPath)
-  
-  if (fs.existsSync(configPath)) {
-    try {
-      const content = fs.readFileSync(configPath, 'utf-8')
-      return JSON.parse(content)
-    } catch (error) {
-      console.error('Error reading config.json:', error)
-      return { ...DEFAULT_CONFIG }
-    }
-  }
-  
-  // Create default config file
-  ensureDataDir()
-  try {
-    fs.writeFileSync(configPath, JSON.stringify(DEFAULT_CONFIG, null, 2))
-    console.log('Created default config.json')
-  } catch (error) {
-    console.error('Error creating config.json:', error)
-  }
-  return { ...DEFAULT_CONFIG }
-}
-
-// Save config to data directory
-function saveConfig(config: any): boolean {
-  const configPath = path.join(dataDir, 'config.json')
-  
-  ensureDataDir()
-  try {
-    fs.writeFileSync(configPath, JSON.stringify(config, null, 2))
-    return true
-  } catch (error) {
-    console.error('Error saving config.json:', error)
-    return false
-  }
-}
 
 // Ensure data directory exists
 function ensureDataDir() {
@@ -114,8 +24,46 @@ function ensureDataDir() {
   }
 }
 
-// Setup portable mode before app is ready
-setupPortableMode()
+// Load settings from data/settings.json
+function loadSettings(): any {
+  const settingsPath = path.join(dataDir, 'settings.json')
+
+  console.log('Loading settings from:', settingsPath)
+
+  if (fs.existsSync(settingsPath)) {
+    try {
+      const content = fs.readFileSync(settingsPath, 'utf-8')
+      return { ...DEFAULT_SETTINGS, ...JSON.parse(content) }
+    } catch (error) {
+      console.error('Error reading settings.json:', error)
+      return { ...DEFAULT_SETTINGS }
+    }
+  }
+
+  // Create default settings file
+  ensureDataDir()
+  try {
+    fs.writeFileSync(settingsPath, JSON.stringify(DEFAULT_SETTINGS, null, 2))
+    console.log('Created default settings.json')
+  } catch (error) {
+    console.error('Error creating settings.json:', error)
+  }
+  return { ...DEFAULT_SETTINGS }
+}
+
+// Save settings to data/settings.json
+function saveSettings(settings: any): boolean {
+  const settingsPath = path.join(dataDir, 'settings.json')
+
+  ensureDataDir()
+  try {
+    fs.writeFileSync(settingsPath, JSON.stringify(settings, null, 2))
+    return true
+  } catch (error) {
+    console.error('Error saving settings.json:', error)
+    return false
+  }
+}
 
 // Load window state from storage
 function loadWindowState() {
@@ -161,7 +109,9 @@ function saveWindowState(window: BrowserWindow) {
 
 function createWindow() {
   const windowState = loadWindowState()
-  
+  const appSettings = loadSettings()
+  const windowTitle: string = appSettings?.title || 'obs-tiles'
+
   mainWindow = new BrowserWindow({
     x: windowState.x,
     y: windowState.y,
@@ -180,13 +130,10 @@ function createWindow() {
     mainWindow.maximize()
   }
 
-  // Load the window title when the HTML page loads
+  // Set window title from stored settings
   mainWindow.webContents.on('page-title-updated', (event) => {
     event.preventDefault()
-    if (appSettings.title) {
-      console.log('Setting window title to:', appSettings.title)
-      mainWindow?.setTitle(appSettings.title)
-    }
+    mainWindow?.setTitle(windowTitle)
   })
 
   if (isDev) {
@@ -222,13 +169,9 @@ app.on('activate', () => {
 
 // IPC handlers
 ipcMain.handle('get-settings', () => {
-  return appSettings
+  return loadSettings()
 })
 
-ipcMain.handle('get-config', () => {
-  return loadConfig()
-})
-
-ipcMain.handle('save-config', (_event, config: any) => {
-  return saveConfig(config)
+ipcMain.handle('save-settings', (_event, settings: any) => {
+  return saveSettings(settings)
 })

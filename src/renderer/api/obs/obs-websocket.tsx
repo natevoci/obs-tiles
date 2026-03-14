@@ -46,14 +46,14 @@ interface OBSWebsocketProviderProps {
 
 export const OBSWebsocketProvider = ({ children }: OBSWebsocketProviderProps) => {
 	const connectionsRef = React.useRef<Record<string, Connection>>({})
-	const { settings } = useSettings()
+	const { currentConfig } = useSettings()
 	const forceUpdate = useForceUpdate()
 	
-	// Track settings to detect changes and reconnect
+	// Track currentConfig to detect changes and reconnect
 	const prevSettingsRef = React.useRef<string>('')
 	
 	React.useEffect(() => {
-		const settingsKey = JSON.stringify(settings)
+		const settingsKey = JSON.stringify(currentConfig)
 		
 		// Skip if this is the initial mount or settings haven't changed
 		if (prevSettingsRef.current === '' || prevSettingsRef.current === settingsKey) {
@@ -76,7 +76,7 @@ export const OBSWebsocketProvider = ({ children }: OBSWebsocketProviderProps) =>
 		// Clear the connections cache so they get recreated with new settings
 		connectionsRef.current = {}
 		forceUpdate()
-	}, [settings, forceUpdate])
+	}, [currentConfig, forceUpdate])
 
 	// Password prompt state
 	const [passwordPrompt, setPasswordPrompt] = React.useState<PasswordPromptState>({
@@ -107,9 +107,9 @@ export const OBSWebsocketProvider = ({ children }: OBSWebsocketProviderProps) =>
 		(connectionName: string): Connection => {
 			const connections = connectionsRef.current
 			if (!connections[connectionName]) {
-				const connSettings = settings.connections[connectionName]
+				const connSettings = currentConfig.connections[connectionName]
 				if (!connSettings) {
-					throw new Error(`Missing connection information for '${connectionName}'. Available connections (${Object.keys(settings.connections).join(', ')})`)
+					throw new Error(`Missing connection information for '${connectionName}'. Available connections (${Object.keys(currentConfig.connections).join(', ')})`)
 				}
 
 				const connection: Connection = {
@@ -147,7 +147,7 @@ export const OBSWebsocketProvider = ({ children }: OBSWebsocketProviderProps) =>
 					else if (apiVersionConfig === 'v5') forceVersion = 5
 
 					// Check if we need to subscribe to InputVolumeMeters events
-					const subscribeVolumeMeters = hasAudioInputTiles(settings.tiles || [])
+					const subscribeVolumeMeters = hasAudioInputTiles(currentConfig.tiles || [])
 					if (subscribeVolumeMeters) {
 						console.log('[obs-websocket] AudioInput tiles detected, will subscribe to InputVolumeMeters')
 					}
@@ -282,7 +282,7 @@ export const OBSWebsocketProvider = ({ children }: OBSWebsocketProviderProps) =>
 			}
 			return connections[connectionName]
 		},
-		[settings?.connections],
+		[currentConfig?.connections],
 	)
 
 	return (

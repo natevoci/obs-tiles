@@ -11,7 +11,7 @@ const Main = styled.main`
 
 export const Content = () => {
 	const {
-		settings: {
+		currentConfig: {
 			connections,
 			...tileSettings
 		},
