@@ -4,6 +4,17 @@
 
 ### 2026-03-15
 
+**refactor(Footer): extract ConfigSelectorDialog to its own file**
+
+- Moved the config selector `Dialog` into `Footer/ConfigSelectorDialog.tsx` as a controlled component (`open` / `onClose` props)
+- Footer now imports and renders `<ConfigSelectorDialog>`; logic is unchanged
+- Prepares for a future "auto-open at launch" setting that can control the dialog from outside the Footer
+
+**feat(Footer): config switcher button**
+
+- Replaced the config name text + icon button with a single MUI `variant="contained"` `Button` labelled `"Selected Config: <name>"`, matching the tile button style
+- Button is disabled when only one config exists; clicking opens a modal `Dialog` with a list of configs to switch to
+
 **refactor(settings): terminology, IPC, and dialog overhaul**
 
 - Renamed `DEFAULT_CONFIG` → `DEFAULT_SETTINGS` in `src/shared/defaults.ts`; added top-level `title: 'obs-tiles'` field

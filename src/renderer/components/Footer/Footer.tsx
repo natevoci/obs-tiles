@@ -1,5 +1,7 @@
+import React from 'react'
 import styled from 'styled-components'
-import { IconButton, Tooltip } from '@material-ui/core'
+import { Button, IconButton, Tooltip } from '@material-ui/core'
+import { ConfigSelectorDialog } from './ConfigSelectorDialog'
 import { Edit, HighlightOff } from '@material-ui/icons'
 
 import { SettingsButton } from '../Settings/SettingsButton'
@@ -41,16 +43,28 @@ const RightActions = styled.div`
 `
 
 export const Footer = () => {
-	const { configs, currentConfigIndex } = useSettings()
+	const { configs, currentConfigIndex, selectConfig } = useSettings()
 	const configName = configs[currentConfigIndex]?.name || ''
 
 	const { isEditMode, setEditMode } = useEditMode()
+
+	const [dialogOpen, setDialogOpen] = React.useState(false)
+	const multipleConfigs = configs.length > 1
 
 	return (
 		<Wrapper>
 			<LogoContainer>
 				<Logo src={OBSLogo} alt="OBS logo" />
-				<Version>v{APP_VERSION} — {configName}</Version>
+				<Version>v{APP_VERSION}</Version>
+				<Button
+					variant="contained"
+					size="small"
+					disabled={!multipleConfigs}
+					onClick={() => setDialogOpen(true)}
+				>
+					Selected Config: {configName}
+				</Button>
+				<ConfigSelectorDialog open={dialogOpen} onClose={() => setDialogOpen(false)} />
 			</LogoContainer>
 			<RightActions>
 				<Tooltip title={isEditMode ? 'Exit Inline Edit' : 'Inline Edit'}>
@@ -58,7 +72,7 @@ export const Footer = () => {
 						size="small"
 						color="inherit"
 						onClick={() => setEditMode(!isEditMode)}
-						style={{ color: isEditMode ? '#538c61' : p => p.theme.text }}
+						style={{ color: isEditMode ? '#538c61' : 'inherit' }}
 					>
 						{isEditMode ? <HighlightOff /> : <Edit />}
 					</IconButton>
