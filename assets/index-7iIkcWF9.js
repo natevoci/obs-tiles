@@ -6402,14 +6402,14 @@ var grey = {
   A400: "#303030",
   A700: "#616161"
 };
-function _extends() {
-  return _extends = Object.assign ? Object.assign.bind() : function(n2) {
+function _extends$1() {
+  return _extends$1 = Object.assign ? Object.assign.bind() : function(n2) {
     for (var e2 = 1; e2 < arguments.length; e2++) {
       var t2 = arguments[e2];
       for (var r2 in t2) ({}).hasOwnProperty.call(t2, r2) && (n2[r2] = t2[r2]);
     }
     return n2;
-  }, _extends.apply(null, arguments);
+  }, _extends$1.apply(null, arguments);
 }
 function _typeof$2(o) {
   "@babel/helpers - typeof";
@@ -6426,7 +6426,7 @@ function deepmerge(target, source2) {
   var options = arguments.length > 2 && arguments[2] !== void 0 ? arguments[2] : {
     clone: true
   };
-  var output = options.clone ? _extends({}, target) : target;
+  var output = options.clone ? _extends$1({}, target) : target;
   if (isPlainObject(target) && isPlainObject(source2)) {
     Object.keys(source2).forEach(function(key2) {
       if (key2 === "__proto__") {
@@ -6644,7 +6644,7 @@ function createBreakpoints(breakpoints) {
   function width(key2) {
     return values2[key2];
   }
-  return _extends({
+  return _extends$1({
     keys,
     values: values2,
     up,
@@ -6656,14 +6656,14 @@ function createBreakpoints(breakpoints) {
 }
 function createMixins(breakpoints, spacing, mixins) {
   var _toolbar;
-  return _extends({
+  return _extends$1({
     gutters: function gutters() {
       var styles4 = arguments.length > 0 && arguments[0] !== void 0 ? arguments[0] : {};
       console.warn(["Material-UI: theme.mixins.gutters() is deprecated.", "You can use the source of the mixin directly:", "\n      paddingLeft: theme.spacing(2),\n      paddingRight: theme.spacing(2),\n      [theme.breakpoints.up('sm')]: {\n        paddingLeft: theme.spacing(3),\n        paddingRight: theme.spacing(3),\n      },\n      "].join("\n"));
-      return _extends({
+      return _extends$1({
         paddingLeft: spacing(2),
         paddingRight: spacing(2)
-      }, styles4, _defineProperty({}, breakpoints.up("sm"), _extends({
+      }, styles4, _defineProperty({}, breakpoints.up("sm"), _extends$1({
         paddingLeft: spacing(3),
         paddingRight: spacing(3)
       }, styles4[breakpoints.up("sm")])));
@@ -6791,7 +6791,7 @@ function createPalette(palette) {
     var mainShade = arguments.length > 1 && arguments[1] !== void 0 ? arguments[1] : 500;
     var lightShade = arguments.length > 2 && arguments[2] !== void 0 ? arguments[2] : 300;
     var darkShade = arguments.length > 3 && arguments[3] !== void 0 ? arguments[3] : 700;
-    color = _extends({}, color);
+    color = _extends$1({}, color);
     if (!color.main && color[mainShade]) {
       color.main = color[mainShade];
     }
@@ -6812,7 +6812,7 @@ function createPalette(palette) {
     dark,
     light
   };
-  var paletteOutput = deepmerge(_extends({
+  var paletteOutput = deepmerge(_extends$1({
     // A collection of common colors.
     common,
     // The palette type, can be light or dark.
@@ -6845,11 +6845,11 @@ function createPalette(palette) {
   }, types[type]), other);
   return paletteOutput;
 }
-function round(value) {
+function round$1(value) {
   return Math.round(value * 1e5) / 1e5;
 }
 function roundWithDeprecationWarning(value) {
-  return round(value);
+  return round$1(value);
 }
 var caseAllCaps = {
   textTransform: "uppercase"
@@ -6862,14 +6862,14 @@ function createTypography(palette, typography2) {
     return "".concat(size / htmlFontSize * coef, "rem");
   };
   var buildVariant = function buildVariant2(fontWeight, size, lineHeight, letterSpacing, casing) {
-    return _extends({
+    return _extends$1({
       fontFamily,
       fontWeight,
       fontSize: pxToRem(size),
       // Unitless following https://meyerweb.com/eric/thoughts/2006/02/08/unitless-line-heights/
       lineHeight
     }, fontFamily === defaultFontFamily ? {
-      letterSpacing: "".concat(round(letterSpacing / size), "em")
+      letterSpacing: "".concat(round$1(letterSpacing / size), "em")
     } : {}, casing, allVariants);
   };
   var variants = {
@@ -6887,7 +6887,7 @@ function createTypography(palette, typography2) {
     caption: buildVariant(fontWeightRegular, 12, 1.66, 0.4),
     overline: buildVariant(fontWeightRegular, 12, 2.66, 1, caseAllCaps)
   };
-  return deepmerge(_extends({
+  return deepmerge(_extends$1({
     htmlFontSize,
     pxToRem,
     round: roundWithDeprecationWarning,
@@ -7152,7 +7152,7 @@ var _typeof$1 = typeof Symbol === "function" && typeof Symbol.iterator === "symb
 } : function(obj) {
   return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj;
 };
-var isBrowser = (typeof window === "undefined" ? "undefined" : _typeof$1(window)) === "object" && (typeof document === "undefined" ? "undefined" : _typeof$1(document)) === "object" && document.nodeType === 9;
+var isBrowser$1 = (typeof window === "undefined" ? "undefined" : _typeof$1(window)) === "object" && (typeof document === "undefined" ? "undefined" : _typeof$1(document)) === "object" && document.nodeType === 9;
 function _defineProperties(e2, r2) {
   for (var t2 = 0; t2 < r2.length; t2++) {
     var o = r2[t2];
@@ -7368,7 +7368,7 @@ var StyleRule = /* @__PURE__ */ function(_BaseStyleRule) {
   _proto2.toString = function toString(options) {
     var sheet = this.options.sheet;
     var link = sheet ? sheet.options.link : false;
-    var opts = link ? _extends({}, options, {
+    var opts = link ? _extends$1({}, options, {
       allowEmpty: true
     }) : options;
     return toCss(this.selectorText, this.style, opts);
@@ -7413,7 +7413,7 @@ var ConditionalRule = /* @__PURE__ */ function() {
     this.at = atMatch ? atMatch[1] : "unknown";
     this.query = options.name || "@" + this.at;
     this.options = options;
-    this.rules = new RuleList(_extends({}, options, {
+    this.rules = new RuleList(_extends$1({}, options, {
       parent: this
     }));
     for (var name in styles4) {
@@ -7480,11 +7480,11 @@ var KeyframesRule = /* @__PURE__ */ function() {
     this.options = options;
     var scoped = options.scoped, sheet = options.sheet, generateId = options.generateId;
     this.id = scoped === false ? this.name : escape$1(generateId(this, sheet));
-    this.rules = new RuleList(_extends({}, options, {
+    this.rules = new RuleList(_extends$1({}, options, {
       parent: this
     }));
     for (var name in frames) {
-      this.rules.add(name, frames[name], _extends({}, options, {
+      this.rules.add(name, frames[name], _extends$1({}, options, {
         parent: this
       }));
     }
@@ -7562,7 +7562,7 @@ var KeyframeRule = /* @__PURE__ */ function(_BaseStyleRule) {
   _proto.toString = function toString(options) {
     var sheet = this.options.sheet;
     var link = sheet ? sheet.options.link : false;
-    var opts = link ? _extends({}, options, {
+    var opts = link ? _extends$1({}, options, {
       allowEmpty: true
     }) : options;
     return toCss(this.key, this.style, opts);
@@ -7684,7 +7684,7 @@ var RuleList = /* @__PURE__ */ function() {
   var _proto = RuleList2.prototype;
   _proto.add = function add(name, decl, ruleOptions) {
     var _this$options = this.options, parent = _this$options.parent, sheet = _this$options.sheet, jss2 = _this$options.jss, Renderer = _this$options.Renderer, generateId = _this$options.generateId, scoped = _this$options.scoped;
-    var options = _extends({
+    var options = _extends$1({
       classes: this.classes,
       parent,
       sheet,
@@ -7718,7 +7718,7 @@ var RuleList = /* @__PURE__ */ function() {
       this.remove(oldRule);
     }
     var options = ruleOptions;
-    if (oldIndex !== -1) options = _extends({}, ruleOptions, {
+    if (oldIndex !== -1) options = _extends$1({}, ruleOptions, {
       index: oldIndex
     });
     return this.add(name, decl, options);
@@ -7828,7 +7828,7 @@ var StyleSheet = /* @__PURE__ */ function() {
     this.deployed = false;
     this.classes = {};
     this.keyframes = {};
-    this.options = _extends({}, options, {
+    this.options = _extends$1({}, options, {
       sheet: this,
       parent: this,
       classes: this.classes,
@@ -7985,7 +7985,7 @@ var PluginsRegistry = /* @__PURE__ */ function() {
       this.registry.onProcessSheet[i](sheet);
     }
   };
-  _proto.onUpdate = function onUpdate(data, rule, sheet, options) {
+  _proto.onUpdate = function onUpdate2(data, rule, sheet, options) {
     for (var i = 0; i < this.registry.onUpdate.length; i++) {
       this.registry.onUpdate[i](data, rule, sheet, options);
     }
@@ -8382,7 +8382,7 @@ var Jss = /* @__PURE__ */ function() {
         minify: false
       },
       createGenerateId,
-      Renderer: isBrowser ? DomRenderer : null,
+      Renderer: isBrowser$1 ? DomRenderer : null,
       plugins: []
     };
     this.generateId = createGenerateId({
@@ -8404,7 +8404,7 @@ var Jss = /* @__PURE__ */ function() {
       this.options.createGenerateId = options.createGenerateId;
     }
     if (options.id) {
-      this.options.id = _extends({}, this.options.id, options.id);
+      this.options.id = _extends$1({}, this.options.id, options.id);
     }
     if (options.createGenerateId || options.id) {
       this.generateId = this.options.createGenerateId(this.options.id);
@@ -8424,7 +8424,7 @@ var Jss = /* @__PURE__ */ function() {
     if (typeof index2 !== "number") {
       index2 = sheets.index === 0 ? 0 : sheets.index + 1;
     }
-    var sheet = new StyleSheet(styles4, _extends({}, options, {
+    var sheet = new StyleSheet(styles4, _extends$1({}, options, {
       jss: this,
       generateId: options.generateId || this.generateId,
       insertionPoint: this.options.insertionPoint,
@@ -8449,7 +8449,7 @@ var Jss = /* @__PURE__ */ function() {
     if (typeof name === "object") {
       return this.createRule(void 0, name, style);
     }
-    var ruleOptions = _extends({}, options, {
+    var ruleOptions = _extends$1({}, options, {
       name,
       jss: this,
       Renderer: this.options.Renderer
@@ -8526,7 +8526,7 @@ var functionPlugin = function functionPlugin2() {
       rule[fnValuesNs] = fnValues;
       return style;
     },
-    onUpdate: function onUpdate(data, rule, sheet, options) {
+    onUpdate: function onUpdate2(data, rule, sheet, options) {
       var styleRule = rule;
       var fnRule = styleRule[fnRuleNs];
       if (fnRule) {
@@ -8550,7 +8550,7 @@ var GlobalContainerRule = /* @__PURE__ */ function() {
     this.isProcessed = false;
     this.key = key2;
     this.options = options;
-    this.rules = new RuleList(_extends({}, options, {
+    this.rules = new RuleList(_extends$1({}, options, {
       parent: this
     }));
     for (var selector in styles4) {
@@ -8588,7 +8588,7 @@ var GlobalPrefixedRule = /* @__PURE__ */ function() {
     this.key = key2;
     this.options = options;
     var selector = key2.substr(atPrefix.length);
-    this.rule = options.jss.createRule(selector, style, _extends({}, options, {
+    this.rule = options.jss.createRule(selector, style, _extends$1({}, options, {
       parent: this
     }));
   }
@@ -8613,7 +8613,7 @@ function handleNestedGlobalContainerRule(rule, sheet) {
   var rules = style ? style[at] : null;
   if (!rules) return;
   for (var name in rules) {
-    sheet.addRule(name, rules[name], _extends({}, options, {
+    sheet.addRule(name, rules[name], _extends$1({}, options, {
       selector: addScope(name, rule.selector)
     }));
   }
@@ -8624,7 +8624,7 @@ function handlePrefixedGlobalRule(rule, sheet) {
   for (var prop in style) {
     if (prop[0] !== "@" || prop.substr(0, at.length) !== at) continue;
     var selector = addScope(prop.substr(at.length), rule.selector);
-    sheet.addRule(selector, style[prop], _extends({}, options, {
+    sheet.addRule(selector, style[prop], _extends$1({}, options, {
       selector
     }));
     delete style[prop];
@@ -8688,12 +8688,12 @@ function jssNested() {
     return result;
   }
   function getOptions(rule, container, prevOptions) {
-    if (prevOptions) return _extends({}, prevOptions, {
+    if (prevOptions) return _extends$1({}, prevOptions, {
       index: prevOptions.index + 1
     });
     var nestingLevel = rule.options.nestingLevel;
     nestingLevel = nestingLevel === void 0 ? 1 : nestingLevel + 1;
-    var options = _extends({}, rule.options, {
+    var options = _extends$1({}, rule.options, {
       nestingLevel,
       index: container.indexOf(rule) + 1
       // We don't need the parent name to be set options for chlid.
@@ -8718,11 +8718,11 @@ function jssNested() {
         selector = selector.replace(refRegExp, replaceRef3);
         var name = styleRule.key + "-" + prop;
         if ("replaceRule" in container) {
-          container.replaceRule(name, style[prop], _extends({}, options, {
+          container.replaceRule(name, style[prop], _extends$1({}, options, {
             selector
           }));
         } else {
-          container.addRule(name, style[prop], _extends({}, options, {
+          container.addRule(name, style[prop], _extends$1({}, options, {
             selector
           }));
         }
@@ -9005,8 +9005,8 @@ var js = "";
 var css = "";
 var vendor = "";
 var browser = "";
-var isTouch = isBrowser && "ontouchstart" in document.documentElement;
-if (isBrowser) {
+var isTouch = isBrowser$1 && "ontouchstart" in document.documentElement;
+if (isBrowser$1) {
   var jsCssMap = {
     Moz: "-moz-",
     ms: "-ms-",
@@ -9253,7 +9253,7 @@ var noPrefill = plugins.filter(function(p2) {
 }, []);
 var el;
 var cache = {};
-if (isBrowser) {
+if (isBrowser$1) {
   el = document.createElement("p");
   var computed = window.getComputedStyle(document.documentElement, "");
   for (var key$1$1 in computed) {
@@ -9302,7 +9302,7 @@ function prefixTransitionCallback(match, p1, p2) {
   if (!prefixedValue) return p1 || p2;
   return prefixedValue;
 }
-if (isBrowser) el$1 = document.createElement("p");
+if (isBrowser$1) el$1 = document.createElement("p");
 function supportedValue(property, value) {
   var prefixedValue = value;
   if (!el$1 || property === "content") return value;
@@ -9416,7 +9416,7 @@ function mergeClasses() {
   if (!newClasses) {
     return baseClasses;
   }
-  var nextClasses = _extends({}, baseClasses);
+  var nextClasses = _extends$1({}, baseClasses);
   Object.keys(newClasses).forEach(function(key2) {
     if (newClasses[key2]) {
       nextClasses[key2] = "".concat(baseClasses[key2], " ").concat(newClasses[key2]);
@@ -9479,7 +9479,7 @@ function getStylesCreator(stylesOrCreator) {
         return styles4;
       }
       var overrides = theme.overrides[name];
-      var stylesWithOverrides = _extends({}, styles4);
+      var stylesWithOverrides = _extends$1({}, styles4);
       Object.keys(overrides).forEach(function(key2) {
         stylesWithOverrides[key2] = deepmerge(stylesWithOverrides[key2], overrides[key2]);
       });
@@ -9535,7 +9535,7 @@ function attach(_ref22, props) {
     };
     multiKeyStore.set(stylesOptions.sheetsManager, stylesCreator, theme, sheetManager);
   }
-  var options = _extends({}, stylesCreator.options, stylesOptions, {
+  var options = _extends$1({}, stylesCreator.options, stylesOptions, {
     theme,
     flip: typeof stylesOptions.flip === "boolean" ? stylesOptions.flip : theme.direction === "rtl"
   });
@@ -9548,7 +9548,7 @@ function attach(_ref22, props) {
     }
     var styles4 = stylesCreator.create(theme, name);
     if (!staticSheet) {
-      staticSheet = stylesOptions.jss.createStyleSheet(styles4, _extends({
+      staticSheet = stylesOptions.jss.createStyleSheet(styles4, _extends$1({
         link: false
       }, options));
       staticSheet.attach();
@@ -9563,7 +9563,7 @@ function attach(_ref22, props) {
     sheetManager.dynamicStyles = getDynamicStyles(styles4);
   }
   if (sheetManager.dynamicStyles) {
-    var dynamicSheet = stylesOptions.jss.createStyleSheet(sheetManager.dynamicStyles, _extends({
+    var dynamicSheet = stylesOptions.jss.createStyleSheet(sheetManager.dynamicStyles, _extends$1({
       link: true
     }, options));
     dynamicSheet.update(props);
@@ -9581,7 +9581,7 @@ function attach(_ref22, props) {
   }
   sheetManager.refs += 1;
 }
-function update(_ref3, props) {
+function update$1(_ref3, props) {
   var state = _ref3.state;
   if (state.dynamicSheet) {
     state.dynamicSheet.update(props);
@@ -9645,7 +9645,7 @@ function makeStyles$1(stylesOrCreator) {
   var useStyles2 = function useStyles22() {
     var props = arguments.length > 0 && arguments[0] !== void 0 ? arguments[0] : {};
     var theme = useTheme$1() || defaultTheme2;
-    var stylesOptions = _extends({}, React$1.useContext(StylesContext), stylesOptions2);
+    var stylesOptions = _extends$1({}, React$1.useContext(StylesContext), stylesOptions2);
     var instance = React$1.useRef();
     var shouldUpdate = React$1.useRef();
     useSynchronousEffect(function() {
@@ -9665,7 +9665,7 @@ function makeStyles$1(stylesOrCreator) {
     }, [theme, stylesCreator]);
     React$1.useEffect(function() {
       if (shouldUpdate.current) {
-        update(instance.current, props);
+        update$1(instance.current, props);
       }
       shouldUpdate.current = true;
     });
@@ -9837,7 +9837,7 @@ function getStatics(component) {
   }
   return TYPE_STATICS[component["$$typeof"]] || REACT_STATICS;
 }
-var defineProperty = Object.defineProperty;
+var defineProperty$1 = Object.defineProperty;
 var getOwnPropertyNames = Object.getOwnPropertyNames;
 var getOwnPropertySymbols = Object.getOwnPropertySymbols;
 var getOwnPropertyDescriptor = Object.getOwnPropertyDescriptor;
@@ -9862,7 +9862,7 @@ function hoistNonReactStatics(targetComponent, sourceComponent, blacklist) {
       if (!KNOWN_STATICS[key2] && !(blacklist && blacklist[key2]) && !(sourceStatics && sourceStatics[key2]) && !(targetStatics && targetStatics[key2])) {
         var descriptor = getOwnPropertyDescriptor(sourceComponent, key2);
         try {
-          defineProperty(targetComponent, key2, descriptor);
+          defineProperty$1(targetComponent, key2, descriptor);
         } catch (e2) {
         }
       }
@@ -9877,7 +9877,7 @@ function mergeOuterLocalTheme(outerTheme, localTheme) {
     var mergedTheme = localTheme(outerTheme);
     return mergedTheme;
   }
-  return _extends({}, outerTheme, localTheme);
+  return _extends$1({}, outerTheme, localTheme);
 }
 function ThemeProvider$1(props) {
   var children = props.children, localTheme = props.theme;
@@ -9898,7 +9898,7 @@ var withStyles$1 = function withStyles2(stylesOrCreator) {
   return function(Component) {
     var defaultTheme2 = options.defaultTheme, _options$withTheme = options.withTheme, withTheme = _options$withTheme === void 0 ? false : _options$withTheme, name = options.name, stylesOptions = _objectWithoutProperties(options, ["defaultTheme", "withTheme", "name"]);
     var classNamePrefix = name;
-    var useStyles2 = makeStyles$1(stylesOrCreator, _extends({
+    var useStyles2 = makeStyles$1(stylesOrCreator, _extends$1({
       defaultTheme: defaultTheme2,
       Component,
       name: name || Component.displayName,
@@ -9907,7 +9907,7 @@ var withStyles$1 = function withStyles2(stylesOrCreator) {
     var WithStyles = /* @__PURE__ */ React$1.forwardRef(function WithStyles2(props, ref) {
       props.classes;
       var innerRef = props.innerRef, other = _objectWithoutProperties(props, ["classes", "innerRef"]);
-      var classes = useStyles2(_extends({}, Component.defaultProps, props));
+      var classes = useStyles2(_extends$1({}, Component.defaultProps, props));
       var theme;
       var more = other;
       if (typeof name === "string" || withTheme) {
@@ -9923,7 +9923,7 @@ var withStyles$1 = function withStyles2(stylesOrCreator) {
           more.theme = theme;
         }
       }
-      return /* @__PURE__ */ React$1.createElement(Component, _extends({
+      return /* @__PURE__ */ React$1.createElement(Component, _extends$1({
         ref: innerRef || ref,
         classes
       }, more));
@@ -9935,7 +9935,7 @@ var withStyles$1 = function withStyles2(stylesOrCreator) {
 var defaultTheme = createTheme();
 function makeStyles(stylesOrCreator) {
   var options = arguments.length > 1 && arguments[1] !== void 0 ? arguments[1] : {};
-  return makeStyles$1(stylesOrCreator, _extends({
+  return makeStyles$1(stylesOrCreator, _extends$1({
     defaultTheme
   }, options));
 }
@@ -9944,7 +9944,7 @@ function useTheme() {
   return theme;
 }
 function withStyles(stylesOrCreator, options) {
-  return withStyles$1(stylesOrCreator, _extends({
+  return withStyles$1(stylesOrCreator, _extends$1({
     defaultTheme
   }, options));
 }
@@ -9972,7 +9972,7 @@ function createChainedFunction() {
   }, function() {
   });
 }
-var styles$D = function styles2(theme) {
+var styles$Q = function styles2(theme) {
   return {
     /* Styles applied to the root element. */
     root: {
@@ -10023,7 +10023,7 @@ var styles$D = function styles2(theme) {
 };
 var SvgIcon = /* @__PURE__ */ reactExports.forwardRef(function SvgIcon2(props, ref) {
   var children = props.children, classes = props.classes, className = props.className, _props$color = props.color, color = _props$color === void 0 ? "inherit" : _props$color, _props$component = props.component, Component = _props$component === void 0 ? "svg" : _props$component, _props$fontSize = props.fontSize, fontSize = _props$fontSize === void 0 ? "medium" : _props$fontSize, htmlColor = props.htmlColor, titleAccess = props.titleAccess, _props$viewBox = props.viewBox, viewBox = _props$viewBox === void 0 ? "0 0 24 24" : _props$viewBox, other = _objectWithoutProperties(props, ["children", "classes", "className", "color", "component", "fontSize", "htmlColor", "titleAccess", "viewBox"]);
-  return /* @__PURE__ */ reactExports.createElement(Component, _extends({
+  return /* @__PURE__ */ reactExports.createElement(Component, _extends$1({
     className: clsx(classes.root, className, color !== "inherit" && classes["color".concat(capitalize(color))], fontSize !== "default" && fontSize !== "medium" && classes["fontSize".concat(capitalize(fontSize))]),
     focusable: "false",
     viewBox,
@@ -10034,19 +10034,19 @@ var SvgIcon = /* @__PURE__ */ reactExports.forwardRef(function SvgIcon2(props, r
   }, other), children, titleAccess ? /* @__PURE__ */ reactExports.createElement("title", null, titleAccess) : null);
 });
 SvgIcon.muiName = "SvgIcon";
-const SvgIcon$1 = withStyles(styles$D, {
+const SvgIcon$1 = withStyles(styles$Q, {
   name: "MuiSvgIcon"
 })(SvgIcon);
 function createSvgIcon$1(path, displayName) {
   var Component = function Component2(props, ref) {
-    return /* @__PURE__ */ React$1.createElement(SvgIcon$1, _extends({
+    return /* @__PURE__ */ React$1.createElement(SvgIcon$1, _extends$1({
       ref
     }, props), path);
   };
   Component.muiName = SvgIcon$1.muiName;
   return /* @__PURE__ */ React$1.memo(/* @__PURE__ */ React$1.forwardRef(Component));
 }
-function debounce(func) {
+function debounce$1(func) {
   var wait = arguments.length > 1 && arguments[1] !== void 0 ? arguments[1] : 166;
   var timeout;
   function debounced() {
@@ -10115,10 +10115,10 @@ function useControlled(_ref3) {
   }, []);
   return [value, setValueIfUncontrolled];
 }
-var useEnhancedEffect$6 = typeof window !== "undefined" ? reactExports.useLayoutEffect : reactExports.useEffect;
+var useEnhancedEffect$7 = typeof window !== "undefined" ? reactExports.useLayoutEffect : reactExports.useEffect;
 function useEventCallback(fn) {
   var ref = reactExports.useRef(fn);
-  useEnhancedEffect$6(function() {
+  useEnhancedEffect$7(function() {
     ref.current = fn;
   });
   return reactExports.useCallback(function() {
@@ -10233,7 +10233,7 @@ const utils = /* @__PURE__ */ Object.freeze(/* @__PURE__ */ Object.definePropert
   capitalize,
   createChainedFunction,
   createSvgIcon: createSvgIcon$1,
-  debounce,
+  debounce: debounce$1,
   deprecatedPropType,
   isMuiElement,
   ownerDocument,
@@ -10766,7 +10766,7 @@ var TransitionGroup = /* @__PURE__ */ function(_React$Component) {
     }
     if (this.mounted) {
       this.setState(function(state) {
-        var children = _extends({}, state.children);
+        var children = _extends$1({}, state.children);
         delete children[child.key];
         return {
           children
@@ -10804,14 +10804,14 @@ function getTransitionProps(props, options) {
     delay: style.transitionDelay
   };
 }
-var styles$C = function styles22(theme) {
+var styles$P = function styles22(theme) {
   var elevations = {};
   theme.shadows.forEach(function(shadow, index) {
     elevations["elevation".concat(index)] = {
       boxShadow: shadow
     };
   });
-  return _extends({
+  return _extends$1({
     /* Styles applied to the root element. */
     root: {
       backgroundColor: theme.palette.background.paper,
@@ -10830,15 +10830,15 @@ var styles$C = function styles22(theme) {
 };
 var Paper = /* @__PURE__ */ reactExports.forwardRef(function Paper2(props, ref) {
   var classes = props.classes, className = props.className, _props$component = props.component, Component = _props$component === void 0 ? "div" : _props$component, _props$square = props.square, square = _props$square === void 0 ? false : _props$square, _props$elevation = props.elevation, elevation = _props$elevation === void 0 ? 1 : _props$elevation, _props$variant = props.variant, variant = _props$variant === void 0 ? "elevation" : _props$variant, other = _objectWithoutProperties(props, ["classes", "className", "component", "square", "elevation", "variant"]);
-  return /* @__PURE__ */ reactExports.createElement(Component, _extends({
+  return /* @__PURE__ */ reactExports.createElement(Component, _extends$1({
     className: clsx(classes.root, className, variant === "outlined" ? classes.outlined : classes["elevation".concat(elevation)], !square && classes.rounded),
     ref
   }, other));
 });
-const Paper$1 = withStyles(styles$C, {
+const Paper$1 = withStyles(styles$P, {
   name: "MuiPaper"
 })(Paper);
-var useEnhancedEffect$5 = typeof window === "undefined" ? reactExports.useEffect : reactExports.useLayoutEffect;
+var useEnhancedEffect$6 = typeof window === "undefined" ? reactExports.useEffect : reactExports.useLayoutEffect;
 function Ripple(props) {
   var classes = props.classes, _props$pulsate = props.pulsate, pulsate = _props$pulsate === void 0 ? false : _props$pulsate, rippleX = props.rippleX, rippleY = props.rippleY, rippleSize = props.rippleSize, inProp = props.in, _props$onExited = props.onExited, onExited = _props$onExited === void 0 ? function() {
   } : _props$onExited, timeout = props.timeout;
@@ -10852,7 +10852,7 @@ function Ripple(props) {
   };
   var childClassName = clsx(classes.child, leaving && classes.childLeaving, pulsate && classes.childPulsate);
   var handleExited = useEventCallback(onExited);
-  useEnhancedEffect$5(function() {
+  useEnhancedEffect$6(function() {
     if (!inProp) {
       setLeaving(true);
       var timeoutId = setTimeout(handleExited, timeout);
@@ -10871,7 +10871,7 @@ function Ripple(props) {
 }
 var DURATION = 550;
 var DELAY_RIPPLE = 80;
-var styles$B = function styles23(theme) {
+var styles$O = function styles23(theme) {
   return {
     /* Styles applied to the root element. */
     root: {
@@ -11088,7 +11088,7 @@ var TouchRipple = /* @__PURE__ */ reactExports.forwardRef(function TouchRipple2(
       stop
     };
   }, [pulsate, start, stop]);
-  return /* @__PURE__ */ reactExports.createElement("span", _extends({
+  return /* @__PURE__ */ reactExports.createElement("span", _extends$1({
     className: clsx(classes.root, className),
     ref: container
   }, other), /* @__PURE__ */ reactExports.createElement(TransitionGroup, {
@@ -11096,11 +11096,11 @@ var TouchRipple = /* @__PURE__ */ reactExports.forwardRef(function TouchRipple2(
     exit: true
   }, ripples));
 });
-const TouchRipple$1 = withStyles(styles$B, {
+const TouchRipple$1 = withStyles(styles$O, {
   flip: false,
   name: "MuiTouchRipple"
 })(/* @__PURE__ */ reactExports.memo(TouchRipple));
-var styles$A = {
+var styles$N = {
   /* Styles applied to the root element. */
   root: {
     display: "inline-flex",
@@ -11284,7 +11284,7 @@ var ButtonBase = /* @__PURE__ */ reactExports.forwardRef(function ButtonBase2(pr
     setMountedState(true);
   }, []);
   var enableTouchRipple = mountedState && !disableRipple && !disabled;
-  return /* @__PURE__ */ reactExports.createElement(ComponentProp, _extends({
+  return /* @__PURE__ */ reactExports.createElement(ComponentProp, _extends$1({
     className: clsx(classes.root, className, focusVisible && [classes.focusVisible, focusVisibleClassName], disabled && classes.disabled),
     onBlur: handleBlur,
     onClick,
@@ -11302,16 +11302,16 @@ var ButtonBase = /* @__PURE__ */ reactExports.forwardRef(function ButtonBase2(pr
     tabIndex: disabled ? -1 : tabIndex
   }, buttonProps, other), children, enableTouchRipple ? (
     /* TouchRipple is only needed client-side, x2 boost on the server. */
-    /* @__PURE__ */ reactExports.createElement(TouchRipple$1, _extends({
+    /* @__PURE__ */ reactExports.createElement(TouchRipple$1, _extends$1({
       ref: rippleRef,
       center: centerRipple
     }, TouchRippleProps))
   ) : null);
 });
-const ButtonBase$1 = withStyles(styles$A, {
+const ButtonBase$1 = withStyles(styles$N, {
   name: "MuiButtonBase"
 })(ButtonBase);
-var styles$z = function styles24(theme) {
+var styles$M = function styles24(theme) {
   return {
     /* Styles applied to the root element. */
     root: {
@@ -11396,7 +11396,7 @@ var styles$z = function styles24(theme) {
 };
 var IconButton = /* @__PURE__ */ reactExports.forwardRef(function IconButton2(props, ref) {
   var _props$edge = props.edge, edge = _props$edge === void 0 ? false : _props$edge, children = props.children, classes = props.classes, className = props.className, _props$color = props.color, color = _props$color === void 0 ? "default" : _props$color, _props$disabled = props.disabled, disabled = _props$disabled === void 0 ? false : _props$disabled, _props$disableFocusRi = props.disableFocusRipple, disableFocusRipple = _props$disableFocusRi === void 0 ? false : _props$disableFocusRi, _props$size = props.size, size = _props$size === void 0 ? "medium" : _props$size, other = _objectWithoutProperties(props, ["edge", "children", "classes", "className", "color", "disabled", "disableFocusRipple", "size"]);
-  return /* @__PURE__ */ reactExports.createElement(ButtonBase$1, _extends({
+  return /* @__PURE__ */ reactExports.createElement(ButtonBase$1, _extends$1({
     className: clsx(classes.root, className, color !== "default" && classes["color".concat(capitalize(color))], disabled && classes.disabled, size === "small" && classes["size".concat(capitalize(size))], {
       "start": classes.edgeStart,
       "end": classes.edgeEnd
@@ -11409,10 +11409,10 @@ var IconButton = /* @__PURE__ */ reactExports.forwardRef(function IconButton2(pr
     className: classes.label
   }, children));
 });
-const IconButton$1 = withStyles(styles$z, {
+const IconButton$1 = withStyles(styles$M, {
   name: "MuiIconButton"
 })(IconButton);
-var styles$y = function styles25(theme) {
+var styles$L = function styles25(theme) {
   var backgroundColorDefault = theme.palette.type === "light" ? theme.palette.grey[100] : theme.palette.grey[900];
   return {
     /* Styles applied to the root element. */
@@ -11487,7 +11487,7 @@ var styles$y = function styles25(theme) {
 };
 var AppBar = /* @__PURE__ */ reactExports.forwardRef(function AppBar2(props, ref) {
   var classes = props.classes, className = props.className, _props$color = props.color, color = _props$color === void 0 ? "primary" : _props$color, _props$position = props.position, position = _props$position === void 0 ? "fixed" : _props$position, other = _objectWithoutProperties(props, ["classes", "className", "color", "position"]);
-  return /* @__PURE__ */ reactExports.createElement(Paper$1, _extends({
+  return /* @__PURE__ */ reactExports.createElement(Paper$1, _extends$1({
     square: true,
     component: "header",
     elevation: 4,
@@ -11495,10 +11495,10 @@ var AppBar = /* @__PURE__ */ reactExports.forwardRef(function AppBar2(props, ref
     ref
   }, other));
 });
-const AppBar$1 = withStyles(styles$y, {
+const AppBar$1 = withStyles(styles$L, {
   name: "MuiAppBar"
 })(AppBar);
-var styles$x = {
+var styles$K = {
   entering: {
     opacity: 1
   },
@@ -11560,7 +11560,7 @@ var Fade = /* @__PURE__ */ reactExports.forwardRef(function Fade2(props, ref) {
     }
   });
   var handleExited = normalizedTransitionCallback(onExited);
-  return /* @__PURE__ */ reactExports.createElement(TransitionComponent, _extends({
+  return /* @__PURE__ */ reactExports.createElement(TransitionComponent, _extends$1({
     appear: true,
     in: inProp,
     nodeRef: enableStrictModeCompat ? nodeRef : void 0,
@@ -11572,16 +11572,16 @@ var Fade = /* @__PURE__ */ reactExports.forwardRef(function Fade2(props, ref) {
     onExiting: handleExiting,
     timeout
   }, other), function(state, childProps) {
-    return /* @__PURE__ */ reactExports.cloneElement(children, _extends({
-      style: _extends({
+    return /* @__PURE__ */ reactExports.cloneElement(children, _extends$1({
+      style: _extends$1({
         opacity: 0,
         visibility: state === "exited" && !inProp ? "hidden" : void 0
-      }, styles$x[state], style, children.props.style),
+      }, styles$K[state], style, children.props.style),
       ref: handleRef
     }, childProps));
   });
 });
-var styles$w = {
+var styles$J = {
   /* Styles applied to the root element. */
   root: {
     // Improve scrollable dialog support.
@@ -11604,7 +11604,7 @@ var styles$w = {
 };
 var Backdrop = /* @__PURE__ */ reactExports.forwardRef(function Backdrop2(props, ref) {
   var children = props.children, classes = props.classes, className = props.className, _props$invisible = props.invisible, invisible = _props$invisible === void 0 ? false : _props$invisible, open = props.open, transitionDuration = props.transitionDuration, _props$TransitionComp = props.TransitionComponent, TransitionComponent = _props$TransitionComp === void 0 ? Fade : _props$TransitionComp, other = _objectWithoutProperties(props, ["children", "classes", "className", "invisible", "open", "transitionDuration", "TransitionComponent"]);
-  return /* @__PURE__ */ reactExports.createElement(TransitionComponent, _extends({
+  return /* @__PURE__ */ reactExports.createElement(TransitionComponent, _extends$1({
     in: open,
     timeout: transitionDuration
   }, other), /* @__PURE__ */ reactExports.createElement("div", {
@@ -11613,10 +11613,10 @@ var Backdrop = /* @__PURE__ */ reactExports.forwardRef(function Backdrop2(props,
     ref
   }, children));
 });
-const Backdrop$1 = withStyles(styles$w, {
+const Backdrop$1 = withStyles(styles$J, {
   name: "MuiBackdrop"
 })(Backdrop);
-var styles$v = function styles26(theme) {
+var styles$I = function styles26(theme) {
   return {
     /* Styles applied to the root element. */
     root: {
@@ -11734,18 +11734,18 @@ var defaultVariantMapping = {
 var Typography = /* @__PURE__ */ reactExports.forwardRef(function Typography2(props, ref) {
   var _props$align = props.align, align = _props$align === void 0 ? "inherit" : _props$align, classes = props.classes, className = props.className, _props$color = props.color, color = _props$color === void 0 ? "initial" : _props$color, component = props.component, _props$display = props.display, display = _props$display === void 0 ? "initial" : _props$display, _props$gutterBottom = props.gutterBottom, gutterBottom = _props$gutterBottom === void 0 ? false : _props$gutterBottom, _props$noWrap = props.noWrap, noWrap = _props$noWrap === void 0 ? false : _props$noWrap, _props$paragraph = props.paragraph, paragraph = _props$paragraph === void 0 ? false : _props$paragraph, _props$variant = props.variant, variant = _props$variant === void 0 ? "body1" : _props$variant, _props$variantMapping = props.variantMapping, variantMapping = _props$variantMapping === void 0 ? defaultVariantMapping : _props$variantMapping, other = _objectWithoutProperties(props, ["align", "classes", "className", "color", "component", "display", "gutterBottom", "noWrap", "paragraph", "variant", "variantMapping"]);
   var Component = component || (paragraph ? "p" : variantMapping[variant] || defaultVariantMapping[variant]) || "span";
-  return /* @__PURE__ */ reactExports.createElement(Component, _extends({
+  return /* @__PURE__ */ reactExports.createElement(Component, _extends$1({
     className: clsx(classes.root, className, variant !== "inherit" && classes[variant], color !== "initial" && classes["color".concat(capitalize(color))], noWrap && classes.noWrap, gutterBottom && classes.gutterBottom, paragraph && classes.paragraph, align !== "inherit" && classes["align".concat(capitalize(align))], display !== "initial" && classes["display".concat(capitalize(display))]),
     ref
   }, other));
 });
-const Typography$1 = withStyles(styles$v, {
+const Typography$1 = withStyles(styles$I, {
   name: "MuiTypography"
 })(Typography);
-var styles$u = function styles27(theme) {
+var styles$H = function styles27(theme) {
   return {
     /* Styles applied to the root element. */
-    root: _extends({}, theme.typography.button, {
+    root: _extends$1({}, theme.typography.button, {
       boxSizing: "border-box",
       minWidth: 64,
       padding: "6px 16px",
@@ -12002,7 +12002,7 @@ var Button$1 = /* @__PURE__ */ reactExports.forwardRef(function Button2(props, r
   var endIcon = endIconProp && /* @__PURE__ */ reactExports.createElement("span", {
     className: clsx(classes.endIcon, classes["iconSize".concat(capitalize(size))])
   }, endIconProp);
-  return /* @__PURE__ */ reactExports.createElement(ButtonBase$1, _extends({
+  return /* @__PURE__ */ reactExports.createElement(ButtonBase$1, _extends$1({
     className: clsx(classes.root, classes[variant], className, color === "inherit" ? classes.colorInherit : color !== "default" && classes["".concat(variant).concat(capitalize(color))], size !== "medium" && [classes["".concat(variant, "Size").concat(capitalize(size))], classes["size".concat(capitalize(size))]], disableElevation && classes.disableElevation, disabled && classes.disabled, fullWidth && classes.fullWidth),
     component,
     disabled,
@@ -12014,7 +12014,7 @@ var Button$1 = /* @__PURE__ */ reactExports.forwardRef(function Button2(props, r
     className: classes.label
   }, startIcon, children, endIcon));
 });
-const MUIButton = withStyles(styles$u, {
+const Button$2 = withStyles(styles$H, {
   name: "MuiButton"
 })(Button$1);
 var FormControlContext = reactExports.createContext();
@@ -12024,8 +12024,180 @@ function useFormControl$1() {
 function useFormControl() {
   return reactExports.useContext(FormControlContext);
 }
+var styles$G = {
+  root: {
+    padding: 9
+  },
+  checked: {},
+  disabled: {},
+  input: {
+    cursor: "inherit",
+    position: "absolute",
+    opacity: 0,
+    width: "100%",
+    height: "100%",
+    top: 0,
+    left: 0,
+    margin: 0,
+    padding: 0,
+    zIndex: 1
+  }
+};
+var SwitchBase = /* @__PURE__ */ reactExports.forwardRef(function SwitchBase2(props, ref) {
+  var autoFocus = props.autoFocus, checkedProp = props.checked, checkedIcon = props.checkedIcon, classes = props.classes, className = props.className, defaultChecked = props.defaultChecked, disabledProp = props.disabled, icon = props.icon, id2 = props.id, inputProps = props.inputProps, inputRef = props.inputRef, name = props.name, onBlur = props.onBlur, onChange = props.onChange, onFocus = props.onFocus, readOnly = props.readOnly, required = props.required, tabIndex = props.tabIndex, type = props.type, value = props.value, other = _objectWithoutProperties(props, ["autoFocus", "checked", "checkedIcon", "classes", "className", "defaultChecked", "disabled", "icon", "id", "inputProps", "inputRef", "name", "onBlur", "onChange", "onFocus", "readOnly", "required", "tabIndex", "type", "value"]);
+  var _useControlled = useControlled({
+    controlled: checkedProp,
+    default: Boolean(defaultChecked),
+    name: "SwitchBase",
+    state: "checked"
+  }), _useControlled2 = _slicedToArray(_useControlled, 2), checked = _useControlled2[0], setCheckedState = _useControlled2[1];
+  var muiFormControl = useFormControl();
+  var handleFocus = function handleFocus2(event) {
+    if (onFocus) {
+      onFocus(event);
+    }
+    if (muiFormControl && muiFormControl.onFocus) {
+      muiFormControl.onFocus(event);
+    }
+  };
+  var handleBlur = function handleBlur2(event) {
+    if (onBlur) {
+      onBlur(event);
+    }
+    if (muiFormControl && muiFormControl.onBlur) {
+      muiFormControl.onBlur(event);
+    }
+  };
+  var handleInputChange = function handleInputChange2(event) {
+    var newChecked = event.target.checked;
+    setCheckedState(newChecked);
+    if (onChange) {
+      onChange(event, newChecked);
+    }
+  };
+  var disabled = disabledProp;
+  if (muiFormControl) {
+    if (typeof disabled === "undefined") {
+      disabled = muiFormControl.disabled;
+    }
+  }
+  var hasLabelFor = type === "checkbox" || type === "radio";
+  return /* @__PURE__ */ reactExports.createElement(IconButton$1, _extends$1({
+    component: "span",
+    className: clsx(classes.root, className, checked && classes.checked, disabled && classes.disabled),
+    disabled,
+    tabIndex: null,
+    role: void 0,
+    onFocus: handleFocus,
+    onBlur: handleBlur,
+    ref
+  }, other), /* @__PURE__ */ reactExports.createElement("input", _extends$1({
+    autoFocus,
+    checked: checkedProp,
+    defaultChecked,
+    className: classes.input,
+    disabled,
+    id: hasLabelFor && id2,
+    name,
+    onChange: handleInputChange,
+    readOnly,
+    ref: inputRef,
+    required,
+    tabIndex,
+    type,
+    value
+  }, inputProps)), checked ? checkedIcon : icon);
+});
+const SwitchBase$1 = withStyles(styles$G, {
+  name: "PrivateSwitchBase"
+})(SwitchBase);
+const CheckBoxOutlineBlankIcon = createSvgIcon$1(/* @__PURE__ */ reactExports.createElement("path", {
+  d: "M19 5v14H5V5h14m0-2H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2z"
+}));
+const CheckBoxIcon = createSvgIcon$1(/* @__PURE__ */ reactExports.createElement("path", {
+  d: "M19 3H5c-1.11 0-2 .9-2 2v14c0 1.1.89 2 2 2h14c1.11 0 2-.9 2-2V5c0-1.1-.89-2-2-2zm-9 14l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"
+}));
+const IndeterminateCheckBoxIcon = createSvgIcon$1(/* @__PURE__ */ reactExports.createElement("path", {
+  d: "M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm-2 10H7v-2h10v2z"
+}));
+var styles$F = function styles28(theme) {
+  return {
+    /* Styles applied to the root element. */
+    root: {
+      color: theme.palette.text.secondary
+    },
+    /* Pseudo-class applied to the root element if `checked={true}`. */
+    checked: {},
+    /* Pseudo-class applied to the root element if `disabled={true}`. */
+    disabled: {},
+    /* Pseudo-class applied to the root element if `indeterminate={true}`. */
+    indeterminate: {},
+    /* Styles applied to the root element if `color="primary"`. */
+    colorPrimary: {
+      "&$checked": {
+        color: theme.palette.primary.main,
+        "&:hover": {
+          backgroundColor: alpha(theme.palette.primary.main, theme.palette.action.hoverOpacity),
+          // Reset on touch devices, it doesn't add specificity
+          "@media (hover: none)": {
+            backgroundColor: "transparent"
+          }
+        }
+      },
+      "&$disabled": {
+        color: theme.palette.action.disabled
+      }
+    },
+    /* Styles applied to the root element if `color="secondary"`. */
+    colorSecondary: {
+      "&$checked": {
+        color: theme.palette.secondary.main,
+        "&:hover": {
+          backgroundColor: alpha(theme.palette.secondary.main, theme.palette.action.hoverOpacity),
+          // Reset on touch devices, it doesn't add specificity
+          "@media (hover: none)": {
+            backgroundColor: "transparent"
+          }
+        }
+      },
+      "&$disabled": {
+        color: theme.palette.action.disabled
+      }
+    }
+  };
+};
+var defaultCheckedIcon = /* @__PURE__ */ reactExports.createElement(CheckBoxIcon, null);
+var defaultIcon = /* @__PURE__ */ reactExports.createElement(CheckBoxOutlineBlankIcon, null);
+var defaultIndeterminateIcon = /* @__PURE__ */ reactExports.createElement(IndeterminateCheckBoxIcon, null);
+var Checkbox = /* @__PURE__ */ reactExports.forwardRef(function Checkbox2(props, ref) {
+  var _props$checkedIcon = props.checkedIcon, checkedIcon = _props$checkedIcon === void 0 ? defaultCheckedIcon : _props$checkedIcon, classes = props.classes, _props$color = props.color, color = _props$color === void 0 ? "secondary" : _props$color, _props$icon = props.icon, iconProp = _props$icon === void 0 ? defaultIcon : _props$icon, _props$indeterminate = props.indeterminate, indeterminate = _props$indeterminate === void 0 ? false : _props$indeterminate, _props$indeterminateI = props.indeterminateIcon, indeterminateIconProp = _props$indeterminateI === void 0 ? defaultIndeterminateIcon : _props$indeterminateI, inputProps = props.inputProps, _props$size = props.size, size = _props$size === void 0 ? "medium" : _props$size, other = _objectWithoutProperties(props, ["checkedIcon", "classes", "color", "icon", "indeterminate", "indeterminateIcon", "inputProps", "size"]);
+  var icon = indeterminate ? indeterminateIconProp : iconProp;
+  var indeterminateIcon = indeterminate ? indeterminateIconProp : checkedIcon;
+  return /* @__PURE__ */ reactExports.createElement(SwitchBase$1, _extends$1({
+    type: "checkbox",
+    classes: {
+      root: clsx(classes.root, classes["color".concat(capitalize(color))], indeterminate && classes.indeterminate),
+      checked: classes.checked,
+      disabled: classes.disabled
+    },
+    color,
+    inputProps: _extends$1({
+      "data-indeterminate": indeterminate
+    }, inputProps),
+    icon: /* @__PURE__ */ reactExports.cloneElement(icon, {
+      fontSize: icon.props.fontSize === void 0 && size === "small" ? size : icon.props.fontSize
+    }),
+    checkedIcon: /* @__PURE__ */ reactExports.cloneElement(indeterminateIcon, {
+      fontSize: indeterminateIcon.props.fontSize === void 0 && size === "small" ? size : indeterminateIcon.props.fontSize
+    }),
+    ref
+  }, other));
+});
+const Checkbox$1 = withStyles(styles$F, {
+  name: "MuiCheckbox"
+})(Checkbox);
 var SIZE = 44;
-var styles$t = function styles28(theme) {
+var styles$E = function styles29(theme) {
   return {
     /* Styles applied to the root element. */
     root: {
@@ -12119,13 +12291,13 @@ var CircularProgress = /* @__PURE__ */ reactExports.forwardRef(function Circular
     circleStyle.strokeDashoffset = "".concat(((100 - value) / 100 * circumference).toFixed(3), "px");
     rootStyle.transform = "rotate(-90deg)";
   }
-  return /* @__PURE__ */ reactExports.createElement("div", _extends({
+  return /* @__PURE__ */ reactExports.createElement("div", _extends$1({
     className: clsx(classes.root, className, color !== "inherit" && classes["color".concat(capitalize(color))], {
       "determinate": classes.determinate,
       "indeterminate": classes.indeterminate,
       "static": classes.static
     }[variant]),
-    style: _extends({
+    style: _extends$1({
       width: size,
       height: size
     }, rootStyle, style),
@@ -12148,7 +12320,7 @@ var CircularProgress = /* @__PURE__ */ reactExports.forwardRef(function Circular
     strokeWidth: thickness
   })));
 });
-const CircularProgress$1 = withStyles(styles$t, {
+const CircularProgress$1 = withStyles(styles$E, {
   name: "MuiCircularProgress",
   flip: false
 })(CircularProgress);
@@ -12156,17 +12328,17 @@ function getContainer$1(container) {
   container = typeof container === "function" ? container() : container;
   return reactDomExports.findDOMNode(container);
 }
-var useEnhancedEffect$4 = typeof window !== "undefined" ? reactExports.useLayoutEffect : reactExports.useEffect;
+var useEnhancedEffect$5 = typeof window !== "undefined" ? reactExports.useLayoutEffect : reactExports.useEffect;
 var Portal = /* @__PURE__ */ reactExports.forwardRef(function Portal2(props, ref) {
   var children = props.children, container = props.container, _props$disablePortal = props.disablePortal, disablePortal = _props$disablePortal === void 0 ? false : _props$disablePortal, onRendered = props.onRendered;
   var _React$useState = reactExports.useState(null), mountNode2 = _React$useState[0], setMountNode = _React$useState[1];
   var handleRef = useForkRef(/* @__PURE__ */ reactExports.isValidElement(children) ? children.ref : null, ref);
-  useEnhancedEffect$4(function() {
+  useEnhancedEffect$5(function() {
     if (!disablePortal) {
       setMountNode(getContainer$1(container) || document.body);
     }
   }, [container, disablePortal]);
-  useEnhancedEffect$4(function() {
+  useEnhancedEffect$5(function() {
     if (mountNode2 && !disablePortal) {
       setRef(ref, mountNode2);
       return function() {
@@ -12175,7 +12347,7 @@ var Portal = /* @__PURE__ */ reactExports.forwardRef(function Portal2(props, ref
     }
     return void 0;
   }, [ref, mountNode2, disablePortal]);
-  useEnhancedEffect$4(function() {
+  useEnhancedEffect$5(function() {
     if (onRendered && (mountNode2 || disablePortal)) {
       onRendered();
     }
@@ -12468,7 +12640,7 @@ function Unstable_TrapFocus(props) {
     "data-test": "sentinelEnd"
   }));
 }
-var styles$s = {
+var styles$D = {
   /* Styles applied to the root element. */
   root: {
     zIndex: -1,
@@ -12487,11 +12659,11 @@ var styles$s = {
 };
 var SimpleBackdrop = /* @__PURE__ */ reactExports.forwardRef(function SimpleBackdrop2(props, ref) {
   var _props$invisible = props.invisible, invisible = _props$invisible === void 0 ? false : _props$invisible, open = props.open, other = _objectWithoutProperties(props, ["invisible", "open"]);
-  return open ? /* @__PURE__ */ reactExports.createElement("div", _extends({
+  return open ? /* @__PURE__ */ reactExports.createElement("div", _extends$1({
     "aria-hidden": true,
     ref
   }, other, {
-    style: _extends({}, styles$s.root, invisible ? styles$s.invisible : {}, other.style)
+    style: _extends$1({}, styles$D.root, invisible ? styles$D.invisible : {}, other.style)
   })) : null;
 });
 function getContainer(container) {
@@ -12502,7 +12674,7 @@ function getHasTransition(props) {
   return props.children ? props.children.props.hasOwnProperty("in") : false;
 }
 var defaultManager = new ModalManager();
-var styles$r = function styles29(theme) {
+var styles$C = function styles210(theme) {
   return {
     /* Styles applied to the root element. */
     root: {
@@ -12523,7 +12695,7 @@ var Modal = /* @__PURE__ */ reactExports.forwardRef(function Modal2(inProps, ref
   var theme = useTheme$1();
   var props = getThemeProps({
     name: "MuiModal",
-    props: _extends({}, inProps),
+    props: _extends$1({}, inProps),
     theme
   });
   var _props$BackdropCompon = props.BackdropComponent, BackdropComponent = _props$BackdropCompon === void 0 ? SimpleBackdrop : _props$BackdropCompon, BackdropProps = props.BackdropProps, children = props.children, _props$closeAfterTran = props.closeAfterTransition, closeAfterTransition = _props$closeAfterTran === void 0 ? false : _props$closeAfterTran, container = props.container, _props$disableAutoFoc = props.disableAutoFocus, disableAutoFocus = _props$disableAutoFoc === void 0 ? false : _props$disableAutoFoc, _props$disableBackdro = props.disableBackdropClick, disableBackdropClick = _props$disableBackdro === void 0 ? false : _props$disableBackdro, _props$disableEnforce = props.disableEnforceFocus, disableEnforceFocus = _props$disableEnforce === void 0 ? false : _props$disableEnforce, _props$disableEscapeK = props.disableEscapeKeyDown, disableEscapeKeyDown = _props$disableEscapeK === void 0 ? false : _props$disableEscapeK, _props$disablePortal = props.disablePortal, disablePortal = _props$disablePortal === void 0 ? false : _props$disablePortal, _props$disableRestore = props.disableRestoreFocus, disableRestoreFocus = _props$disableRestore === void 0 ? false : _props$disableRestore, _props$disableScrollL = props.disableScrollLock, disableScrollLock = _props$disableScrollL === void 0 ? false : _props$disableScrollL, _props$hideBackdrop = props.hideBackdrop, hideBackdrop = _props$hideBackdrop === void 0 ? false : _props$hideBackdrop, _props$keepMounted = props.keepMounted, keepMounted = _props$keepMounted === void 0 ? false : _props$keepMounted, _props$manager = props.manager, manager = _props$manager === void 0 ? defaultManager : _props$manager, onBackdropClick = props.onBackdropClick, onClose = props.onClose, onEscapeKeyDown = props.onEscapeKeyDown, onRendered = props.onRendered, open = props.open, other = _objectWithoutProperties(props, ["BackdropComponent", "BackdropProps", "children", "closeAfterTransition", "container", "disableAutoFocus", "disableBackdropClick", "disableEnforceFocus", "disableEscapeKeyDown", "disablePortal", "disableRestoreFocus", "disableScrollLock", "hideBackdrop", "keepMounted", "manager", "onBackdropClick", "onClose", "onEscapeKeyDown", "onRendered", "open"]);
@@ -12623,7 +12795,7 @@ var Modal = /* @__PURE__ */ reactExports.forwardRef(function Modal2(inProps, ref
       }
     }
   };
-  var inlineStyle = styles$r(theme || {
+  var inlineStyle = styles$C(theme || {
     zIndex
   });
   var childProps = {};
@@ -12638,13 +12810,13 @@ var Modal = /* @__PURE__ */ reactExports.forwardRef(function Modal2(inProps, ref
     ref: handlePortalRef,
     container,
     disablePortal
-  }, /* @__PURE__ */ reactExports.createElement("div", _extends({
+  }, /* @__PURE__ */ reactExports.createElement("div", _extends$1({
     ref: handleRef,
     onKeyDown: handleKeyDown2,
     role: "presentation"
   }, other, {
-    style: _extends({}, inlineStyle.root, !open && exited ? inlineStyle.hidden : {}, other.style)
-  }), hideBackdrop ? null : /* @__PURE__ */ reactExports.createElement(BackdropComponent, _extends({
+    style: _extends$1({}, inlineStyle.root, !open && exited ? inlineStyle.hidden : {}, other.style)
+  }), hideBackdrop ? null : /* @__PURE__ */ reactExports.createElement(BackdropComponent, _extends$1({
     open,
     onClick: handleBackdropClick
   }, BackdropProps)), /* @__PURE__ */ reactExports.createElement(Unstable_TrapFocus, {
@@ -12656,7 +12828,7 @@ var Modal = /* @__PURE__ */ reactExports.forwardRef(function Modal2(inProps, ref
     open
   }, /* @__PURE__ */ reactExports.cloneElement(children, childProps))));
 });
-var styles$q = function styles210(theme) {
+var styles$B = function styles211(theme) {
   return {
     /* Styles applied to the root element. */
     root: {
@@ -12800,10 +12972,10 @@ var Dialog = /* @__PURE__ */ reactExports.forwardRef(function Dialog2(props, ref
       onClose(event, "backdropClick");
     }
   };
-  return /* @__PURE__ */ reactExports.createElement(Modal, _extends({
+  return /* @__PURE__ */ reactExports.createElement(Modal, _extends$1({
     className: clsx(classes.root, className),
     BackdropComponent: Backdrop$1,
-    BackdropProps: _extends({
+    BackdropProps: _extends$1({
       transitionDuration
     }, BackdropProps),
     closeAfterTransition: true
@@ -12815,7 +12987,7 @@ var Dialog = /* @__PURE__ */ reactExports.forwardRef(function Dialog2(props, ref
     onClose,
     open,
     ref
-  }, other), /* @__PURE__ */ reactExports.createElement(TransitionComponent, _extends({
+  }, other), /* @__PURE__ */ reactExports.createElement(TransitionComponent, _extends$1({
     appear: true,
     in: open,
     timeout: transitionDuration,
@@ -12830,7 +13002,7 @@ var Dialog = /* @__PURE__ */ reactExports.forwardRef(function Dialog2(props, ref
     className: clsx(classes.container, classes["scroll".concat(capitalize(scroll))]),
     onMouseUp: handleBackdropClick,
     onMouseDown: handleMouseDown
-  }, /* @__PURE__ */ reactExports.createElement(PaperComponent, _extends({
+  }, /* @__PURE__ */ reactExports.createElement(PaperComponent, _extends$1({
     elevation: 24,
     role: "dialog",
     "aria-describedby": ariaDescribedby,
@@ -12839,10 +13011,10 @@ var Dialog = /* @__PURE__ */ reactExports.forwardRef(function Dialog2(props, ref
     className: clsx(classes.paper, classes["paperScroll".concat(capitalize(scroll))], classes["paperWidth".concat(capitalize(String(maxWidth)))], PaperProps.className, fullScreen && classes.paperFullScreen, fullWidth && classes.paperFullWidth)
   }), children))));
 });
-const Dialog$1 = withStyles(styles$q, {
+const Dialog$1 = withStyles(styles$B, {
   name: "MuiDialog"
 })(Dialog);
-var styles$p = {
+var styles$A = {
   /* Styles applied to the root element. */
   root: {
     display: "flex",
@@ -12860,15 +13032,15 @@ var styles$p = {
 };
 var DialogActions = /* @__PURE__ */ reactExports.forwardRef(function DialogActions2(props, ref) {
   var _props$disableSpacing = props.disableSpacing, disableSpacing = _props$disableSpacing === void 0 ? false : _props$disableSpacing, classes = props.classes, className = props.className, other = _objectWithoutProperties(props, ["disableSpacing", "classes", "className"]);
-  return /* @__PURE__ */ reactExports.createElement("div", _extends({
+  return /* @__PURE__ */ reactExports.createElement("div", _extends$1({
     className: clsx(classes.root, className, !disableSpacing && classes.spacing),
     ref
   }, other));
 });
-const DialogActions$1 = withStyles(styles$p, {
+const DialogActions$1 = withStyles(styles$A, {
   name: "MuiDialogActions"
 })(DialogActions);
-var styles$o = function styles211(theme) {
+var styles$z = function styles212(theme) {
   return {
     /* Styles applied to the root element. */
     root: {
@@ -12892,15 +13064,32 @@ var styles$o = function styles211(theme) {
 };
 var DialogContent = /* @__PURE__ */ reactExports.forwardRef(function DialogContent2(props, ref) {
   var classes = props.classes, className = props.className, _props$dividers = props.dividers, dividers = _props$dividers === void 0 ? false : _props$dividers, other = _objectWithoutProperties(props, ["classes", "className", "dividers"]);
-  return /* @__PURE__ */ reactExports.createElement("div", _extends({
+  return /* @__PURE__ */ reactExports.createElement("div", _extends$1({
     className: clsx(classes.root, className, dividers && classes.dividers),
     ref
   }, other));
 });
-const DialogContent$1 = withStyles(styles$o, {
+const DialogContent$1 = withStyles(styles$z, {
   name: "MuiDialogContent"
 })(DialogContent);
-var styles$n = {
+var styles$y = {
+  /* Styles applied to the root element. */
+  root: {
+    marginBottom: 12
+  }
+};
+var DialogContentText = /* @__PURE__ */ reactExports.forwardRef(function DialogContentText2(props, ref) {
+  return /* @__PURE__ */ reactExports.createElement(Typography$1, _extends$1({
+    component: "p",
+    variant: "body1",
+    color: "textSecondary",
+    ref
+  }, props));
+});
+const DialogContentText$1 = withStyles(styles$y, {
+  name: "MuiDialogContentText"
+})(DialogContentText);
+var styles$x = {
   /* Styles applied to the root element. */
   root: {
     margin: 0,
@@ -12910,7 +13099,7 @@ var styles$n = {
 };
 var DialogTitle = /* @__PURE__ */ reactExports.forwardRef(function DialogTitle2(props, ref) {
   var children = props.children, classes = props.classes, className = props.className, _props$disableTypogra = props.disableTypography, disableTypography = _props$disableTypogra === void 0 ? false : _props$disableTypogra, other = _objectWithoutProperties(props, ["children", "classes", "className", "disableTypography"]);
-  return /* @__PURE__ */ reactExports.createElement("div", _extends({
+  return /* @__PURE__ */ reactExports.createElement("div", _extends$1({
     className: clsx(classes.root, className),
     ref
   }, other), disableTypography ? children : /* @__PURE__ */ reactExports.createElement(Typography$1, {
@@ -12918,9 +13107,63 @@ var DialogTitle = /* @__PURE__ */ reactExports.forwardRef(function DialogTitle2(
     variant: "h6"
   }, children));
 });
-const DialogTitle$1 = withStyles(styles$n, {
+const DialogTitle$1 = withStyles(styles$x, {
   name: "MuiDialogTitle"
 })(DialogTitle);
+var styles$w = function styles213(theme) {
+  return {
+    /* Styles applied to the root element. */
+    root: {
+      height: 1,
+      margin: 0,
+      // Reset browser default style.
+      border: "none",
+      flexShrink: 0,
+      backgroundColor: theme.palette.divider
+    },
+    /* Styles applied to the root element if `absolute={true}`. */
+    absolute: {
+      position: "absolute",
+      bottom: 0,
+      left: 0,
+      width: "100%"
+    },
+    /* Styles applied to the root element if `variant="inset"`. */
+    inset: {
+      marginLeft: 72
+    },
+    /* Styles applied to the root element if `light={true}`. */
+    light: {
+      backgroundColor: alpha(theme.palette.divider, 0.08)
+    },
+    /* Styles applied to the root element if `variant="middle"`. */
+    middle: {
+      marginLeft: theme.spacing(2),
+      marginRight: theme.spacing(2)
+    },
+    /* Styles applied to the root element if `orientation="vertical"`. */
+    vertical: {
+      height: "100%",
+      width: 1
+    },
+    /* Styles applied to the root element if `flexItem={true}`. */
+    flexItem: {
+      alignSelf: "stretch",
+      height: "auto"
+    }
+  };
+};
+var Divider = /* @__PURE__ */ reactExports.forwardRef(function Divider2(props, ref) {
+  var _props$absolute = props.absolute, absolute = _props$absolute === void 0 ? false : _props$absolute, classes = props.classes, className = props.className, _props$component = props.component, Component = _props$component === void 0 ? "hr" : _props$component, _props$flexItem = props.flexItem, flexItem = _props$flexItem === void 0 ? false : _props$flexItem, _props$light = props.light, light2 = _props$light === void 0 ? false : _props$light, _props$orientation = props.orientation, orientation = _props$orientation === void 0 ? "horizontal" : _props$orientation, _props$role = props.role, role = _props$role === void 0 ? Component !== "hr" ? "separator" : void 0 : _props$role, _props$variant = props.variant, variant = _props$variant === void 0 ? "fullWidth" : _props$variant, other = _objectWithoutProperties(props, ["absolute", "classes", "className", "component", "flexItem", "light", "orientation", "role", "variant"]);
+  return /* @__PURE__ */ reactExports.createElement(Component, _extends$1({
+    className: clsx(classes.root, className, variant !== "fullWidth" && classes[variant], absolute && classes.absolute, flexItem && classes.flexItem, light2 && classes.light, orientation === "vertical" && classes.vertical),
+    role,
+    ref
+  }, other));
+});
+const MuiDivider = withStyles(styles$w, {
+  name: "MuiDivider"
+})(Divider);
 function formControlState(_ref3) {
   var props = _ref3.props, states = _ref3.states, muiFormControl = _ref3.muiFormControl;
   return states.reduce(function(acc, state) {
@@ -12936,8 +13179,8 @@ function formControlState(_ref3) {
 function getStyleValue(computedStyle, property) {
   return parseInt(computedStyle[property], 10) || 0;
 }
-var useEnhancedEffect$3 = typeof window !== "undefined" ? reactExports.useLayoutEffect : reactExports.useEffect;
-var styles$m = {
+var useEnhancedEffect$4 = typeof window !== "undefined" ? reactExports.useLayoutEffect : reactExports.useEffect;
+var styles$v = {
   /* Styles applied to the shadow textarea element. */
   shadow: {
     // Visibility needed to hide the extra text area on iPads
@@ -13000,7 +13243,7 @@ var TextareaAutosize = /* @__PURE__ */ reactExports.forwardRef(function Textarea
     });
   }, [maxRows, minRows, props.placeholder]);
   reactExports.useEffect(function() {
-    var handleResize = debounce(function() {
+    var handleResize = debounce$1(function() {
       renders.current = 0;
       syncHeight();
     });
@@ -13010,7 +13253,7 @@ var TextareaAutosize = /* @__PURE__ */ reactExports.forwardRef(function Textarea
       window.removeEventListener("resize", handleResize);
     };
   }, [syncHeight]);
-  useEnhancedEffect$3(function() {
+  useEnhancedEffect$4(function() {
     syncHeight();
   });
   reactExports.useEffect(function() {
@@ -13025,12 +13268,12 @@ var TextareaAutosize = /* @__PURE__ */ reactExports.forwardRef(function Textarea
       onChange(event);
     }
   };
-  return /* @__PURE__ */ reactExports.createElement(reactExports.Fragment, null, /* @__PURE__ */ reactExports.createElement("textarea", _extends({
+  return /* @__PURE__ */ reactExports.createElement(reactExports.Fragment, null, /* @__PURE__ */ reactExports.createElement("textarea", _extends$1({
     value,
     onChange: handleChange,
     ref: handleRef,
     rows: minRows,
-    style: _extends({
+    style: _extends$1({
       height: state.outerHeightStyle,
       // Need a large enough difference to allow scrolling.
       // This prevents infinite rendering loop.
@@ -13042,7 +13285,7 @@ var TextareaAutosize = /* @__PURE__ */ reactExports.forwardRef(function Textarea
     readOnly: true,
     ref: shadowRef,
     tabIndex: -1,
-    style: _extends({}, styles$m.shadow, style)
+    style: _extends$1({}, styles$v.shadow, style)
   }));
 });
 function hasValue(value) {
@@ -13055,7 +13298,7 @@ function isFilled(obj) {
 function isAdornedStart(obj) {
   return obj.startAdornment;
 }
-var styles$l = function styles212(theme) {
+var styles$u = function styles214(theme) {
   var light2 = theme.palette.type === "light";
   var placeholder = {
     color: "currentColor",
@@ -13076,7 +13319,7 @@ var styles$l = function styles212(theme) {
       "@keyframes mui-auto-fill-cancel": {}
     },
     /* Styles applied to the root element. */
-    root: _extends({}, theme.typography.body1, {
+    root: _extends$1({}, theme.typography.body1, {
       color: theme.palette.text.primary,
       lineHeight: "1.1876em",
       // Reset (19px), match the native input line-height
@@ -13207,7 +13450,7 @@ var styles$l = function styles212(theme) {
     inputHiddenLabel: {}
   };
 };
-var useEnhancedEffect$2 = typeof window === "undefined" ? reactExports.useEffect : reactExports.useLayoutEffect;
+var useEnhancedEffect$3 = typeof window === "undefined" ? reactExports.useEffect : reactExports.useLayoutEffect;
 var InputBase = /* @__PURE__ */ reactExports.forwardRef(function InputBase2(props, ref) {
   var ariaDescribedby = props["aria-describedby"], autoComplete = props.autoComplete, autoFocus = props.autoFocus, classes = props.classes, className = props.className;
   props.color;
@@ -13251,7 +13494,7 @@ var InputBase = /* @__PURE__ */ reactExports.forwardRef(function InputBase2(prop
       onEmpty();
     }
   }, [onFilled, onEmpty]);
-  useEnhancedEffect$2(function() {
+  useEnhancedEffect$3(function() {
     if (isControlled) {
       checkDirty({
         value
@@ -13320,11 +13563,11 @@ var InputBase = /* @__PURE__ */ reactExports.forwardRef(function InputBase2(prop
     }
   };
   var InputComponent = inputComponent;
-  var inputProps = _extends({}, inputPropsProp, {
+  var inputProps = _extends$1({}, inputPropsProp, {
     ref: handleInputRef
   });
   if (typeof InputComponent !== "string") {
-    inputProps = _extends({
+    inputProps = _extends$1({
       // Rename ref to inputRef as we don't know the
       // provided `inputComponent` structure.
       inputRef: handleInputRef,
@@ -13336,7 +13579,7 @@ var InputBase = /* @__PURE__ */ reactExports.forwardRef(function InputBase2(prop
     if (rows && !maxRows && !minRows && !rowsMax && !rowsMin) {
       InputComponent = "textarea";
     } else {
-      inputProps = _extends({
+      inputProps = _extends$1({
         minRows: rows || minRows,
         rowsMax,
         maxRows
@@ -13344,7 +13587,7 @@ var InputBase = /* @__PURE__ */ reactExports.forwardRef(function InputBase2(prop
       InputComponent = TextareaAutosize;
     }
   } else {
-    inputProps = _extends({
+    inputProps = _extends$1({
       type
     }, inputProps);
   }
@@ -13358,13 +13601,13 @@ var InputBase = /* @__PURE__ */ reactExports.forwardRef(function InputBase2(prop
       muiFormControl.setAdornedStart(Boolean(startAdornment));
     }
   }, [muiFormControl, startAdornment]);
-  return /* @__PURE__ */ reactExports.createElement("div", _extends({
+  return /* @__PURE__ */ reactExports.createElement("div", _extends$1({
     className: clsx(classes.root, classes["color".concat(capitalize(fcs.color || "primary"))], className, fcs.disabled && classes.disabled, fcs.error && classes.error, fullWidth && classes.fullWidth, fcs.focused && classes.focused, muiFormControl && classes.formControl, multiline && classes.multiline, startAdornment && classes.adornedStart, endAdornment && classes.adornedEnd, fcs.margin === "dense" && classes.marginDense),
     onClick: handleClick,
     ref
   }, other), startAdornment, /* @__PURE__ */ reactExports.createElement(FormControlContext.Provider, {
     value: null
-  }, /* @__PURE__ */ reactExports.createElement(InputComponent, _extends({
+  }, /* @__PURE__ */ reactExports.createElement(InputComponent, _extends$1({
     "aria-invalid": fcs.error,
     "aria-describedby": ariaDescribedby,
     autoComplete,
@@ -13386,14 +13629,14 @@ var InputBase = /* @__PURE__ */ reactExports.forwardRef(function InputBase2(prop
     onBlur: handleBlur,
     onChange: handleChange,
     onFocus: handleFocus
-  }))), endAdornment, renderSuffix ? renderSuffix(_extends({}, fcs, {
+  }))), endAdornment, renderSuffix ? renderSuffix(_extends$1({}, fcs, {
     startAdornment
   })) : null);
 });
-const InputBase$1 = withStyles(styles$l, {
+const InputBase$1 = withStyles(styles$u, {
   name: "MuiInputBase"
 })(InputBase);
-var styles$k = function styles213(theme) {
+var styles$t = function styles215(theme) {
   var light2 = theme.palette.type === "light";
   var bottomLineColor = light2 ? "rgba(0, 0, 0, 0.42)" : "rgba(255, 255, 255, 0.7)";
   var backgroundColor = light2 ? "rgba(0, 0, 0, 0.09)" : "rgba(255, 255, 255, 0.09)";
@@ -13540,8 +13783,8 @@ var styles$k = function styles213(theme) {
 };
 var FilledInput = /* @__PURE__ */ reactExports.forwardRef(function FilledInput2(props, ref) {
   var disableUnderline = props.disableUnderline, classes = props.classes, _props$fullWidth = props.fullWidth, fullWidth = _props$fullWidth === void 0 ? false : _props$fullWidth, _props$inputComponent = props.inputComponent, inputComponent = _props$inputComponent === void 0 ? "input" : _props$inputComponent, _props$multiline = props.multiline, multiline = _props$multiline === void 0 ? false : _props$multiline, _props$type = props.type, type = _props$type === void 0 ? "text" : _props$type, other = _objectWithoutProperties(props, ["disableUnderline", "classes", "fullWidth", "inputComponent", "multiline", "type"]);
-  return /* @__PURE__ */ reactExports.createElement(InputBase$1, _extends({
-    classes: _extends({}, classes, {
+  return /* @__PURE__ */ reactExports.createElement(InputBase$1, _extends$1({
+    classes: _extends$1({}, classes, {
       root: clsx(classes.root, !disableUnderline && classes.underline),
       underline: null
     }),
@@ -13553,10 +13796,10 @@ var FilledInput = /* @__PURE__ */ reactExports.forwardRef(function FilledInput2(
   }, other));
 });
 FilledInput.muiName = "Input";
-const FilledInput$1 = withStyles(styles$k, {
+const FilledInput$1 = withStyles(styles$t, {
   name: "MuiFilledInput"
 })(FilledInput);
-var styles$j = {
+var styles$s = {
   /* Styles applied to the root element. */
   root: {
     display: "inline-flex",
@@ -13653,18 +13896,98 @@ var FormControl = /* @__PURE__ */ reactExports.forwardRef(function FormControl2(
   };
   return /* @__PURE__ */ reactExports.createElement(FormControlContext.Provider, {
     value: childContext
-  }, /* @__PURE__ */ reactExports.createElement(Component, _extends({
+  }, /* @__PURE__ */ reactExports.createElement(Component, _extends$1({
     className: clsx(classes.root, className, margin !== "none" && classes["margin".concat(capitalize(margin))], fullWidth && classes.fullWidth),
     ref
   }, other), children));
 });
-const FormControl$1 = withStyles(styles$j, {
+const FormControl$1 = withStyles(styles$s, {
   name: "MuiFormControl"
 })(FormControl);
-var styles$i = function styles214(theme) {
+var styles$r = function styles216(theme) {
   return {
     /* Styles applied to the root element. */
-    root: _extends({
+    root: {
+      display: "inline-flex",
+      alignItems: "center",
+      cursor: "pointer",
+      // For correct alignment with the text.
+      verticalAlign: "middle",
+      WebkitTapHighlightColor: "transparent",
+      marginLeft: -11,
+      marginRight: 16,
+      // used for row presentation of radio/checkbox
+      "&$disabled": {
+        cursor: "default"
+      }
+    },
+    /* Styles applied to the root element if `labelPlacement="start"`. */
+    labelPlacementStart: {
+      flexDirection: "row-reverse",
+      marginLeft: 16,
+      // used for row presentation of radio/checkbox
+      marginRight: -11
+    },
+    /* Styles applied to the root element if `labelPlacement="top"`. */
+    labelPlacementTop: {
+      flexDirection: "column-reverse",
+      marginLeft: 16
+    },
+    /* Styles applied to the root element if `labelPlacement="bottom"`. */
+    labelPlacementBottom: {
+      flexDirection: "column",
+      marginLeft: 16
+    },
+    /* Pseudo-class applied to the root element if `disabled={true}`. */
+    disabled: {},
+    /* Styles applied to the label's Typography component. */
+    label: {
+      "&$disabled": {
+        color: theme.palette.text.disabled
+      }
+    }
+  };
+};
+var FormControlLabel = /* @__PURE__ */ reactExports.forwardRef(function FormControlLabel2(props, ref) {
+  props.checked;
+  var classes = props.classes, className = props.className, control = props.control, disabledProp = props.disabled;
+  props.inputRef;
+  var label = props.label, _props$labelPlacement = props.labelPlacement, labelPlacement = _props$labelPlacement === void 0 ? "end" : _props$labelPlacement;
+  props.name;
+  props.onChange;
+  props.value;
+  var other = _objectWithoutProperties(props, ["checked", "classes", "className", "control", "disabled", "inputRef", "label", "labelPlacement", "name", "onChange", "value"]);
+  var muiFormControl = useFormControl();
+  var disabled = disabledProp;
+  if (typeof disabled === "undefined" && typeof control.props.disabled !== "undefined") {
+    disabled = control.props.disabled;
+  }
+  if (typeof disabled === "undefined" && muiFormControl) {
+    disabled = muiFormControl.disabled;
+  }
+  var controlProps = {
+    disabled
+  };
+  ["checked", "name", "onChange", "value", "inputRef"].forEach(function(key2) {
+    if (typeof control.props[key2] === "undefined" && typeof props[key2] !== "undefined") {
+      controlProps[key2] = props[key2];
+    }
+  });
+  return /* @__PURE__ */ reactExports.createElement("label", _extends$1({
+    className: clsx(classes.root, className, labelPlacement !== "end" && classes["labelPlacement".concat(capitalize(labelPlacement))], disabled && classes.disabled),
+    ref
+  }, other), /* @__PURE__ */ reactExports.cloneElement(control, controlProps), /* @__PURE__ */ reactExports.createElement(Typography$1, {
+    component: "span",
+    className: clsx(classes.label, disabled && classes.disabled)
+  }, label));
+});
+const FormControlLabel$1 = withStyles(styles$r, {
+  name: "MuiFormControlLabel"
+})(FormControlLabel);
+var styles$q = function styles217(theme) {
+  return {
+    /* Styles applied to the root element. */
+    root: _extends$1({
       color: theme.palette.text.secondary
     }, theme.typography.caption, {
       textAlign: "left",
@@ -13714,7 +14037,7 @@ var FormHelperText = /* @__PURE__ */ reactExports.forwardRef(function FormHelper
     muiFormControl,
     states: ["variant", "margin", "disabled", "error", "filled", "focused", "required"]
   });
-  return /* @__PURE__ */ reactExports.createElement(Component, _extends({
+  return /* @__PURE__ */ reactExports.createElement(Component, _extends$1({
     className: clsx(classes.root, (fcs.variant === "filled" || fcs.variant === "outlined") && classes.contained, className, fcs.disabled && classes.disabled, fcs.error && classes.error, fcs.filled && classes.filled, fcs.focused && classes.focused, fcs.required && classes.required, fcs.margin === "dense" && classes.marginDense),
     ref
   }, other), children === " " ? (
@@ -13726,13 +14049,13 @@ var FormHelperText = /* @__PURE__ */ reactExports.forwardRef(function FormHelper
     })
   ) : children);
 });
-const FormHelperText$1 = withStyles(styles$i, {
+const FormHelperText$1 = withStyles(styles$q, {
   name: "MuiFormHelperText"
 })(FormHelperText);
-var styles$h = function styles215(theme) {
+var styles$p = function styles218(theme) {
   return {
     /* Styles applied to the root element. */
-    root: _extends({
+    root: _extends$1({
       color: theme.palette.text.secondary
     }, theme.typography.body1, {
       lineHeight: 1,
@@ -13787,7 +14110,7 @@ var FormLabel = /* @__PURE__ */ reactExports.forwardRef(function FormLabel2(prop
     muiFormControl,
     states: ["color", "required", "focused", "disabled", "error", "filled"]
   });
-  return /* @__PURE__ */ reactExports.createElement(Component, _extends({
+  return /* @__PURE__ */ reactExports.createElement(Component, _extends$1({
     className: clsx(classes.root, classes["color".concat(capitalize(fcs.color || "primary"))], className, fcs.disabled && classes.disabled, fcs.error && classes.error, fcs.filled && classes.filled, fcs.focused && classes.focused, fcs.required && classes.required),
     ref
   }, other), children, fcs.required && /* @__PURE__ */ reactExports.createElement("span", {
@@ -13795,13 +14118,13 @@ var FormLabel = /* @__PURE__ */ reactExports.forwardRef(function FormLabel2(prop
     className: clsx(classes.asterisk, fcs.error && classes.error)
   }, " ", "*"));
 });
-const FormLabel$1 = withStyles(styles$h, {
+const FormLabel$1 = withStyles(styles$p, {
   name: "MuiFormLabel"
 })(FormLabel);
 function getScale(value) {
   return "scale(".concat(value, ", ").concat(Math.pow(value, 2), ")");
 }
-var styles$g = {
+var styles$o = {
   entering: {
     opacity: 1,
     transform: getScale(1)
@@ -13900,7 +14223,7 @@ var Grow = /* @__PURE__ */ reactExports.forwardRef(function Grow2(props, ref) {
       clearTimeout(timer.current);
     };
   }, []);
-  return /* @__PURE__ */ reactExports.createElement(TransitionComponent, _extends({
+  return /* @__PURE__ */ reactExports.createElement(TransitionComponent, _extends$1({
     appear: true,
     in: inProp,
     nodeRef: enableStrictModeCompat ? nodeRef : void 0,
@@ -13913,18 +14236,18 @@ var Grow = /* @__PURE__ */ reactExports.forwardRef(function Grow2(props, ref) {
     addEndListener,
     timeout: timeout === "auto" ? null : timeout
   }, other), function(state, childProps) {
-    return /* @__PURE__ */ reactExports.cloneElement(children, _extends({
-      style: _extends({
+    return /* @__PURE__ */ reactExports.cloneElement(children, _extends$1({
+      style: _extends$1({
         opacity: 0,
         transform: getScale(0.75),
         visibility: state === "exited" && !inProp ? "hidden" : void 0
-      }, styles$g[state], style, children.props.style),
+      }, styles$o[state], style, children.props.style),
       ref: handleRef
     }, childProps));
   });
 });
 Grow.muiSupportAuto = true;
-var styles$f = function styles216(theme) {
+var styles$n = function styles219(theme) {
   var light2 = theme.palette.type === "light";
   var bottomLineColor = light2 ? "rgba(0, 0, 0, 0.42)" : "rgba(255, 255, 255, 0.7)";
   return {
@@ -14019,8 +14342,8 @@ var styles$f = function styles216(theme) {
 };
 var Input = /* @__PURE__ */ reactExports.forwardRef(function Input2(props, ref) {
   var disableUnderline = props.disableUnderline, classes = props.classes, _props$fullWidth = props.fullWidth, fullWidth = _props$fullWidth === void 0 ? false : _props$fullWidth, _props$inputComponent = props.inputComponent, inputComponent = _props$inputComponent === void 0 ? "input" : _props$inputComponent, _props$multiline = props.multiline, multiline = _props$multiline === void 0 ? false : _props$multiline, _props$type = props.type, type = _props$type === void 0 ? "text" : _props$type, other = _objectWithoutProperties(props, ["disableUnderline", "classes", "fullWidth", "inputComponent", "multiline", "type"]);
-  return /* @__PURE__ */ reactExports.createElement(InputBase$1, _extends({
-    classes: _extends({}, classes, {
+  return /* @__PURE__ */ reactExports.createElement(InputBase$1, _extends$1({
+    classes: _extends$1({}, classes, {
       root: clsx(classes.root, !disableUnderline && classes.underline),
       underline: null
     }),
@@ -14032,10 +14355,10 @@ var Input = /* @__PURE__ */ reactExports.forwardRef(function Input2(props, ref) 
   }, other));
 });
 Input.muiName = "Input";
-const Input$1 = withStyles(styles$f, {
+const Input$1 = withStyles(styles$n, {
   name: "MuiInput"
 })(Input);
-var styles$e = function styles217(theme) {
+var styles$m = function styles220(theme) {
   return {
     /* Styles applied to the root element. */
     root: {
@@ -14127,7 +14450,7 @@ var InputLabel = /* @__PURE__ */ reactExports.forwardRef(function InputLabel2(pr
     muiFormControl,
     states: ["margin", "variant"]
   });
-  return /* @__PURE__ */ reactExports.createElement(FormLabel$1, _extends({
+  return /* @__PURE__ */ reactExports.createElement(FormLabel$1, _extends$1({
     "data-shrink": shrink,
     className: clsx(classes.root, className, muiFormControl && classes.formControl, !disableAnimation && classes.animated, shrink && classes.shrink, fcs.margin === "dense" && classes.marginDense, {
       "filled": classes.filled,
@@ -14143,11 +14466,11 @@ var InputLabel = /* @__PURE__ */ reactExports.forwardRef(function InputLabel2(pr
     ref
   }, other));
 });
-const InputLabel$1 = withStyles(styles$e, {
+const InputLabel$1 = withStyles(styles$m, {
   name: "MuiInputLabel"
 })(InputLabel);
 var TRANSITION_DURATION = 4;
-var styles$d = function styles218(theme) {
+var styles$l = function styles221(theme) {
   var getColor = function getColor2(color) {
     return theme.palette.type === "light" ? lighten(color, 0.62) : darken(color, 0.5);
   };
@@ -14325,7 +14648,7 @@ var LinearProgress = /* @__PURE__ */ reactExports.forwardRef(function LinearProg
       inlineStyles.bar2.transform = "translateX(".concat(_transform, "%)");
     }
   }
-  return /* @__PURE__ */ reactExports.createElement("div", _extends({
+  return /* @__PURE__ */ reactExports.createElement("div", _extends$1({
     className: clsx(classes.root, classes["color".concat(capitalize(color))], className, {
       "determinate": classes.determinate,
       "indeterminate": classes.indeterminate,
@@ -14348,11 +14671,11 @@ var LinearProgress = /* @__PURE__ */ reactExports.forwardRef(function LinearProg
     style: inlineStyles.bar2
   }));
 });
-const LinearProgress$1 = withStyles(styles$d, {
+const LinearProgress$1 = withStyles(styles$l, {
   name: "MuiLinearProgress"
 })(LinearProgress);
 var ListContext = reactExports.createContext({});
-var styles$c = {
+var styles$k = {
   /* Styles applied to the root element. */
   root: {
     listStyle: "none",
@@ -14381,15 +14704,15 @@ var List = /* @__PURE__ */ reactExports.forwardRef(function List2(props, ref) {
   }, [dense]);
   return /* @__PURE__ */ reactExports.createElement(ListContext.Provider, {
     value: context
-  }, /* @__PURE__ */ reactExports.createElement(Component, _extends({
+  }, /* @__PURE__ */ reactExports.createElement(Component, _extends$1({
     className: clsx(classes.root, className, dense && classes.dense, !disablePadding && classes.padding, subheader && classes.subheader),
     ref
   }, other), subheader, children));
 });
-const List$1 = withStyles(styles$c, {
+const List$1 = withStyles(styles$k, {
   name: "MuiList"
 })(List);
-var styles$b = function styles219(theme) {
+var styles$j = function styles222(theme) {
   return {
     /* Styles applied to the (normally root) `component` element. May be wrapped by a `container`. */
     root: {
@@ -14464,7 +14787,7 @@ var styles$b = function styles219(theme) {
     selected: {}
   };
 };
-var useEnhancedEffect$1 = typeof window === "undefined" ? reactExports.useEffect : reactExports.useLayoutEffect;
+var useEnhancedEffect$2 = typeof window === "undefined" ? reactExports.useEffect : reactExports.useLayoutEffect;
 var ListItem = /* @__PURE__ */ reactExports.forwardRef(function ListItem2(props, ref) {
   var _props$alignItems = props.alignItems, alignItems = _props$alignItems === void 0 ? "center" : _props$alignItems, _props$autoFocus = props.autoFocus, autoFocus = _props$autoFocus === void 0 ? false : _props$autoFocus, _props$button = props.button, button = _props$button === void 0 ? false : _props$button, childrenProp = props.children, classes = props.classes, className = props.className, componentProp = props.component, _props$ContainerCompo = props.ContainerComponent, ContainerComponent = _props$ContainerCompo === void 0 ? "li" : _props$ContainerCompo, _props$ContainerProps = props.ContainerProps;
   _props$ContainerProps = _props$ContainerProps === void 0 ? {} : _props$ContainerProps;
@@ -14475,7 +14798,7 @@ var ListItem = /* @__PURE__ */ reactExports.forwardRef(function ListItem2(props,
     alignItems
   };
   var listItemRef = reactExports.useRef(null);
-  useEnhancedEffect$1(function() {
+  useEnhancedEffect$2(function() {
     if (autoFocus) {
       if (listItemRef.current) {
         listItemRef.current.focus();
@@ -14488,7 +14811,7 @@ var ListItem = /* @__PURE__ */ reactExports.forwardRef(function ListItem2(props,
     listItemRef.current = reactDomExports.findDOMNode(instance);
   }, []);
   var handleRef = useForkRef(handleOwnRef, ref);
-  var componentProps = _extends({
+  var componentProps = _extends$1({
     className: clsx(classes.root, className, childContext.dense && classes.dense, !disableGutters && classes.gutters, divider && classes.divider, disabled && classes.disabled, button && classes.button, alignItems !== "center" && classes.alignItemsFlexStart, hasSecondaryAction && classes.secondaryAction, selected && classes.selected),
     disabled
   }, other);
@@ -14509,20 +14832,99 @@ var ListItem = /* @__PURE__ */ reactExports.forwardRef(function ListItem2(props,
     }
     return /* @__PURE__ */ reactExports.createElement(ListContext.Provider, {
       value: childContext
-    }, /* @__PURE__ */ reactExports.createElement(ContainerComponent, _extends({
+    }, /* @__PURE__ */ reactExports.createElement(ContainerComponent, _extends$1({
       className: clsx(classes.container, ContainerClassName),
       ref: handleRef
     }, ContainerProps), /* @__PURE__ */ reactExports.createElement(Component, componentProps, children), children.pop()));
   }
   return /* @__PURE__ */ reactExports.createElement(ListContext.Provider, {
     value: childContext
-  }, /* @__PURE__ */ reactExports.createElement(Component, _extends({
+  }, /* @__PURE__ */ reactExports.createElement(Component, _extends$1({
     ref: handleRef
   }, componentProps), children));
 });
-const ListItem$1 = withStyles(styles$b, {
+const ListItem$1 = withStyles(styles$j, {
   name: "MuiListItem"
 })(ListItem);
+var styles$i = function styles223(theme) {
+  return {
+    /* Styles applied to the root element. */
+    root: {
+      minWidth: 56,
+      color: theme.palette.action.active,
+      flexShrink: 0,
+      display: "inline-flex"
+    },
+    /* Styles applied to the root element when the parent `ListItem` uses `alignItems="flex-start"`. */
+    alignItemsFlexStart: {
+      marginTop: 8
+    }
+  };
+};
+var ListItemIcon = /* @__PURE__ */ reactExports.forwardRef(function ListItemIcon2(props, ref) {
+  var classes = props.classes, className = props.className, other = _objectWithoutProperties(props, ["classes", "className"]);
+  var context = reactExports.useContext(ListContext);
+  return /* @__PURE__ */ reactExports.createElement("div", _extends$1({
+    className: clsx(classes.root, className, context.alignItems === "flex-start" && classes.alignItemsFlexStart),
+    ref
+  }, other));
+});
+const ListItemIcon$1 = withStyles(styles$i, {
+  name: "MuiListItemIcon"
+})(ListItemIcon);
+var styles$h = {
+  /* Styles applied to the root element. */
+  root: {
+    flex: "1 1 auto",
+    minWidth: 0,
+    marginTop: 4,
+    marginBottom: 4
+  },
+  /* Styles applied to the `Typography` components if primary and secondary are set. */
+  multiline: {
+    marginTop: 6,
+    marginBottom: 6
+  },
+  /* Styles applied to the `Typography` components if dense. */
+  dense: {},
+  /* Styles applied to the root element if `inset={true}`. */
+  inset: {
+    paddingLeft: 56
+  },
+  /* Styles applied to the primary `Typography` component. */
+  primary: {},
+  /* Styles applied to the secondary `Typography` component. */
+  secondary: {}
+};
+var ListItemText = /* @__PURE__ */ reactExports.forwardRef(function ListItemText2(props, ref) {
+  var children = props.children, classes = props.classes, className = props.className, _props$disableTypogra = props.disableTypography, disableTypography = _props$disableTypogra === void 0 ? false : _props$disableTypogra, _props$inset = props.inset, inset = _props$inset === void 0 ? false : _props$inset, primaryProp = props.primary, primaryTypographyProps = props.primaryTypographyProps, secondaryProp = props.secondary, secondaryTypographyProps = props.secondaryTypographyProps, other = _objectWithoutProperties(props, ["children", "classes", "className", "disableTypography", "inset", "primary", "primaryTypographyProps", "secondary", "secondaryTypographyProps"]);
+  var _React$useContext = reactExports.useContext(ListContext), dense = _React$useContext.dense;
+  var primary = primaryProp != null ? primaryProp : children;
+  if (primary != null && primary.type !== Typography$1 && !disableTypography) {
+    primary = /* @__PURE__ */ reactExports.createElement(Typography$1, _extends$1({
+      variant: dense ? "body2" : "body1",
+      className: classes.primary,
+      component: "span",
+      display: "block"
+    }, primaryTypographyProps), primary);
+  }
+  var secondary = secondaryProp;
+  if (secondary != null && secondary.type !== Typography$1 && !disableTypography) {
+    secondary = /* @__PURE__ */ reactExports.createElement(Typography$1, _extends$1({
+      variant: "body2",
+      className: classes.secondary,
+      color: "textSecondary",
+      display: "block"
+    }, secondaryTypographyProps), secondary);
+  }
+  return /* @__PURE__ */ reactExports.createElement("div", _extends$1({
+    className: clsx(classes.root, className, dense && classes.dense, inset && classes.inset, primary && secondary && classes.multiline),
+    ref
+  }, other), primary, secondary);
+});
+const ListItemText$1 = withStyles(styles$h, {
+  name: "MuiListItemText"
+})(ListItemText);
 function getOffsetTop(rect, vertical) {
   var offset4 = 0;
   if (typeof vertical === "number") {
@@ -14550,7 +14952,7 @@ function getTransformOriginValue(transformOrigin) {
     return typeof n2 === "number" ? "".concat(n2, "px") : n2;
   }).join(" ");
 }
-function getScrollParent(parent, child) {
+function getScrollParent$1(parent, child) {
   var element = child;
   var scrollTop = 0;
   while (element && element !== parent) {
@@ -14559,10 +14961,10 @@ function getScrollParent(parent, child) {
   }
   return scrollTop;
 }
-function getAnchorEl(anchorEl) {
+function getAnchorEl$1(anchorEl) {
   return typeof anchorEl === "function" ? anchorEl() : anchorEl;
 }
-var styles$a = {
+var styles$g = {
   /* Styles applied to the root element. */
   root: {},
   /* Styles applied to the `Paper` component. */
@@ -14593,7 +14995,7 @@ var Popover = /* @__PURE__ */ reactExports.forwardRef(function Popover2(props, r
     if (anchorReference === "anchorPosition") {
       return anchorPosition;
     }
-    var resolvedAnchorEl = getAnchorEl(anchorEl);
+    var resolvedAnchorEl = getAnchorEl$1(anchorEl);
     var anchorElement = resolvedAnchorEl && resolvedAnchorEl.nodeType === 1 ? resolvedAnchorEl : ownerDocument(paperRef.current).body;
     var anchorRect = anchorElement.getBoundingClientRect();
     var anchorVertical = contentAnchorOffset === 0 ? anchorOrigin.vertical : "center";
@@ -14607,7 +15009,7 @@ var Popover = /* @__PURE__ */ reactExports.forwardRef(function Popover2(props, r
     if (getContentAnchorEl && anchorReference === "anchorEl") {
       var contentAnchorEl = getContentAnchorEl(element);
       if (contentAnchorEl && element.contains(contentAnchorEl)) {
-        var scrollTop = getScrollParent(element, contentAnchorEl);
+        var scrollTop = getScrollParent$1(element, contentAnchorEl);
         contentAnchorOffset = contentAnchorEl.offsetTop + contentAnchorEl.clientHeight / 2 - scrollTop || 0;
       }
     }
@@ -14639,7 +15041,7 @@ var Popover = /* @__PURE__ */ reactExports.forwardRef(function Popover2(props, r
     var left = anchorOffset.left - elemTransformOrigin.horizontal;
     var bottom = top + elemRect.height;
     var right = left + elemRect.width;
-    var containerWindow = ownerWindow(getAnchorEl(anchorEl));
+    var containerWindow = ownerWindow(getAnchorEl$1(anchorEl));
     var heightThreshold = containerWindow.innerHeight - marginThreshold;
     var widthThreshold = containerWindow.innerWidth - marginThreshold;
     if (top < marginThreshold) {
@@ -14705,7 +15107,7 @@ var Popover = /* @__PURE__ */ reactExports.forwardRef(function Popover2(props, r
     if (!open) {
       return void 0;
     }
-    var handleResize = debounce(function() {
+    var handleResize = debounce$1(function() {
       setPositioningStyles();
     });
     window.addEventListener("resize", handleResize);
@@ -14718,8 +15120,8 @@ var Popover = /* @__PURE__ */ reactExports.forwardRef(function Popover2(props, r
   if (transitionDurationProp === "auto" && !TransitionComponent.muiSupportAuto) {
     transitionDuration = void 0;
   }
-  var container = containerProp || (anchorEl ? ownerDocument(getAnchorEl(anchorEl)).body : void 0);
-  return /* @__PURE__ */ reactExports.createElement(Modal, _extends({
+  var container = containerProp || (anchorEl ? ownerDocument(getAnchorEl$1(anchorEl)).body : void 0);
+  return /* @__PURE__ */ reactExports.createElement(Modal, _extends$1({
     container,
     open,
     ref,
@@ -14727,7 +15129,7 @@ var Popover = /* @__PURE__ */ reactExports.forwardRef(function Popover2(props, r
       invisible: true
     },
     className: clsx(classes.root, className)
-  }, other), /* @__PURE__ */ reactExports.createElement(TransitionComponent, _extends({
+  }, other), /* @__PURE__ */ reactExports.createElement(TransitionComponent, _extends$1({
     appear: true,
     in: open,
     onEnter,
@@ -14738,14 +15140,14 @@ var Popover = /* @__PURE__ */ reactExports.forwardRef(function Popover2(props, r
     timeout: transitionDuration
   }, TransitionProps, {
     onEntering: createChainedFunction(handleEntering, TransitionProps.onEntering)
-  }), /* @__PURE__ */ reactExports.createElement(Paper$1, _extends({
+  }), /* @__PURE__ */ reactExports.createElement(Paper$1, _extends$1({
     elevation,
     ref: handlePaperRef
   }, PaperProps, {
     className: clsx(classes.paper, PaperProps.className)
   }), children)));
 });
-const Popover$1 = withStyles(styles$a, {
+const Popover$1 = withStyles(styles$g, {
   name: "MuiPopover"
 })(Popover);
 function nextItem(list, item, disableListWrap) {
@@ -14802,7 +15204,7 @@ function moveFocus(list, currentFocus, disableListWrap, disabledItemsFocusable, 
     }
   }
 }
-var useEnhancedEffect = typeof window === "undefined" ? reactExports.useEffect : reactExports.useLayoutEffect;
+var useEnhancedEffect$1 = typeof window === "undefined" ? reactExports.useEffect : reactExports.useLayoutEffect;
 var MenuList = /* @__PURE__ */ reactExports.forwardRef(function MenuList2(props, ref) {
   var actions2 = props.actions, _props$autoFocus = props.autoFocus, autoFocus = _props$autoFocus === void 0 ? false : _props$autoFocus, _props$autoFocusItem = props.autoFocusItem, autoFocusItem = _props$autoFocusItem === void 0 ? false : _props$autoFocusItem, children = props.children, className = props.className, _props$disabledItemsF = props.disabledItemsFocusable, disabledItemsFocusable = _props$disabledItemsF === void 0 ? false : _props$disabledItemsF, _props$disableListWra = props.disableListWrap, disableListWrap = _props$disableListWra === void 0 ? false : _props$disableListWra, onKeyDown = props.onKeyDown, _props$variant = props.variant, variant = _props$variant === void 0 ? "selectedMenu" : _props$variant, other = _objectWithoutProperties(props, ["actions", "autoFocus", "autoFocusItem", "children", "className", "disabledItemsFocusable", "disableListWrap", "onKeyDown", "variant"]);
   var listRef = reactExports.useRef(null);
@@ -14812,7 +15214,7 @@ var MenuList = /* @__PURE__ */ reactExports.forwardRef(function MenuList2(props,
     previousKeyMatched: true,
     lastTime: null
   });
-  useEnhancedEffect(function() {
+  useEnhancedEffect$1(function() {
     if (autoFocus) {
       listRef.current.focus();
     }
@@ -14902,7 +15304,7 @@ var MenuList = /* @__PURE__ */ reactExports.forwardRef(function MenuList2(props,
     }
     return child;
   });
-  return /* @__PURE__ */ reactExports.createElement(List$1, _extends({
+  return /* @__PURE__ */ reactExports.createElement(List$1, _extends$1({
     role: "menu",
     ref: handleRef,
     className,
@@ -14918,7 +15320,7 @@ var LTR_ORIGIN = {
   vertical: "top",
   horizontal: "left"
 };
-var styles$9 = {
+var styles$f = {
   /* Styles applied to the `Paper` component. */
   paper: {
     // specZ: The maximum height of a simple menu should be one or more rows less than the view
@@ -14988,24 +15390,24 @@ var Menu = /* @__PURE__ */ reactExports.forwardRef(function Menu2(props, ref) {
     }
     return child;
   });
-  return /* @__PURE__ */ reactExports.createElement(Popover$1, _extends({
+  return /* @__PURE__ */ reactExports.createElement(Popover$1, _extends$1({
     getContentAnchorEl,
     classes: PopoverClasses,
     onClose,
-    TransitionProps: _extends({
+    TransitionProps: _extends$1({
       onEntering: handleEntering
     }, TransitionProps),
     anchorOrigin: theme.direction === "rtl" ? RTL_ORIGIN : LTR_ORIGIN,
     transformOrigin: theme.direction === "rtl" ? RTL_ORIGIN : LTR_ORIGIN,
-    PaperProps: _extends({}, PaperProps, {
-      classes: _extends({}, PaperProps.classes, {
+    PaperProps: _extends$1({}, PaperProps, {
+      classes: _extends$1({}, PaperProps.classes, {
         root: classes.paper
       })
     }),
     open,
     ref,
     transitionDuration
-  }, other), /* @__PURE__ */ reactExports.createElement(MenuList, _extends({
+  }, other), /* @__PURE__ */ reactExports.createElement(MenuList, _extends$1({
     onKeyDown: handleListKeyDown,
     actions: menuListActionsRef,
     autoFocus: autoFocus && (activeItemIndex === -1 || disableAutoFocusItem),
@@ -15015,13 +15417,13 @@ var Menu = /* @__PURE__ */ reactExports.forwardRef(function Menu2(props, ref) {
     className: clsx(classes.list, MenuListProps.className)
   }), items));
 });
-const Menu$1 = withStyles(styles$9, {
+const Menu$1 = withStyles(styles$f, {
   name: "MuiMenu"
 })(Menu);
-var styles$8 = function styles220(theme) {
+var styles$e = function styles224(theme) {
   return {
     /* Styles applied to the root element. */
-    root: _extends({}, theme.typography.body1, _defineProperty({
+    root: _extends$1({}, theme.typography.body1, _defineProperty({
       minHeight: 48,
       paddingTop: 6,
       paddingBottom: 6,
@@ -15038,7 +15440,7 @@ var styles$8 = function styles220(theme) {
     /* Styles applied to the root element if `selected={true}`. */
     selected: {},
     /* Styles applied to the root element if dense. */
-    dense: _extends({}, theme.typography.body2, {
+    dense: _extends$1({}, theme.typography.body2, {
       minHeight: "auto"
     })
   };
@@ -15049,26 +15451,26 @@ var MenuItem = /* @__PURE__ */ reactExports.forwardRef(function MenuItem2(props,
   if (!props.disabled) {
     tabIndex = tabIndexProp !== void 0 ? tabIndexProp : -1;
   }
-  return /* @__PURE__ */ reactExports.createElement(ListItem$1, _extends({
+  return /* @__PURE__ */ reactExports.createElement(ListItem$1, _extends$1({
     button: true,
     role,
     tabIndex,
     component,
     selected,
     disableGutters,
-    classes: _extends({
+    classes: _extends$1({
       dense: classes.dense
     }, ListItemClasses),
     className: clsx(classes.root, className, selected && classes.selected, !disableGutters && classes.gutters),
     ref
   }, other));
 });
-const MenuItem$1 = withStyles(styles$8, {
+const MenuItem$1 = withStyles(styles$e, {
   name: "MuiMenuItem"
 })(MenuItem);
 var NativeSelectInput = /* @__PURE__ */ reactExports.forwardRef(function NativeSelectInput2(props, ref) {
   var classes = props.classes, className = props.className, disabled = props.disabled, IconComponent = props.IconComponent, inputRef = props.inputRef, _props$variant = props.variant, variant = _props$variant === void 0 ? "standard" : _props$variant, other = _objectWithoutProperties(props, ["classes", "className", "disabled", "IconComponent", "inputRef", "variant"]);
-  return /* @__PURE__ */ reactExports.createElement(reactExports.Fragment, null, /* @__PURE__ */ reactExports.createElement("select", _extends({
+  return /* @__PURE__ */ reactExports.createElement(reactExports.Fragment, null, /* @__PURE__ */ reactExports.createElement("select", _extends$1({
     className: clsx(
       classes.root,
       // TODO v5: merge root and select
@@ -15086,7 +15488,7 @@ var NativeSelectInput = /* @__PURE__ */ reactExports.forwardRef(function NativeS
 const ArrowDropDownIcon = createSvgIcon$1(/* @__PURE__ */ reactExports.createElement("path", {
   d: "M7 10l5 5 5-5z"
 }));
-var styles$7 = function styles221(theme) {
+var styles$d = function styles225(theme) {
   return {
     /* Styles applied to the select component `root` class. */
     root: {},
@@ -15201,11 +15603,11 @@ var NativeSelect = /* @__PURE__ */ reactExports.forwardRef(function NativeSelect
     muiFormControl,
     states: ["variant"]
   });
-  return /* @__PURE__ */ reactExports.cloneElement(input, _extends({
+  return /* @__PURE__ */ reactExports.cloneElement(input, _extends$1({
     // Most of the logic is implemented in `NativeSelectInput`.
     // The `Select` component is a simple API wrapper to expose something better to play with.
     inputComponent: NativeSelectInput,
-    inputProps: _extends({
+    inputProps: _extends$1({
       children,
       classes,
       IconComponent,
@@ -15216,10 +15618,10 @@ var NativeSelect = /* @__PURE__ */ reactExports.forwardRef(function NativeSelect
   }, other));
 });
 NativeSelect.muiName = "Select";
-withStyles(styles$7, {
+withStyles(styles$d, {
   name: "MuiNativeSelect"
 })(NativeSelect);
-var styles$6 = function styles222(theme) {
+var styles$c = function styles226(theme) {
   return {
     /* Styles applied to the root element. */
     root: {
@@ -15285,7 +15687,7 @@ var NotchedOutline = /* @__PURE__ */ reactExports.forwardRef(function NotchedOut
   var theme = useTheme();
   var align = theme.direction === "rtl" ? "right" : "left";
   if (label !== void 0) {
-    return /* @__PURE__ */ reactExports.createElement("fieldset", _extends({
+    return /* @__PURE__ */ reactExports.createElement("fieldset", _extends$1({
       "aria-hidden": true,
       className: clsx(classes.root, className),
       ref,
@@ -15299,9 +15701,9 @@ var NotchedOutline = /* @__PURE__ */ reactExports.forwardRef(function NotchedOut
     })));
   }
   var labelWidth = labelWidthProp > 0 ? labelWidthProp * 0.75 + 8 : 0.01;
-  return /* @__PURE__ */ reactExports.createElement("fieldset", _extends({
+  return /* @__PURE__ */ reactExports.createElement("fieldset", _extends$1({
     "aria-hidden": true,
-    style: _extends(_defineProperty({}, "padding".concat(capitalize(align)), 8), style),
+    style: _extends$1(_defineProperty({}, "padding".concat(capitalize(align)), 8), style),
     className: clsx(classes.root, className),
     ref
   }, other), /* @__PURE__ */ reactExports.createElement("legend", {
@@ -15318,10 +15720,10 @@ var NotchedOutline = /* @__PURE__ */ reactExports.forwardRef(function NotchedOut
     }
   })));
 });
-const NotchedOutline$1 = withStyles(styles$6, {
+const NotchedOutline$1 = withStyles(styles$c, {
   name: "PrivateNotchedOutline"
 })(NotchedOutline);
-var styles$5 = function styles223(theme) {
+var styles$b = function styles227(theme) {
   var borderColor = theme.palette.type === "light" ? "rgba(0, 0, 0, 0.23)" : "rgba(255, 255, 255, 0.23)";
   return {
     /* Styles applied to the root element. */
@@ -15413,7 +15815,7 @@ var styles$5 = function styles223(theme) {
 };
 var OutlinedInput = /* @__PURE__ */ reactExports.forwardRef(function OutlinedInput2(props, ref) {
   var classes = props.classes, _props$fullWidth = props.fullWidth, fullWidth = _props$fullWidth === void 0 ? false : _props$fullWidth, _props$inputComponent = props.inputComponent, inputComponent = _props$inputComponent === void 0 ? "input" : _props$inputComponent, label = props.label, _props$labelWidth = props.labelWidth, labelWidth = _props$labelWidth === void 0 ? 0 : _props$labelWidth, _props$multiline = props.multiline, multiline = _props$multiline === void 0 ? false : _props$multiline, notched = props.notched, _props$type = props.type, type = _props$type === void 0 ? "text" : _props$type, other = _objectWithoutProperties(props, ["classes", "fullWidth", "inputComponent", "label", "labelWidth", "multiline", "notched", "type"]);
-  return /* @__PURE__ */ reactExports.createElement(InputBase$1, _extends({
+  return /* @__PURE__ */ reactExports.createElement(InputBase$1, _extends$1({
     renderSuffix: function renderSuffix(state) {
       return /* @__PURE__ */ reactExports.createElement(NotchedOutline$1, {
         className: classes.notchedOutline,
@@ -15422,7 +15824,7 @@ var OutlinedInput = /* @__PURE__ */ reactExports.forwardRef(function OutlinedInp
         notched: typeof notched !== "undefined" ? notched : Boolean(state.startAdornment || state.filled || state.focused)
       });
     },
-    classes: _extends({}, classes, {
+    classes: _extends$1({}, classes, {
       root: clsx(classes.root, classes.underline),
       notchedOutline: null
     }),
@@ -15434,9 +15836,1677 @@ var OutlinedInput = /* @__PURE__ */ reactExports.forwardRef(function OutlinedInp
   }, other));
 });
 OutlinedInput.muiName = "Input";
-const OutlinedInput$1 = withStyles(styles$5, {
+const OutlinedInput$1 = withStyles(styles$b, {
   name: "MuiOutlinedInput"
 })(OutlinedInput);
+/**!
+ * @fileOverview Kickass library to create and place poppers near their reference elements.
+ * @version 1.16.1-lts
+ * @license
+ * Copyright (c) 2016 Federico Zivolo and contributors
+ *
+ * Permission is hereby granted, free of charge, to any person obtaining a copy
+ * of this software and associated documentation files (the "Software"), to deal
+ * in the Software without restriction, including without limitation the rights
+ * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+ * copies of the Software, and to permit persons to whom the Software is
+ * furnished to do so, subject to the following conditions:
+ *
+ * The above copyright notice and this permission notice shall be included in all
+ * copies or substantial portions of the Software.
+ *
+ * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+ * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+ * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+ * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+ * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+ * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+ * SOFTWARE.
+ */
+var isBrowser = typeof window !== "undefined" && typeof document !== "undefined" && typeof navigator !== "undefined";
+var timeoutDuration = function() {
+  var longerTimeoutBrowsers = ["Edge", "Trident", "Firefox"];
+  for (var i = 0; i < longerTimeoutBrowsers.length; i += 1) {
+    if (isBrowser && navigator.userAgent.indexOf(longerTimeoutBrowsers[i]) >= 0) {
+      return 1;
+    }
+  }
+  return 0;
+}();
+function microtaskDebounce(fn) {
+  var called = false;
+  return function() {
+    if (called) {
+      return;
+    }
+    called = true;
+    window.Promise.resolve().then(function() {
+      called = false;
+      fn();
+    });
+  };
+}
+function taskDebounce(fn) {
+  var scheduled = false;
+  return function() {
+    if (!scheduled) {
+      scheduled = true;
+      setTimeout(function() {
+        scheduled = false;
+        fn();
+      }, timeoutDuration);
+    }
+  };
+}
+var supportsMicroTasks = isBrowser && window.Promise;
+var debounce = supportsMicroTasks ? microtaskDebounce : taskDebounce;
+function isFunction(functionToCheck) {
+  var getType = {};
+  return functionToCheck && getType.toString.call(functionToCheck) === "[object Function]";
+}
+function getStyleComputedProperty(element, property) {
+  if (element.nodeType !== 1) {
+    return [];
+  }
+  var window2 = element.ownerDocument.defaultView;
+  var css2 = window2.getComputedStyle(element, null);
+  return property ? css2[property] : css2;
+}
+function getParentNode(element) {
+  if (element.nodeName === "HTML") {
+    return element;
+  }
+  return element.parentNode || element.host;
+}
+function getScrollParent(element) {
+  if (!element) {
+    return document.body;
+  }
+  switch (element.nodeName) {
+    case "HTML":
+    case "BODY":
+      return element.ownerDocument.body;
+    case "#document":
+      return element.body;
+  }
+  var _getStyleComputedProp = getStyleComputedProperty(element), overflow = _getStyleComputedProp.overflow, overflowX = _getStyleComputedProp.overflowX, overflowY = _getStyleComputedProp.overflowY;
+  if (/(auto|scroll|overlay)/.test(overflow + overflowY + overflowX)) {
+    return element;
+  }
+  return getScrollParent(getParentNode(element));
+}
+function getReferenceNode(reference) {
+  return reference && reference.referenceNode ? reference.referenceNode : reference;
+}
+var isIE11 = isBrowser && !!(window.MSInputMethodContext && document.documentMode);
+var isIE10 = isBrowser && /MSIE 10/.test(navigator.userAgent);
+function isIE(version) {
+  if (version === 11) {
+    return isIE11;
+  }
+  if (version === 10) {
+    return isIE10;
+  }
+  return isIE11 || isIE10;
+}
+function getOffsetParent(element) {
+  if (!element) {
+    return document.documentElement;
+  }
+  var noOffsetParent = isIE(10) ? document.body : null;
+  var offsetParent = element.offsetParent || null;
+  while (offsetParent === noOffsetParent && element.nextElementSibling) {
+    offsetParent = (element = element.nextElementSibling).offsetParent;
+  }
+  var nodeName = offsetParent && offsetParent.nodeName;
+  if (!nodeName || nodeName === "BODY" || nodeName === "HTML") {
+    return element ? element.ownerDocument.documentElement : document.documentElement;
+  }
+  if (["TH", "TD", "TABLE"].indexOf(offsetParent.nodeName) !== -1 && getStyleComputedProperty(offsetParent, "position") === "static") {
+    return getOffsetParent(offsetParent);
+  }
+  return offsetParent;
+}
+function isOffsetContainer(element) {
+  var nodeName = element.nodeName;
+  if (nodeName === "BODY") {
+    return false;
+  }
+  return nodeName === "HTML" || getOffsetParent(element.firstElementChild) === element;
+}
+function getRoot(node) {
+  if (node.parentNode !== null) {
+    return getRoot(node.parentNode);
+  }
+  return node;
+}
+function findCommonOffsetParent(element1, element2) {
+  if (!element1 || !element1.nodeType || !element2 || !element2.nodeType) {
+    return document.documentElement;
+  }
+  var order = element1.compareDocumentPosition(element2) & Node.DOCUMENT_POSITION_FOLLOWING;
+  var start = order ? element1 : element2;
+  var end = order ? element2 : element1;
+  var range = document.createRange();
+  range.setStart(start, 0);
+  range.setEnd(end, 0);
+  var commonAncestorContainer = range.commonAncestorContainer;
+  if (element1 !== commonAncestorContainer && element2 !== commonAncestorContainer || start.contains(end)) {
+    if (isOffsetContainer(commonAncestorContainer)) {
+      return commonAncestorContainer;
+    }
+    return getOffsetParent(commonAncestorContainer);
+  }
+  var element1root = getRoot(element1);
+  if (element1root.host) {
+    return findCommonOffsetParent(element1root.host, element2);
+  } else {
+    return findCommonOffsetParent(element1, getRoot(element2).host);
+  }
+}
+function getScroll(element) {
+  var side = arguments.length > 1 && arguments[1] !== void 0 ? arguments[1] : "top";
+  var upperSide = side === "top" ? "scrollTop" : "scrollLeft";
+  var nodeName = element.nodeName;
+  if (nodeName === "BODY" || nodeName === "HTML") {
+    var html = element.ownerDocument.documentElement;
+    var scrollingElement = element.ownerDocument.scrollingElement || html;
+    return scrollingElement[upperSide];
+  }
+  return element[upperSide];
+}
+function includeScroll(rect, element) {
+  var subtract = arguments.length > 2 && arguments[2] !== void 0 ? arguments[2] : false;
+  var scrollTop = getScroll(element, "top");
+  var scrollLeft = getScroll(element, "left");
+  var modifier = subtract ? -1 : 1;
+  rect.top += scrollTop * modifier;
+  rect.bottom += scrollTop * modifier;
+  rect.left += scrollLeft * modifier;
+  rect.right += scrollLeft * modifier;
+  return rect;
+}
+function getBordersSize(styles4, axis) {
+  var sideA = axis === "x" ? "Left" : "Top";
+  var sideB = sideA === "Left" ? "Right" : "Bottom";
+  return parseFloat(styles4["border" + sideA + "Width"]) + parseFloat(styles4["border" + sideB + "Width"]);
+}
+function getSize(axis, body, html, computedStyle) {
+  return Math.max(body["offset" + axis], body["scroll" + axis], html["client" + axis], html["offset" + axis], html["scroll" + axis], isIE(10) ? parseInt(html["offset" + axis]) + parseInt(computedStyle["margin" + (axis === "Height" ? "Top" : "Left")]) + parseInt(computedStyle["margin" + (axis === "Height" ? "Bottom" : "Right")]) : 0);
+}
+function getWindowSizes(document2) {
+  var body = document2.body;
+  var html = document2.documentElement;
+  var computedStyle = isIE(10) && getComputedStyle(html);
+  return {
+    height: getSize("Height", body, html, computedStyle),
+    width: getSize("Width", body, html, computedStyle)
+  };
+}
+var classCallCheck = function(instance, Constructor) {
+  if (!(instance instanceof Constructor)) {
+    throw new TypeError("Cannot call a class as a function");
+  }
+};
+var createClass = /* @__PURE__ */ function() {
+  function defineProperties(target, props) {
+    for (var i = 0; i < props.length; i++) {
+      var descriptor = props[i];
+      descriptor.enumerable = descriptor.enumerable || false;
+      descriptor.configurable = true;
+      if ("value" in descriptor) descriptor.writable = true;
+      Object.defineProperty(target, descriptor.key, descriptor);
+    }
+  }
+  return function(Constructor, protoProps, staticProps) {
+    if (protoProps) defineProperties(Constructor.prototype, protoProps);
+    if (staticProps) defineProperties(Constructor, staticProps);
+    return Constructor;
+  };
+}();
+var defineProperty = function(obj, key2, value) {
+  if (key2 in obj) {
+    Object.defineProperty(obj, key2, {
+      value,
+      enumerable: true,
+      configurable: true,
+      writable: true
+    });
+  } else {
+    obj[key2] = value;
+  }
+  return obj;
+};
+var _extends = Object.assign || function(target) {
+  for (var i = 1; i < arguments.length; i++) {
+    var source2 = arguments[i];
+    for (var key2 in source2) {
+      if (Object.prototype.hasOwnProperty.call(source2, key2)) {
+        target[key2] = source2[key2];
+      }
+    }
+  }
+  return target;
+};
+function getClientRect(offsets) {
+  return _extends({}, offsets, {
+    right: offsets.left + offsets.width,
+    bottom: offsets.top + offsets.height
+  });
+}
+function getBoundingClientRect(element) {
+  var rect = {};
+  try {
+    if (isIE(10)) {
+      rect = element.getBoundingClientRect();
+      var scrollTop = getScroll(element, "top");
+      var scrollLeft = getScroll(element, "left");
+      rect.top += scrollTop;
+      rect.left += scrollLeft;
+      rect.bottom += scrollTop;
+      rect.right += scrollLeft;
+    } else {
+      rect = element.getBoundingClientRect();
+    }
+  } catch (e2) {
+  }
+  var result = {
+    left: rect.left,
+    top: rect.top,
+    width: rect.right - rect.left,
+    height: rect.bottom - rect.top
+  };
+  var sizes = element.nodeName === "HTML" ? getWindowSizes(element.ownerDocument) : {};
+  var width = sizes.width || element.clientWidth || result.width;
+  var height = sizes.height || element.clientHeight || result.height;
+  var horizScrollbar = element.offsetWidth - width;
+  var vertScrollbar = element.offsetHeight - height;
+  if (horizScrollbar || vertScrollbar) {
+    var styles4 = getStyleComputedProperty(element);
+    horizScrollbar -= getBordersSize(styles4, "x");
+    vertScrollbar -= getBordersSize(styles4, "y");
+    result.width -= horizScrollbar;
+    result.height -= vertScrollbar;
+  }
+  return getClientRect(result);
+}
+function getOffsetRectRelativeToArbitraryNode(children, parent) {
+  var fixedPosition = arguments.length > 2 && arguments[2] !== void 0 ? arguments[2] : false;
+  var isIE102 = isIE(10);
+  var isHTML = parent.nodeName === "HTML";
+  var childrenRect = getBoundingClientRect(children);
+  var parentRect = getBoundingClientRect(parent);
+  var scrollParent = getScrollParent(children);
+  var styles4 = getStyleComputedProperty(parent);
+  var borderTopWidth = parseFloat(styles4.borderTopWidth);
+  var borderLeftWidth = parseFloat(styles4.borderLeftWidth);
+  if (fixedPosition && isHTML) {
+    parentRect.top = Math.max(parentRect.top, 0);
+    parentRect.left = Math.max(parentRect.left, 0);
+  }
+  var offsets = getClientRect({
+    top: childrenRect.top - parentRect.top - borderTopWidth,
+    left: childrenRect.left - parentRect.left - borderLeftWidth,
+    width: childrenRect.width,
+    height: childrenRect.height
+  });
+  offsets.marginTop = 0;
+  offsets.marginLeft = 0;
+  if (!isIE102 && isHTML) {
+    var marginTop = parseFloat(styles4.marginTop);
+    var marginLeft = parseFloat(styles4.marginLeft);
+    offsets.top -= borderTopWidth - marginTop;
+    offsets.bottom -= borderTopWidth - marginTop;
+    offsets.left -= borderLeftWidth - marginLeft;
+    offsets.right -= borderLeftWidth - marginLeft;
+    offsets.marginTop = marginTop;
+    offsets.marginLeft = marginLeft;
+  }
+  if (isIE102 && !fixedPosition ? parent.contains(scrollParent) : parent === scrollParent && scrollParent.nodeName !== "BODY") {
+    offsets = includeScroll(offsets, parent);
+  }
+  return offsets;
+}
+function getViewportOffsetRectRelativeToArtbitraryNode(element) {
+  var excludeScroll = arguments.length > 1 && arguments[1] !== void 0 ? arguments[1] : false;
+  var html = element.ownerDocument.documentElement;
+  var relativeOffset = getOffsetRectRelativeToArbitraryNode(element, html);
+  var width = Math.max(html.clientWidth, window.innerWidth || 0);
+  var height = Math.max(html.clientHeight, window.innerHeight || 0);
+  var scrollTop = !excludeScroll ? getScroll(html) : 0;
+  var scrollLeft = !excludeScroll ? getScroll(html, "left") : 0;
+  var offset4 = {
+    top: scrollTop - relativeOffset.top + relativeOffset.marginTop,
+    left: scrollLeft - relativeOffset.left + relativeOffset.marginLeft,
+    width,
+    height
+  };
+  return getClientRect(offset4);
+}
+function isFixed(element) {
+  var nodeName = element.nodeName;
+  if (nodeName === "BODY" || nodeName === "HTML") {
+    return false;
+  }
+  if (getStyleComputedProperty(element, "position") === "fixed") {
+    return true;
+  }
+  var parentNode = getParentNode(element);
+  if (!parentNode) {
+    return false;
+  }
+  return isFixed(parentNode);
+}
+function getFixedPositionOffsetParent(element) {
+  if (!element || !element.parentElement || isIE()) {
+    return document.documentElement;
+  }
+  var el2 = element.parentElement;
+  while (el2 && getStyleComputedProperty(el2, "transform") === "none") {
+    el2 = el2.parentElement;
+  }
+  return el2 || document.documentElement;
+}
+function getBoundaries(popper, reference, padding, boundariesElement) {
+  var fixedPosition = arguments.length > 4 && arguments[4] !== void 0 ? arguments[4] : false;
+  var boundaries = { top: 0, left: 0 };
+  var offsetParent = fixedPosition ? getFixedPositionOffsetParent(popper) : findCommonOffsetParent(popper, getReferenceNode(reference));
+  if (boundariesElement === "viewport") {
+    boundaries = getViewportOffsetRectRelativeToArtbitraryNode(offsetParent, fixedPosition);
+  } else {
+    var boundariesNode = void 0;
+    if (boundariesElement === "scrollParent") {
+      boundariesNode = getScrollParent(getParentNode(reference));
+      if (boundariesNode.nodeName === "BODY") {
+        boundariesNode = popper.ownerDocument.documentElement;
+      }
+    } else if (boundariesElement === "window") {
+      boundariesNode = popper.ownerDocument.documentElement;
+    } else {
+      boundariesNode = boundariesElement;
+    }
+    var offsets = getOffsetRectRelativeToArbitraryNode(boundariesNode, offsetParent, fixedPosition);
+    if (boundariesNode.nodeName === "HTML" && !isFixed(offsetParent)) {
+      var _getWindowSizes = getWindowSizes(popper.ownerDocument), height = _getWindowSizes.height, width = _getWindowSizes.width;
+      boundaries.top += offsets.top - offsets.marginTop;
+      boundaries.bottom = height + offsets.top;
+      boundaries.left += offsets.left - offsets.marginLeft;
+      boundaries.right = width + offsets.left;
+    } else {
+      boundaries = offsets;
+    }
+  }
+  padding = padding || 0;
+  var isPaddingNumber = typeof padding === "number";
+  boundaries.left += isPaddingNumber ? padding : padding.left || 0;
+  boundaries.top += isPaddingNumber ? padding : padding.top || 0;
+  boundaries.right -= isPaddingNumber ? padding : padding.right || 0;
+  boundaries.bottom -= isPaddingNumber ? padding : padding.bottom || 0;
+  return boundaries;
+}
+function getArea(_ref3) {
+  var width = _ref3.width, height = _ref3.height;
+  return width * height;
+}
+function computeAutoPlacement(placement, refRect, popper, reference, boundariesElement) {
+  var padding = arguments.length > 5 && arguments[5] !== void 0 ? arguments[5] : 0;
+  if (placement.indexOf("auto") === -1) {
+    return placement;
+  }
+  var boundaries = getBoundaries(popper, reference, padding, boundariesElement);
+  var rects = {
+    top: {
+      width: boundaries.width,
+      height: refRect.top - boundaries.top
+    },
+    right: {
+      width: boundaries.right - refRect.right,
+      height: boundaries.height
+    },
+    bottom: {
+      width: boundaries.width,
+      height: boundaries.bottom - refRect.bottom
+    },
+    left: {
+      width: refRect.left - boundaries.left,
+      height: boundaries.height
+    }
+  };
+  var sortedAreas = Object.keys(rects).map(function(key2) {
+    return _extends({
+      key: key2
+    }, rects[key2], {
+      area: getArea(rects[key2])
+    });
+  }).sort(function(a, b2) {
+    return b2.area - a.area;
+  });
+  var filteredAreas = sortedAreas.filter(function(_ref22) {
+    var width = _ref22.width, height = _ref22.height;
+    return width >= popper.clientWidth && height >= popper.clientHeight;
+  });
+  var computedPlacement = filteredAreas.length > 0 ? filteredAreas[0].key : sortedAreas[0].key;
+  var variation = placement.split("-")[1];
+  return computedPlacement + (variation ? "-" + variation : "");
+}
+function getReferenceOffsets(state, popper, reference) {
+  var fixedPosition = arguments.length > 3 && arguments[3] !== void 0 ? arguments[3] : null;
+  var commonOffsetParent = fixedPosition ? getFixedPositionOffsetParent(popper) : findCommonOffsetParent(popper, getReferenceNode(reference));
+  return getOffsetRectRelativeToArbitraryNode(reference, commonOffsetParent, fixedPosition);
+}
+function getOuterSizes(element) {
+  var window2 = element.ownerDocument.defaultView;
+  var styles4 = window2.getComputedStyle(element);
+  var x2 = parseFloat(styles4.marginTop || 0) + parseFloat(styles4.marginBottom || 0);
+  var y2 = parseFloat(styles4.marginLeft || 0) + parseFloat(styles4.marginRight || 0);
+  var result = {
+    width: element.offsetWidth + y2,
+    height: element.offsetHeight + x2
+  };
+  return result;
+}
+function getOppositePlacement(placement) {
+  var hash = { left: "right", right: "left", bottom: "top", top: "bottom" };
+  return placement.replace(/left|right|bottom|top/g, function(matched) {
+    return hash[matched];
+  });
+}
+function getPopperOffsets(popper, referenceOffsets, placement) {
+  placement = placement.split("-")[0];
+  var popperRect = getOuterSizes(popper);
+  var popperOffsets = {
+    width: popperRect.width,
+    height: popperRect.height
+  };
+  var isHoriz = ["right", "left"].indexOf(placement) !== -1;
+  var mainSide = isHoriz ? "top" : "left";
+  var secondarySide = isHoriz ? "left" : "top";
+  var measurement = isHoriz ? "height" : "width";
+  var secondaryMeasurement = !isHoriz ? "height" : "width";
+  popperOffsets[mainSide] = referenceOffsets[mainSide] + referenceOffsets[measurement] / 2 - popperRect[measurement] / 2;
+  if (placement === secondarySide) {
+    popperOffsets[secondarySide] = referenceOffsets[secondarySide] - popperRect[secondaryMeasurement];
+  } else {
+    popperOffsets[secondarySide] = referenceOffsets[getOppositePlacement(secondarySide)];
+  }
+  return popperOffsets;
+}
+function find(arr, check) {
+  if (Array.prototype.find) {
+    return arr.find(check);
+  }
+  return arr.filter(check)[0];
+}
+function findIndex(arr, prop, value) {
+  if (Array.prototype.findIndex) {
+    return arr.findIndex(function(cur) {
+      return cur[prop] === value;
+    });
+  }
+  var match = find(arr, function(obj) {
+    return obj[prop] === value;
+  });
+  return arr.indexOf(match);
+}
+function runModifiers(modifiers2, data, ends) {
+  var modifiersToRun = ends === void 0 ? modifiers2 : modifiers2.slice(0, findIndex(modifiers2, "name", ends));
+  modifiersToRun.forEach(function(modifier) {
+    if (modifier["function"]) {
+      console.warn("`modifier.function` is deprecated, use `modifier.fn`!");
+    }
+    var fn = modifier["function"] || modifier.fn;
+    if (modifier.enabled && isFunction(fn)) {
+      data.offsets.popper = getClientRect(data.offsets.popper);
+      data.offsets.reference = getClientRect(data.offsets.reference);
+      data = fn(data, modifier);
+    }
+  });
+  return data;
+}
+function update() {
+  if (this.state.isDestroyed) {
+    return;
+  }
+  var data = {
+    instance: this,
+    styles: {},
+    arrowStyles: {},
+    attributes: {},
+    flipped: false,
+    offsets: {}
+  };
+  data.offsets.reference = getReferenceOffsets(this.state, this.popper, this.reference, this.options.positionFixed);
+  data.placement = computeAutoPlacement(this.options.placement, data.offsets.reference, this.popper, this.reference, this.options.modifiers.flip.boundariesElement, this.options.modifiers.flip.padding);
+  data.originalPlacement = data.placement;
+  data.positionFixed = this.options.positionFixed;
+  data.offsets.popper = getPopperOffsets(this.popper, data.offsets.reference, data.placement);
+  data.offsets.popper.position = this.options.positionFixed ? "fixed" : "absolute";
+  data = runModifiers(this.modifiers, data);
+  if (!this.state.isCreated) {
+    this.state.isCreated = true;
+    this.options.onCreate(data);
+  } else {
+    this.options.onUpdate(data);
+  }
+}
+function isModifierEnabled(modifiers2, modifierName) {
+  return modifiers2.some(function(_ref3) {
+    var name = _ref3.name, enabled = _ref3.enabled;
+    return enabled && name === modifierName;
+  });
+}
+function getSupportedPropertyName(property) {
+  var prefixes = [false, "ms", "Webkit", "Moz", "O"];
+  var upperProp = property.charAt(0).toUpperCase() + property.slice(1);
+  for (var i = 0; i < prefixes.length; i++) {
+    var prefix2 = prefixes[i];
+    var toCheck = prefix2 ? "" + prefix2 + upperProp : property;
+    if (typeof document.body.style[toCheck] !== "undefined") {
+      return toCheck;
+    }
+  }
+  return null;
+}
+function destroy() {
+  this.state.isDestroyed = true;
+  if (isModifierEnabled(this.modifiers, "applyStyle")) {
+    this.popper.removeAttribute("x-placement");
+    this.popper.style.position = "";
+    this.popper.style.top = "";
+    this.popper.style.left = "";
+    this.popper.style.right = "";
+    this.popper.style.bottom = "";
+    this.popper.style.willChange = "";
+    this.popper.style[getSupportedPropertyName("transform")] = "";
+  }
+  this.disableEventListeners();
+  if (this.options.removeOnDestroy) {
+    this.popper.parentNode.removeChild(this.popper);
+  }
+  return this;
+}
+function getWindow(element) {
+  var ownerDocument2 = element.ownerDocument;
+  return ownerDocument2 ? ownerDocument2.defaultView : window;
+}
+function attachToScrollParents(scrollParent, event, callback, scrollParents) {
+  var isBody = scrollParent.nodeName === "BODY";
+  var target = isBody ? scrollParent.ownerDocument.defaultView : scrollParent;
+  target.addEventListener(event, callback, { passive: true });
+  if (!isBody) {
+    attachToScrollParents(getScrollParent(target.parentNode), event, callback, scrollParents);
+  }
+  scrollParents.push(target);
+}
+function setupEventListeners(reference, options, state, updateBound) {
+  state.updateBound = updateBound;
+  getWindow(reference).addEventListener("resize", state.updateBound, { passive: true });
+  var scrollElement = getScrollParent(reference);
+  attachToScrollParents(scrollElement, "scroll", state.updateBound, state.scrollParents);
+  state.scrollElement = scrollElement;
+  state.eventsEnabled = true;
+  return state;
+}
+function enableEventListeners() {
+  if (!this.state.eventsEnabled) {
+    this.state = setupEventListeners(this.reference, this.options, this.state, this.scheduleUpdate);
+  }
+}
+function removeEventListeners(reference, state) {
+  getWindow(reference).removeEventListener("resize", state.updateBound);
+  state.scrollParents.forEach(function(target) {
+    target.removeEventListener("scroll", state.updateBound);
+  });
+  state.updateBound = null;
+  state.scrollParents = [];
+  state.scrollElement = null;
+  state.eventsEnabled = false;
+  return state;
+}
+function disableEventListeners() {
+  if (this.state.eventsEnabled) {
+    cancelAnimationFrame(this.scheduleUpdate);
+    this.state = removeEventListeners(this.reference, this.state);
+  }
+}
+function isNumeric(n2) {
+  return n2 !== "" && !isNaN(parseFloat(n2)) && isFinite(n2);
+}
+function setStyles(element, styles4) {
+  Object.keys(styles4).forEach(function(prop) {
+    var unit = "";
+    if (["width", "height", "top", "right", "bottom", "left"].indexOf(prop) !== -1 && isNumeric(styles4[prop])) {
+      unit = "px";
+    }
+    element.style[prop] = styles4[prop] + unit;
+  });
+}
+function setAttributes(element, attributes) {
+  Object.keys(attributes).forEach(function(prop) {
+    var value = attributes[prop];
+    if (value !== false) {
+      element.setAttribute(prop, attributes[prop]);
+    } else {
+      element.removeAttribute(prop);
+    }
+  });
+}
+function applyStyle(data) {
+  setStyles(data.instance.popper, data.styles);
+  setAttributes(data.instance.popper, data.attributes);
+  if (data.arrowElement && Object.keys(data.arrowStyles).length) {
+    setStyles(data.arrowElement, data.arrowStyles);
+  }
+  return data;
+}
+function applyStyleOnLoad(reference, popper, options, modifierOptions, state) {
+  var referenceOffsets = getReferenceOffsets(state, popper, reference, options.positionFixed);
+  var placement = computeAutoPlacement(options.placement, referenceOffsets, popper, reference, options.modifiers.flip.boundariesElement, options.modifiers.flip.padding);
+  popper.setAttribute("x-placement", placement);
+  setStyles(popper, { position: options.positionFixed ? "fixed" : "absolute" });
+  return options;
+}
+function getRoundedOffsets(data, shouldRound) {
+  var _data$offsets = data.offsets, popper = _data$offsets.popper, reference = _data$offsets.reference;
+  var round2 = Math.round, floor = Math.floor;
+  var noRound = function noRound2(v2) {
+    return v2;
+  };
+  var referenceWidth = round2(reference.width);
+  var popperWidth = round2(popper.width);
+  var isVertical = ["left", "right"].indexOf(data.placement) !== -1;
+  var isVariation = data.placement.indexOf("-") !== -1;
+  var sameWidthParity = referenceWidth % 2 === popperWidth % 2;
+  var bothOddWidth = referenceWidth % 2 === 1 && popperWidth % 2 === 1;
+  var horizontalToInteger = !shouldRound ? noRound : isVertical || isVariation || sameWidthParity ? round2 : floor;
+  var verticalToInteger = !shouldRound ? noRound : round2;
+  return {
+    left: horizontalToInteger(bothOddWidth && !isVariation && shouldRound ? popper.left - 1 : popper.left),
+    top: verticalToInteger(popper.top),
+    bottom: verticalToInteger(popper.bottom),
+    right: horizontalToInteger(popper.right)
+  };
+}
+var isFirefox = isBrowser && /Firefox/i.test(navigator.userAgent);
+function computeStyle(data, options) {
+  var x2 = options.x, y2 = options.y;
+  var popper = data.offsets.popper;
+  var legacyGpuAccelerationOption = find(data.instance.modifiers, function(modifier) {
+    return modifier.name === "applyStyle";
+  }).gpuAcceleration;
+  if (legacyGpuAccelerationOption !== void 0) {
+    console.warn("WARNING: `gpuAcceleration` option moved to `computeStyle` modifier and will not be supported in future versions of Popper.js!");
+  }
+  var gpuAcceleration = legacyGpuAccelerationOption !== void 0 ? legacyGpuAccelerationOption : options.gpuAcceleration;
+  var offsetParent = getOffsetParent(data.instance.popper);
+  var offsetParentRect = getBoundingClientRect(offsetParent);
+  var styles4 = {
+    position: popper.position
+  };
+  var offsets = getRoundedOffsets(data, window.devicePixelRatio < 2 || !isFirefox);
+  var sideA = x2 === "bottom" ? "top" : "bottom";
+  var sideB = y2 === "right" ? "left" : "right";
+  var prefixedProperty = getSupportedPropertyName("transform");
+  var left = void 0, top = void 0;
+  if (sideA === "bottom") {
+    if (offsetParent.nodeName === "HTML") {
+      top = -offsetParent.clientHeight + offsets.bottom;
+    } else {
+      top = -offsetParentRect.height + offsets.bottom;
+    }
+  } else {
+    top = offsets.top;
+  }
+  if (sideB === "right") {
+    if (offsetParent.nodeName === "HTML") {
+      left = -offsetParent.clientWidth + offsets.right;
+    } else {
+      left = -offsetParentRect.width + offsets.right;
+    }
+  } else {
+    left = offsets.left;
+  }
+  if (gpuAcceleration && prefixedProperty) {
+    styles4[prefixedProperty] = "translate3d(" + left + "px, " + top + "px, 0)";
+    styles4[sideA] = 0;
+    styles4[sideB] = 0;
+    styles4.willChange = "transform";
+  } else {
+    var invertTop = sideA === "bottom" ? -1 : 1;
+    var invertLeft = sideB === "right" ? -1 : 1;
+    styles4[sideA] = top * invertTop;
+    styles4[sideB] = left * invertLeft;
+    styles4.willChange = sideA + ", " + sideB;
+  }
+  var attributes = {
+    "x-placement": data.placement
+  };
+  data.attributes = _extends({}, attributes, data.attributes);
+  data.styles = _extends({}, styles4, data.styles);
+  data.arrowStyles = _extends({}, data.offsets.arrow, data.arrowStyles);
+  return data;
+}
+function isModifierRequired(modifiers2, requestingName, requestedName) {
+  var requesting = find(modifiers2, function(_ref3) {
+    var name = _ref3.name;
+    return name === requestingName;
+  });
+  var isRequired = !!requesting && modifiers2.some(function(modifier) {
+    return modifier.name === requestedName && modifier.enabled && modifier.order < requesting.order;
+  });
+  if (!isRequired) {
+    var _requesting = "`" + requestingName + "`";
+    var requested = "`" + requestedName + "`";
+    console.warn(requested + " modifier is required by " + _requesting + " modifier in order to work, be sure to include it before " + _requesting + "!");
+  }
+  return isRequired;
+}
+function arrow(data, options) {
+  var _data$offsets$arrow;
+  if (!isModifierRequired(data.instance.modifiers, "arrow", "keepTogether")) {
+    return data;
+  }
+  var arrowElement = options.element;
+  if (typeof arrowElement === "string") {
+    arrowElement = data.instance.popper.querySelector(arrowElement);
+    if (!arrowElement) {
+      return data;
+    }
+  } else {
+    if (!data.instance.popper.contains(arrowElement)) {
+      console.warn("WARNING: `arrow.element` must be child of its popper element!");
+      return data;
+    }
+  }
+  var placement = data.placement.split("-")[0];
+  var _data$offsets = data.offsets, popper = _data$offsets.popper, reference = _data$offsets.reference;
+  var isVertical = ["left", "right"].indexOf(placement) !== -1;
+  var len = isVertical ? "height" : "width";
+  var sideCapitalized = isVertical ? "Top" : "Left";
+  var side = sideCapitalized.toLowerCase();
+  var altSide = isVertical ? "left" : "top";
+  var opSide = isVertical ? "bottom" : "right";
+  var arrowElementSize = getOuterSizes(arrowElement)[len];
+  if (reference[opSide] - arrowElementSize < popper[side]) {
+    data.offsets.popper[side] -= popper[side] - (reference[opSide] - arrowElementSize);
+  }
+  if (reference[side] + arrowElementSize > popper[opSide]) {
+    data.offsets.popper[side] += reference[side] + arrowElementSize - popper[opSide];
+  }
+  data.offsets.popper = getClientRect(data.offsets.popper);
+  var center = reference[side] + reference[len] / 2 - arrowElementSize / 2;
+  var css2 = getStyleComputedProperty(data.instance.popper);
+  var popperMarginSide = parseFloat(css2["margin" + sideCapitalized]);
+  var popperBorderSide = parseFloat(css2["border" + sideCapitalized + "Width"]);
+  var sideValue = center - data.offsets.popper[side] - popperMarginSide - popperBorderSide;
+  sideValue = Math.max(Math.min(popper[len] - arrowElementSize, sideValue), 0);
+  data.arrowElement = arrowElement;
+  data.offsets.arrow = (_data$offsets$arrow = {}, defineProperty(_data$offsets$arrow, side, Math.round(sideValue)), defineProperty(_data$offsets$arrow, altSide, ""), _data$offsets$arrow);
+  return data;
+}
+function getOppositeVariation(variation) {
+  if (variation === "end") {
+    return "start";
+  } else if (variation === "start") {
+    return "end";
+  }
+  return variation;
+}
+var placements = ["auto-start", "auto", "auto-end", "top-start", "top", "top-end", "right-start", "right", "right-end", "bottom-end", "bottom", "bottom-start", "left-end", "left", "left-start"];
+var validPlacements = placements.slice(3);
+function clockwise(placement) {
+  var counter = arguments.length > 1 && arguments[1] !== void 0 ? arguments[1] : false;
+  var index = validPlacements.indexOf(placement);
+  var arr = validPlacements.slice(index + 1).concat(validPlacements.slice(0, index));
+  return counter ? arr.reverse() : arr;
+}
+var BEHAVIORS = {
+  FLIP: "flip",
+  CLOCKWISE: "clockwise",
+  COUNTERCLOCKWISE: "counterclockwise"
+};
+function flip(data, options) {
+  if (isModifierEnabled(data.instance.modifiers, "inner")) {
+    return data;
+  }
+  if (data.flipped && data.placement === data.originalPlacement) {
+    return data;
+  }
+  var boundaries = getBoundaries(data.instance.popper, data.instance.reference, options.padding, options.boundariesElement, data.positionFixed);
+  var placement = data.placement.split("-")[0];
+  var placementOpposite = getOppositePlacement(placement);
+  var variation = data.placement.split("-")[1] || "";
+  var flipOrder = [];
+  switch (options.behavior) {
+    case BEHAVIORS.FLIP:
+      flipOrder = [placement, placementOpposite];
+      break;
+    case BEHAVIORS.CLOCKWISE:
+      flipOrder = clockwise(placement);
+      break;
+    case BEHAVIORS.COUNTERCLOCKWISE:
+      flipOrder = clockwise(placement, true);
+      break;
+    default:
+      flipOrder = options.behavior;
+  }
+  flipOrder.forEach(function(step, index) {
+    if (placement !== step || flipOrder.length === index + 1) {
+      return data;
+    }
+    placement = data.placement.split("-")[0];
+    placementOpposite = getOppositePlacement(placement);
+    var popperOffsets = data.offsets.popper;
+    var refOffsets = data.offsets.reference;
+    var floor = Math.floor;
+    var overlapsRef = placement === "left" && floor(popperOffsets.right) > floor(refOffsets.left) || placement === "right" && floor(popperOffsets.left) < floor(refOffsets.right) || placement === "top" && floor(popperOffsets.bottom) > floor(refOffsets.top) || placement === "bottom" && floor(popperOffsets.top) < floor(refOffsets.bottom);
+    var overflowsLeft = floor(popperOffsets.left) < floor(boundaries.left);
+    var overflowsRight = floor(popperOffsets.right) > floor(boundaries.right);
+    var overflowsTop = floor(popperOffsets.top) < floor(boundaries.top);
+    var overflowsBottom = floor(popperOffsets.bottom) > floor(boundaries.bottom);
+    var overflowsBoundaries = placement === "left" && overflowsLeft || placement === "right" && overflowsRight || placement === "top" && overflowsTop || placement === "bottom" && overflowsBottom;
+    var isVertical = ["top", "bottom"].indexOf(placement) !== -1;
+    var flippedVariationByRef = !!options.flipVariations && (isVertical && variation === "start" && overflowsLeft || isVertical && variation === "end" && overflowsRight || !isVertical && variation === "start" && overflowsTop || !isVertical && variation === "end" && overflowsBottom);
+    var flippedVariationByContent = !!options.flipVariationsByContent && (isVertical && variation === "start" && overflowsRight || isVertical && variation === "end" && overflowsLeft || !isVertical && variation === "start" && overflowsBottom || !isVertical && variation === "end" && overflowsTop);
+    var flippedVariation = flippedVariationByRef || flippedVariationByContent;
+    if (overlapsRef || overflowsBoundaries || flippedVariation) {
+      data.flipped = true;
+      if (overlapsRef || overflowsBoundaries) {
+        placement = flipOrder[index + 1];
+      }
+      if (flippedVariation) {
+        variation = getOppositeVariation(variation);
+      }
+      data.placement = placement + (variation ? "-" + variation : "");
+      data.offsets.popper = _extends({}, data.offsets.popper, getPopperOffsets(data.instance.popper, data.offsets.reference, data.placement));
+      data = runModifiers(data.instance.modifiers, data, "flip");
+    }
+  });
+  return data;
+}
+function keepTogether(data) {
+  var _data$offsets = data.offsets, popper = _data$offsets.popper, reference = _data$offsets.reference;
+  var placement = data.placement.split("-")[0];
+  var floor = Math.floor;
+  var isVertical = ["top", "bottom"].indexOf(placement) !== -1;
+  var side = isVertical ? "right" : "bottom";
+  var opSide = isVertical ? "left" : "top";
+  var measurement = isVertical ? "width" : "height";
+  if (popper[side] < floor(reference[opSide])) {
+    data.offsets.popper[opSide] = floor(reference[opSide]) - popper[measurement];
+  }
+  if (popper[opSide] > floor(reference[side])) {
+    data.offsets.popper[opSide] = floor(reference[side]);
+  }
+  return data;
+}
+function toValue(str, measurement, popperOffsets, referenceOffsets) {
+  var split = str.match(/((?:\-|\+)?\d*\.?\d*)(.*)/);
+  var value = +split[1];
+  var unit = split[2];
+  if (!value) {
+    return str;
+  }
+  if (unit.indexOf("%") === 0) {
+    var element = void 0;
+    switch (unit) {
+      case "%p":
+        element = popperOffsets;
+        break;
+      case "%":
+      case "%r":
+      default:
+        element = referenceOffsets;
+    }
+    var rect = getClientRect(element);
+    return rect[measurement] / 100 * value;
+  } else if (unit === "vh" || unit === "vw") {
+    var size = void 0;
+    if (unit === "vh") {
+      size = Math.max(document.documentElement.clientHeight, window.innerHeight || 0);
+    } else {
+      size = Math.max(document.documentElement.clientWidth, window.innerWidth || 0);
+    }
+    return size / 100 * value;
+  } else {
+    return value;
+  }
+}
+function parseOffset(offset4, popperOffsets, referenceOffsets, basePlacement) {
+  var offsets = [0, 0];
+  var useHeight = ["right", "left"].indexOf(basePlacement) !== -1;
+  var fragments = offset4.split(/(\+|\-)/).map(function(frag) {
+    return frag.trim();
+  });
+  var divider = fragments.indexOf(find(fragments, function(frag) {
+    return frag.search(/,|\s/) !== -1;
+  }));
+  if (fragments[divider] && fragments[divider].indexOf(",") === -1) {
+    console.warn("Offsets separated by white space(s) are deprecated, use a comma (,) instead.");
+  }
+  var splitRegex = /\s*,\s*|\s+/;
+  var ops = divider !== -1 ? [fragments.slice(0, divider).concat([fragments[divider].split(splitRegex)[0]]), [fragments[divider].split(splitRegex)[1]].concat(fragments.slice(divider + 1))] : [fragments];
+  ops = ops.map(function(op, index) {
+    var measurement = (index === 1 ? !useHeight : useHeight) ? "height" : "width";
+    var mergeWithPrevious = false;
+    return op.reduce(function(a, b2) {
+      if (a[a.length - 1] === "" && ["+", "-"].indexOf(b2) !== -1) {
+        a[a.length - 1] = b2;
+        mergeWithPrevious = true;
+        return a;
+      } else if (mergeWithPrevious) {
+        a[a.length - 1] += b2;
+        mergeWithPrevious = false;
+        return a;
+      } else {
+        return a.concat(b2);
+      }
+    }, []).map(function(str) {
+      return toValue(str, measurement, popperOffsets, referenceOffsets);
+    });
+  });
+  ops.forEach(function(op, index) {
+    op.forEach(function(frag, index2) {
+      if (isNumeric(frag)) {
+        offsets[index] += frag * (op[index2 - 1] === "-" ? -1 : 1);
+      }
+    });
+  });
+  return offsets;
+}
+function offset(data, _ref3) {
+  var offset4 = _ref3.offset;
+  var placement = data.placement, _data$offsets = data.offsets, popper = _data$offsets.popper, reference = _data$offsets.reference;
+  var basePlacement = placement.split("-")[0];
+  var offsets = void 0;
+  if (isNumeric(+offset4)) {
+    offsets = [+offset4, 0];
+  } else {
+    offsets = parseOffset(offset4, popper, reference, basePlacement);
+  }
+  if (basePlacement === "left") {
+    popper.top += offsets[0];
+    popper.left -= offsets[1];
+  } else if (basePlacement === "right") {
+    popper.top += offsets[0];
+    popper.left += offsets[1];
+  } else if (basePlacement === "top") {
+    popper.left += offsets[0];
+    popper.top -= offsets[1];
+  } else if (basePlacement === "bottom") {
+    popper.left += offsets[0];
+    popper.top += offsets[1];
+  }
+  data.popper = popper;
+  return data;
+}
+function preventOverflow(data, options) {
+  var boundariesElement = options.boundariesElement || getOffsetParent(data.instance.popper);
+  if (data.instance.reference === boundariesElement) {
+    boundariesElement = getOffsetParent(boundariesElement);
+  }
+  var transformProp = getSupportedPropertyName("transform");
+  var popperStyles = data.instance.popper.style;
+  var top = popperStyles.top, left = popperStyles.left, transform2 = popperStyles[transformProp];
+  popperStyles.top = "";
+  popperStyles.left = "";
+  popperStyles[transformProp] = "";
+  var boundaries = getBoundaries(data.instance.popper, data.instance.reference, options.padding, boundariesElement, data.positionFixed);
+  popperStyles.top = top;
+  popperStyles.left = left;
+  popperStyles[transformProp] = transform2;
+  options.boundaries = boundaries;
+  var order = options.priority;
+  var popper = data.offsets.popper;
+  var check = {
+    primary: function primary(placement) {
+      var value = popper[placement];
+      if (popper[placement] < boundaries[placement] && !options.escapeWithReference) {
+        value = Math.max(popper[placement], boundaries[placement]);
+      }
+      return defineProperty({}, placement, value);
+    },
+    secondary: function secondary(placement) {
+      var mainSide = placement === "right" ? "left" : "top";
+      var value = popper[mainSide];
+      if (popper[placement] > boundaries[placement] && !options.escapeWithReference) {
+        value = Math.min(popper[mainSide], boundaries[placement] - (placement === "right" ? popper.width : popper.height));
+      }
+      return defineProperty({}, mainSide, value);
+    }
+  };
+  order.forEach(function(placement) {
+    var side = ["left", "top"].indexOf(placement) !== -1 ? "primary" : "secondary";
+    popper = _extends({}, popper, check[side](placement));
+  });
+  data.offsets.popper = popper;
+  return data;
+}
+function shift(data) {
+  var placement = data.placement;
+  var basePlacement = placement.split("-")[0];
+  var shiftvariation = placement.split("-")[1];
+  if (shiftvariation) {
+    var _data$offsets = data.offsets, reference = _data$offsets.reference, popper = _data$offsets.popper;
+    var isVertical = ["bottom", "top"].indexOf(basePlacement) !== -1;
+    var side = isVertical ? "left" : "top";
+    var measurement = isVertical ? "width" : "height";
+    var shiftOffsets = {
+      start: defineProperty({}, side, reference[side]),
+      end: defineProperty({}, side, reference[side] + reference[measurement] - popper[measurement])
+    };
+    data.offsets.popper = _extends({}, popper, shiftOffsets[shiftvariation]);
+  }
+  return data;
+}
+function hide(data) {
+  if (!isModifierRequired(data.instance.modifiers, "hide", "preventOverflow")) {
+    return data;
+  }
+  var refRect = data.offsets.reference;
+  var bound = find(data.instance.modifiers, function(modifier) {
+    return modifier.name === "preventOverflow";
+  }).boundaries;
+  if (refRect.bottom < bound.top || refRect.left > bound.right || refRect.top > bound.bottom || refRect.right < bound.left) {
+    if (data.hide === true) {
+      return data;
+    }
+    data.hide = true;
+    data.attributes["x-out-of-boundaries"] = "";
+  } else {
+    if (data.hide === false) {
+      return data;
+    }
+    data.hide = false;
+    data.attributes["x-out-of-boundaries"] = false;
+  }
+  return data;
+}
+function inner(data) {
+  var placement = data.placement;
+  var basePlacement = placement.split("-")[0];
+  var _data$offsets = data.offsets, popper = _data$offsets.popper, reference = _data$offsets.reference;
+  var isHoriz = ["left", "right"].indexOf(basePlacement) !== -1;
+  var subtractLength = ["top", "left"].indexOf(basePlacement) === -1;
+  popper[isHoriz ? "left" : "top"] = reference[basePlacement] - (subtractLength ? popper[isHoriz ? "width" : "height"] : 0);
+  data.placement = getOppositePlacement(placement);
+  data.offsets.popper = getClientRect(popper);
+  return data;
+}
+var modifiers = {
+  /**
+   * Modifier used to shift the popper on the start or end of its reference
+   * element.<br />
+   * It will read the variation of the `placement` property.<br />
+   * It can be one either `-end` or `-start`.
+   * @memberof modifiers
+   * @inner
+   */
+  shift: {
+    /** @prop {number} order=100 - Index used to define the order of execution */
+    order: 100,
+    /** @prop {Boolean} enabled=true - Whether the modifier is enabled or not */
+    enabled: true,
+    /** @prop {ModifierFn} */
+    fn: shift
+  },
+  /**
+   * The `offset` modifier can shift your popper on both its axis.
+   *
+   * It accepts the following units:
+   * - `px` or unit-less, interpreted as pixels
+   * - `%` or `%r`, percentage relative to the length of the reference element
+   * - `%p`, percentage relative to the length of the popper element
+   * - `vw`, CSS viewport width unit
+   * - `vh`, CSS viewport height unit
+   *
+   * For length is intended the main axis relative to the placement of the popper.<br />
+   * This means that if the placement is `top` or `bottom`, the length will be the
+   * `width`. In case of `left` or `right`, it will be the `height`.
+   *
+   * You can provide a single value (as `Number` or `String`), or a pair of values
+   * as `String` divided by a comma or one (or more) white spaces.<br />
+   * The latter is a deprecated method because it leads to confusion and will be
+   * removed in v2.<br />
+   * Additionally, it accepts additions and subtractions between different units.
+   * Note that multiplications and divisions aren't supported.
+   *
+   * Valid examples are:
+   * ```
+   * 10
+   * '10%'
+   * '10, 10'
+   * '10%, 10'
+   * '10 + 10%'
+   * '10 - 5vh + 3%'
+   * '-10px + 5vh, 5px - 6%'
+   * ```
+   * > **NB**: If you desire to apply offsets to your poppers in a way that may make them overlap
+   * > with their reference element, unfortunately, you will have to disable the `flip` modifier.
+   * > You can read more on this at this [issue](https://github.com/FezVrasta/popper.js/issues/373).
+   *
+   * @memberof modifiers
+   * @inner
+   */
+  offset: {
+    /** @prop {number} order=200 - Index used to define the order of execution */
+    order: 200,
+    /** @prop {Boolean} enabled=true - Whether the modifier is enabled or not */
+    enabled: true,
+    /** @prop {ModifierFn} */
+    fn: offset,
+    /** @prop {Number|String} offset=0
+     * The offset value as described in the modifier description
+     */
+    offset: 0
+  },
+  /**
+   * Modifier used to prevent the popper from being positioned outside the boundary.
+   *
+   * A scenario exists where the reference itself is not within the boundaries.<br />
+   * We can say it has "escaped the boundaries" — or just "escaped".<br />
+   * In this case we need to decide whether the popper should either:
+   *
+   * - detach from the reference and remain "trapped" in the boundaries, or
+   * - if it should ignore the boundary and "escape with its reference"
+   *
+   * When `escapeWithReference` is set to`true` and reference is completely
+   * outside its boundaries, the popper will overflow (or completely leave)
+   * the boundaries in order to remain attached to the edge of the reference.
+   *
+   * @memberof modifiers
+   * @inner
+   */
+  preventOverflow: {
+    /** @prop {number} order=300 - Index used to define the order of execution */
+    order: 300,
+    /** @prop {Boolean} enabled=true - Whether the modifier is enabled or not */
+    enabled: true,
+    /** @prop {ModifierFn} */
+    fn: preventOverflow,
+    /**
+     * @prop {Array} [priority=['left','right','top','bottom']]
+     * Popper will try to prevent overflow following these priorities by default,
+     * then, it could overflow on the left and on top of the `boundariesElement`
+     */
+    priority: ["left", "right", "top", "bottom"],
+    /**
+     * @prop {number} padding=5
+     * Amount of pixel used to define a minimum distance between the boundaries
+     * and the popper. This makes sure the popper always has a little padding
+     * between the edges of its container
+     */
+    padding: 5,
+    /**
+     * @prop {String|HTMLElement} boundariesElement='scrollParent'
+     * Boundaries used by the modifier. Can be `scrollParent`, `window`,
+     * `viewport` or any DOM element.
+     */
+    boundariesElement: "scrollParent"
+  },
+  /**
+   * Modifier used to make sure the reference and its popper stay near each other
+   * without leaving any gap between the two. Especially useful when the arrow is
+   * enabled and you want to ensure that it points to its reference element.
+   * It cares only about the first axis. You can still have poppers with margin
+   * between the popper and its reference element.
+   * @memberof modifiers
+   * @inner
+   */
+  keepTogether: {
+    /** @prop {number} order=400 - Index used to define the order of execution */
+    order: 400,
+    /** @prop {Boolean} enabled=true - Whether the modifier is enabled or not */
+    enabled: true,
+    /** @prop {ModifierFn} */
+    fn: keepTogether
+  },
+  /**
+   * This modifier is used to move the `arrowElement` of the popper to make
+   * sure it is positioned between the reference element and its popper element.
+   * It will read the outer size of the `arrowElement` node to detect how many
+   * pixels of conjunction are needed.
+   *
+   * It has no effect if no `arrowElement` is provided.
+   * @memberof modifiers
+   * @inner
+   */
+  arrow: {
+    /** @prop {number} order=500 - Index used to define the order of execution */
+    order: 500,
+    /** @prop {Boolean} enabled=true - Whether the modifier is enabled or not */
+    enabled: true,
+    /** @prop {ModifierFn} */
+    fn: arrow,
+    /** @prop {String|HTMLElement} element='[x-arrow]' - Selector or node used as arrow */
+    element: "[x-arrow]"
+  },
+  /**
+   * Modifier used to flip the popper's placement when it starts to overlap its
+   * reference element.
+   *
+   * Requires the `preventOverflow` modifier before it in order to work.
+   *
+   * **NOTE:** this modifier will interrupt the current update cycle and will
+   * restart it if it detects the need to flip the placement.
+   * @memberof modifiers
+   * @inner
+   */
+  flip: {
+    /** @prop {number} order=600 - Index used to define the order of execution */
+    order: 600,
+    /** @prop {Boolean} enabled=true - Whether the modifier is enabled or not */
+    enabled: true,
+    /** @prop {ModifierFn} */
+    fn: flip,
+    /**
+     * @prop {String|Array} behavior='flip'
+     * The behavior used to change the popper's placement. It can be one of
+     * `flip`, `clockwise`, `counterclockwise` or an array with a list of valid
+     * placements (with optional variations)
+     */
+    behavior: "flip",
+    /**
+     * @prop {number} padding=5
+     * The popper will flip if it hits the edges of the `boundariesElement`
+     */
+    padding: 5,
+    /**
+     * @prop {String|HTMLElement} boundariesElement='viewport'
+     * The element which will define the boundaries of the popper position.
+     * The popper will never be placed outside of the defined boundaries
+     * (except if `keepTogether` is enabled)
+     */
+    boundariesElement: "viewport",
+    /**
+     * @prop {Boolean} flipVariations=false
+     * The popper will switch placement variation between `-start` and `-end` when
+     * the reference element overlaps its boundaries.
+     *
+     * The original placement should have a set variation.
+     */
+    flipVariations: false,
+    /**
+     * @prop {Boolean} flipVariationsByContent=false
+     * The popper will switch placement variation between `-start` and `-end` when
+     * the popper element overlaps its reference boundaries.
+     *
+     * The original placement should have a set variation.
+     */
+    flipVariationsByContent: false
+  },
+  /**
+   * Modifier used to make the popper flow toward the inner of the reference element.
+   * By default, when this modifier is disabled, the popper will be placed outside
+   * the reference element.
+   * @memberof modifiers
+   * @inner
+   */
+  inner: {
+    /** @prop {number} order=700 - Index used to define the order of execution */
+    order: 700,
+    /** @prop {Boolean} enabled=false - Whether the modifier is enabled or not */
+    enabled: false,
+    /** @prop {ModifierFn} */
+    fn: inner
+  },
+  /**
+   * Modifier used to hide the popper when its reference element is outside of the
+   * popper boundaries. It will set a `x-out-of-boundaries` attribute which can
+   * be used to hide with a CSS selector the popper when its reference is
+   * out of boundaries.
+   *
+   * Requires the `preventOverflow` modifier before it in order to work.
+   * @memberof modifiers
+   * @inner
+   */
+  hide: {
+    /** @prop {number} order=800 - Index used to define the order of execution */
+    order: 800,
+    /** @prop {Boolean} enabled=true - Whether the modifier is enabled or not */
+    enabled: true,
+    /** @prop {ModifierFn} */
+    fn: hide
+  },
+  /**
+   * Computes the style that will be applied to the popper element to gets
+   * properly positioned.
+   *
+   * Note that this modifier will not touch the DOM, it just prepares the styles
+   * so that `applyStyle` modifier can apply it. This separation is useful
+   * in case you need to replace `applyStyle` with a custom implementation.
+   *
+   * This modifier has `850` as `order` value to maintain backward compatibility
+   * with previous versions of Popper.js. Expect the modifiers ordering method
+   * to change in future major versions of the library.
+   *
+   * @memberof modifiers
+   * @inner
+   */
+  computeStyle: {
+    /** @prop {number} order=850 - Index used to define the order of execution */
+    order: 850,
+    /** @prop {Boolean} enabled=true - Whether the modifier is enabled or not */
+    enabled: true,
+    /** @prop {ModifierFn} */
+    fn: computeStyle,
+    /**
+     * @prop {Boolean} gpuAcceleration=true
+     * If true, it uses the CSS 3D transformation to position the popper.
+     * Otherwise, it will use the `top` and `left` properties
+     */
+    gpuAcceleration: true,
+    /**
+     * @prop {string} [x='bottom']
+     * Where to anchor the X axis (`bottom` or `top`). AKA X offset origin.
+     * Change this if your popper should grow in a direction different from `bottom`
+     */
+    x: "bottom",
+    /**
+     * @prop {string} [x='left']
+     * Where to anchor the Y axis (`left` or `right`). AKA Y offset origin.
+     * Change this if your popper should grow in a direction different from `right`
+     */
+    y: "right"
+  },
+  /**
+   * Applies the computed styles to the popper element.
+   *
+   * All the DOM manipulations are limited to this modifier. This is useful in case
+   * you want to integrate Popper.js inside a framework or view library and you
+   * want to delegate all the DOM manipulations to it.
+   *
+   * Note that if you disable this modifier, you must make sure the popper element
+   * has its position set to `absolute` before Popper.js can do its work!
+   *
+   * Just disable this modifier and define your own to achieve the desired effect.
+   *
+   * @memberof modifiers
+   * @inner
+   */
+  applyStyle: {
+    /** @prop {number} order=900 - Index used to define the order of execution */
+    order: 900,
+    /** @prop {Boolean} enabled=true - Whether the modifier is enabled or not */
+    enabled: true,
+    /** @prop {ModifierFn} */
+    fn: applyStyle,
+    /** @prop {Function} */
+    onLoad: applyStyleOnLoad,
+    /**
+     * @deprecated since version 1.10.0, the property moved to `computeStyle` modifier
+     * @prop {Boolean} gpuAcceleration=true
+     * If true, it uses the CSS 3D transformation to position the popper.
+     * Otherwise, it will use the `top` and `left` properties
+     */
+    gpuAcceleration: void 0
+  }
+};
+var Defaults = {
+  /**
+   * Popper's placement.
+   * @prop {Popper.placements} placement='bottom'
+   */
+  placement: "bottom",
+  /**
+   * Set this to true if you want popper to position it self in 'fixed' mode
+   * @prop {Boolean} positionFixed=false
+   */
+  positionFixed: false,
+  /**
+   * Whether events (resize, scroll) are initially enabled.
+   * @prop {Boolean} eventsEnabled=true
+   */
+  eventsEnabled: true,
+  /**
+   * Set to true if you want to automatically remove the popper when
+   * you call the `destroy` method.
+   * @prop {Boolean} removeOnDestroy=false
+   */
+  removeOnDestroy: false,
+  /**
+   * Callback called when the popper is created.<br />
+   * By default, it is set to no-op.<br />
+   * Access Popper.js instance with `data.instance`.
+   * @prop {onCreate}
+   */
+  onCreate: function onCreate() {
+  },
+  /**
+   * Callback called when the popper is updated. This callback is not called
+   * on the initialization/creation of the popper, but only on subsequent
+   * updates.<br />
+   * By default, it is set to no-op.<br />
+   * Access Popper.js instance with `data.instance`.
+   * @prop {onUpdate}
+   */
+  onUpdate: function onUpdate() {
+  },
+  /**
+   * List of modifiers used to modify the offsets before they are applied to the popper.
+   * They provide most of the functionalities of Popper.js.
+   * @prop {modifiers}
+   */
+  modifiers
+};
+var Popper$1 = function() {
+  function Popper3(reference, popper) {
+    var _this = this;
+    var options = arguments.length > 2 && arguments[2] !== void 0 ? arguments[2] : {};
+    classCallCheck(this, Popper3);
+    this.scheduleUpdate = function() {
+      return requestAnimationFrame(_this.update);
+    };
+    this.update = debounce(this.update.bind(this));
+    this.options = _extends({}, Popper3.Defaults, options);
+    this.state = {
+      isDestroyed: false,
+      isCreated: false,
+      scrollParents: []
+    };
+    this.reference = reference && reference.jquery ? reference[0] : reference;
+    this.popper = popper && popper.jquery ? popper[0] : popper;
+    this.options.modifiers = {};
+    Object.keys(_extends({}, Popper3.Defaults.modifiers, options.modifiers)).forEach(function(name) {
+      _this.options.modifiers[name] = _extends({}, Popper3.Defaults.modifiers[name] || {}, options.modifiers ? options.modifiers[name] : {});
+    });
+    this.modifiers = Object.keys(this.options.modifiers).map(function(name) {
+      return _extends({
+        name
+      }, _this.options.modifiers[name]);
+    }).sort(function(a, b2) {
+      return a.order - b2.order;
+    });
+    this.modifiers.forEach(function(modifierOptions) {
+      if (modifierOptions.enabled && isFunction(modifierOptions.onLoad)) {
+        modifierOptions.onLoad(_this.reference, _this.popper, _this.options, modifierOptions, _this.state);
+      }
+    });
+    this.update();
+    var eventsEnabled = this.options.eventsEnabled;
+    if (eventsEnabled) {
+      this.enableEventListeners();
+    }
+    this.state.eventsEnabled = eventsEnabled;
+  }
+  createClass(Popper3, [{
+    key: "update",
+    value: function update$$1() {
+      return update.call(this);
+    }
+  }, {
+    key: "destroy",
+    value: function destroy$$1() {
+      return destroy.call(this);
+    }
+  }, {
+    key: "enableEventListeners",
+    value: function enableEventListeners$$1() {
+      return enableEventListeners.call(this);
+    }
+  }, {
+    key: "disableEventListeners",
+    value: function disableEventListeners$$1() {
+      return disableEventListeners.call(this);
+    }
+    /**
+     * Schedules an update. It will run on the next UI update available.
+     * @method scheduleUpdate
+     * @memberof Popper
+     */
+    /**
+     * Collection of utilities useful when writing custom modifiers.
+     * Starting from version 1.7, this method is available only if you
+     * include `popper-utils.js` before `popper.js`.
+     *
+     * **DEPRECATION**: This way to access PopperUtils is deprecated
+     * and will be removed in v2! Use the PopperUtils module directly instead.
+     * Due to the high instability of the methods contained in Utils, we can't
+     * guarantee them to follow semver. Use them at your own risk!
+     * @static
+     * @private
+     * @type {Object}
+     * @deprecated since version 1.8
+     * @member Utils
+     * @memberof Popper
+     */
+  }]);
+  return Popper3;
+}();
+Popper$1.Utils = (typeof window !== "undefined" ? window : global).PopperUtils;
+Popper$1.placements = placements;
+Popper$1.Defaults = Defaults;
+function flipPlacement(placement, theme) {
+  var direction = theme && theme.direction || "ltr";
+  if (direction === "ltr") {
+    return placement;
+  }
+  switch (placement) {
+    case "bottom-end":
+      return "bottom-start";
+    case "bottom-start":
+      return "bottom-end";
+    case "top-end":
+      return "top-start";
+    case "top-start":
+      return "top-end";
+    default:
+      return placement;
+  }
+}
+function getAnchorEl(anchorEl) {
+  return typeof anchorEl === "function" ? anchorEl() : anchorEl;
+}
+var useEnhancedEffect = typeof window !== "undefined" ? reactExports.useLayoutEffect : reactExports.useEffect;
+var defaultPopperOptions = {};
+var Popper = /* @__PURE__ */ reactExports.forwardRef(function Popper2(props, ref) {
+  var anchorEl = props.anchorEl, children = props.children, container = props.container, _props$disablePortal = props.disablePortal, disablePortal = _props$disablePortal === void 0 ? false : _props$disablePortal, _props$keepMounted = props.keepMounted, keepMounted = _props$keepMounted === void 0 ? false : _props$keepMounted, modifiers2 = props.modifiers, open = props.open, _props$placement = props.placement, initialPlacement = _props$placement === void 0 ? "bottom" : _props$placement, _props$popperOptions = props.popperOptions, popperOptions = _props$popperOptions === void 0 ? defaultPopperOptions : _props$popperOptions, popperRefProp = props.popperRef, style = props.style, _props$transition = props.transition, transition2 = _props$transition === void 0 ? false : _props$transition, other = _objectWithoutProperties(props, ["anchorEl", "children", "container", "disablePortal", "keepMounted", "modifiers", "open", "placement", "popperOptions", "popperRef", "style", "transition"]);
+  var tooltipRef = reactExports.useRef(null);
+  var ownRef = useForkRef(tooltipRef, ref);
+  var popperRef = reactExports.useRef(null);
+  var handlePopperRef = useForkRef(popperRef, popperRefProp);
+  var handlePopperRefRef = reactExports.useRef(handlePopperRef);
+  useEnhancedEffect(function() {
+    handlePopperRefRef.current = handlePopperRef;
+  }, [handlePopperRef]);
+  reactExports.useImperativeHandle(popperRefProp, function() {
+    return popperRef.current;
+  }, []);
+  var _React$useState = reactExports.useState(true), exited = _React$useState[0], setExited = _React$useState[1];
+  var theme = useTheme$1();
+  var rtlPlacement = flipPlacement(initialPlacement, theme);
+  var _React$useState2 = reactExports.useState(rtlPlacement), placement = _React$useState2[0], setPlacement = _React$useState2[1];
+  reactExports.useEffect(function() {
+    if (popperRef.current) {
+      popperRef.current.update();
+    }
+  });
+  var handleOpen = reactExports.useCallback(function() {
+    if (!tooltipRef.current || !anchorEl || !open) {
+      return;
+    }
+    if (popperRef.current) {
+      popperRef.current.destroy();
+      handlePopperRefRef.current(null);
+    }
+    var handlePopperUpdate = function handlePopperUpdate2(data) {
+      setPlacement(data.placement);
+    };
+    getAnchorEl(anchorEl);
+    var popper = new Popper$1(getAnchorEl(anchorEl), tooltipRef.current, _extends$1({
+      placement: rtlPlacement
+    }, popperOptions, {
+      modifiers: _extends$1({}, disablePortal ? {} : {
+        // It's using scrollParent by default, we can use the viewport when using a portal.
+        preventOverflow: {
+          boundariesElement: "window"
+        }
+      }, modifiers2, popperOptions.modifiers),
+      // We could have been using a custom modifier like react-popper is doing.
+      // But it seems this is the best public API for this use case.
+      onCreate: createChainedFunction(handlePopperUpdate, popperOptions.onCreate),
+      onUpdate: createChainedFunction(handlePopperUpdate, popperOptions.onUpdate)
+    }));
+    handlePopperRefRef.current(popper);
+  }, [anchorEl, disablePortal, modifiers2, open, rtlPlacement, popperOptions]);
+  var handleRef = reactExports.useCallback(function(node) {
+    setRef(ownRef, node);
+    handleOpen();
+  }, [ownRef, handleOpen]);
+  var handleEnter = function handleEnter2() {
+    setExited(false);
+  };
+  var handleClose = function handleClose2() {
+    if (!popperRef.current) {
+      return;
+    }
+    popperRef.current.destroy();
+    handlePopperRefRef.current(null);
+  };
+  var handleExited = function handleExited2() {
+    setExited(true);
+    handleClose();
+  };
+  reactExports.useEffect(function() {
+    return function() {
+      handleClose();
+    };
+  }, []);
+  reactExports.useEffect(function() {
+    if (!open && !transition2) {
+      handleClose();
+    }
+  }, [open, transition2]);
+  if (!keepMounted && !open && (!transition2 || exited)) {
+    return null;
+  }
+  var childProps = {
+    placement
+  };
+  if (transition2) {
+    childProps.TransitionProps = {
+      in: open,
+      onEnter: handleEnter,
+      onExited: handleExited
+    };
+  }
+  return /* @__PURE__ */ reactExports.createElement(Portal, {
+    disablePortal,
+    container
+  }, /* @__PURE__ */ reactExports.createElement("div", _extends$1({
+    ref: handleRef,
+    role: "tooltip"
+  }, other, {
+    style: _extends$1({
+      // Prevents scroll issue, waiting for Popper.js to add this style once initiated.
+      position: "fixed",
+      // Fix Popper.js display issue
+      top: 0,
+      left: 0,
+      display: !open && keepMounted && !transition2 ? "none" : null
+    }, style)
+  }), typeof children === "function" ? children(childProps) : children));
+});
 function areEqualValues(a, b2) {
   if (_typeof$2(b2) === "object" && b2 !== null) {
     return a === b2;
@@ -15665,7 +17735,7 @@ var SelectInput = /* @__PURE__ */ reactExports.forwardRef(function SelectInput2(
     tabIndex = disabled ? null : 0;
   }
   var buttonId = SelectDisplayProps.id || (name ? "mui-component-select-".concat(name) : void 0);
-  return /* @__PURE__ */ reactExports.createElement(reactExports.Fragment, null, /* @__PURE__ */ reactExports.createElement("div", _extends({
+  return /* @__PURE__ */ reactExports.createElement(reactExports.Fragment, null, /* @__PURE__ */ reactExports.createElement("div", _extends$1({
     className: clsx(
       classes.root,
       // TODO v5: merge root and select
@@ -15697,7 +17767,7 @@ var SelectInput = /* @__PURE__ */ reactExports.forwardRef(function SelectInput2(
         __html: "&#8203;"
       }
     })
-  ) : display), /* @__PURE__ */ reactExports.createElement("input", _extends({
+  ) : display), /* @__PURE__ */ reactExports.createElement("input", _extends$1({
     value: Array.isArray(value) ? value.join(",") : value,
     name,
     ref: inputRef,
@@ -15708,27 +17778,27 @@ var SelectInput = /* @__PURE__ */ reactExports.forwardRef(function SelectInput2(
     autoFocus
   }, other)), /* @__PURE__ */ reactExports.createElement(IconComponent, {
     className: clsx(classes.icon, classes["icon".concat(capitalize(variant))], open && classes.iconOpen, disabled && classes.disabled)
-  }), /* @__PURE__ */ reactExports.createElement(Menu$1, _extends({
+  }), /* @__PURE__ */ reactExports.createElement(Menu$1, _extends$1({
     id: "menu-".concat(name || ""),
     anchorEl: displayNode,
     open,
     onClose: handleClose
   }, MenuProps, {
-    MenuListProps: _extends({
+    MenuListProps: _extends$1({
       "aria-labelledby": labelId,
       role: "listbox",
       disableListWrap: true
     }, MenuProps.MenuListProps),
-    PaperProps: _extends({}, MenuProps.PaperProps, {
-      style: _extends({
+    PaperProps: _extends$1({}, MenuProps.PaperProps, {
+      style: _extends$1({
         minWidth: menuMinWidth
       }, MenuProps.PaperProps != null ? MenuProps.PaperProps.style : null)
     })
   }), items));
 });
-var styles$4 = styles$7;
-var _ref = /* @__PURE__ */ reactExports.createElement(Input$1, null);
-var _ref2 = /* @__PURE__ */ reactExports.createElement(FilledInput$1, null);
+var styles$a = styles$d;
+var _ref$1 = /* @__PURE__ */ reactExports.createElement(Input$1, null);
+var _ref2$1 = /* @__PURE__ */ reactExports.createElement(FilledInput$1, null);
 var Select = /* @__PURE__ */ reactExports.forwardRef(function Select2(props, ref) {
   var _props$autoWidth = props.autoWidth, autoWidth = _props$autoWidth === void 0 ? false : _props$autoWidth, children = props.children, classes = props.classes, _props$displayEmpty = props.displayEmpty, displayEmpty = _props$displayEmpty === void 0 ? false : _props$displayEmpty, _props$IconComponent = props.IconComponent, IconComponent = _props$IconComponent === void 0 ? ArrowDropDownIcon : _props$IconComponent, id2 = props.id, input = props.input, inputProps = props.inputProps, label = props.label, labelId = props.labelId, _props$labelWidth = props.labelWidth, labelWidth = _props$labelWidth === void 0 ? 0 : _props$labelWidth, MenuProps = props.MenuProps, _props$multiple = props.multiple, multiple = _props$multiple === void 0 ? false : _props$multiple, _props$native = props.native, native = _props$native === void 0 ? false : _props$native, onClose = props.onClose, onOpen = props.onOpen, open = props.open, renderValue = props.renderValue, SelectDisplayProps = props.SelectDisplayProps, _props$variant = props.variant, variantProps = _props$variant === void 0 ? "standard" : _props$variant, other = _objectWithoutProperties(props, ["autoWidth", "children", "classes", "displayEmpty", "IconComponent", "id", "input", "inputProps", "label", "labelId", "labelWidth", "MenuProps", "multiple", "native", "onClose", "onOpen", "open", "renderValue", "SelectDisplayProps", "variant"]);
   var inputComponent = native ? NativeSelectInput : SelectInput;
@@ -15740,18 +17810,18 @@ var Select = /* @__PURE__ */ reactExports.forwardRef(function Select2(props, ref
   });
   var variant = fcs.variant || variantProps;
   var InputComponent = input || {
-    standard: _ref,
+    standard: _ref$1,
     outlined: /* @__PURE__ */ reactExports.createElement(OutlinedInput$1, {
       label,
       labelWidth
     }),
-    filled: _ref2
+    filled: _ref2$1
   }[variant];
-  return /* @__PURE__ */ reactExports.cloneElement(InputComponent, _extends({
+  return /* @__PURE__ */ reactExports.cloneElement(InputComponent, _extends$1({
     // Most of the logic is implemented in `SelectInput`.
     // The `Select` component is a simple API wrapper to expose something better to play with.
     inputComponent,
-    inputProps: _extends({
+    inputProps: _extends$1({
       children,
       IconComponent,
       variant,
@@ -15769,7 +17839,7 @@ var Select = /* @__PURE__ */ reactExports.forwardRef(function Select2(props, ref
       onOpen,
       open,
       renderValue,
-      SelectDisplayProps: _extends({
+      SelectDisplayProps: _extends$1({
         id: id2
       }, SelectDisplayProps)
     }, inputProps, {
@@ -15783,10 +17853,10 @@ var Select = /* @__PURE__ */ reactExports.forwardRef(function Select2(props, ref
   }, other));
 });
 Select.muiName = "Select";
-const Select$1 = withStyles(styles$4, {
+const Select$1 = withStyles(styles$a, {
   name: "MuiSelect"
 })(Select);
-var styles$3 = function styles(theme) {
+var styles$9 = function styles(theme) {
   return {
     thumb: {
       "&$open": {
@@ -15796,7 +17866,7 @@ var styles$3 = function styles(theme) {
       }
     },
     open: {},
-    offset: _extends({
+    offset: _extends$1({
       zIndex: 1
     }, theme.typography.body2, {
       fontSize: theme.typography.pxToRem(12),
@@ -15840,7 +17910,7 @@ function ValueLabel(props) {
     className: classes.label
   }, value))));
 }
-const ValueLabel$1 = withStyles(styles$3, {
+const ValueLabel$1 = withStyles(styles$9, {
   name: "PrivateValueLabel"
 })(ValueLabel);
 function asc(a, b2) {
@@ -15919,7 +17989,7 @@ function focusThumb(_ref22) {
 }
 var axisProps = {
   horizontal: {
-    offset: function offset(percent2) {
+    offset: function offset2(percent2) {
       return {
         left: "".concat(percent2, "%")
       };
@@ -15931,7 +18001,7 @@ var axisProps = {
     }
   },
   "horizontal-reverse": {
-    offset: function offset2(percent2) {
+    offset: function offset22(percent2) {
       return {
         right: "".concat(percent2, "%")
       };
@@ -15958,7 +18028,7 @@ var axisProps = {
 var Identity = function Identity2(x2) {
   return x2;
 };
-var styles$2 = function styles224(theme) {
+var styles$8 = function styles228(theme) {
   return {
     /* Styles applied to the root element. */
     root: {
@@ -16147,7 +18217,7 @@ var styles$2 = function styles224(theme) {
       opacity: 0.8
     },
     /* Styles applied to the mark label element. */
-    markLabel: _extends({}, theme.typography.body2, {
+    markLabel: _extends$1({}, theme.typography.body2, {
       color: theme.palette.text.secondary,
       position: "absolute",
       top: 26,
@@ -16453,8 +18523,8 @@ var Slider = /* @__PURE__ */ reactExports.forwardRef(function Slider2(props, ref
   });
   var trackOffset = valueToPercent(range ? values2[0] : min, min, max);
   var trackLeap = valueToPercent(values2[values2.length - 1], min, max) - trackOffset;
-  var trackStyle = _extends({}, axisProps[axis].offset(trackOffset), axisProps[axis].leap(trackLeap));
-  return /* @__PURE__ */ reactExports.createElement(Component, _extends({
+  var trackStyle = _extends$1({}, axisProps[axis].offset(trackOffset), axisProps[axis].leap(trackLeap));
+  return /* @__PURE__ */ reactExports.createElement(Component, _extends$1({
     ref: handleRef,
     className: clsx(classes.root, classes["color".concat(capitalize(color))], className, disabled && classes.disabled, marks.length > 0 && marks.some(function(mark) {
       return mark.label;
@@ -16523,10 +18593,127 @@ var Slider = /* @__PURE__ */ reactExports.forwardRef(function Slider2(props, ref
     }));
   }));
 });
-const Slider$1 = withStyles(styles$2, {
+const Slider$1 = withStyles(styles$8, {
   name: "MuiSlider"
 })(Slider);
-var styles$1 = function styles225(theme) {
+var styles$7 = function styles229(theme) {
+  var _extends2;
+  return {
+    /* Styles applied to the root element. */
+    root: _extends$1({}, theme.typography.button, (_extends2 = {
+      maxWidth: 264,
+      minWidth: 72,
+      position: "relative",
+      boxSizing: "border-box",
+      minHeight: 48,
+      flexShrink: 0,
+      padding: "6px 12px"
+    }, _defineProperty(_extends2, theme.breakpoints.up("sm"), {
+      padding: "6px 24px"
+    }), _defineProperty(_extends2, "overflow", "hidden"), _defineProperty(_extends2, "whiteSpace", "normal"), _defineProperty(_extends2, "textAlign", "center"), _defineProperty(_extends2, theme.breakpoints.up("sm"), {
+      minWidth: 160
+    }), _extends2)),
+    /* Styles applied to the root element if both `icon` and `label` are provided. */
+    labelIcon: {
+      minHeight: 72,
+      paddingTop: 9,
+      "& $wrapper > *:first-child": {
+        marginBottom: 6
+      }
+    },
+    /* Styles applied to the root element if the parent [`Tabs`](/api/tabs/) has `textColor="inherit"`. */
+    textColorInherit: {
+      color: "inherit",
+      opacity: 0.7,
+      "&$selected": {
+        opacity: 1
+      },
+      "&$disabled": {
+        opacity: 0.5
+      }
+    },
+    /* Styles applied to the root element if the parent [`Tabs`](/api/tabs/) has `textColor="primary"`. */
+    textColorPrimary: {
+      color: theme.palette.text.secondary,
+      "&$selected": {
+        color: theme.palette.primary.main
+      },
+      "&$disabled": {
+        color: theme.palette.text.disabled
+      }
+    },
+    /* Styles applied to the root element if the parent [`Tabs`](/api/tabs/) has `textColor="secondary"`. */
+    textColorSecondary: {
+      color: theme.palette.text.secondary,
+      "&$selected": {
+        color: theme.palette.secondary.main
+      },
+      "&$disabled": {
+        color: theme.palette.text.disabled
+      }
+    },
+    /* Pseudo-class applied to the root element if `selected={true}` (controlled by the Tabs component). */
+    selected: {},
+    /* Pseudo-class applied to the root element if `disabled={true}` (controlled by the Tabs component). */
+    disabled: {},
+    /* Styles applied to the root element if `fullWidth={true}` (controlled by the Tabs component). */
+    fullWidth: {
+      flexShrink: 1,
+      flexGrow: 1,
+      flexBasis: 0,
+      maxWidth: "none"
+    },
+    /* Styles applied to the root element if `wrapped={true}`. */
+    wrapped: {
+      fontSize: theme.typography.pxToRem(12),
+      lineHeight: 1.5
+    },
+    /* Styles applied to the `icon` and `label`'s wrapper element. */
+    wrapper: {
+      display: "inline-flex",
+      alignItems: "center",
+      justifyContent: "center",
+      width: "100%",
+      flexDirection: "column"
+    }
+  };
+};
+var Tab = /* @__PURE__ */ reactExports.forwardRef(function Tab2(props, ref) {
+  var classes = props.classes, className = props.className, _props$disabled = props.disabled, disabled = _props$disabled === void 0 ? false : _props$disabled, _props$disableFocusRi = props.disableFocusRipple, disableFocusRipple = _props$disableFocusRi === void 0 ? false : _props$disableFocusRi, fullWidth = props.fullWidth, icon = props.icon, indicator = props.indicator, label = props.label, onChange = props.onChange, onClick = props.onClick, onFocus = props.onFocus, selected = props.selected, selectionFollowsFocus = props.selectionFollowsFocus, _props$textColor = props.textColor, textColor = _props$textColor === void 0 ? "inherit" : _props$textColor, value = props.value, _props$wrapped = props.wrapped, wrapped = _props$wrapped === void 0 ? false : _props$wrapped, other = _objectWithoutProperties(props, ["classes", "className", "disabled", "disableFocusRipple", "fullWidth", "icon", "indicator", "label", "onChange", "onClick", "onFocus", "selected", "selectionFollowsFocus", "textColor", "value", "wrapped"]);
+  var handleClick = function handleClick2(event) {
+    if (onChange) {
+      onChange(event, value);
+    }
+    if (onClick) {
+      onClick(event);
+    }
+  };
+  var handleFocus = function handleFocus2(event) {
+    if (selectionFollowsFocus && !selected && onChange) {
+      onChange(event, value);
+    }
+    if (onFocus) {
+      onFocus(event);
+    }
+  };
+  return /* @__PURE__ */ reactExports.createElement(ButtonBase$1, _extends$1({
+    focusRipple: !disableFocusRipple,
+    className: clsx(classes.root, classes["textColor".concat(capitalize(textColor))], className, disabled && classes.disabled, selected && classes.selected, label && icon && classes.labelIcon, fullWidth && classes.fullWidth, wrapped && classes.wrapped),
+    ref,
+    role: "tab",
+    "aria-selected": selected,
+    disabled,
+    onClick: handleClick,
+    onFocus: handleFocus,
+    tabIndex: selected ? 0 : -1
+  }, other), /* @__PURE__ */ reactExports.createElement("span", {
+    className: classes.wrapper
+  }, icon, label), indicator);
+});
+const Tab$1 = withStyles(styles$7, {
+  name: "MuiTab"
+})(Tab);
+var styles$6 = function styles230(theme) {
   return {
     /* Styles applied to the root element. */
     root: {
@@ -16552,20 +18739,553 @@ var styles$1 = function styles225(theme) {
 };
 var Toolbar = /* @__PURE__ */ reactExports.forwardRef(function Toolbar2(props, ref) {
   var classes = props.classes, className = props.className, _props$component = props.component, Component = _props$component === void 0 ? "div" : _props$component, _props$disableGutters = props.disableGutters, disableGutters = _props$disableGutters === void 0 ? false : _props$disableGutters, _props$variant = props.variant, variant = _props$variant === void 0 ? "regular" : _props$variant, other = _objectWithoutProperties(props, ["classes", "className", "component", "disableGutters", "variant"]);
-  return /* @__PURE__ */ reactExports.createElement(Component, _extends({
+  return /* @__PURE__ */ reactExports.createElement(Component, _extends$1({
     className: clsx(classes.root, classes[variant], className, !disableGutters && classes.gutters),
     ref
   }, other));
 });
-const Toolbar$1 = withStyles(styles$1, {
+const Toolbar$1 = withStyles(styles$6, {
   name: "MuiToolbar"
 })(Toolbar);
+const KeyboardArrowLeft = createSvgIcon$1(/* @__PURE__ */ reactExports.createElement("path", {
+  d: "M15.41 16.09l-4.58-4.59 4.58-4.59L14 5.5l-6 6 6 6z"
+}));
+const KeyboardArrowRight = createSvgIcon$1(/* @__PURE__ */ reactExports.createElement("path", {
+  d: "M8.59 16.34l4.58-4.59-4.58-4.59L10 5.75l6 6-6 6z"
+}));
+var cachedType;
+function detectScrollType() {
+  if (cachedType) {
+    return cachedType;
+  }
+  var dummy = document.createElement("div");
+  var container = document.createElement("div");
+  container.style.width = "10px";
+  container.style.height = "1px";
+  dummy.appendChild(container);
+  dummy.dir = "rtl";
+  dummy.style.fontSize = "14px";
+  dummy.style.width = "4px";
+  dummy.style.height = "1px";
+  dummy.style.position = "absolute";
+  dummy.style.top = "-1000px";
+  dummy.style.overflow = "scroll";
+  document.body.appendChild(dummy);
+  cachedType = "reverse";
+  if (dummy.scrollLeft > 0) {
+    cachedType = "default";
+  } else {
+    dummy.scrollLeft = 1;
+    if (dummy.scrollLeft === 0) {
+      cachedType = "negative";
+    }
+  }
+  document.body.removeChild(dummy);
+  return cachedType;
+}
+function getNormalizedScrollLeft(element, direction) {
+  var scrollLeft = element.scrollLeft;
+  if (direction !== "rtl") {
+    return scrollLeft;
+  }
+  var type = detectScrollType();
+  switch (type) {
+    case "negative":
+      return element.scrollWidth - element.clientWidth + scrollLeft;
+    case "reverse":
+      return element.scrollWidth - element.clientWidth - scrollLeft;
+    default:
+      return scrollLeft;
+  }
+}
+function easeInOutSin(time) {
+  return (1 + Math.sin(Math.PI * time - Math.PI / 2)) / 2;
+}
+function animate(property, element, to) {
+  var options = arguments.length > 3 && arguments[3] !== void 0 ? arguments[3] : {};
+  var cb2 = arguments.length > 4 && arguments[4] !== void 0 ? arguments[4] : function() {
+  };
+  var _options$ease = options.ease, ease = _options$ease === void 0 ? easeInOutSin : _options$ease, _options$duration = options.duration, duration2 = _options$duration === void 0 ? 300 : _options$duration;
+  var start = null;
+  var from = element[property];
+  var cancelled = false;
+  var cancel = function cancel2() {
+    cancelled = true;
+  };
+  var step = function step2(timestamp) {
+    if (cancelled) {
+      cb2(new Error("Animation cancelled"));
+      return;
+    }
+    if (start === null) {
+      start = timestamp;
+    }
+    var time = Math.min(1, (timestamp - start) / duration2);
+    element[property] = ease(time) * (to - from) + from;
+    if (time >= 1) {
+      requestAnimationFrame(function() {
+        cb2(null);
+      });
+      return;
+    }
+    requestAnimationFrame(step2);
+  };
+  if (from === to) {
+    cb2(new Error("Element already at target position"));
+    return cancel;
+  }
+  requestAnimationFrame(step);
+  return cancel;
+}
+var styles$5 = {
+  width: 99,
+  height: 99,
+  position: "absolute",
+  top: -9999,
+  overflow: "scroll"
+};
+function ScrollbarSize(props) {
+  var onChange = props.onChange, other = _objectWithoutProperties(props, ["onChange"]);
+  var scrollbarHeight = reactExports.useRef();
+  var nodeRef = reactExports.useRef(null);
+  var setMeasurements = function setMeasurements2() {
+    scrollbarHeight.current = nodeRef.current.offsetHeight - nodeRef.current.clientHeight;
+  };
+  reactExports.useEffect(function() {
+    var handleResize = debounce$1(function() {
+      var prevHeight = scrollbarHeight.current;
+      setMeasurements();
+      if (prevHeight !== scrollbarHeight.current) {
+        onChange(scrollbarHeight.current);
+      }
+    });
+    window.addEventListener("resize", handleResize);
+    return function() {
+      handleResize.clear();
+      window.removeEventListener("resize", handleResize);
+    };
+  }, [onChange]);
+  reactExports.useEffect(function() {
+    setMeasurements();
+    onChange(scrollbarHeight.current);
+  }, [onChange]);
+  return /* @__PURE__ */ reactExports.createElement("div", _extends$1({
+    style: styles$5,
+    ref: nodeRef
+  }, other));
+}
+var styles$4 = function styles231(theme) {
+  return {
+    root: {
+      position: "absolute",
+      height: 2,
+      bottom: 0,
+      width: "100%",
+      transition: theme.transitions.create()
+    },
+    colorPrimary: {
+      backgroundColor: theme.palette.primary.main
+    },
+    colorSecondary: {
+      backgroundColor: theme.palette.secondary.main
+    },
+    vertical: {
+      height: "100%",
+      width: 2,
+      right: 0
+    }
+  };
+};
+var TabIndicator = /* @__PURE__ */ reactExports.forwardRef(function TabIndicator2(props, ref) {
+  var classes = props.classes, className = props.className, color = props.color, orientation = props.orientation, other = _objectWithoutProperties(props, ["classes", "className", "color", "orientation"]);
+  return /* @__PURE__ */ reactExports.createElement("span", _extends$1({
+    className: clsx(classes.root, classes["color".concat(capitalize(color))], className, orientation === "vertical" && classes.vertical),
+    ref
+  }, other));
+});
+const TabIndicator$1 = withStyles(styles$4, {
+  name: "PrivateTabIndicator"
+})(TabIndicator);
+var styles$3 = {
+  /* Styles applied to the root element. */
+  root: {
+    width: 40,
+    flexShrink: 0,
+    opacity: 0.8,
+    "&$disabled": {
+      opacity: 0
+    }
+  },
+  /* Styles applied to the root element if `orientation="vertical"`. */
+  vertical: {
+    width: "100%",
+    height: 40,
+    "& svg": {
+      transform: "rotate(90deg)"
+    }
+  },
+  /* Pseudo-class applied to the root element if `disabled={true}`. */
+  disabled: {}
+};
+var _ref = /* @__PURE__ */ reactExports.createElement(KeyboardArrowLeft, {
+  fontSize: "small"
+});
+var _ref2 = /* @__PURE__ */ reactExports.createElement(KeyboardArrowRight, {
+  fontSize: "small"
+});
+var TabScrollButton = /* @__PURE__ */ reactExports.forwardRef(function TabScrollButton2(props, ref) {
+  var classes = props.classes, classNameProp = props.className, direction = props.direction, orientation = props.orientation, disabled = props.disabled, other = _objectWithoutProperties(props, ["classes", "className", "direction", "orientation", "disabled"]);
+  return /* @__PURE__ */ reactExports.createElement(ButtonBase$1, _extends$1({
+    component: "div",
+    className: clsx(classes.root, classNameProp, disabled && classes.disabled, orientation === "vertical" && classes.vertical),
+    ref,
+    role: null,
+    tabIndex: null
+  }, other), direction === "left" ? _ref : _ref2);
+});
+const TabScrollButton$1 = withStyles(styles$3, {
+  name: "MuiTabScrollButton"
+})(TabScrollButton);
+var styles$2 = function styles232(theme) {
+  return {
+    /* Styles applied to the root element. */
+    root: {
+      overflow: "hidden",
+      minHeight: 48,
+      WebkitOverflowScrolling: "touch",
+      // Add iOS momentum scrolling.
+      display: "flex"
+    },
+    /* Styles applied to the root element if `orientation="vertical"`. */
+    vertical: {
+      flexDirection: "column"
+    },
+    /* Styles applied to the flex container element. */
+    flexContainer: {
+      display: "flex"
+    },
+    /* Styles applied to the flex container element if `orientation="vertical"`. */
+    flexContainerVertical: {
+      flexDirection: "column"
+    },
+    /* Styles applied to the flex container element if `centered={true}` & `!variant="scrollable"`. */
+    centered: {
+      justifyContent: "center"
+    },
+    /* Styles applied to the tablist element. */
+    scroller: {
+      position: "relative",
+      display: "inline-block",
+      flex: "1 1 auto",
+      whiteSpace: "nowrap"
+    },
+    /* Styles applied to the tablist element if `!variant="scrollable"`. */
+    fixed: {
+      overflowX: "hidden",
+      width: "100%"
+    },
+    /* Styles applied to the tablist element if `variant="scrollable"`. */
+    scrollable: {
+      overflowX: "scroll",
+      // Hide dimensionless scrollbar on MacOS
+      scrollbarWidth: "none",
+      // Firefox
+      "&::-webkit-scrollbar": {
+        display: "none"
+        // Safari + Chrome
+      }
+    },
+    /* Styles applied to the `ScrollButtonComponent` component. */
+    scrollButtons: {},
+    /* Styles applied to the `ScrollButtonComponent` component if `scrollButtons="auto"` or scrollButtons="desktop"`. */
+    scrollButtonsDesktop: _defineProperty({}, theme.breakpoints.down("xs"), {
+      display: "none"
+    }),
+    /* Styles applied to the `TabIndicator` component. */
+    indicator: {}
+  };
+};
+var Tabs = /* @__PURE__ */ reactExports.forwardRef(function Tabs2(props, ref) {
+  var ariaLabel = props["aria-label"], ariaLabelledBy = props["aria-labelledby"], action = props.action, _props$centered = props.centered, centered = _props$centered === void 0 ? false : _props$centered, childrenProp = props.children, classes = props.classes, className = props.className, _props$component = props.component, Component = _props$component === void 0 ? "div" : _props$component, _props$indicatorColor = props.indicatorColor, indicatorColor = _props$indicatorColor === void 0 ? "secondary" : _props$indicatorColor, onChange = props.onChange, _props$orientation = props.orientation, orientation = _props$orientation === void 0 ? "horizontal" : _props$orientation, _props$ScrollButtonCo = props.ScrollButtonComponent, ScrollButtonComponent = _props$ScrollButtonCo === void 0 ? TabScrollButton$1 : _props$ScrollButtonCo, _props$scrollButtons = props.scrollButtons, scrollButtons = _props$scrollButtons === void 0 ? "auto" : _props$scrollButtons, selectionFollowsFocus = props.selectionFollowsFocus, _props$TabIndicatorPr = props.TabIndicatorProps, TabIndicatorProps = _props$TabIndicatorPr === void 0 ? {} : _props$TabIndicatorPr, TabScrollButtonProps = props.TabScrollButtonProps, _props$textColor = props.textColor, textColor = _props$textColor === void 0 ? "inherit" : _props$textColor, value = props.value, _props$variant = props.variant, variant = _props$variant === void 0 ? "standard" : _props$variant, other = _objectWithoutProperties(props, ["aria-label", "aria-labelledby", "action", "centered", "children", "classes", "className", "component", "indicatorColor", "onChange", "orientation", "ScrollButtonComponent", "scrollButtons", "selectionFollowsFocus", "TabIndicatorProps", "TabScrollButtonProps", "textColor", "value", "variant"]);
+  var theme = useTheme();
+  var scrollable = variant === "scrollable";
+  var isRtl = theme.direction === "rtl";
+  var vertical = orientation === "vertical";
+  var scrollStart = vertical ? "scrollTop" : "scrollLeft";
+  var start = vertical ? "top" : "left";
+  var end = vertical ? "bottom" : "right";
+  var clientSize = vertical ? "clientHeight" : "clientWidth";
+  var size = vertical ? "height" : "width";
+  var _React$useState = reactExports.useState(false), mounted = _React$useState[0], setMounted = _React$useState[1];
+  var _React$useState2 = reactExports.useState({}), indicatorStyle = _React$useState2[0], setIndicatorStyle = _React$useState2[1];
+  var _React$useState3 = reactExports.useState({
+    start: false,
+    end: false
+  }), displayScroll = _React$useState3[0], setDisplayScroll = _React$useState3[1];
+  var _React$useState4 = reactExports.useState({
+    overflow: "hidden",
+    marginBottom: null
+  }), scrollerStyle = _React$useState4[0], setScrollerStyle = _React$useState4[1];
+  var valueToIndex = /* @__PURE__ */ new Map();
+  var tabsRef = reactExports.useRef(null);
+  var tabListRef = reactExports.useRef(null);
+  var getTabsMeta = function getTabsMeta2() {
+    var tabsNode = tabsRef.current;
+    var tabsMeta;
+    if (tabsNode) {
+      var rect = tabsNode.getBoundingClientRect();
+      tabsMeta = {
+        clientWidth: tabsNode.clientWidth,
+        scrollLeft: tabsNode.scrollLeft,
+        scrollTop: tabsNode.scrollTop,
+        scrollLeftNormalized: getNormalizedScrollLeft(tabsNode, theme.direction),
+        scrollWidth: tabsNode.scrollWidth,
+        top: rect.top,
+        bottom: rect.bottom,
+        left: rect.left,
+        right: rect.right
+      };
+    }
+    var tabMeta;
+    if (tabsNode && value !== false) {
+      var _children = tabListRef.current.children;
+      if (_children.length > 0) {
+        var tab = _children[valueToIndex.get(value)];
+        tabMeta = tab ? tab.getBoundingClientRect() : null;
+      }
+    }
+    return {
+      tabsMeta,
+      tabMeta
+    };
+  };
+  var updateIndicatorState = useEventCallback(function() {
+    var _newIndicatorStyle;
+    var _getTabsMeta = getTabsMeta(), tabsMeta = _getTabsMeta.tabsMeta, tabMeta = _getTabsMeta.tabMeta;
+    var startValue = 0;
+    if (tabMeta && tabsMeta) {
+      if (vertical) {
+        startValue = tabMeta.top - tabsMeta.top + tabsMeta.scrollTop;
+      } else {
+        var correction = isRtl ? tabsMeta.scrollLeftNormalized + tabsMeta.clientWidth - tabsMeta.scrollWidth : tabsMeta.scrollLeft;
+        startValue = tabMeta.left - tabsMeta.left + correction;
+      }
+    }
+    var newIndicatorStyle = (_newIndicatorStyle = {}, _defineProperty(_newIndicatorStyle, start, startValue), _defineProperty(_newIndicatorStyle, size, tabMeta ? tabMeta[size] : 0), _newIndicatorStyle);
+    if (isNaN(indicatorStyle[start]) || isNaN(indicatorStyle[size])) {
+      setIndicatorStyle(newIndicatorStyle);
+    } else {
+      var dStart = Math.abs(indicatorStyle[start] - newIndicatorStyle[start]);
+      var dSize = Math.abs(indicatorStyle[size] - newIndicatorStyle[size]);
+      if (dStart >= 1 || dSize >= 1) {
+        setIndicatorStyle(newIndicatorStyle);
+      }
+    }
+  });
+  var scroll = function scroll2(scrollValue) {
+    animate(scrollStart, tabsRef.current, scrollValue);
+  };
+  var moveTabsScroll = function moveTabsScroll2(delta) {
+    var scrollValue = tabsRef.current[scrollStart];
+    if (vertical) {
+      scrollValue += delta;
+    } else {
+      scrollValue += delta * (isRtl ? -1 : 1);
+      scrollValue *= isRtl && detectScrollType() === "reverse" ? -1 : 1;
+    }
+    scroll(scrollValue);
+  };
+  var handleStartScrollClick = function handleStartScrollClick2() {
+    moveTabsScroll(-tabsRef.current[clientSize]);
+  };
+  var handleEndScrollClick = function handleEndScrollClick2() {
+    moveTabsScroll(tabsRef.current[clientSize]);
+  };
+  var handleScrollbarSizeChange = reactExports.useCallback(function(scrollbarHeight) {
+    setScrollerStyle({
+      overflow: null,
+      marginBottom: -scrollbarHeight
+    });
+  }, []);
+  var getConditionalElements = function getConditionalElements2() {
+    var conditionalElements2 = {};
+    conditionalElements2.scrollbarSizeListener = scrollable ? /* @__PURE__ */ reactExports.createElement(ScrollbarSize, {
+      className: classes.scrollable,
+      onChange: handleScrollbarSizeChange
+    }) : null;
+    var scrollButtonsActive = displayScroll.start || displayScroll.end;
+    var showScrollButtons = scrollable && (scrollButtons === "auto" && scrollButtonsActive || scrollButtons === "desktop" || scrollButtons === "on");
+    conditionalElements2.scrollButtonStart = showScrollButtons ? /* @__PURE__ */ reactExports.createElement(ScrollButtonComponent, _extends$1({
+      orientation,
+      direction: isRtl ? "right" : "left",
+      onClick: handleStartScrollClick,
+      disabled: !displayScroll.start,
+      className: clsx(classes.scrollButtons, scrollButtons !== "on" && classes.scrollButtonsDesktop)
+    }, TabScrollButtonProps)) : null;
+    conditionalElements2.scrollButtonEnd = showScrollButtons ? /* @__PURE__ */ reactExports.createElement(ScrollButtonComponent, _extends$1({
+      orientation,
+      direction: isRtl ? "left" : "right",
+      onClick: handleEndScrollClick,
+      disabled: !displayScroll.end,
+      className: clsx(classes.scrollButtons, scrollButtons !== "on" && classes.scrollButtonsDesktop)
+    }, TabScrollButtonProps)) : null;
+    return conditionalElements2;
+  };
+  var scrollSelectedIntoView = useEventCallback(function() {
+    var _getTabsMeta2 = getTabsMeta(), tabsMeta = _getTabsMeta2.tabsMeta, tabMeta = _getTabsMeta2.tabMeta;
+    if (!tabMeta || !tabsMeta) {
+      return;
+    }
+    if (tabMeta[start] < tabsMeta[start]) {
+      var nextScrollStart = tabsMeta[scrollStart] + (tabMeta[start] - tabsMeta[start]);
+      scroll(nextScrollStart);
+    } else if (tabMeta[end] > tabsMeta[end]) {
+      var _nextScrollStart = tabsMeta[scrollStart] + (tabMeta[end] - tabsMeta[end]);
+      scroll(_nextScrollStart);
+    }
+  });
+  var updateScrollButtonState = useEventCallback(function() {
+    if (scrollable && scrollButtons !== "off") {
+      var _tabsRef$current = tabsRef.current, scrollTop = _tabsRef$current.scrollTop, scrollHeight = _tabsRef$current.scrollHeight, clientHeight = _tabsRef$current.clientHeight, scrollWidth = _tabsRef$current.scrollWidth, clientWidth = _tabsRef$current.clientWidth;
+      var showStartScroll;
+      var showEndScroll;
+      if (vertical) {
+        showStartScroll = scrollTop > 1;
+        showEndScroll = scrollTop < scrollHeight - clientHeight - 1;
+      } else {
+        var scrollLeft = getNormalizedScrollLeft(tabsRef.current, theme.direction);
+        showStartScroll = isRtl ? scrollLeft < scrollWidth - clientWidth - 1 : scrollLeft > 1;
+        showEndScroll = !isRtl ? scrollLeft < scrollWidth - clientWidth - 1 : scrollLeft > 1;
+      }
+      if (showStartScroll !== displayScroll.start || showEndScroll !== displayScroll.end) {
+        setDisplayScroll({
+          start: showStartScroll,
+          end: showEndScroll
+        });
+      }
+    }
+  });
+  reactExports.useEffect(function() {
+    var handleResize = debounce$1(function() {
+      updateIndicatorState();
+      updateScrollButtonState();
+    });
+    var win = ownerWindow(tabsRef.current);
+    win.addEventListener("resize", handleResize);
+    return function() {
+      handleResize.clear();
+      win.removeEventListener("resize", handleResize);
+    };
+  }, [updateIndicatorState, updateScrollButtonState]);
+  var handleTabsScroll = reactExports.useCallback(debounce$1(function() {
+    updateScrollButtonState();
+  }));
+  reactExports.useEffect(function() {
+    return function() {
+      handleTabsScroll.clear();
+    };
+  }, [handleTabsScroll]);
+  reactExports.useEffect(function() {
+    setMounted(true);
+  }, []);
+  reactExports.useEffect(function() {
+    updateIndicatorState();
+    updateScrollButtonState();
+  });
+  reactExports.useEffect(function() {
+    scrollSelectedIntoView();
+  }, [scrollSelectedIntoView, indicatorStyle]);
+  reactExports.useImperativeHandle(action, function() {
+    return {
+      updateIndicator: updateIndicatorState,
+      updateScrollButtons: updateScrollButtonState
+    };
+  }, [updateIndicatorState, updateScrollButtonState]);
+  var indicator = /* @__PURE__ */ reactExports.createElement(TabIndicator$1, _extends$1({
+    className: classes.indicator,
+    orientation,
+    color: indicatorColor
+  }, TabIndicatorProps, {
+    style: _extends$1({}, indicatorStyle, TabIndicatorProps.style)
+  }));
+  var childIndex = 0;
+  var children = reactExports.Children.map(childrenProp, function(child) {
+    if (!/* @__PURE__ */ reactExports.isValidElement(child)) {
+      return null;
+    }
+    var childValue = child.props.value === void 0 ? childIndex : child.props.value;
+    valueToIndex.set(childValue, childIndex);
+    var selected = childValue === value;
+    childIndex += 1;
+    return /* @__PURE__ */ reactExports.cloneElement(child, {
+      fullWidth: variant === "fullWidth",
+      indicator: selected && !mounted && indicator,
+      selected,
+      selectionFollowsFocus,
+      onChange,
+      textColor,
+      value: childValue
+    });
+  });
+  var handleKeyDown2 = function handleKeyDown22(event) {
+    var target = event.target;
+    var role = target.getAttribute("role");
+    if (role !== "tab") {
+      return;
+    }
+    var newFocusTarget = null;
+    var previousItemKey = orientation !== "vertical" ? "ArrowLeft" : "ArrowUp";
+    var nextItemKey = orientation !== "vertical" ? "ArrowRight" : "ArrowDown";
+    if (orientation !== "vertical" && theme.direction === "rtl") {
+      previousItemKey = "ArrowRight";
+      nextItemKey = "ArrowLeft";
+    }
+    switch (event.key) {
+      case previousItemKey:
+        newFocusTarget = target.previousElementSibling || tabListRef.current.lastChild;
+        break;
+      case nextItemKey:
+        newFocusTarget = target.nextElementSibling || tabListRef.current.firstChild;
+        break;
+      case "Home":
+        newFocusTarget = tabListRef.current.firstChild;
+        break;
+      case "End":
+        newFocusTarget = tabListRef.current.lastChild;
+        break;
+    }
+    if (newFocusTarget !== null) {
+      newFocusTarget.focus();
+      event.preventDefault();
+    }
+  };
+  var conditionalElements = getConditionalElements();
+  return /* @__PURE__ */ reactExports.createElement(Component, _extends$1({
+    className: clsx(classes.root, className, vertical && classes.vertical),
+    ref
+  }, other), conditionalElements.scrollButtonStart, conditionalElements.scrollbarSizeListener, /* @__PURE__ */ reactExports.createElement("div", {
+    className: clsx(classes.scroller, scrollable ? classes.scrollable : classes.fixed),
+    style: scrollerStyle,
+    ref: tabsRef,
+    onScroll: handleTabsScroll
+  }, /* @__PURE__ */ reactExports.createElement("div", {
+    "aria-label": ariaLabel,
+    "aria-labelledby": ariaLabelledBy,
+    className: clsx(classes.flexContainer, vertical && classes.flexContainerVertical, centered && !scrollable && classes.centered),
+    onKeyDown: handleKeyDown2,
+    ref: tabListRef,
+    role: "tablist"
+  }, children), mounted && indicator), conditionalElements.scrollButtonEnd);
+});
+const Tabs$1 = withStyles(styles$2, {
+  name: "MuiTabs"
+})(Tabs);
 var variantComponent = {
   standard: Input$1,
   filled: FilledInput$1,
   outlined: OutlinedInput$1
 };
-var styles3 = {
+var styles$1 = {
   /* Styles applied to the root element. */
   root: {}
 };
@@ -16591,7 +19311,7 @@ var TextField = /* @__PURE__ */ reactExports.forwardRef(function TextField2(prop
   var helperTextId = helperText && id2 ? "".concat(id2, "-helper-text") : void 0;
   var inputLabelId = label && id2 ? "".concat(id2, "-label") : void 0;
   var InputComponent = variantComponent[variant];
-  var InputElement = /* @__PURE__ */ reactExports.createElement(InputComponent, _extends({
+  var InputElement = /* @__PURE__ */ reactExports.createElement(InputComponent, _extends$1({
     "aria-describedby": helperTextId,
     autoComplete,
     autoFocus,
@@ -16613,7 +19333,7 @@ var TextField = /* @__PURE__ */ reactExports.forwardRef(function TextField2(prop
     placeholder,
     inputProps
   }, InputMore, InputProps));
-  return /* @__PURE__ */ reactExports.createElement(FormControl$1, _extends({
+  return /* @__PURE__ */ reactExports.createElement(FormControl$1, _extends$1({
     className: clsx(classes.root, className),
     disabled,
     error,
@@ -16623,22 +19343,380 @@ var TextField = /* @__PURE__ */ reactExports.forwardRef(function TextField2(prop
     required,
     color,
     variant
-  }, other), label && /* @__PURE__ */ reactExports.createElement(InputLabel$1, _extends({
+  }, other), label && /* @__PURE__ */ reactExports.createElement(InputLabel$1, _extends$1({
     htmlFor: id2,
     id: inputLabelId
-  }, InputLabelProps), label), select ? /* @__PURE__ */ reactExports.createElement(Select$1, _extends({
+  }, InputLabelProps), label), select ? /* @__PURE__ */ reactExports.createElement(Select$1, _extends$1({
     "aria-describedby": helperTextId,
     id: id2,
     labelId: inputLabelId,
     value,
     input: InputElement
-  }, SelectProps), children) : InputElement, helperText && /* @__PURE__ */ reactExports.createElement(FormHelperText$1, _extends({
+  }, SelectProps), children) : InputElement, helperText && /* @__PURE__ */ reactExports.createElement(FormHelperText$1, _extends$1({
     id: helperTextId
   }, FormHelperTextProps), helperText));
 });
-const TextField$1 = withStyles(styles3, {
+const TextField$1 = withStyles(styles$1, {
   name: "MuiTextField"
 })(TextField);
+function round(value) {
+  return Math.round(value * 1e5) / 1e5;
+}
+function arrowGenerator() {
+  return {
+    '&[x-placement*="bottom"] $arrow': {
+      top: 0,
+      left: 0,
+      marginTop: "-0.71em",
+      marginLeft: 4,
+      marginRight: 4,
+      "&::before": {
+        transformOrigin: "0 100%"
+      }
+    },
+    '&[x-placement*="top"] $arrow': {
+      bottom: 0,
+      left: 0,
+      marginBottom: "-0.71em",
+      marginLeft: 4,
+      marginRight: 4,
+      "&::before": {
+        transformOrigin: "100% 0"
+      }
+    },
+    '&[x-placement*="right"] $arrow': {
+      left: 0,
+      marginLeft: "-0.71em",
+      height: "1em",
+      width: "0.71em",
+      marginTop: 4,
+      marginBottom: 4,
+      "&::before": {
+        transformOrigin: "100% 100%"
+      }
+    },
+    '&[x-placement*="left"] $arrow': {
+      right: 0,
+      marginRight: "-0.71em",
+      height: "1em",
+      width: "0.71em",
+      marginTop: 4,
+      marginBottom: 4,
+      "&::before": {
+        transformOrigin: "0 0"
+      }
+    }
+  };
+}
+var styles3 = function styles233(theme) {
+  return {
+    /* Styles applied to the Popper component. */
+    popper: {
+      zIndex: theme.zIndex.tooltip,
+      pointerEvents: "none"
+      // disable jss-rtl plugin
+    },
+    /* Styles applied to the Popper component if `interactive={true}`. */
+    popperInteractive: {
+      pointerEvents: "auto"
+    },
+    /* Styles applied to the Popper component if `arrow={true}`. */
+    popperArrow: arrowGenerator(),
+    /* Styles applied to the tooltip (label wrapper) element. */
+    tooltip: {
+      backgroundColor: alpha(theme.palette.grey[700], 0.9),
+      borderRadius: theme.shape.borderRadius,
+      color: theme.palette.common.white,
+      fontFamily: theme.typography.fontFamily,
+      padding: "4px 8px",
+      fontSize: theme.typography.pxToRem(10),
+      lineHeight: "".concat(round(14 / 10), "em"),
+      maxWidth: 300,
+      wordWrap: "break-word",
+      fontWeight: theme.typography.fontWeightMedium
+    },
+    /* Styles applied to the tooltip (label wrapper) element if `arrow={true}`. */
+    tooltipArrow: {
+      position: "relative",
+      margin: "0"
+    },
+    /* Styles applied to the arrow element. */
+    arrow: {
+      overflow: "hidden",
+      position: "absolute",
+      width: "1em",
+      height: "0.71em",
+      boxSizing: "border-box",
+      color: alpha(theme.palette.grey[700], 0.9),
+      "&::before": {
+        content: '""',
+        margin: "auto",
+        display: "block",
+        width: "100%",
+        height: "100%",
+        backgroundColor: "currentColor",
+        transform: "rotate(45deg)"
+      }
+    },
+    /* Styles applied to the tooltip (label wrapper) element if the tooltip is opened by touch. */
+    touch: {
+      padding: "8px 16px",
+      fontSize: theme.typography.pxToRem(14),
+      lineHeight: "".concat(round(16 / 14), "em"),
+      fontWeight: theme.typography.fontWeightRegular
+    },
+    /* Styles applied to the tooltip (label wrapper) element if `placement` contains "left". */
+    tooltipPlacementLeft: _defineProperty({
+      transformOrigin: "right center",
+      margin: "0 24px "
+    }, theme.breakpoints.up("sm"), {
+      margin: "0 14px"
+    }),
+    /* Styles applied to the tooltip (label wrapper) element if `placement` contains "right". */
+    tooltipPlacementRight: _defineProperty({
+      transformOrigin: "left center",
+      margin: "0 24px"
+    }, theme.breakpoints.up("sm"), {
+      margin: "0 14px"
+    }),
+    /* Styles applied to the tooltip (label wrapper) element if `placement` contains "top". */
+    tooltipPlacementTop: _defineProperty({
+      transformOrigin: "center bottom",
+      margin: "24px 0"
+    }, theme.breakpoints.up("sm"), {
+      margin: "14px 0"
+    }),
+    /* Styles applied to the tooltip (label wrapper) element if `placement` contains "bottom". */
+    tooltipPlacementBottom: _defineProperty({
+      transformOrigin: "center top",
+      margin: "24px 0"
+    }, theme.breakpoints.up("sm"), {
+      margin: "14px 0"
+    })
+  };
+};
+var hystersisOpen = false;
+var hystersisTimer = null;
+var Tooltip = /* @__PURE__ */ reactExports.forwardRef(function Tooltip2(props, ref) {
+  var _props$arrow = props.arrow, arrow2 = _props$arrow === void 0 ? false : _props$arrow, children = props.children, classes = props.classes, _props$disableFocusLi = props.disableFocusListener, disableFocusListener = _props$disableFocusLi === void 0 ? false : _props$disableFocusLi, _props$disableHoverLi = props.disableHoverListener, disableHoverListener = _props$disableHoverLi === void 0 ? false : _props$disableHoverLi, _props$disableTouchLi = props.disableTouchListener, disableTouchListener = _props$disableTouchLi === void 0 ? false : _props$disableTouchLi, _props$enterDelay = props.enterDelay, enterDelay = _props$enterDelay === void 0 ? 100 : _props$enterDelay, _props$enterNextDelay = props.enterNextDelay, enterNextDelay = _props$enterNextDelay === void 0 ? 0 : _props$enterNextDelay, _props$enterTouchDela = props.enterTouchDelay, enterTouchDelay = _props$enterTouchDela === void 0 ? 700 : _props$enterTouchDela, idProp = props.id, _props$interactive = props.interactive, interactive = _props$interactive === void 0 ? false : _props$interactive, _props$leaveDelay = props.leaveDelay, leaveDelay = _props$leaveDelay === void 0 ? 0 : _props$leaveDelay, _props$leaveTouchDela = props.leaveTouchDelay, leaveTouchDelay = _props$leaveTouchDela === void 0 ? 1500 : _props$leaveTouchDela, onClose = props.onClose, onOpen = props.onOpen, openProp = props.open, _props$placement = props.placement, placement = _props$placement === void 0 ? "bottom" : _props$placement, _props$PopperComponen = props.PopperComponent, PopperComponent = _props$PopperComponen === void 0 ? Popper : _props$PopperComponen, PopperProps = props.PopperProps, title = props.title, _props$TransitionComp = props.TransitionComponent, TransitionComponent = _props$TransitionComp === void 0 ? Grow : _props$TransitionComp, TransitionProps = props.TransitionProps, other = _objectWithoutProperties(props, ["arrow", "children", "classes", "disableFocusListener", "disableHoverListener", "disableTouchListener", "enterDelay", "enterNextDelay", "enterTouchDelay", "id", "interactive", "leaveDelay", "leaveTouchDelay", "onClose", "onOpen", "open", "placement", "PopperComponent", "PopperProps", "title", "TransitionComponent", "TransitionProps"]);
+  var theme = useTheme();
+  var _React$useState = reactExports.useState(), childNode = _React$useState[0], setChildNode = _React$useState[1];
+  var _React$useState2 = reactExports.useState(null), arrowRef = _React$useState2[0], setArrowRef = _React$useState2[1];
+  var ignoreNonTouchEvents = reactExports.useRef(false);
+  var closeTimer = reactExports.useRef();
+  var enterTimer = reactExports.useRef();
+  var leaveTimer = reactExports.useRef();
+  var touchTimer = reactExports.useRef();
+  var _useControlled = useControlled({
+    controlled: openProp,
+    default: false,
+    name: "Tooltip",
+    state: "open"
+  }), _useControlled2 = _slicedToArray(_useControlled, 2), openState = _useControlled2[0], setOpenState = _useControlled2[1];
+  var open = openState;
+  var id2 = useId(idProp);
+  reactExports.useEffect(function() {
+    return function() {
+      clearTimeout(closeTimer.current);
+      clearTimeout(enterTimer.current);
+      clearTimeout(leaveTimer.current);
+      clearTimeout(touchTimer.current);
+    };
+  }, []);
+  var handleOpen = function handleOpen2(event) {
+    clearTimeout(hystersisTimer);
+    hystersisOpen = true;
+    setOpenState(true);
+    if (onOpen) {
+      onOpen(event);
+    }
+  };
+  var handleEnter = function handleEnter2() {
+    var forward = arguments.length > 0 && arguments[0] !== void 0 ? arguments[0] : true;
+    return function(event) {
+      var childrenProps2 = children.props;
+      if (event.type === "mouseover" && childrenProps2.onMouseOver && forward) {
+        childrenProps2.onMouseOver(event);
+      }
+      if (ignoreNonTouchEvents.current && event.type !== "touchstart") {
+        return;
+      }
+      if (childNode) {
+        childNode.removeAttribute("title");
+      }
+      clearTimeout(enterTimer.current);
+      clearTimeout(leaveTimer.current);
+      if (enterDelay || hystersisOpen && enterNextDelay) {
+        event.persist();
+        enterTimer.current = setTimeout(function() {
+          handleOpen(event);
+        }, hystersisOpen ? enterNextDelay : enterDelay);
+      } else {
+        handleOpen(event);
+      }
+    };
+  };
+  var _useIsFocusVisible = useIsFocusVisible(), isFocusVisible2 = _useIsFocusVisible.isFocusVisible, onBlurVisible = _useIsFocusVisible.onBlurVisible, focusVisibleRef = _useIsFocusVisible.ref;
+  var _React$useState3 = reactExports.useState(false), childIsFocusVisible = _React$useState3[0], setChildIsFocusVisible = _React$useState3[1];
+  var handleBlur = function handleBlur2() {
+    if (childIsFocusVisible) {
+      setChildIsFocusVisible(false);
+      onBlurVisible();
+    }
+  };
+  var handleFocus = function handleFocus2() {
+    var forward = arguments.length > 0 && arguments[0] !== void 0 ? arguments[0] : true;
+    return function(event) {
+      if (!childNode) {
+        setChildNode(event.currentTarget);
+      }
+      if (isFocusVisible2(event)) {
+        setChildIsFocusVisible(true);
+        handleEnter()(event);
+      }
+      var childrenProps2 = children.props;
+      if (childrenProps2.onFocus && forward) {
+        childrenProps2.onFocus(event);
+      }
+    };
+  };
+  var handleClose = function handleClose2(event) {
+    clearTimeout(hystersisTimer);
+    hystersisTimer = setTimeout(function() {
+      hystersisOpen = false;
+    }, 800 + leaveDelay);
+    setOpenState(false);
+    if (onClose) {
+      onClose(event);
+    }
+    clearTimeout(closeTimer.current);
+    closeTimer.current = setTimeout(function() {
+      ignoreNonTouchEvents.current = false;
+    }, theme.transitions.duration.shortest);
+  };
+  var handleLeave = function handleLeave2() {
+    var forward = arguments.length > 0 && arguments[0] !== void 0 ? arguments[0] : true;
+    return function(event) {
+      var childrenProps2 = children.props;
+      if (event.type === "blur") {
+        if (childrenProps2.onBlur && forward) {
+          childrenProps2.onBlur(event);
+        }
+        handleBlur();
+      }
+      if (event.type === "mouseleave" && childrenProps2.onMouseLeave && event.currentTarget === childNode) {
+        childrenProps2.onMouseLeave(event);
+      }
+      clearTimeout(enterTimer.current);
+      clearTimeout(leaveTimer.current);
+      event.persist();
+      leaveTimer.current = setTimeout(function() {
+        handleClose(event);
+      }, leaveDelay);
+    };
+  };
+  var detectTouchStart = function detectTouchStart2(event) {
+    ignoreNonTouchEvents.current = true;
+    var childrenProps2 = children.props;
+    if (childrenProps2.onTouchStart) {
+      childrenProps2.onTouchStart(event);
+    }
+  };
+  var handleTouchStart = function handleTouchStart2(event) {
+    detectTouchStart(event);
+    clearTimeout(leaveTimer.current);
+    clearTimeout(closeTimer.current);
+    clearTimeout(touchTimer.current);
+    event.persist();
+    touchTimer.current = setTimeout(function() {
+      handleEnter()(event);
+    }, enterTouchDelay);
+  };
+  var handleTouchEnd = function handleTouchEnd2(event) {
+    if (children.props.onTouchEnd) {
+      children.props.onTouchEnd(event);
+    }
+    clearTimeout(touchTimer.current);
+    clearTimeout(leaveTimer.current);
+    event.persist();
+    leaveTimer.current = setTimeout(function() {
+      handleClose(event);
+    }, leaveTouchDelay);
+  };
+  var handleUseRef = useForkRef(setChildNode, ref);
+  var handleFocusRef = useForkRef(focusVisibleRef, handleUseRef);
+  var handleOwnRef = reactExports.useCallback(function(instance) {
+    setRef(handleFocusRef, reactDomExports.findDOMNode(instance));
+  }, [handleFocusRef]);
+  var handleRef = useForkRef(children.ref, handleOwnRef);
+  if (title === "") {
+    open = false;
+  }
+  var shouldShowNativeTitle = !open && !disableHoverListener;
+  var childrenProps = _extends$1({
+    "aria-describedby": open ? id2 : null,
+    title: shouldShowNativeTitle && typeof title === "string" ? title : null
+  }, other, children.props, {
+    className: clsx(other.className, children.props.className),
+    onTouchStart: detectTouchStart,
+    ref: handleRef
+  });
+  var interactiveWrapperListeners = {};
+  if (!disableTouchListener) {
+    childrenProps.onTouchStart = handleTouchStart;
+    childrenProps.onTouchEnd = handleTouchEnd;
+  }
+  if (!disableHoverListener) {
+    childrenProps.onMouseOver = handleEnter();
+    childrenProps.onMouseLeave = handleLeave();
+    if (interactive) {
+      interactiveWrapperListeners.onMouseOver = handleEnter(false);
+      interactiveWrapperListeners.onMouseLeave = handleLeave(false);
+    }
+  }
+  if (!disableFocusListener) {
+    childrenProps.onFocus = handleFocus();
+    childrenProps.onBlur = handleLeave();
+    if (interactive) {
+      interactiveWrapperListeners.onFocus = handleFocus(false);
+      interactiveWrapperListeners.onBlur = handleLeave(false);
+    }
+  }
+  var mergedPopperProps = reactExports.useMemo(function() {
+    return deepmerge({
+      popperOptions: {
+        modifiers: {
+          arrow: {
+            enabled: Boolean(arrowRef),
+            element: arrowRef
+          }
+        }
+      }
+    }, PopperProps);
+  }, [arrowRef, PopperProps]);
+  return /* @__PURE__ */ reactExports.createElement(reactExports.Fragment, null, /* @__PURE__ */ reactExports.cloneElement(children, childrenProps), /* @__PURE__ */ reactExports.createElement(PopperComponent, _extends$1({
+    className: clsx(classes.popper, interactive && classes.popperInteractive, arrow2 && classes.popperArrow),
+    placement,
+    anchorEl: childNode,
+    open: childNode ? open : false,
+    id: childrenProps["aria-describedby"],
+    transition: true
+  }, interactiveWrapperListeners, mergedPopperProps), function(_ref3) {
+    var placementInner = _ref3.placement, TransitionPropsInner = _ref3.TransitionProps;
+    return /* @__PURE__ */ reactExports.createElement(TransitionComponent, _extends$1({
+      timeout: theme.transitions.duration.shorter
+    }, TransitionPropsInner, TransitionProps), /* @__PURE__ */ reactExports.createElement("div", {
+      className: clsx(classes.tooltip, classes["tooltipPlacement".concat(capitalize(placementInner.split("-")[0]))], ignoreNonTouchEvents.current && classes.touch, arrow2 && classes.tooltipArrow)
+    }, title, arrow2 ? /* @__PURE__ */ reactExports.createElement("span", {
+      className: classes.arrow,
+      ref: setArrowRef
+    }) : null));
+  }));
+});
+const Tooltip$1 = withStyles(styles3, {
+  name: "MuiTooltip",
+  flip: false
+})(Tooltip);
 const SettingsContext = React$1.createContext({});
 const useSettings = () => React$1.useContext(SettingsContext);
 const useForceUpdate = () => {
@@ -16873,6 +19951,7 @@ const sceneList = (obs) => createProvider({
         obs.adapter.getSceneList().then((data) => {
           onChanged({
             currentScene: data.currentProgramSceneName,
+            currentPreviewSceneName: data.currentPreviewSceneName,
             scenes: data.scenes.reduce(
               (prev, curr) => {
                 prev[curr.sceneName] = curr;
@@ -16886,6 +19965,9 @@ const sceneList = (obs) => createProvider({
     };
     fetchSceneList();
     obs.adapter?.on("CurrentProgramSceneChanged", () => {
+      fetchSceneList();
+    });
+    obs.adapter?.on("CurrentPreviewSceneChanged", () => {
       fetchSceneList();
     });
     obs.adapter?.on("SceneListChanged", () => {
@@ -18199,7 +21281,7 @@ class V5Adapter {
 }
 const VERSION_DETECTION_TIMEOUT = 2e3;
 window.addEventListener("beforeunload", function() {
-  debugger;
+  if (window.ipcRenderer) debugger;
 }, false);
 async function createAdapter(options) {
   const { address, password, forceVersion = "auto", subscribeVolumeMeters = false } = options;
@@ -18303,11 +21385,11 @@ function hasAudioInputTiles(tiles) {
 }
 const OBSWebsocketProvider = ({ children }) => {
   const connectionsRef = reactExports.useRef({});
-  const { settings } = useSettings();
+  const { currentConfig } = useSettings();
   const forceUpdate = useForceUpdate();
   const prevSettingsRef = reactExports.useRef("");
   reactExports.useEffect(() => {
-    const settingsKey = JSON.stringify(settings);
+    const settingsKey = JSON.stringify(currentConfig);
     if (prevSettingsRef.current === "" || prevSettingsRef.current === settingsKey) {
       prevSettingsRef.current = settingsKey;
       return;
@@ -18324,7 +21406,7 @@ const OBSWebsocketProvider = ({ children }) => {
     }
     connectionsRef.current = {};
     forceUpdate();
-  }, [settings, forceUpdate]);
+  }, [currentConfig, forceUpdate]);
   const [passwordPrompt, setPasswordPrompt] = reactExports.useState({
     open: false,
     address: "",
@@ -18349,9 +21431,9 @@ const OBSWebsocketProvider = ({ children }) => {
     (connectionName) => {
       const connections = connectionsRef.current;
       if (!connections[connectionName]) {
-        const connSettings = settings.connections[connectionName];
+        const connSettings = currentConfig.connections[connectionName];
         if (!connSettings) {
-          throw new Error(`Missing connection information for '${connectionName}'. Available connections (${Object.keys(settings.connections).join(", ")})`);
+          throw new Error(`Missing connection information for '${connectionName}'. Available connections (${Object.keys(currentConfig.connections).join(", ")})`);
         }
         const connection = {
           adapter: null,
@@ -18385,7 +21467,7 @@ const OBSWebsocketProvider = ({ children }) => {
           let forceVersion = "auto";
           if (apiVersionConfig === "v4") forceVersion = 4;
           else if (apiVersionConfig === "v5") forceVersion = 5;
-          const subscribeVolumeMeters = hasAudioInputTiles(settings.tiles || []);
+          const subscribeVolumeMeters = hasAudioInputTiles(currentConfig.tiles || []);
           if (subscribeVolumeMeters) {
             console.log("[obs-websocket] AudioInput tiles detected, will subscribe to InputVolumeMeters");
           }
@@ -18493,7 +21575,7 @@ const OBSWebsocketProvider = ({ children }) => {
       }
       return connections[connectionName];
     },
-    [settings?.connections]
+    [currentConfig?.connections]
   );
   return /* @__PURE__ */ jsxRuntimeExports.jsxs(
     obsContext.Provider,
@@ -18530,8 +21612,8 @@ const OBSWebsocketProvider = ({ children }) => {
             )
           ] }),
           /* @__PURE__ */ jsxRuntimeExports.jsxs(DialogActions$1, { children: [
-            /* @__PURE__ */ jsxRuntimeExports.jsx(MUIButton, { onClick: handlePasswordCancel, children: "Cancel" }),
-            /* @__PURE__ */ jsxRuntimeExports.jsx(MUIButton, { onClick: handlePasswordSubmit, color: "primary", children: "Connect" })
+            /* @__PURE__ */ jsxRuntimeExports.jsx(Button$2, { onClick: handlePasswordCancel, children: "Cancel" }),
+            /* @__PURE__ */ jsxRuntimeExports.jsx(Button$2, { onClick: handlePasswordSubmit, color: "primary", children: "Connect" })
           ] })
         ] })
       ]
@@ -19627,8 +22709,14 @@ const JSON5 = {
   stringify
 };
 var lib = JSON5;
-const DEFAULT_CONFIG = {
+const DEFAULT_SETTINGS = {
+  title: "obs-tiles",
   currentConfigIndex: 0,
+  selectConfigAtLaunch: false,
+  confirmBeforeStartStreaming: false,
+  confirmBeforeStopStreaming: false,
+  confirmBeforeStartRecording: false,
+  confirmBeforeStopRecording: false,
   configs: [
     {
       name: "Default",
@@ -19680,152 +22768,89 @@ const DEFAULT_CONFIG = {
     }
   ]
 };
-function normalizeConfig(config2) {
-  if (!config2) {
-    return DEFAULT_CONFIG;
+function persistSettings(data) {
+  if (window.ipcRenderer) {
+    window.ipcRenderer.saveSettings(data).catch((error) => {
+      console.error("Failed to save settings:", error);
+    });
+  } else {
+    window.localStorage.setItem("settings", JSON.stringify(data));
   }
-  if (config2.configs && Array.isArray(config2.configs) && typeof config2.currentConfigIndex === "number") {
-    return config2;
-  }
-  if (Array.isArray(config2)) {
-    return {
-      configs: config2,
-      currentConfigIndex: 0
-    };
-  }
-  return {
-    configs: [{
-      name: "Default",
-      ...config2
-    }],
-    currentConfigIndex: 0
-  };
 }
+const EMPTY_SETTINGS = { ...DEFAULT_SETTINGS, configs: [] };
 const SettingsProvider = ({ children }) => {
-  const [configs, setConfigs] = React$1.useState([]);
-  const [currentConfigIndex, setCurrentConfigIndex] = React$1.useState(0);
+  const [settings, setSettings] = React$1.useState(EMPTY_SETTINGS);
+  const [autoOpenSelector, setAutoOpenSelector] = React$1.useState(false);
   React$1.useEffect(() => {
-    const loadConfig = async () => {
-      let rawConfig;
+    const load = async () => {
+      let rawSettings;
       if (window.ipcRenderer) {
         try {
-          rawConfig = await window.ipcRenderer.getConfig();
+          rawSettings = await window.ipcRenderer.getSettings();
         } catch (error) {
-          console.error("Failed to get config:", error);
+          console.error("Failed to get settings:", error);
         }
       } else {
-        const stored = window.localStorage.getItem("settingsCurrent");
+        const stored = window.localStorage.getItem("settings");
         if (stored) {
           try {
-            rawConfig = lib.parse(stored);
+            rawSettings = lib.parse(stored);
           } catch (e2) {
-            console.error("Failed to parse stored config:", e2);
+            console.error("Failed to parse stored settings:", e2);
           }
         }
       }
-      const normalized = normalizeConfig(rawConfig);
-      setConfigs(normalized.configs);
-      setCurrentConfigIndex(Math.min(normalized.currentConfigIndex, normalized.configs.length - 1));
-      const wasOldFormat = rawConfig && (Array.isArray(rawConfig) || !rawConfig.configs && !Array.isArray(rawConfig));
-      if (wasOldFormat) {
-        console.log("Converting old config format to new format");
-        if (window.ipcRenderer) {
-          window.ipcRenderer.saveConfig(normalized).catch((error) => {
-            console.error("Failed to save converted config:", error);
-          });
-        } else {
-          window.localStorage.setItem("settingsCurrent", JSON.stringify(normalized));
-        }
+      const loaded = {
+        ...DEFAULT_SETTINGS,
+        ...rawSettings
+      };
+      loaded.currentConfigIndex = Math.min(loaded.currentConfigIndex, loaded.configs.length - 1);
+      setSettings(loaded);
+      if (loaded.selectConfigAtLaunch && loaded.configs.length > 1) {
+        setAutoOpenSelector(true);
       }
     };
-    loadConfig();
+    load();
   }, []);
-  const saveConfigs = React$1.useCallback((newConfigs, newIndex) => {
-    setConfigs(newConfigs);
-    const indexToSave = newIndex !== void 0 ? newIndex : currentConfigIndex;
-    const configToSave = {
-      configs: newConfigs,
-      currentConfigIndex: indexToSave
-    };
-    if (window.ipcRenderer) {
-      window.ipcRenderer.saveConfig(configToSave).catch((error) => {
-        console.error("Failed to save config:", error);
-      });
-    } else {
-      window.localStorage.setItem("settingsCurrent", JSON.stringify(configToSave));
-    }
-  }, [currentConfigIndex]);
-  const handleSetSettingsJSON = React$1.useCallback((value) => {
-    try {
-      const parsed = lib.parse(value);
-      const newConfigs = [...configs];
-      newConfigs[currentConfigIndex] = parsed;
-      saveConfigs(newConfigs);
-    } catch (error) {
-      console.error("Failed to parse config:", error);
-    }
-  }, [configs, currentConfigIndex, saveConfigs]);
+  const closeAutoOpenSelector = React$1.useCallback(() => {
+    setAutoOpenSelector(false);
+  }, []);
   const selectConfig = React$1.useCallback((index) => {
-    setCurrentConfigIndex(index);
-    const configToSave = {
-      configs,
-      currentConfigIndex: index
-    };
-    if (window.ipcRenderer) {
-      window.ipcRenderer.saveConfig(configToSave).catch((error) => {
-        console.error("Failed to save config:", error);
-      });
-    } else {
-      window.localStorage.setItem("settingsCurrent", JSON.stringify(configToSave));
-    }
-  }, [configs]);
-  const addConfig = React$1.useCallback((name) => {
-    const newConfig = {
-      ...DEFAULT_CONFIG.configs[0],
-      name
-    };
-    const newConfigs = [...configs, newConfig];
-    const newIndex = newConfigs.length - 1;
-    saveConfigs(newConfigs, newIndex);
-    setCurrentConfigIndex(newIndex);
-  }, [configs, saveConfigs]);
-  const deleteConfig = React$1.useCallback((index) => {
-    if (configs.length <= 1) {
-      return;
-    }
-    const newConfigs = configs.filter((_2, i) => i !== index);
-    const newIndex = Math.min(currentConfigIndex, newConfigs.length - 1);
-    saveConfigs(newConfigs, newIndex);
-    setCurrentConfigIndex(newIndex);
-  }, [configs, currentConfigIndex, saveConfigs]);
-  const renameConfig = React$1.useCallback((index, newName) => {
-    const newConfigs = [...configs];
-    newConfigs[index] = { ...newConfigs[index], name: newName };
-    saveConfigs(newConfigs);
-  }, [configs, saveConfigs]);
-  const saveAllConfigs = React$1.useCallback((newConfigs, selectedIndex) => {
-    saveConfigs(newConfigs, selectedIndex);
-    setCurrentConfigIndex(selectedIndex);
-  }, [saveConfigs]);
-  if (configs.length === 0) {
+    setSettings((prev) => {
+      const next = { ...prev, currentConfigIndex: index };
+      persistSettings(next);
+      return next;
+    });
+  }, []);
+  const saveFullSettings = React$1.useCallback((newSettings) => {
+    setSettings(newSettings);
+    persistSettings(newSettings);
+  }, []);
+  const updateCurrentConfig = React$1.useCallback((updater) => {
+    setSettings((prev) => {
+      const newConfigs = [...prev.configs];
+      newConfigs[prev.currentConfigIndex] = updater(newConfigs[prev.currentConfigIndex]);
+      console.log("Updated current config. New config:", newConfigs[prev.currentConfigIndex]);
+      const next = { ...prev, configs: newConfigs };
+      persistSettings(next);
+      return next;
+    });
+  }, []);
+  if (settings.configs.length === 0) {
     return null;
   }
-  const currentConfig = configs[currentConfigIndex];
-  const settingsJSON = JSON.stringify(currentConfig, null, 2);
+  const currentConfig = settings.configs[settings.currentConfigIndex];
   return /* @__PURE__ */ jsxRuntimeExports.jsx(
     SettingsContext.Provider,
     {
       value: {
-        configs,
-        currentConfigIndex,
-        settingsJSON,
-        setSettingsJSON: handleSetSettingsJSON,
-        settings: currentConfig,
+        settings,
+        autoOpenSelector,
+        closeAutoOpenSelector,
+        currentConfig,
         selectConfig,
-        addConfig,
-        deleteConfig,
-        renameConfig,
-        saveAllConfigs
+        saveFullSettings,
+        updateCurrentConfig
       },
       children
     }
@@ -20911,6 +23936,102 @@ const ThemeProvider = ({ children, theme }) => /* @__PURE__ */ jsxRuntimeExports
     ...theme || {}
   }
 }, children) });
+const EditModeContext = React$1.createContext({
+  isEditMode: false,
+  setEditMode: () => {
+  },
+  clipboard: null,
+  setClipboard: () => {
+  }
+});
+const useEditMode = () => React$1.useContext(EditModeContext);
+const EditModeProvider = ({ children }) => {
+  const [isEditMode, setEditMode] = React$1.useState(false);
+  const [clipboard, setClipboard] = React$1.useState(null);
+  return /* @__PURE__ */ jsxRuntimeExports.jsx(EditModeContext.Provider, { value: { isEditMode, setEditMode, clipboard, setClipboard }, children });
+};
+const ConfigSelectorDialog = ({ open, onClose }) => {
+  const { settings, selectConfig } = useSettings();
+  const { configs, currentConfigIndex } = settings;
+  return /* @__PURE__ */ jsxRuntimeExports.jsxs(Dialog$1, { open, onClose, children: [
+    /* @__PURE__ */ jsxRuntimeExports.jsx(DialogTitle$1, { children: "Select Config" }),
+    /* @__PURE__ */ jsxRuntimeExports.jsx(MenuList, { dense: true, style: { minWidth: 220, paddingBottom: 8 }, children: configs.map((cfg, idx) => /* @__PURE__ */ jsxRuntimeExports.jsx(
+      MenuItem$1,
+      {
+        selected: idx === currentConfigIndex,
+        onClick: () => {
+          selectConfig(idx);
+          onClose();
+        },
+        children: /* @__PURE__ */ jsxRuntimeExports.jsx(ListItemText$1, { primary: cfg.name })
+      },
+      idx
+    )) })
+  ] });
+};
+const Add = createSvgIcon$1(/* @__PURE__ */ reactExports.createElement("path", {
+  d: "M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"
+}));
+const AddCircleOutline = createSvgIcon$1(/* @__PURE__ */ reactExports.createElement("path", {
+  d: "M13 7h-2v4H7v2h4v4h2v-4h4v-2h-4V7zm-1-5C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8z"
+}));
+const ArrowBack = createSvgIcon$1(/* @__PURE__ */ reactExports.createElement("path", {
+  d: "M20 11H7.83l5.59-5.59L12 4l-8 8 8 8 1.41-1.41L7.83 13H20v-2z"
+}));
+const ArrowDownward = createSvgIcon$1(/* @__PURE__ */ reactExports.createElement("path", {
+  d: "M20 12l-1.41-1.41L13 16.17V4h-2v12.17l-5.58-5.59L4 12l8 8 8-8z"
+}));
+const ArrowForward = createSvgIcon$1(/* @__PURE__ */ reactExports.createElement("path", {
+  d: "M12 4l-1.41 1.41L16.17 11H4v2h12.17l-5.58 5.59L12 20l8-8z"
+}));
+const ArrowUpward = createSvgIcon$1(/* @__PURE__ */ reactExports.createElement("path", {
+  d: "M4 12l1.41 1.41L11 7.83V20h2V7.83l5.58 5.59L20 12l-8-8-8 8z"
+}));
+const CallSplit = createSvgIcon$1(/* @__PURE__ */ reactExports.createElement("path", {
+  d: "M14 4l2.29 2.29-2.88 2.88 1.42 1.42 2.88-2.88L20 10V4zm-4 0H4v6l2.29-2.29 4.71 4.7V20h2v-8.41l-5.29-5.3z"
+}));
+const ChevronRight = createSvgIcon$1(/* @__PURE__ */ reactExports.createElement("path", {
+  d: "M10 6L8.59 7.41 13.17 12l-4.58 4.59L10 18l6-6z"
+}));
+const Close = createSvgIcon$1(/* @__PURE__ */ reactExports.createElement("path", {
+  d: "M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"
+}));
+const Delete = createSvgIcon$1(/* @__PURE__ */ reactExports.createElement("path", {
+  d: "M6 19c0 1.1.9 2 2 2h8c1.1 0 2-.9 2-2V7H6v12zM19 4h-3.5l-1-1h-5l-1 1H5v2h14V4z"
+}));
+const DragIndicator = createSvgIcon$1(/* @__PURE__ */ reactExports.createElement("path", {
+  d: "M11 18c0 1.1-.9 2-2 2s-2-.9-2-2 .9-2 2-2 2 .9 2 2zm-2-8c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2zm0-6c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2zm6 4c1.1 0 2-.9 2-2s-.9-2-2-2-2 .9-2 2 .9 2 2 2zm0 2c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2zm0 6c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2z"
+}));
+const Edit = createSvgIcon$1(/* @__PURE__ */ reactExports.createElement("path", {
+  d: "M3 17.25V21h3.75L17.81 9.94l-3.75-3.75L3 17.25zM20.71 7.04c.39-.39.39-1.02 0-1.41l-2.34-2.34a.9959.9959 0 00-1.41 0l-1.83 1.83 3.75 3.75 1.83-1.83z"
+}));
+const ExpandMore = createSvgIcon$1(/* @__PURE__ */ reactExports.createElement("path", {
+  d: "M16.59 8.59L12 13.17 7.41 8.59 6 10l6 6 6-6z"
+}));
+const FileCopy = createSvgIcon$1(/* @__PURE__ */ reactExports.createElement("path", {
+  d: "M16 1H4c-1.1 0-2 .9-2 2v14h2V3h12V1zm-1 4l6 6v10c0 1.1-.9 2-2 2H7.99C6.89 23 6 22.1 6 21l.01-14c0-1.1.89-2 1.99-2h7zm-1 7h5.5L14 6.5V12z"
+}));
+const HighlightOff = createSvgIcon$1(/* @__PURE__ */ reactExports.createElement("path", {
+  d: "M14.59 8L12 10.59 9.41 8 8 9.41 10.59 12 8 14.59 9.41 16 12 13.41 14.59 16 16 14.59 13.41 12 16 9.41 14.59 8zM12 2C6.47 2 2 6.47 2 12s4.47 10 10 10 10-4.47 10-10S17.53 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8z"
+}));
+const MoreVert = createSvgIcon$1(/* @__PURE__ */ reactExports.createElement("path", {
+  d: "M12 8c1.1 0 2-.9 2-2s-.9-2-2-2-2 .9-2 2 .9 2 2 2zm0 2c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2zm0 6c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2z"
+}));
+const SettingsIcon$1 = createSvgIcon$1(/* @__PURE__ */ reactExports.createElement("path", {
+  d: "M19.14 12.94c.04-.3.06-.61.06-.94 0-.32-.02-.64-.07-.94l2.03-1.58c.18-.14.23-.41.12-.61l-1.92-3.32c-.12-.22-.37-.29-.59-.22l-2.39.96c-.5-.38-1.03-.7-1.62-.94l-.36-2.54c-.04-.24-.24-.41-.48-.41h-3.84c-.24 0-.43.17-.47.41l-.36 2.54c-.59.24-1.13.57-1.62.94l-2.39-.96c-.22-.08-.47 0-.59.22L2.74 8.87c-.12.21-.08.47.12.61l2.03 1.58c-.05.3-.09.63-.09.94s.02.64.07.94l-2.03 1.58c-.18.14-.23.41-.12.61l1.92 3.32c.12.22.37.29.59.22l2.39-.96c.5.38 1.03.7 1.62.94l.36 2.54c.05.24.24.41.48.41h3.84c.24 0 .44-.17.47-.41l.36-2.54c.59-.24 1.13-.56 1.62-.94l2.39.96c.22.08.47 0 .59-.22l1.92-3.32c.12-.22.07-.47-.12-.61l-2.01-1.58zM12 15.6c-1.98 0-3.6-1.62-3.6-3.6s1.62-3.6 3.6-3.6 3.6 1.62 3.6 3.6-1.62 3.6-3.6 3.6z"
+}));
+const SettingsIcon = createSvgIcon$1(/* @__PURE__ */ reactExports.createElement("path", {
+  d: "M12 10c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2zm7-7H5c-1.11 0-2 .9-2 2v14c0 1.1.89 2 2 2h14c1.11 0 2-.9 2-2V5c0-1.1-.89-2-2-2zm-1.75 9c0 .23-.02.46-.05.68l1.48 1.16c.13.11.17.3.08.45l-1.4 2.42c-.09.15-.27.21-.43.15l-1.74-.7c-.36.28-.76.51-1.18.69l-.26 1.85c-.03.17-.18.3-.35.3h-2.8c-.17 0-.32-.13-.35-.29l-.26-1.85c-.43-.18-.82-.41-1.18-.69l-1.74.7c-.16.06-.34 0-.43-.15l-1.4-2.42c-.09-.15-.05-.34.08-.45l1.48-1.16c-.03-.23-.05-.46-.05-.69 0-.23.02-.46.05-.68l-1.48-1.16c-.13-.11-.17-.3-.08-.45l1.4-2.42c.09-.15.27-.21.43-.15l1.74.7c.36-.28.76-.51 1.18-.69l.26-1.85c.03-.17.18-.3.35-.3h2.8c.17 0 .32.13.35.29l.26 1.85c.43.18.82.41 1.18.69l1.74-.7c.16-.06.34 0 .43.15l1.4 2.42c.09.15.05.34-.08.45l-1.48 1.16c.03.23.05.46.05.69z"
+}));
+const VolumeOff = createSvgIcon$1(/* @__PURE__ */ reactExports.createElement("path", {
+  d: "M16.5 12c0-1.77-1.02-3.29-2.5-4.03v2.21l2.45 2.45c.03-.2.05-.41.05-.63zm2.5 0c0 .94-.2 1.82-.54 2.64l1.51 1.51C20.63 14.91 21 13.5 21 12c0-4.28-2.99-7.86-7-8.77v2.06c2.89.86 5 3.54 5 6.71zM4.27 3L3 4.27 7.73 9H3v6h4l5 5v-6.73l4.25 4.25c-.67.52-1.42.93-2.25 1.18v2.06c1.38-.31 2.63-.95 3.69-1.81L19.73 21 21 19.73l-9-9L4.27 3zM12 4L9.91 6.09 12 8.18V4z"
+}));
+const VolumeUp = createSvgIcon$1(/* @__PURE__ */ reactExports.createElement("path", {
+  d: "M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02zM14 3.23v2.06c2.89.86 5 3.54 5 6.71s-2.11 5.85-5 6.71v2.06c4.01-.91 7-4.49 7-8.77s-2.99-7.86-7-8.77z"
+}));
+const Warning = createSvgIcon$1(/* @__PURE__ */ reactExports.createElement("path", {
+  d: "M1 21h22L12 2 1 21zm12-3h-2v-2h2v2zm0-4h-2v-4h2v4z"
+}));
 var Settings = {};
 var interopRequireDefault = { exports: {} };
 (function(module) {
@@ -20990,60 +24111,406 @@ var _default = (0, _createSvgIcon.default)(/* @__PURE__ */ React.createElement("
   d: "M19.14 12.94c.04-.3.06-.61.06-.94 0-.32-.02-.64-.07-.94l2.03-1.58c.18-.14.23-.41.12-.61l-1.92-3.32c-.12-.22-.37-.29-.59-.22l-2.39.96c-.5-.38-1.03-.7-1.62-.94l-.36-2.54c-.04-.24-.24-.41-.48-.41h-3.84c-.24 0-.43.17-.47.41l-.36 2.54c-.59.24-1.13.57-1.62.94l-2.39-.96c-.22-.08-.47 0-.59.22L2.74 8.87c-.12.21-.08.47.12.61l2.03 1.58c-.05.3-.09.63-.09.94s.02.64.07.94l-2.03 1.58c-.18.14-.23.41-.12.61l1.92 3.32c.12.22.37.29.59.22l2.39-.96c.5.38 1.03.7 1.62.94l.36 2.54c.05.24.24.41.48.41h3.84c.24 0 .44-.17.47-.41l.36-2.54c.59-.24 1.13-.56 1.62-.94l2.39.96c.22.08.47 0 .59-.22l1.92-3.32c.12-.22.07-.47-.12-.61l-2.01-1.58zM12 15.6c-1.98 0-3.6-1.62-3.6-3.6s1.62-3.6 3.6-3.6 3.6 1.62 3.6 3.6-1.62 3.6-3.6 3.6z"
 }), "Settings");
 default_1 = Settings.default = _default;
-const Add = createSvgIcon$1(/* @__PURE__ */ reactExports.createElement("path", {
-  d: "M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"
-}));
-const Close = createSvgIcon$1(/* @__PURE__ */ reactExports.createElement("path", {
-  d: "M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"
-}));
-const Delete = createSvgIcon$1(/* @__PURE__ */ reactExports.createElement("path", {
-  d: "M6 19c0 1.1.9 2 2 2h8c1.1 0 2-.9 2-2V7H6v12zM19 4h-3.5l-1-1h-5l-1 1H5v2h14V4z"
-}));
-const Edit = createSvgIcon$1(/* @__PURE__ */ reactExports.createElement("path", {
-  d: "M3 17.25V21h3.75L17.81 9.94l-3.75-3.75L3 17.25zM20.71 7.04c.39-.39.39-1.02 0-1.41l-2.34-2.34a.9959.9959 0 00-1.41 0l-1.83 1.83 3.75 3.75 1.83-1.83z"
-}));
-const VolumeOff = createSvgIcon$1(/* @__PURE__ */ reactExports.createElement("path", {
-  d: "M16.5 12c0-1.77-1.02-3.29-2.5-4.03v2.21l2.45 2.45c.03-.2.05-.41.05-.63zm2.5 0c0 .94-.2 1.82-.54 2.64l1.51 1.51C20.63 14.91 21 13.5 21 12c0-4.28-2.99-7.86-7-8.77v2.06c2.89.86 5 3.54 5 6.71zM4.27 3L3 4.27 7.73 9H3v6h4l5 5v-6.73l4.25 4.25c-.67.52-1.42.93-2.25 1.18v2.06c1.38-.31 2.63-.95 3.69-1.81L19.73 21 21 19.73l-9-9L4.27 3zM12 4L9.91 6.09 12 8.18V4z"
-}));
-const VolumeUp = createSvgIcon$1(/* @__PURE__ */ reactExports.createElement("path", {
-  d: "M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02zM14 3.23v2.06c2.89.86 5 3.54 5 6.71s-2.11 5.85-5 6.71v2.06c4.01-.91 7-4.49 7-8.77s-2.99-7.86-7-8.77z"
-}));
-const FlexRow = qe.div`
-	position: relative;
+function setPath(obj, path, value) {
+  if (path.length === 0) return value;
+  const [head, ...rest] = path;
+  if (Array.isArray(obj)) {
+    const arr = [...obj];
+    arr[head] = setPath(arr[head], rest, value);
+    return arr;
+  }
+  return { ...obj, [head]: setPath(obj[head], rest, value) };
+}
+function getPath(obj, path) {
+  return path.reduce((cur, key2) => cur != null ? cur[key2] : void 0, obj);
+}
+function buildTree(config2) {
+  const connectionNames = Object.keys(config2.connections || {});
+  return [
+    {
+      id: "connections",
+      label: "Connections",
+      type: "connections-group",
+      path: ["connections"],
+      children: connectionNames.map((name) => ({
+        id: `connections/${name}`,
+        label: name,
+        type: "connection",
+        path: ["connections", name]
+      }))
+    }
+  ];
+}
+const EditorLayout = qe.div`
 	display: flex;
 	flex-direction: row;
-	${(p2) => p2.$fillHeight ? Ae`
-		flex-grow: 1;
-		overflow-y: hidden;
-	` : ""};
-	${(p2) => p2.$height ? Ae`
-		height: ${p2.$height};
-	` : ""};
-	${(p2) => p2.$minHeight ? Ae`
-		min-height: ${p2.$minHeight};
-	` : ""}
-
-	> :not(:last-child) {
-		margin-right: ${(p2) => p2.theme.grid(3)};
-	}
+	height: 100%;
+	overflow: hidden;
 `;
-const FlexColumn = qe.div`
-	position: relative;
+const TreePanel = qe.div`
+	width: ${(p2) => p2.$width}px;
+	overflow-y: auto;
+	flex-shrink: 0;
+	border-right: 1px solid ${(p2) => p2.theme.palette?.divider ?? "#ddd"};
+`;
+const ResizeDivider = qe.div`
+	width: 5px;
+	cursor: col-resize;
+	background: transparent;
+	flex-shrink: 0;
+	&:hover { background: rgba(128,128,128,0.2); }
+`;
+const DetailPanel = qe.div`
+	flex: 1;
+	overflow-y: auto;
+	padding: 0;
+`;
+const TreeItemRow = qe.div`
+	display: flex;
+	align-items: center;
+	padding: 4px 8px 4px ${(p2) => 8 + p2.$depth * 16}px;
+	cursor: pointer;
+	background: ${(p2) => p2.$selected ? "rgba(255,255,255,0.12)" : "transparent"};
+	&:hover { background: rgba(255,255,255,0.06); }
+`;
+const TreeItemLabel = qe.span`
+	font-size: 13px;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	white-space: nowrap;
+`;
+const ChevronPlaceholder = qe.div`
+	width: 18px;
+	height: 18px;
+	flex-shrink: 0;
+`;
+const DetailSection = qe.div`
 	display: flex;
 	flex-direction: column;
-	${(p2) => p2.$fixedHeight ? Ae`
-		overflow-y: hidden;
-	` : ""}
-	${(p2) => p2.$fixedHeight ? Ae`
-		height: ${p2.$fixedHeight === true ? "100%" : p2.$fixedHeight};
-	` : ""}
-
-	> :not(:last-child) {
-		margin-bottom: ${(p2) => p2.theme.grid(2)};
-	}
+	gap: 12px;
+	padding: 16px;
+`;
+const DetailTitle = qe(Typography$1)`
+	font-weight: 600 !important;
+`;
+const ActionRow = qe.div`
+	display: flex;
+	gap: 8px;
+	flex-wrap: wrap;
+`;
+function TreeNodeItem({
+  node,
+  depth,
+  selectedId,
+  expandedIds,
+  onSelect,
+  onToggleExpand
+}) {
+  const isSelected = node.id === selectedId;
+  const hasChildren = Boolean(node.children?.length);
+  const isExpanded = expandedIds.has(node.id);
+  const handleClick = () => {
+    onSelect(node.id);
+    if (hasChildren) onToggleExpand(node.id);
+  };
+  return /* @__PURE__ */ jsxRuntimeExports.jsxs(jsxRuntimeExports.Fragment, { children: [
+    /* @__PURE__ */ jsxRuntimeExports.jsxs(
+      TreeItemRow,
+      {
+        $depth: depth,
+        $selected: isSelected,
+        onClick: handleClick,
+        title: node.label,
+        children: [
+          hasChildren ? isExpanded ? /* @__PURE__ */ jsxRuntimeExports.jsx(ExpandMore, { style: { width: 18, height: 18, flexShrink: 0, opacity: 0.7 } }) : /* @__PURE__ */ jsxRuntimeExports.jsx(ChevronRight, { style: { width: 18, height: 18, flexShrink: 0, opacity: 0.7 } }) : /* @__PURE__ */ jsxRuntimeExports.jsx(ChevronPlaceholder, {}),
+          /* @__PURE__ */ jsxRuntimeExports.jsx(TreeItemLabel, { children: node.label })
+        ]
+      }
+    ),
+    hasChildren && isExpanded && node.children.map((child) => /* @__PURE__ */ jsxRuntimeExports.jsx(
+      TreeNodeItem,
+      {
+        node: child,
+        depth: depth + 1,
+        selectedId,
+        expandedIds,
+        onSelect,
+        onToggleExpand
+      },
+      child.id
+    ))
+  ] });
+}
+const API_VERSIONS = ["auto", "v4", "v5"];
+function makeField(label, value, onChange) {
+  return /* @__PURE__ */ jsxRuntimeExports.jsx(
+    TextField$1,
+    {
+      label,
+      value: value ?? "",
+      onChange: (e2) => onChange(e2.target.value),
+      variant: "outlined",
+      size: "small",
+      fullWidth: true
+    },
+    label
+  );
+}
+function makeSelectField(label, value, options, onChange) {
+  return /* @__PURE__ */ jsxRuntimeExports.jsxs(FormControl$1, { variant: "outlined", size: "small", fullWidth: true, children: [
+    /* @__PURE__ */ jsxRuntimeExports.jsx(InputLabel$1, { children: label }),
+    /* @__PURE__ */ jsxRuntimeExports.jsx(
+      Select$1,
+      {
+        label,
+        value: value ?? "",
+        onChange: (e2) => onChange(e2.target.value),
+        children: options.map((o) => /* @__PURE__ */ jsxRuntimeExports.jsx(MenuItem$1, { value: o, children: o }, o))
+      }
+    )
+  ] }, label);
+}
+function ConnectionForm({ config: config2, node, onChange }) {
+  const conn = getPath(config2, node.path) || {};
+  const patch = (partial) => onChange(setPath(config2, node.path, { ...conn, ...partial }));
+  return /* @__PURE__ */ jsxRuntimeExports.jsxs(DetailSection, { children: [
+    /* @__PURE__ */ jsxRuntimeExports.jsxs(DetailTitle, { variant: "subtitle2", children: [
+      "Connection: ",
+      node.label
+    ] }),
+    /* @__PURE__ */ jsxRuntimeExports.jsx(MuiDivider, {}),
+    makeField("Address", conn.address, (v2) => patch({ address: v2 })),
+    makeSelectField("API Version", conn.apiVersion ?? "auto", API_VERSIONS, (v2) => patch({ apiVersion: v2 }))
+  ] });
+}
+function ConnectionsGroupForm({ config: config2, onChange }) {
+  const [newName, setNewName] = React$1.useState("");
+  const handleAdd = () => {
+    const name = newName.trim();
+    if (!name || config2.connections?.[name]) return;
+    const updated = {
+      ...config2,
+      connections: {
+        ...config2.connections,
+        [name]: { address: "localhost:4455", apiVersion: "auto" }
+      }
+    };
+    onChange(updated);
+    setNewName("");
+  };
+  return /* @__PURE__ */ jsxRuntimeExports.jsxs(DetailSection, { children: [
+    /* @__PURE__ */ jsxRuntimeExports.jsx(DetailTitle, { variant: "subtitle2", children: "Connections" }),
+    /* @__PURE__ */ jsxRuntimeExports.jsx(MuiDivider, {}),
+    /* @__PURE__ */ jsxRuntimeExports.jsx(Typography$1, { variant: "body2", color: "textSecondary", children: "Select a connection to edit its address and API version." }),
+    /* @__PURE__ */ jsxRuntimeExports.jsxs(ActionRow, { children: [
+      /* @__PURE__ */ jsxRuntimeExports.jsx(
+        TextField$1,
+        {
+          label: "New connection name",
+          value: newName,
+          onChange: (e2) => setNewName(e2.target.value),
+          onKeyPress: (e2) => e2.key === "Enter" && handleAdd(),
+          variant: "outlined",
+          size: "small"
+        }
+      ),
+      /* @__PURE__ */ jsxRuntimeExports.jsx(Button$2, { variant: "outlined", size: "small", startIcon: /* @__PURE__ */ jsxRuntimeExports.jsx(Add, {}), onClick: handleAdd, disabled: !newName.trim(), children: "Add" })
+    ] })
+  ] });
+}
+function DeleteConnectionButton({ config: config2, node, onChange }) {
+  const connectionName = node.label;
+  const canDelete = Object.keys(config2.connections || {}).length > 1;
+  const handleDelete = () => {
+    if (!canDelete) return;
+    if (!window.confirm(`Delete connection "${connectionName}"?`)) return;
+    const connections = { ...config2.connections };
+    delete connections[connectionName];
+    onChange({ ...config2, connections });
+  };
+  return /* @__PURE__ */ jsxRuntimeExports.jsx(DetailSection, { style: { paddingTop: 0 }, children: /* @__PURE__ */ jsxRuntimeExports.jsx(
+    Button$2,
+    {
+      variant: "outlined",
+      size: "small",
+      startIcon: /* @__PURE__ */ jsxRuntimeExports.jsx(Delete, {}),
+      onClick: handleDelete,
+      disabled: !canDelete,
+      style: { alignSelf: "flex-start", color: canDelete ? "#f44336" : void 0, borderColor: canDelete ? "#f44336" : void 0 },
+      children: "Delete connection"
+    }
+  ) });
+}
+function renderDetailForm(config2, node, onChange) {
+  if (!node) {
+    return /* @__PURE__ */ jsxRuntimeExports.jsx(DetailSection, { children: /* @__PURE__ */ jsxRuntimeExports.jsx(Typography$1, { variant: "body2", color: "textSecondary", children: "Select an item in the tree to edit its properties." }) });
+  }
+  if (node.type === "connections-group") {
+    return /* @__PURE__ */ jsxRuntimeExports.jsx(ConnectionsGroupForm, { config: config2, onChange });
+  }
+  if (node.type === "connection") {
+    return /* @__PURE__ */ jsxRuntimeExports.jsxs(jsxRuntimeExports.Fragment, { children: [
+      /* @__PURE__ */ jsxRuntimeExports.jsx(ConnectionForm, { config: config2, node, onChange }),
+      /* @__PURE__ */ jsxRuntimeExports.jsx(DeleteConnectionButton, { config: config2, node, onChange })
+    ] });
+  }
+  return null;
+}
+function flattenTree(nodes) {
+  const result = [];
+  function walk(n2) {
+    result.push(n2);
+    n2.children?.forEach(walk);
+  }
+  nodes.forEach(walk);
+  return result;
+}
+const ConfigVisualEditor = ({ config: config2, onChange }) => {
+  const tree = React$1.useMemo(() => buildTree(config2 || {}), [config2]);
+  const [selectedId, setSelectedId] = React$1.useState("connections");
+  const [expandedIds, setExpandedIds] = React$1.useState(
+    () => /* @__PURE__ */ new Set(["connections"])
+  );
+  const [treeWidth, setTreeWidth] = React$1.useState(220);
+  const isDragging = React$1.useRef(false);
+  const dragStartX = React$1.useRef(0);
+  const dragStartWidth = React$1.useRef(220);
+  const handleDividerMouseDown = React$1.useCallback((e2) => {
+    isDragging.current = true;
+    dragStartX.current = e2.clientX;
+    dragStartWidth.current = treeWidth;
+    e2.preventDefault();
+  }, [treeWidth]);
+  React$1.useEffect(() => {
+    const onMouseMove = (e2) => {
+      if (!isDragging.current) return;
+      const delta = e2.clientX - dragStartX.current;
+      setTreeWidth(Math.max(120, Math.min(400, dragStartWidth.current + delta)));
+    };
+    const onMouseUp = () => {
+      isDragging.current = false;
+    };
+    document.addEventListener("mousemove", onMouseMove);
+    document.addEventListener("mouseup", onMouseUp);
+    return () => {
+      document.removeEventListener("mousemove", onMouseMove);
+      document.removeEventListener("mouseup", onMouseUp);
+    };
+  }, []);
+  const allNodes = React$1.useMemo(() => flattenTree(tree), [tree]);
+  const selectedNode = React$1.useMemo(
+    () => allNodes.find((n2) => n2.id === selectedId) ?? null,
+    [allNodes, selectedId]
+  );
+  const handleToggleExpand = React$1.useCallback((id2) => {
+    setExpandedIds((prev) => {
+      const next = new Set(prev);
+      if (next.has(id2)) next.delete(id2);
+      else next.add(id2);
+      return next;
+    });
+  }, []);
+  const handleSelect = React$1.useCallback((id2) => {
+    setSelectedId(id2);
+  }, []);
+  return /* @__PURE__ */ jsxRuntimeExports.jsxs(EditorLayout, { children: [
+    /* @__PURE__ */ jsxRuntimeExports.jsx(TreePanel, { $width: treeWidth, children: tree.map((node) => /* @__PURE__ */ jsxRuntimeExports.jsx(
+      TreeNodeItem,
+      {
+        node,
+        depth: 0,
+        selectedId,
+        expandedIds,
+        onSelect: handleSelect,
+        onToggleExpand: handleToggleExpand
+      },
+      node.id
+    )) }),
+    /* @__PURE__ */ jsxRuntimeExports.jsx(ResizeDivider, { onMouseDown: handleDividerMouseDown }),
+    /* @__PURE__ */ jsxRuntimeExports.jsx(DetailPanel, { children: /* @__PURE__ */ jsxRuntimeExports.jsx(jsxRuntimeExports.Fragment, { children: renderDetailForm(config2 || {}, selectedNode, onChange) }) })
+  ] });
+};
+const ConfirmDialog = ({ open, title, message, onConfirm, onCancel }) => /* @__PURE__ */ jsxRuntimeExports.jsxs(Dialog$1, { open, onClose: onCancel, children: [
+  /* @__PURE__ */ jsxRuntimeExports.jsx(DialogTitle$1, { children: title }),
+  /* @__PURE__ */ jsxRuntimeExports.jsx(DialogContent$1, { children: /* @__PURE__ */ jsxRuntimeExports.jsx(DialogContentText$1, { children: message }) }),
+  /* @__PURE__ */ jsxRuntimeExports.jsxs(DialogActions$1, { children: [
+    /* @__PURE__ */ jsxRuntimeExports.jsx(Button$2, { onClick: onCancel, children: "Cancel" }),
+    /* @__PURE__ */ jsxRuntimeExports.jsx(Button$2, { onClick: onConfirm, color: "primary", variant: "contained", autoFocus: true, children: "Confirm" })
+  ] })
+] });
+const DialogBody = qe.div`
+	display: flex;
+	flex-direction: row;
+	flex: 1;
+	overflow: hidden;
+	height: 100%;
+`;
+const LeftPanel = qe.div`
+	width: 220px;
+	flex-shrink: 0;
+	display: flex;
+	flex-direction: column;
+	border-right: 1px solid ${(p2) => p2.theme.palette?.divider ?? "#ddd"};
+	overflow-y: auto;
+`;
+const RightPanel = qe.div`
+	flex: 1;
+	display: flex;
+	flex-direction: column;
+	overflow: hidden;
+`;
+const RightPanelHeader = qe.div`
+	display: flex;
+	align-items: center;
+	gap: 4px;
+	padding: 8px 16px;
+	border-bottom: 1px solid ${(p2) => p2.theme.palette?.divider ?? "#ddd"};
+	flex-shrink: 0;
+`;
+const RightPanelContent = qe.div`
+	flex: 1;
+	overflow: hidden;
+	display: flex;
+	flex-direction: column;
+`;
+const TreeRow = qe.div`
+	display: flex;
+	align-items: center;
+	padding: 6px 8px 6px ${(p2) => 8 + p2.$depth * 16}px;
+	cursor: pointer;
+	user-select: none;
+	background: ${(p2) => p2.$selected ? "rgba(255,255,255,0.12)" : "transparent"};
+	&:hover { background: rgba(255,255,255,0.07); }
+`;
+const TreeLabel = qe.span`
+	font-size: 13px;
+	flex: 1;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	white-space: nowrap;
+`;
+const TreeIcon = qe.div`
+	width: 18px;
+	height: 18px;
+	flex-shrink: 0;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+`;
+const SettingsFormSection = qe.div`
+	display: flex;
+	flex-direction: column;
+	gap: 16px;
+	padding: 20px;
+`;
+const TabContent = qe.div`
+	flex: 1;
+	overflow: hidden;
+	display: flex;
+	flex-direction: column;
 `;
 const StyledTextField = qe(TextField$1)`
-	height: 100%;
+	flex: 1;
 	> .MuiInputBase-root {
 		height: 100%;
 		align-items: initial;
@@ -21053,275 +24520,445 @@ const StyledTextField = qe(TextField$1)`
 		font-family: monospace;
 	}
 `;
-const ConfigRow = qe.div`
-	display: flex;
-	align-items: center;
-	gap: 8px;
-	margin-bottom: 16px;
-`;
-const ConfigSelect = qe(FormControl$1)`
-	flex: 1;
-	min-width: 200px;
-	margin-top: 8px !important;
+const EmptyHint = qe.div`
+	padding: 20px;
+	color: ${(p2) => p2.theme.palette?.text?.secondary ?? "#888"};
+	font-size: 13px;
 `;
 const useStyles = makeStyles((theme) => ({
-  appBar: {
-    position: "relative"
-  },
-  title: {
-    marginLeft: theme.spacing(2),
-    flex: 1
-  },
-  small: {
-    width: theme.spacing(3),
-    height: theme.spacing(3),
-    marginRight: theme.spacing(2)
-  },
+  appBar: { position: "relative" },
+  title: { marginLeft: theme.spacing(2), flex: 1 },
   content: {
     position: "relative",
-    paddingTop: theme.spacing(2),
-    overflowY: "hidden"
+    padding: 0,
+    display: "flex",
+    flexDirection: "column",
+    overflow: "hidden",
+    flex: 1
   }
 }));
-const SettingsDialog = ({
-  onClose
-}) => {
+const NamePromptDialog = ({ open, title, initialValue, onConfirm, onCancel }) => {
+  const [value, setValue] = React$1.useState(initialValue);
+  React$1.useEffect(() => {
+    if (open) setValue(initialValue);
+  }, [open, initialValue]);
+  const handleConfirm = () => {
+    const trimmed = value.trim();
+    if (!trimmed) return;
+    onConfirm(trimmed);
+  };
+  return /* @__PURE__ */ jsxRuntimeExports.jsxs(Dialog$1, { open, onClose: onCancel, fullWidth: true, maxWidth: "xs", children: [
+    /* @__PURE__ */ jsxRuntimeExports.jsx(DialogTitle$1, { children: title }),
+    /* @__PURE__ */ jsxRuntimeExports.jsx(DialogContent$1, { children: /* @__PURE__ */ jsxRuntimeExports.jsx(
+      TextField$1,
+      {
+        autoFocus: true,
+        fullWidth: true,
+        variant: "outlined",
+        size: "small",
+        value,
+        onChange: (e2) => setValue(e2.target.value),
+        onKeyDown: (e2) => {
+          if (e2.key === "Enter") handleConfirm();
+        },
+        style: { marginTop: 8 }
+      }
+    ) }),
+    /* @__PURE__ */ jsxRuntimeExports.jsxs(DialogActions$1, { children: [
+      /* @__PURE__ */ jsxRuntimeExports.jsx(Button$2, { onClick: onCancel, children: "Cancel" }),
+      /* @__PURE__ */ jsxRuntimeExports.jsx(Button$2, { onClick: handleConfirm, color: "primary", variant: "contained", disabled: !value.trim(), children: "OK" })
+    ] })
+  ] });
+};
+const SettingsDialog = ({ onClose }) => {
   const classes = useStyles();
   const {
-    configs: savedConfigs,
-    currentConfigIndex: savedConfigIndex,
-    saveAllConfigs
+    settings: savedSettings,
+    saveFullSettings
   } = useSettings();
+  const [localTitle, setLocalTitle] = React$1.useState(savedSettings.title ?? DEFAULT_SETTINGS.title);
+  const [localSelectConfigAtLaunch, setLocalSelectConfigAtLaunch] = React$1.useState(savedSettings.selectConfigAtLaunch ?? false);
+  const [localConfirmBeforeStartStreaming, setLocalConfirmBeforeStartStreaming] = React$1.useState(savedSettings.confirmBeforeStartStreaming ?? false);
+  const [localConfirmBeforeStopStreaming, setLocalConfirmBeforeStopStreaming] = React$1.useState(savedSettings.confirmBeforeStopStreaming ?? false);
+  const [localConfirmBeforeStartRecording, setLocalConfirmBeforeStartRecording] = React$1.useState(savedSettings.confirmBeforeStartRecording ?? false);
+  const [localConfirmBeforeStopRecording, setLocalConfirmBeforeStopRecording] = React$1.useState(savedSettings.confirmBeforeStopRecording ?? false);
   const [localConfigs, setLocalConfigs] = React$1.useState(
-    () => savedConfigs.map((c2) => ({ ...c2 }))
+    () => savedSettings.configs.map((c2) => ({ ...c2 }))
   );
-  const [localConfigIndex, setLocalConfigIndex] = React$1.useState(savedConfigIndex);
-  const currentConfigJSON = React$1.useMemo(
-    () => JSON.stringify(localConfigs[localConfigIndex], null, 2),
-    [localConfigs, localConfigIndex]
+  const [localConfigIndex, setLocalConfigIndex] = React$1.useState(savedSettings.currentConfigIndex);
+  const [selected, setSelected] = React$1.useState("settings");
+  const [configsExpanded, setConfigsExpanded] = React$1.useState(true);
+  const [activeTab, setActiveTab] = React$1.useState("connections");
+  const [jsonValue, setJsonValue] = React$1.useState(
+    () => JSON.stringify(savedSettings.configs[savedSettings.currentConfigIndex], null, 2)
   );
-  const [value, setValue] = React$1.useState(currentConfigJSON);
-  const [renameDialogOpen, setRenameDialogOpen] = React$1.useState(false);
-  const [newConfigDialogOpen, setNewConfigDialogOpen] = React$1.useState(false);
-  const [dialogInputValue, setDialogInputValue] = React$1.useState("");
-  const updateLocalConfigFromTextArea = React$1.useCallback(() => {
-    try {
-      const parsed = JSON.parse(value);
-      setLocalConfigs((prev) => {
-        const updated = [...prev];
-        updated[localConfigIndex] = parsed;
-        return updated;
-      });
-    } catch (e2) {
-    }
-  }, [value, localConfigIndex]);
+  const [namePrompt, setNamePrompt] = React$1.useState(null);
+  const [deleteConfirm, setDeleteConfirm] = React$1.useState(null);
+  const [jsonError, setJsonError] = React$1.useState(null);
+  const pendingSelectLastRef = React$1.useRef(false);
   React$1.useEffect(() => {
-    setValue(JSON.stringify(localConfigs[localConfigIndex], null, 2));
-  }, [localConfigIndex, localConfigs]);
-  const handleChange = React$1.useCallback(
-    (event) => {
-      setValue(event.target.value);
+    if (pendingSelectLastRef.current && localConfigs.length > 0) {
+      pendingSelectLastRef.current = false;
+      const idx = localConfigs.length - 1;
+      setSelected(idx);
+      setJsonValue(JSON.stringify(localConfigs[idx], null, 2));
+    }
+  }, [localConfigs]);
+  const flushJson = React$1.useCallback(
+    (configIndex) => {
+      try {
+        const parsed = JSON.parse(jsonValue);
+        setLocalConfigs((prev) => {
+          const next = [...prev];
+          next[configIndex] = parsed;
+          return next;
+        });
+        return true;
+      } catch {
+        return false;
+      }
+    },
+    [jsonValue]
+  );
+  const handleSelectNode = React$1.useCallback(
+    (node) => {
+      if (typeof selected === "number" && activeTab === "json") {
+        flushJson(selected);
+      }
+      setSelected(node);
+      if (typeof node === "number") {
+        setJsonValue(JSON.stringify(localConfigs[node], null, 2));
+      }
+    },
+    [selected, activeTab, flushJson, localConfigs]
+  );
+  const handleConnectionsChange = React$1.useCallback(
+    (configIndex, newConfig) => {
+      setLocalConfigs((prev) => {
+        const next = [...prev];
+        next[configIndex] = newConfig;
+        return next;
+      });
     },
     []
   );
-  const handleConfigSelect = (event) => {
-    updateLocalConfigFromTextArea();
-    setLocalConfigIndex(event.target.value);
-  };
-  const handleNewConfig = () => {
-    setDialogInputValue("");
-    setNewConfigDialogOpen(true);
-  };
-  const handleNewConfigConfirm = () => {
-    if (dialogInputValue.trim()) {
-      updateLocalConfigFromTextArea();
-      const newConfig = {
-        ...localConfigs[0],
-        name: dialogInputValue.trim()
-      };
-      const newConfigs = [...localConfigs, newConfig];
-      setLocalConfigs(newConfigs);
-      setLocalConfigIndex(newConfigs.length - 1);
-    }
-    setNewConfigDialogOpen(false);
-  };
-  const handleRename = () => {
-    setDialogInputValue(localConfigs[localConfigIndex]?.name || "");
-    setRenameDialogOpen(true);
-  };
-  const handleRenameConfirm = () => {
-    if (dialogInputValue.trim()) {
-      setLocalConfigs((prev) => {
-        const updated = [...prev];
-        updated[localConfigIndex] = { ...updated[localConfigIndex], name: dialogInputValue.trim() };
-        return updated;
+  const handleNewConfig = React$1.useCallback(() => {
+    setNamePrompt({
+      title: "New config name",
+      initialValue: "",
+      onConfirm: (name) => {
+        const newConfig = { ...DEFAULT_SETTINGS.configs[0], name };
+        pendingSelectLastRef.current = true;
+        setLocalConfigs((prev) => [...prev, newConfig]);
+        setNamePrompt(null);
+      }
+    });
+  }, []);
+  const handleRename = React$1.useCallback(
+    (configIndex) => {
+      setNamePrompt({
+        title: "Rename config",
+        initialValue: localConfigs[configIndex]?.name ?? "",
+        onConfirm: (newName) => {
+          setLocalConfigs((prev) => {
+            const next = [...prev];
+            next[configIndex] = { ...next[configIndex], name: newName };
+            return next;
+          });
+          setNamePrompt(null);
+        }
       });
-    }
-    setRenameDialogOpen(false);
-  };
-  const handleDelete = () => {
-    if (localConfigs.length > 1 && window.confirm(`Delete config "${localConfigs[localConfigIndex]?.name}"?`)) {
-      const newConfigs = localConfigs.filter((_2, i) => i !== localConfigIndex);
-      const newIndex = Math.min(localConfigIndex, newConfigs.length - 1);
-      setLocalConfigs(newConfigs);
-      setLocalConfigIndex(newIndex);
-    }
-  };
+    },
+    [localConfigs]
+  );
+  const handleDelete = React$1.useCallback(
+    (configIndex) => {
+      if (localConfigs.length <= 1) return;
+      setDeleteConfirm({ configIndex, configName: localConfigs[configIndex]?.name ?? "" });
+    },
+    [localConfigs]
+  );
+  const confirmDelete = React$1.useCallback(() => {
+    if (!deleteConfirm) return;
+    const { configIndex } = deleteConfirm;
+    setLocalConfigs((prev) => {
+      const next = prev.filter((_2, i) => i !== configIndex);
+      const newActive = Math.min(localConfigIndex, next.length - 1);
+      setLocalConfigIndex(newActive);
+      setSelected(newActive);
+      setJsonValue(JSON.stringify(next[newActive], null, 2));
+      return next;
+    });
+    setDeleteConfirm(null);
+  }, [deleteConfirm, localConfigIndex]);
   const handleSave = () => {
     let finalConfigs = localConfigs;
-    try {
-      const parsed = JSON.parse(value);
-      finalConfigs = [...localConfigs];
-      finalConfigs[localConfigIndex] = parsed;
-    } catch (e2) {
-      alert(`Invalid JSON: ${e2 instanceof Error ? e2.message : "Unknown error"}`);
-      return;
+    if (typeof selected === "number" && activeTab === "json") {
+      try {
+        const parsed = JSON.parse(jsonValue);
+        finalConfigs = [...localConfigs];
+        finalConfigs[selected] = parsed;
+      } catch (e2) {
+        setJsonError(`Invalid JSON: ${e2 instanceof Error ? e2.message : "Unknown error"}`);
+        return;
+      }
     }
-    saveAllConfigs(finalConfigs, localConfigIndex);
+    saveFullSettings({
+      title: localTitle,
+      configs: finalConfigs,
+      currentConfigIndex: localConfigIndex,
+      selectConfigAtLaunch: localSelectConfigAtLaunch,
+      confirmBeforeStartStreaming: localConfirmBeforeStartStreaming,
+      confirmBeforeStopStreaming: localConfirmBeforeStopStreaming,
+      confirmBeforeStartRecording: localConfirmBeforeStartRecording,
+      confirmBeforeStopRecording: localConfirmBeforeStopRecording
+    });
     onClose();
   };
-  return /* @__PURE__ */ jsxRuntimeExports.jsxs(
-    Dialog$1,
-    {
-      open: true,
-      fullScreen: true,
-      onClose,
-      children: [
-        /* @__PURE__ */ jsxRuntimeExports.jsx(AppBar$1, { className: classes.appBar, children: /* @__PURE__ */ jsxRuntimeExports.jsxs(Toolbar$1, { children: [
-          /* @__PURE__ */ jsxRuntimeExports.jsx(Typography$1, { variant: "h6", className: classes.title, children: "Settings" }),
-          /* @__PURE__ */ jsxRuntimeExports.jsx(
+  const renderTree = () => /* @__PURE__ */ jsxRuntimeExports.jsxs(jsxRuntimeExports.Fragment, { children: [
+    /* @__PURE__ */ jsxRuntimeExports.jsxs(
+      TreeRow,
+      {
+        $depth: 0,
+        $selected: selected === "settings",
+        onClick: () => handleSelectNode("settings"),
+        children: [
+          /* @__PURE__ */ jsxRuntimeExports.jsx(TreeIcon, { children: /* @__PURE__ */ jsxRuntimeExports.jsx(SettingsIcon$1, { style: { width: 16, height: 16, opacity: 0.7 } }) }),
+          /* @__PURE__ */ jsxRuntimeExports.jsx(TreeLabel, { children: "Settings" })
+        ]
+      }
+    ),
+    /* @__PURE__ */ jsxRuntimeExports.jsxs(
+      TreeRow,
+      {
+        $depth: 0,
+        $selected: selected === "configs-group",
+        onClick: () => {
+          handleSelectNode("configs-group");
+          setConfigsExpanded((v2) => !v2);
+        },
+        children: [
+          /* @__PURE__ */ jsxRuntimeExports.jsx(TreeIcon, { children: configsExpanded ? /* @__PURE__ */ jsxRuntimeExports.jsx(ExpandMore, { style: { width: 18, height: 18, opacity: 0.7 } }) : /* @__PURE__ */ jsxRuntimeExports.jsx(ChevronRight, { style: { width: 18, height: 18, opacity: 0.7 } }) }),
+          /* @__PURE__ */ jsxRuntimeExports.jsx(TreeLabel, { children: "Configs" }),
+          /* @__PURE__ */ jsxRuntimeExports.jsx(Tooltip$1, { title: "New config", children: /* @__PURE__ */ jsxRuntimeExports.jsx(
             IconButton$1,
             {
-              edge: "start",
-              color: "inherit",
-              onClick: () => {
-                onClose();
+              size: "small",
+              onClick: (e2) => {
+                e2.stopPropagation();
+                handleNewConfig();
               },
-              "aria-label": "close",
-              children: /* @__PURE__ */ jsxRuntimeExports.jsx(Close, {})
+              style: { padding: 2 },
+              children: /* @__PURE__ */ jsxRuntimeExports.jsx(Add, { style: { width: 16, height: 16 } })
             }
-          )
-        ] }) }),
-        /* @__PURE__ */ jsxRuntimeExports.jsx(DialogContent$1, { className: classes.content, children: /* @__PURE__ */ jsxRuntimeExports.jsxs(
-          FlexColumn,
-          {
-            "aria-label": "Column",
-            $fixedHeight: true,
-            children: [
-              /* @__PURE__ */ jsxRuntimeExports.jsxs(ConfigRow, { children: [
-                /* @__PURE__ */ jsxRuntimeExports.jsxs(ConfigSelect, { variant: "outlined", size: "small", children: [
-                  /* @__PURE__ */ jsxRuntimeExports.jsx(InputLabel$1, { id: "config-select-label", children: "Configuration" }),
-                  /* @__PURE__ */ jsxRuntimeExports.jsx(
-                    Select$1,
-                    {
-                      labelId: "config-select-label",
-                      value: localConfigIndex,
-                      onChange: handleConfigSelect,
-                      label: "Configuration",
-                      children: localConfigs.map((config2, index) => /* @__PURE__ */ jsxRuntimeExports.jsx(MenuItem$1, { value: index, children: config2.name }, index))
-                    }
-                  )
-                ] }),
-                /* @__PURE__ */ jsxRuntimeExports.jsx(IconButton$1, { size: "small", onClick: handleNewConfig, title: "New Config", children: /* @__PURE__ */ jsxRuntimeExports.jsx(Add, {}) }),
-                /* @__PURE__ */ jsxRuntimeExports.jsx(IconButton$1, { size: "small", onClick: handleRename, title: "Rename Config", children: /* @__PURE__ */ jsxRuntimeExports.jsx(Edit, {}) }),
-                /* @__PURE__ */ jsxRuntimeExports.jsx(
-                  IconButton$1,
-                  {
-                    size: "small",
-                    onClick: handleDelete,
-                    title: "Delete Config",
-                    disabled: localConfigs.length <= 1,
-                    children: /* @__PURE__ */ jsxRuntimeExports.jsx(Delete, {})
-                  }
-                )
-              ] }),
-              /* @__PURE__ */ jsxRuntimeExports.jsx(
-                FlexRow,
-                {
-                  "aria-label": "Settings text area row",
-                  $fillHeight: true,
-                  children: /* @__PURE__ */ jsxRuntimeExports.jsx(
-                    StyledTextField,
-                    {
-                      id: "settings",
-                      type: "text",
-                      multiline: true,
-                      fullWidth: true,
-                      variant: "filled",
-                      InputProps: {
-                        disableUnderline: true
-                      },
-                      value,
-                      onChange: handleChange
-                    }
-                  )
-                }
-              )
-            ]
-          }
-        ) }),
-        /* @__PURE__ */ jsxRuntimeExports.jsxs(DialogActions$1, { children: [
+          ) })
+        ]
+      }
+    ),
+    configsExpanded && localConfigs.map((cfg, idx) => /* @__PURE__ */ jsxRuntimeExports.jsxs(
+      TreeRow,
+      {
+        $depth: 1,
+        $selected: selected === idx,
+        onClick: () => handleSelectNode(idx),
+        children: [
+          /* @__PURE__ */ jsxRuntimeExports.jsx(TreeIcon, {}),
+          /* @__PURE__ */ jsxRuntimeExports.jsx(TreeLabel, { title: cfg.name, children: cfg.name })
+        ]
+      },
+      idx
+    ))
+  ] });
+  const renderRightPanel = () => {
+    if (selected === "settings") {
+      return /* @__PURE__ */ jsxRuntimeExports.jsxs(jsxRuntimeExports.Fragment, { children: [
+        /* @__PURE__ */ jsxRuntimeExports.jsx(RightPanelHeader, { children: /* @__PURE__ */ jsxRuntimeExports.jsx(Typography$1, { variant: "subtitle1", style: { fontWeight: 600 }, children: "Settings" }) }),
+        /* @__PURE__ */ jsxRuntimeExports.jsx(RightPanelContent, { children: /* @__PURE__ */ jsxRuntimeExports.jsxs(SettingsFormSection, { children: [
           /* @__PURE__ */ jsxRuntimeExports.jsx(
-            MUIButton,
+            TextField$1,
             {
-              color: "primary",
-              variant: "contained",
-              onClick: handleSave,
-              children: "Save"
+              label: "Window title",
+              value: localTitle,
+              onChange: (e2) => setLocalTitle(e2.target.value),
+              variant: "outlined",
+              size: "small",
+              fullWidth: true
             }
           ),
           /* @__PURE__ */ jsxRuntimeExports.jsx(
-            MUIButton,
+            FormControlLabel$1,
             {
-              variant: "contained",
-              onClick: () => {
-                onClose();
-              },
-              children: "Cancel"
+              control: /* @__PURE__ */ jsxRuntimeExports.jsx(
+                Checkbox$1,
+                {
+                  checked: localSelectConfigAtLaunch,
+                  onChange: (e2) => setLocalSelectConfigAtLaunch(e2.target.checked),
+                  color: "primary",
+                  size: "small"
+                }
+              ),
+              label: "Select config at launch"
+            }
+          ),
+          /* @__PURE__ */ jsxRuntimeExports.jsx(
+            FormControlLabel$1,
+            {
+              control: /* @__PURE__ */ jsxRuntimeExports.jsx(
+                Checkbox$1,
+                {
+                  checked: localConfirmBeforeStartStreaming,
+                  onChange: (e2) => setLocalConfirmBeforeStartStreaming(e2.target.checked),
+                  color: "primary",
+                  size: "small"
+                }
+              ),
+              label: "Confirm before starting stream"
+            }
+          ),
+          /* @__PURE__ */ jsxRuntimeExports.jsx(
+            FormControlLabel$1,
+            {
+              control: /* @__PURE__ */ jsxRuntimeExports.jsx(
+                Checkbox$1,
+                {
+                  checked: localConfirmBeforeStopStreaming,
+                  onChange: (e2) => setLocalConfirmBeforeStopStreaming(e2.target.checked),
+                  color: "primary",
+                  size: "small"
+                }
+              ),
+              label: "Confirm before stopping stream"
+            }
+          ),
+          /* @__PURE__ */ jsxRuntimeExports.jsx(
+            FormControlLabel$1,
+            {
+              control: /* @__PURE__ */ jsxRuntimeExports.jsx(
+                Checkbox$1,
+                {
+                  checked: localConfirmBeforeStartRecording,
+                  onChange: (e2) => setLocalConfirmBeforeStartRecording(e2.target.checked),
+                  color: "primary",
+                  size: "small"
+                }
+              ),
+              label: "Confirm before starting recording"
+            }
+          ),
+          /* @__PURE__ */ jsxRuntimeExports.jsx(
+            FormControlLabel$1,
+            {
+              control: /* @__PURE__ */ jsxRuntimeExports.jsx(
+                Checkbox$1,
+                {
+                  checked: localConfirmBeforeStopRecording,
+                  onChange: (e2) => setLocalConfirmBeforeStopRecording(e2.target.checked),
+                  color: "primary",
+                  size: "small"
+                }
+              ),
+              label: "Confirm before stopping recording"
             }
           )
-        ] }),
-        /* @__PURE__ */ jsxRuntimeExports.jsxs(Dialog$1, { open: newConfigDialogOpen, onClose: () => setNewConfigDialogOpen(false), children: [
-          /* @__PURE__ */ jsxRuntimeExports.jsx(DialogContent$1, { children: /* @__PURE__ */ jsxRuntimeExports.jsx(
-            TextField$1,
-            {
-              autoFocus: true,
-              margin: "dense",
-              label: "Config Name",
-              fullWidth: true,
-              variant: "outlined",
-              value: dialogInputValue,
-              onChange: (e2) => setDialogInputValue(e2.target.value),
-              onKeyPress: (e2) => e2.key === "Enter" && handleNewConfigConfirm()
-            }
-          ) }),
-          /* @__PURE__ */ jsxRuntimeExports.jsxs(DialogActions$1, { children: [
-            /* @__PURE__ */ jsxRuntimeExports.jsx(MUIButton, { onClick: () => setNewConfigDialogOpen(false), children: "Cancel" }),
-            /* @__PURE__ */ jsxRuntimeExports.jsx(MUIButton, { onClick: handleNewConfigConfirm, color: "primary", variant: "contained", children: "Create" })
-          ] })
-        ] }),
-        /* @__PURE__ */ jsxRuntimeExports.jsxs(Dialog$1, { open: renameDialogOpen, onClose: () => setRenameDialogOpen(false), children: [
-          /* @__PURE__ */ jsxRuntimeExports.jsx(DialogContent$1, { children: /* @__PURE__ */ jsxRuntimeExports.jsx(
-            TextField$1,
-            {
-              autoFocus: true,
-              margin: "dense",
-              label: "Config Name",
-              fullWidth: true,
-              variant: "outlined",
-              value: dialogInputValue,
-              onChange: (e2) => setDialogInputValue(e2.target.value),
-              onKeyPress: (e2) => e2.key === "Enter" && handleRenameConfirm()
-            }
-          ) }),
-          /* @__PURE__ */ jsxRuntimeExports.jsxs(DialogActions$1, { children: [
-            /* @__PURE__ */ jsxRuntimeExports.jsx(MUIButton, { onClick: () => setRenameDialogOpen(false), children: "Cancel" }),
-            /* @__PURE__ */ jsxRuntimeExports.jsx(MUIButton, { onClick: handleRenameConfirm, color: "primary", variant: "contained", children: "Rename" })
-          ] })
-        ] })
-      ]
+        ] }) })
+      ] });
     }
-  );
+    if (selected === "configs-group") {
+      return /* @__PURE__ */ jsxRuntimeExports.jsxs(jsxRuntimeExports.Fragment, { children: [
+        /* @__PURE__ */ jsxRuntimeExports.jsx(RightPanelHeader, { children: /* @__PURE__ */ jsxRuntimeExports.jsx(Typography$1, { variant: "subtitle1", style: { fontWeight: 600 }, children: "Configs" }) }),
+        /* @__PURE__ */ jsxRuntimeExports.jsx(RightPanelContent, { children: /* @__PURE__ */ jsxRuntimeExports.jsx(EmptyHint, { children: "Select a config to edit its connections and settings, or create a new one with the + button." }) })
+      ] });
+    }
+    const configIndex = selected;
+    const config2 = localConfigs[configIndex];
+    if (!config2) return null;
+    return /* @__PURE__ */ jsxRuntimeExports.jsxs(jsxRuntimeExports.Fragment, { children: [
+      /* @__PURE__ */ jsxRuntimeExports.jsxs(RightPanelHeader, { children: [
+        /* @__PURE__ */ jsxRuntimeExports.jsx(Typography$1, { variant: "subtitle1", style: { fontWeight: 600, flex: 1 }, children: config2.name }),
+        /* @__PURE__ */ jsxRuntimeExports.jsx(Tooltip$1, { title: "Rename", children: /* @__PURE__ */ jsxRuntimeExports.jsx(IconButton$1, { size: "small", onClick: () => handleRename(configIndex), children: /* @__PURE__ */ jsxRuntimeExports.jsx(Edit, { fontSize: "small" }) }) }),
+        /* @__PURE__ */ jsxRuntimeExports.jsx(Tooltip$1, { title: "Delete", children: /* @__PURE__ */ jsxRuntimeExports.jsx("span", { children: /* @__PURE__ */ jsxRuntimeExports.jsx(
+          IconButton$1,
+          {
+            size: "small",
+            onClick: () => handleDelete(configIndex),
+            disabled: localConfigs.length <= 1,
+            children: /* @__PURE__ */ jsxRuntimeExports.jsx(Delete, { fontSize: "small" })
+          }
+        ) }) })
+      ] }),
+      /* @__PURE__ */ jsxRuntimeExports.jsxs(
+        Tabs$1,
+        {
+          value: activeTab,
+          onChange: (_2, v2) => setActiveTab(v2),
+          indicatorColor: "primary",
+          textColor: "primary",
+          style: { flexShrink: 0, borderBottom: "1px solid rgba(255,255,255,0.12)" },
+          children: [
+            /* @__PURE__ */ jsxRuntimeExports.jsx(Tab$1, { value: "connections", label: "Connections" }),
+            /* @__PURE__ */ jsxRuntimeExports.jsx(Tab$1, { value: "json", label: "JSON" })
+          ]
+        }
+      ),
+      /* @__PURE__ */ jsxRuntimeExports.jsx(TabContent, { children: activeTab === "connections" ? /* @__PURE__ */ jsxRuntimeExports.jsx(
+        ConfigVisualEditor,
+        {
+          config: config2,
+          onChange: (newConfig) => handleConnectionsChange(configIndex, newConfig)
+        }
+      ) : /* @__PURE__ */ jsxRuntimeExports.jsx(
+        StyledTextField,
+        {
+          multiline: true,
+          fullWidth: true,
+          variant: "filled",
+          InputProps: { disableUnderline: true },
+          value: jsonValue,
+          onChange: (e2) => setJsonValue(e2.target.value),
+          style: { flex: 1, height: "100%" }
+        }
+      ) })
+    ] });
+  };
+  return /* @__PURE__ */ jsxRuntimeExports.jsxs(Dialog$1, { open: true, fullScreen: true, onClose, children: [
+    /* @__PURE__ */ jsxRuntimeExports.jsx(AppBar$1, { className: classes.appBar, children: /* @__PURE__ */ jsxRuntimeExports.jsxs(Toolbar$1, { children: [
+      /* @__PURE__ */ jsxRuntimeExports.jsx(Typography$1, { variant: "h6", className: classes.title, children: "Settings" }),
+      /* @__PURE__ */ jsxRuntimeExports.jsx(IconButton$1, { edge: "start", color: "inherit", onClick: onClose, "aria-label": "close", children: /* @__PURE__ */ jsxRuntimeExports.jsx(Close, {}) })
+    ] }) }),
+    /* @__PURE__ */ jsxRuntimeExports.jsx(DialogContent$1, { className: classes.content, children: /* @__PURE__ */ jsxRuntimeExports.jsxs(DialogBody, { children: [
+      /* @__PURE__ */ jsxRuntimeExports.jsx(LeftPanel, { children: renderTree() }),
+      /* @__PURE__ */ jsxRuntimeExports.jsx(RightPanel, { children: renderRightPanel() })
+    ] }) }),
+    /* @__PURE__ */ jsxRuntimeExports.jsxs(DialogActions$1, { children: [
+      /* @__PURE__ */ jsxRuntimeExports.jsx(Button$2, { color: "primary", variant: "contained", onClick: handleSave, children: "Save" }),
+      /* @__PURE__ */ jsxRuntimeExports.jsx(Button$2, { variant: "contained", onClick: onClose, children: "Cancel" })
+    ] }),
+    namePrompt && /* @__PURE__ */ jsxRuntimeExports.jsx(
+      NamePromptDialog,
+      {
+        open: namePrompt !== null,
+        title: namePrompt.title,
+        initialValue: namePrompt.initialValue,
+        onConfirm: namePrompt.onConfirm,
+        onCancel: () => setNamePrompt(null)
+      }
+    ),
+    /* @__PURE__ */ jsxRuntimeExports.jsx(
+      ConfirmDialog,
+      {
+        open: deleteConfirm !== null,
+        title: "Delete config",
+        message: `Delete config "${deleteConfirm?.configName}"?`,
+        onConfirm: confirmDelete,
+        onCancel: () => setDeleteConfirm(null)
+      }
+    ),
+    /* @__PURE__ */ jsxRuntimeExports.jsxs(Dialog$1, { open: jsonError !== null, onClose: () => setJsonError(null), fullWidth: true, maxWidth: "xs", children: [
+      /* @__PURE__ */ jsxRuntimeExports.jsx(DialogTitle$1, { children: "Invalid JSON" }),
+      /* @__PURE__ */ jsxRuntimeExports.jsx(DialogContent$1, { children: /* @__PURE__ */ jsxRuntimeExports.jsx(Typography$1, { variant: "body2", style: { fontFamily: "monospace", wordBreak: "break-all" }, children: jsonError }) }),
+      /* @__PURE__ */ jsxRuntimeExports.jsx(DialogActions$1, { children: /* @__PURE__ */ jsxRuntimeExports.jsx(Button$2, { onClick: () => setJsonError(null), color: "primary", variant: "contained", children: "OK" }) })
+    ] })
+  ] });
 };
 const SettingsButton = () => {
   const [settingsVisible, setSettingsVisible] = React$1.useState(false);
@@ -21368,20 +25005,54 @@ const Version = qe.span`
 	color: ${(p2) => p2.theme.text};
 	opacity: 0.7;
 `;
+const RightActions = qe.div`
+	display: flex;
+	align-items: center;
+	gap: 4px;
+	color: ${(p2) => p2.theme.text};
+`;
 const Footer = () => {
-  const { configs, currentConfigIndex } = useSettings();
+  const { settings } = useSettings();
+  const { configs, currentConfigIndex } = settings;
   const configName = configs[currentConfigIndex]?.name || "";
+  const { isEditMode, setEditMode } = useEditMode();
+  const [dialogOpen, setDialogOpen] = React$1.useState(false);
+  const multipleConfigs = configs.length > 1;
   return /* @__PURE__ */ jsxRuntimeExports.jsxs(Wrapper$2, { children: [
     /* @__PURE__ */ jsxRuntimeExports.jsxs(LogoContainer, { children: [
       /* @__PURE__ */ jsxRuntimeExports.jsx(Logo, { src: OBSLogo, alt: "OBS logo" }),
       /* @__PURE__ */ jsxRuntimeExports.jsxs(Version, { children: [
         "v",
-        APP_VERSION,
-        " — ",
-        configName
-      ] })
+        APP_VERSION
+      ] }),
+      /* @__PURE__ */ jsxRuntimeExports.jsxs(
+        Button$2,
+        {
+          variant: "contained",
+          size: "small",
+          disabled: !multipleConfigs,
+          onClick: () => setDialogOpen(true),
+          children: [
+            "Selected Config: ",
+            configName
+          ]
+        }
+      ),
+      /* @__PURE__ */ jsxRuntimeExports.jsx(ConfigSelectorDialog, { open: dialogOpen, onClose: () => setDialogOpen(false) })
     ] }),
-    /* @__PURE__ */ jsxRuntimeExports.jsx(SettingsButton, {})
+    /* @__PURE__ */ jsxRuntimeExports.jsxs(RightActions, { children: [
+      /* @__PURE__ */ jsxRuntimeExports.jsx(Tooltip$1, { title: isEditMode ? "Exit Inline Edit" : "Inline Edit", children: /* @__PURE__ */ jsxRuntimeExports.jsx(
+        IconButton$1,
+        {
+          size: "small",
+          color: "inherit",
+          onClick: () => setEditMode(!isEditMode),
+          style: { color: isEditMode ? "#538c61" : "inherit" },
+          children: isEditMode ? /* @__PURE__ */ jsxRuntimeExports.jsx(HighlightOff, {}) : /* @__PURE__ */ jsxRuntimeExports.jsx(Edit, {})
+        }
+      ) }),
+      /* @__PURE__ */ jsxRuntimeExports.jsx(SettingsButton, {})
+    ] })
   ] });
 };
 const Wrapper$1 = qe.div`
@@ -21425,11 +25096,11 @@ const ImgOverlay = qe.div`
 	box-shadow: inset 0 -7px 3px -5px ${(p2) => p2.theme.sceneTextBackground};
 	pointer-events: none;
 `;
-const Label = qe.p`
+const Label$1 = qe.p`
 	text-align: center;
 	font-size: ${(p2) => p2.theme.fontSize.large};
 	width: 100%;
-	height: ${(p2) => p2.$size * 2.5}px;
+	height: 25px;
 	background-color: ${(p2) => p2.theme.sceneTextBackground};
 `;
 const StyledCircularProgress = qe(CircularProgress$1)`
@@ -21466,7 +25137,7 @@ const TileWrapper$1 = ({
           /* @__PURE__ */ jsxRuntimeExports.jsx(TextOverlay, { $size: size, children: /* @__PURE__ */ jsxRuntimeExports.jsx("div", { style: { display: "contents" }, children: overlay }) }),
           /* @__PURE__ */ jsxRuntimeExports.jsx("div", { style: { display: "contents" }, children }),
           /* @__PURE__ */ jsxRuntimeExports.jsx(ImgOverlay, { $size: size }),
-          /* @__PURE__ */ jsxRuntimeExports.jsx(Label, { $size: size, children: label })
+          /* @__PURE__ */ jsxRuntimeExports.jsx(Label$1, { $size: size, children: label })
         ]
       }
     )
@@ -21490,6 +25161,60 @@ const TileContentArea = qe.div`
 	box-sizing: border-box;
 	gap: 8px;
 `;
+const Container = qe.div`
+	display: flex;
+	flex-direction: row;
+	align-items: center;
+	width: ${(p2) => p2.$size * 16}px;
+	min-height: 36px;
+	cursor: pointer;
+	padding: 2px 8px 2px 2px;
+	border-radius: 4px;
+	background-color: ${(p2) => p2.theme.sceneBackground};
+	color: ${(p2) => p2.theme.sceneText};
+	user-select: none;
+	box-sizing: border-box;
+	transition: background-color 0.15s;
+
+	&:hover {
+		background-color: rgba(255, 255, 255, 0.08);
+	}
+`;
+const Label = qe.span`
+	font-size: ${(p2) => p2.theme.fontSize.large};
+	overflow: hidden;
+	text-overflow: ellipsis;
+	white-space: nowrap;
+	flex: 1;
+`;
+const iconSlotStyle = {
+  display: "flex",
+  alignItems: "center",
+  justifyContent: "center",
+  width: 38,
+  height: 38,
+  flexShrink: 0
+};
+const StyledCheckbox = qe(Checkbox$1)`
+	&.MuiCheckbox-root:not(.Mui-checked) {
+		color: ${(p2) => p2.theme.sceneBorder};
+	}
+`;
+const CheckboxTile = ({ size, label, checked, eventHandlers, icon }) => {
+  return /* @__PURE__ */ jsxRuntimeExports.jsxs(Container, { $size: size, ...eventHandlers, children: [
+    icon !== void 0 ? /* @__PURE__ */ jsxRuntimeExports.jsx("div", { style: iconSlotStyle, children: icon }) : /* @__PURE__ */ jsxRuntimeExports.jsx(
+      StyledCheckbox,
+      {
+        checked,
+        color: "primary",
+        size: "small",
+        onChange: () => {
+        }
+      }
+    ),
+    /* @__PURE__ */ jsxRuntimeExports.jsx(Label, { children: label })
+  ] });
+};
 const MeterContainer = qe.div`
 	width: 16px;
 	height: 100%;
@@ -21602,7 +25327,8 @@ const AudioInputTile = ({
   connection,
   audioInput,
   title,
-  tileSize = "10"
+  tileSize = "10",
+  viewType = "preview"
 }) => {
   const size = parseInt(String(tileSize));
   const { inputName } = audioInput;
@@ -21701,6 +25427,18 @@ const AudioInputTile = ({
       ) })
     ] })
   ] }) : null;
+  if (viewType === "checkbox") {
+    return /* @__PURE__ */ jsxRuntimeExports.jsx(
+      CheckboxTile,
+      {
+        size,
+        label: title ?? inputName,
+        checked: !isMuted,
+        eventHandlers: { onClick: handleMuteToggle },
+        icon: /* @__PURE__ */ jsxRuntimeExports.jsx(MuteIcon, { $muted: isMuted, children: isMuted ? /* @__PURE__ */ jsxRuntimeExports.jsx(VolumeOff, {}) : /* @__PURE__ */ jsxRuntimeExports.jsx(VolumeUp, {}) })
+      }
+    );
+  }
   return /* @__PURE__ */ jsxRuntimeExports.jsx(
     TileWrapper$1,
     {
@@ -21712,7 +25450,7 @@ const AudioInputTile = ({
     }
   );
 };
-const StyledMUIButton = qe(MUIButton)`
+const StyledMUIButton = qe(Button$2)`
 	width: ${(p2) => p2.$size * 16}px;
 
 	&.MuiButton-contained.Mui-disabled {
@@ -21746,17 +25484,45 @@ const ButtonComponents = {
       isStarting = false,
       isStopping = false,
       isLoading = true
-    } = useIsStreaming(obs);
-    return /* @__PURE__ */ jsxRuntimeExports.jsx(
-      StyledButton,
-      {
-        tileSize,
-        label: isStarted ? "Stop Streaming" : isStopped ? "Start Streaming" : isStarting ? "Starting..." : isStopping ? "Stopping" : "...",
-        color: isStarted ? "secondary" : isStopped ? "primary" : "inherit",
-        disabled: isStarting || isStopping || isLoading,
-        onClick: isStarted ? () => obs.action("stopStreaming") : isStopped ? () => obs.action("startStreaming") : void 0
+    } = useIsStreaming(obs) ?? {};
+    const { settings } = useSettings();
+    const [confirmOpen, setConfirmOpen] = React$1.useState(false);
+    const [pendingAction, setPendingAction] = React$1.useState(null);
+    const handleClick = (action, needsConfirm) => {
+      if (needsConfirm) {
+        setPendingAction(() => action);
+        setConfirmOpen(true);
+      } else {
+        action();
       }
-    );
+    };
+    const startAction = () => obs.action("startStreaming");
+    const stopAction = () => obs.action("stopStreaming");
+    return /* @__PURE__ */ jsxRuntimeExports.jsxs(jsxRuntimeExports.Fragment, { children: [
+      /* @__PURE__ */ jsxRuntimeExports.jsx(
+        StyledButton,
+        {
+          tileSize,
+          label: isStarted ? "Stop Streaming" : isStopped || isLoading ? "Start Streaming" : isStarting ? "Starting..." : isStopping ? "Stopping" : "...",
+          color: isStarted ? "secondary" : isStopped ? "primary" : "inherit",
+          disabled: isStarting || isStopping || isLoading,
+          onClick: isStarted ? () => handleClick(stopAction, settings.confirmBeforeStopStreaming ?? false) : isStopped ? () => handleClick(startAction, settings.confirmBeforeStartStreaming ?? false) : void 0
+        }
+      ),
+      /* @__PURE__ */ jsxRuntimeExports.jsx(
+        ConfirmDialog,
+        {
+          open: confirmOpen,
+          title: isStarted ? "Stop Streaming?" : "Start Streaming?",
+          message: isStarted ? "Are you sure you want to stop the stream?" : "Are you sure you want to start the stream?",
+          onConfirm: () => {
+            pendingAction?.();
+            setConfirmOpen(false);
+          },
+          onCancel: () => setConfirmOpen(false)
+        }
+      )
+    ] });
   },
   "toggleRecording": ({
     obs,
@@ -21768,17 +25534,45 @@ const ButtonComponents = {
       isStarting = false,
       isStopping = false,
       isLoading = true
-    } = useIsRecording(obs);
-    return /* @__PURE__ */ jsxRuntimeExports.jsx(
-      StyledButton,
-      {
-        tileSize,
-        label: isStarted ? "Stop Recording" : isStopped ? "Start Recording" : isStarting ? "Starting..." : isStopping ? "Stopping" : "...",
-        color: isStarted ? "secondary" : isStopped ? "primary" : "inherit",
-        disabled: isStarting || isStopping || isLoading,
-        onClick: isStarted ? () => obs.action("stopRecording") : isStopped ? () => obs.action("startRecording") : void 0
+    } = useIsRecording(obs) ?? {};
+    const { settings } = useSettings();
+    const [confirmOpen, setConfirmOpen] = React$1.useState(false);
+    const [pendingAction, setPendingAction] = React$1.useState(null);
+    const handleClick = (action, needsConfirm) => {
+      if (needsConfirm) {
+        setPendingAction(() => action);
+        setConfirmOpen(true);
+      } else {
+        action();
       }
-    );
+    };
+    const startAction = () => obs.action("startRecording");
+    const stopAction = () => obs.action("stopRecording");
+    return /* @__PURE__ */ jsxRuntimeExports.jsxs(jsxRuntimeExports.Fragment, { children: [
+      /* @__PURE__ */ jsxRuntimeExports.jsx(
+        StyledButton,
+        {
+          tileSize,
+          label: isStarted ? "Stop Recording" : isStopped || isLoading ? "Start Recording" : isStarting ? "Starting..." : isStopping ? "Stopping" : "...",
+          color: isStarted ? "secondary" : isStopped ? "primary" : "inherit",
+          disabled: isStarting || isStopping || isLoading,
+          onClick: isStarted ? () => handleClick(stopAction, settings.confirmBeforeStopRecording ?? false) : isStopped ? () => handleClick(startAction, settings.confirmBeforeStartRecording ?? false) : void 0
+        }
+      ),
+      /* @__PURE__ */ jsxRuntimeExports.jsx(
+        ConfirmDialog,
+        {
+          open: confirmOpen,
+          title: isStarted ? "Stop Recording?" : "Start Recording?",
+          message: isStarted ? "Are you sure you want to stop the recording?" : "Are you sure you want to start the recording?",
+          onConfirm: () => {
+            pendingAction?.();
+            setConfirmOpen(false);
+          },
+          onCancel: () => setConfirmOpen(false)
+        }
+      )
+    ] });
   }
 };
 const Button = ({
@@ -21787,9 +25581,6 @@ const Button = ({
 }) => {
   const obs = useObs({ connection });
   const component = ButtonComponents[props.button];
-  if (!obs.connected) {
-    return null;
-  }
   return component ? React$1.createElement(component, {
     obs,
     ...props
@@ -21799,14 +25590,19 @@ const SceneButton = ({
   connection,
   scene,
   title,
-  tileSize = "10"
+  tileSize = "10",
+  viewType = "preview"
 }) => {
   const size = parseInt(String(tileSize));
   const obs = useObs({ connection });
   const currentScene2 = useCurrentScene(obs);
+  const sceneList2 = useSceneList(obs);
   const transition2 = useTransition(obs);
   const isPrevScene = currentScene2?.name === scene && transition2?.fromSceneName === scene;
   const isCurrentScene = transition2?.toSceneName === scene || currentScene2?.name === scene;
+  const isProgramScene = scene === sceneList2?.currentScene;
+  const isPreviewScene = scene === sceneList2?.currentPreviewSceneName;
+  const suppressOverlay = isProgramScene || isPreviewScene;
   const imageData = useSceneImage(obs, {
     scene,
     tileSize: Math.min(size, 20),
@@ -21823,14 +25619,25 @@ const SceneButton = ({
     obs.failedConnection ?? "Connecting...",
     obs.connecting ? /* @__PURE__ */ jsxRuntimeExports.jsx(StyledCircularProgress, {}) : null
   ] }) : null;
+  if (viewType === "checkbox") {
+    return /* @__PURE__ */ jsxRuntimeExports.jsx(
+      CheckboxTile,
+      {
+        size,
+        label: title ?? scene,
+        checked: isCurrentScene,
+        eventHandlers: { onClick: handleClick }
+      }
+    );
+  }
   return /* @__PURE__ */ jsxRuntimeExports.jsx(
     TileWrapper$1,
     {
       size,
       label: title ?? scene,
       onClick: handleClick,
-      isSelected: isCurrentScene || isPrevScene,
-      isDeselecting: isPrevScene,
+      isSelected: !suppressOverlay && (isCurrentScene || isPrevScene),
+      isDeselecting: !suppressOverlay && isPrevScene,
       elementType: "SceneWrapper",
       overlay,
       children: /* @__PURE__ */ jsxRuntimeExports.jsx(TileImage, { src: imageData ?? void 0, $size: size })
@@ -21947,7 +25754,8 @@ const SceneItemButton = ({
     longPress = "toggleVisible"
   },
   title,
-  tileSize = "10"
+  tileSize = "10",
+  viewType = "preview"
 }) => {
   const size = parseInt(String(tileSize));
   const obs = useObs({ connection });
@@ -21989,6 +25797,17 @@ const SceneItemButton = ({
     handlers,
     delay: 600
   });
+  if (viewType === "checkbox") {
+    return /* @__PURE__ */ jsxRuntimeExports.jsx(
+      CheckboxTile,
+      {
+        size,
+        label: title ?? item,
+        checked: isSelected,
+        eventHandlers: buttonEventListeners
+      }
+    );
+  }
   const overlay = !obs.connected ? /* @__PURE__ */ jsxRuntimeExports.jsxs(jsxRuntimeExports.Fragment, { children: [
     obs.failedConnection ?? "Connecting...",
     obs.connecting ? /* @__PURE__ */ jsxRuntimeExports.jsx(StyledCircularProgress, {}) : null
@@ -22022,13 +25841,33 @@ const formatMB = (mb2) => {
 const TextComponents = {
   "stats": ({
     obs,
-    tileSize
+    tileSize,
+    statsLines,
+    customText
   }) => {
     const size = parseInt(tileSize);
     const stats2 = obs.useDataProvider("stats");
     const videoInfo2 = obs.useDataProvider("videoInfo");
+    const show = {
+      fps: statsLines?.fps !== false,
+      cpu: statsLines?.cpu !== false,
+      memory: statsLines?.memory !== false,
+      freeDisk: statsLines?.freeDisk !== false,
+      skippedFrames: statsLines?.skippedFrames !== false
+    };
+    const anyVisible = Object.values(show).some(Boolean) || Boolean(customText);
+    if (!anyVisible) {
+      return /* @__PURE__ */ jsxRuntimeExports.jsx(StyledText, { $size: size, children: /* @__PURE__ */ jsxRuntimeExports.jsx(Paragraph, { $size: size, children: " " }) });
+    }
     if (!stats2) {
-      return null;
+      return /* @__PURE__ */ jsxRuntimeExports.jsxs(StyledText, { $size: size, children: [
+        show.fps && /* @__PURE__ */ jsxRuntimeExports.jsx(Paragraph, { $size: size, children: "FPS: —" }),
+        show.cpu && /* @__PURE__ */ jsxRuntimeExports.jsx(Paragraph, { $size: size, children: "CPU: —" }),
+        show.memory && /* @__PURE__ */ jsxRuntimeExports.jsx(Paragraph, { $size: size, children: "Memory: —" }),
+        show.freeDisk && /* @__PURE__ */ jsxRuntimeExports.jsx(Paragraph, { $size: size, children: "Free Disk: —" }),
+        show.skippedFrames && /* @__PURE__ */ jsxRuntimeExports.jsx(Paragraph, { $size: size, children: "Skipped Frames: —" }),
+        customText && /* @__PURE__ */ jsxRuntimeExports.jsx(Paragraph, { $size: size, children: customText })
+      ] });
     }
     const fps = stats2.fps || 0;
     const fpsPerc = videoInfo2?.fps > 0 ? 100 * fps / videoInfo2?.fps : 0;
@@ -22036,37 +25875,36 @@ const TextComponents = {
     const memoryUsage = stats2.memoryUsage || 0;
     const freeDiskSpace = stats2.freeDiskSpace || 0;
     const outputSkippedFrames = stats2.outputSkippedFrames || 0;
-    return /* @__PURE__ */ jsxRuntimeExports.jsxs(
-      StyledText,
-      {
-        $size: size,
-        children: [
-          /* @__PURE__ */ jsxRuntimeExports.jsxs(Paragraph, { $size: size, children: [
-            "FPS: ",
-            fps.toFixed(2)
-          ] }),
-          /* @__PURE__ */ jsxRuntimeExports.jsx(LinearProgress$1, { variant: "determinate", value: Math.round(fpsPerc), color: fpsPerc > 80 ? "primary" : "secondary" }),
-          /* @__PURE__ */ jsxRuntimeExports.jsxs(Paragraph, { $size: size, children: [
-            "CPU: ",
-            cpuUsage.toFixed(0),
-            "%"
-          ] }),
-          /* @__PURE__ */ jsxRuntimeExports.jsx(LinearProgress$1, { variant: "determinate", value: Math.round(cpuUsage), color: cpuUsage < 80 ? "primary" : "secondary" }),
-          /* @__PURE__ */ jsxRuntimeExports.jsxs(Paragraph, { $size: size, children: [
-            "Memory: ",
-            formatMB(memoryUsage)
-          ] }),
-          /* @__PURE__ */ jsxRuntimeExports.jsxs(Paragraph, { $size: size, children: [
-            "Free Disk: ",
-            formatMB(freeDiskSpace)
-          ] }),
-          /* @__PURE__ */ jsxRuntimeExports.jsxs(Paragraph, { $size: size, children: [
-            "Skipped Frames: ",
-            outputSkippedFrames
-          ] })
-        ]
-      }
-    );
+    return /* @__PURE__ */ jsxRuntimeExports.jsxs(StyledText, { $size: size, children: [
+      show.fps && /* @__PURE__ */ jsxRuntimeExports.jsxs(jsxRuntimeExports.Fragment, { children: [
+        /* @__PURE__ */ jsxRuntimeExports.jsxs(Paragraph, { $size: size, children: [
+          "FPS: ",
+          fps.toFixed(2)
+        ] }),
+        /* @__PURE__ */ jsxRuntimeExports.jsx(LinearProgress$1, { variant: "determinate", value: Math.round(fpsPerc), color: fpsPerc > 80 ? "primary" : "secondary" })
+      ] }),
+      show.cpu && /* @__PURE__ */ jsxRuntimeExports.jsxs(jsxRuntimeExports.Fragment, { children: [
+        /* @__PURE__ */ jsxRuntimeExports.jsxs(Paragraph, { $size: size, children: [
+          "CPU: ",
+          cpuUsage.toFixed(0),
+          "%"
+        ] }),
+        /* @__PURE__ */ jsxRuntimeExports.jsx(LinearProgress$1, { variant: "determinate", value: Math.round(cpuUsage), color: cpuUsage < 80 ? "primary" : "secondary" })
+      ] }),
+      show.memory && /* @__PURE__ */ jsxRuntimeExports.jsxs(Paragraph, { $size: size, children: [
+        "Memory: ",
+        formatMB(memoryUsage)
+      ] }),
+      show.freeDisk && /* @__PURE__ */ jsxRuntimeExports.jsxs(Paragraph, { $size: size, children: [
+        "Free Disk: ",
+        formatMB(freeDiskSpace)
+      ] }),
+      show.skippedFrames && /* @__PURE__ */ jsxRuntimeExports.jsxs(Paragraph, { $size: size, children: [
+        "Skipped Frames: ",
+        outputSkippedFrames
+      ] }),
+      customText && /* @__PURE__ */ jsxRuntimeExports.jsx(Paragraph, { $size: size, children: customText })
+    ] });
   }
 };
 const Text = ({
@@ -22075,9 +25913,6 @@ const Text = ({
 }) => {
   const obs = useObs({ connection });
   const component = TextComponents[props.text];
-  if (!obs.connected) {
-    return null;
-  }
   return component ? React$1.createElement(component, {
     obs,
     ...props
@@ -22093,7 +25928,7 @@ const TilesGroupWrapper = qe.div`
 	align-items: center;
 	border: 1px solid ${(p2) => p2.theme.border};
 	border-radius: ${(p2) => p2.theme.grid(0.5)};
-	background-color: ${(p2) => p2.theme.groupBackground};
+	background-color: ${(p2) => p2.$backgroundColor || p2.theme.groupBackground};
 	padding: 0 ${(p2) => p2.theme.grid(0.5)} ${(p2) => p2.theme.grid(0.5)} ${(p2) => p2.theme.grid(0.5)};
 
 	& h3 {
@@ -22131,21 +25966,21 @@ function warnExtraProps(tile, allowed, typeName) {
 function isGroupTileConfig(tile) {
   const valid = typeof tile === "object" && "tiles" in tile && Array.isArray(tile.tiles);
   if (valid) {
-    warnExtraProps(tile, ["group", "tiles", "direction", "wrap", ...COMMON_TILE_PROPS], "GroupTileConfig");
+    warnExtraProps(tile, ["group", "tiles", "direction", "wrap", "backgroundColor", ...COMMON_TILE_PROPS], "GroupTileConfig");
   }
   return valid;
 }
 function isSceneButtonTileConfig(tile) {
   const valid = typeof tile === "object" && "scene" in tile && typeof tile.scene === "string" && !("sceneItem" in tile);
   if (valid) {
-    warnExtraProps(tile, ["scene", ...COMMON_TILE_PROPS], "SceneButtonTileConfig");
+    warnExtraProps(tile, ["scene", "viewType", ...COMMON_TILE_PROPS], "SceneButtonTileConfig");
   }
   return valid;
 }
 function isSceneItemButtonTileConfig(tile) {
   const valid = typeof tile === "object" && "sceneItem" in tile && typeof tile.sceneItem === "object" && tile.sceneItem !== null;
   if (valid) {
-    warnExtraProps(tile, ["sceneItem", ...COMMON_TILE_PROPS], "SceneItemButtonTileConfig");
+    warnExtraProps(tile, ["sceneItem", "viewType", ...COMMON_TILE_PROPS], "SceneItemButtonTileConfig");
   }
   return valid;
 }
@@ -22159,14 +25994,14 @@ function isButtonTileConfig(tile) {
 function isTextTileConfig(tile) {
   const valid = typeof tile === "object" && "text" in tile && typeof tile.text === "string" && !!tile.text;
   if (valid) {
-    warnExtraProps(tile, ["text", ...COMMON_TILE_PROPS], "TextTileConfig");
+    warnExtraProps(tile, ["text", "statsLines", "customText", ...COMMON_TILE_PROPS], "TextTileConfig");
   }
   return valid;
 }
 function isAudioInputTileConfig(tile) {
   const valid = typeof tile === "object" && "audioInput" in tile && typeof tile.audioInput === "object" && tile.audioInput !== null && typeof tile.audioInput.inputName === "string";
   if (valid) {
-    warnExtraProps(tile, ["audioInput", ...COMMON_TILE_PROPS], "AudioInputTileConfig");
+    warnExtraProps(tile, ["audioInput", "viewType", ...COMMON_TILE_PROPS], "AudioInputTileConfig");
   }
   return valid;
 }
@@ -22184,31 +26019,60 @@ const Tiles = ({
       tileSize
     };
     if (isGroupTileConfig(tile)) {
-      return /* @__PURE__ */ jsxRuntimeExports.jsxs(TilesGroupWrapper, { "data-elementtype": "TilesGroupWrapper", children: [
+      console.log("Rendering group tile:", tile.group, " with background color:", tile);
+      return /* @__PURE__ */ jsxRuntimeExports.jsxs(TilesGroupWrapper, { "data-elementtype": "TilesGroupWrapper", $backgroundColor: tile.backgroundColor, children: [
         /* @__PURE__ */ jsxRuntimeExports.jsx("h3", { children: tile.group }),
         /* @__PURE__ */ jsxRuntimeExports.jsx(Tiles, { ...inheritableProps, ...tile, tiles: tile.tiles })
       ] }, tile.group);
     }
     if (isSceneButtonTileConfig(tile)) {
-      return /* @__PURE__ */ jsxRuntimeExports.jsx(SceneButton, { connection, tileSize: String(tileSize), scene: tile.scene, title: tile.title }, tile.scene);
+      return /* @__PURE__ */ jsxRuntimeExports.jsx(
+        SceneButton,
+        {
+          ...inheritableProps,
+          connection,
+          ...tile
+        },
+        tile.scene
+      );
     }
     if (isSceneItemButtonTileConfig(tile)) {
-      return /* @__PURE__ */ jsxRuntimeExports.jsx(SceneItemButton, { connection, tileSize: String(tileSize), sceneItem: tile.sceneItem, title: tile.title }, tile.sceneItem.item ?? JSON.stringify(tile.sceneItem));
+      return /* @__PURE__ */ jsxRuntimeExports.jsx(
+        SceneItemButton,
+        {
+          ...inheritableProps,
+          connection,
+          ...tile
+        },
+        tile.sceneItem.item ?? JSON.stringify(tile.sceneItem)
+      );
     }
     if (isButtonTileConfig(tile)) {
-      return /* @__PURE__ */ jsxRuntimeExports.jsx(Button, { ...inheritableProps, ...tile, button: tile.button }, tile.button);
+      return /* @__PURE__ */ jsxRuntimeExports.jsx(
+        Button,
+        {
+          ...inheritableProps,
+          ...tile
+        },
+        tile.button
+      );
     }
     if (isTextTileConfig(tile)) {
-      return /* @__PURE__ */ jsxRuntimeExports.jsx(Text, { ...inheritableProps, ...tile, text: tile.text }, tile.text);
+      return /* @__PURE__ */ jsxRuntimeExports.jsx(
+        Text,
+        {
+          ...inheritableProps,
+          ...tile
+        },
+        tile.text
+      );
     }
     if (isAudioInputTileConfig(tile)) {
       return /* @__PURE__ */ jsxRuntimeExports.jsx(
         AudioInputTile,
         {
-          connection,
-          tileSize: String(tileSize),
-          audioInput: tile.audioInput,
-          title: tile.title
+          ...inheritableProps,
+          ...tile
         },
         tile.audioInput.inputName
       );
@@ -22236,30 +26100,1436 @@ const Tiles = ({
     }
   );
 };
+const FormSection = qe.div`
+	display: flex;
+	flex-direction: column;
+	gap: 14px;
+	padding-top: 8px;
+`;
+const DIRECTIONS = ["row", "column"];
+const CLICK_ACTIONS = ["toggleVisible", "moveToTop"];
+const BUTTON_TYPES = ["toggleStreaming", "toggleRecording"];
+const VIEW_TYPES = [
+  { value: "preview", label: "Preview (tile)" },
+  { value: "checkbox", label: "Checkbox" }
+];
+function detectTileType(tile) {
+  if (!tile) return "button";
+  if ("tiles" in tile) return "group";
+  if ("sceneItem" in tile) return "sceneItem";
+  if ("scene" in tile) return "scene";
+  if ("button" in tile) return "button";
+  if ("text" in tile) return "text";
+  if ("audioInput" in tile) return "audioInput";
+  return "button";
+}
+const ScenePicker = ({ connection, value, onChange }) => {
+  const obs = useObs({ connection });
+  const sceneListData = useSceneList(obs);
+  const scenes = sceneListData ? Object.keys(sceneListData.scenes) : null;
+  if (!obs.connected) {
+    return /* @__PURE__ */ jsxRuntimeExports.jsx(
+      TextField$1,
+      {
+        label: "Scene",
+        value,
+        onChange: (e2) => onChange(e2.target.value),
+        variant: "outlined",
+        size: "small",
+        fullWidth: true,
+        helperText: "OBS not connected — enter scene name manually"
+      }
+    );
+  }
+  if (!scenes) {
+    return /* @__PURE__ */ jsxRuntimeExports.jsxs(FormControl$1, { variant: "outlined", size: "small", fullWidth: true, children: [
+      /* @__PURE__ */ jsxRuntimeExports.jsx(InputLabel$1, { children: "Scene" }),
+      /* @__PURE__ */ jsxRuntimeExports.jsx(Select$1, { label: "Scene", value: "", disabled: true, children: /* @__PURE__ */ jsxRuntimeExports.jsxs(MenuItem$1, { value: "", children: [
+        /* @__PURE__ */ jsxRuntimeExports.jsx(CircularProgress$1, { size: 16, style: { margin: "0 8px" } }),
+        " Loading…"
+      ] }) })
+    ] });
+  }
+  const programScene = sceneListData?.currentScene;
+  const previewScene = sceneListData?.currentPreviewSceneName;
+  return /* @__PURE__ */ jsxRuntimeExports.jsxs(FormControl$1, { variant: "outlined", size: "small", fullWidth: true, children: [
+    /* @__PURE__ */ jsxRuntimeExports.jsx(InputLabel$1, { children: "Scene" }),
+    /* @__PURE__ */ jsxRuntimeExports.jsxs(
+      Select$1,
+      {
+        label: "Scene",
+        value,
+        onChange: (e2) => onChange(e2.target.value),
+        children: [
+          scenes.map((s) => /* @__PURE__ */ jsxRuntimeExports.jsx(MenuItem$1, { value: s, children: s }, s)),
+          (programScene || previewScene) && /* @__PURE__ */ jsxRuntimeExports.jsx(MuiDivider, {}),
+          programScene && /* @__PURE__ */ jsxRuntimeExports.jsxs(MenuItem$1, { value: programScene, style: { fontStyle: "italic" }, children: [
+            "▶ Program — ",
+            programScene
+          ] }),
+          previewScene && /* @__PURE__ */ jsxRuntimeExports.jsxs(MenuItem$1, { value: previewScene, style: { fontStyle: "italic" }, children: [
+            "○ Preview — ",
+            previewScene
+          ] })
+        ]
+      }
+    )
+  ] });
+};
+const SceneItemPicker = ({ connection, scene, value, onChange }) => {
+  const obs = useObs({ connection });
+  const items = useSceneItemList(obs, { scene });
+  if (!obs.connected || !scene) {
+    return /* @__PURE__ */ jsxRuntimeExports.jsx(
+      TextField$1,
+      {
+        label: "Item",
+        value,
+        onChange: (e2) => onChange(e2.target.value),
+        variant: "outlined",
+        size: "small",
+        fullWidth: true,
+        helperText: !scene ? "Enter a scene name first" : "OBS not connected — enter item name manually"
+      }
+    );
+  }
+  if (!items) {
+    return /* @__PURE__ */ jsxRuntimeExports.jsxs(FormControl$1, { variant: "outlined", size: "small", fullWidth: true, children: [
+      /* @__PURE__ */ jsxRuntimeExports.jsx(InputLabel$1, { children: "Item" }),
+      /* @__PURE__ */ jsxRuntimeExports.jsx(Select$1, { label: "Item", value: "", disabled: true, children: /* @__PURE__ */ jsxRuntimeExports.jsxs(MenuItem$1, { value: "", children: [
+        /* @__PURE__ */ jsxRuntimeExports.jsx(CircularProgress$1, { size: 16, style: { margin: "0 8px" } }),
+        " Loading…"
+      ] }) })
+    ] });
+  }
+  return /* @__PURE__ */ jsxRuntimeExports.jsxs(FormControl$1, { variant: "outlined", size: "small", fullWidth: true, children: [
+    /* @__PURE__ */ jsxRuntimeExports.jsx(InputLabel$1, { children: "Item" }),
+    /* @__PURE__ */ jsxRuntimeExports.jsx(
+      Select$1,
+      {
+        label: "Item",
+        value,
+        onChange: (e2) => onChange(e2.target.value),
+        children: items.map((item) => /* @__PURE__ */ jsxRuntimeExports.jsx(MenuItem$1, { value: item.sourceName, children: item.sourceName }, item.sourceName))
+      }
+    )
+  ] });
+};
+function GroupForm({ draft, setDraft }) {
+  return /* @__PURE__ */ jsxRuntimeExports.jsxs(FormSection, { children: [
+    /* @__PURE__ */ jsxRuntimeExports.jsx(
+      TextField$1,
+      {
+        label: "Group Name",
+        value: draft.group ?? "",
+        onChange: (e2) => setDraft({ ...draft, group: e2.target.value || void 0 }),
+        variant: "outlined",
+        size: "small",
+        fullWidth: true
+      }
+    ),
+    /* @__PURE__ */ jsxRuntimeExports.jsxs(FormControl$1, { variant: "outlined", size: "small", fullWidth: true, children: [
+      /* @__PURE__ */ jsxRuntimeExports.jsx(InputLabel$1, { children: "Direction" }),
+      /* @__PURE__ */ jsxRuntimeExports.jsx(
+        Select$1,
+        {
+          label: "Direction",
+          value: draft.direction ?? "row",
+          onChange: (e2) => setDraft({ ...draft, direction: e2.target.value }),
+          children: DIRECTIONS.map((d2) => /* @__PURE__ */ jsxRuntimeExports.jsx(MenuItem$1, { value: d2, children: d2 }, d2))
+        }
+      )
+    ] }),
+    /* @__PURE__ */ jsxRuntimeExports.jsx(
+      FormControlLabel$1,
+      {
+        control: /* @__PURE__ */ jsxRuntimeExports.jsx(
+          Checkbox$1,
+          {
+            checked: draft.wrap !== false,
+            onChange: (e2) => setDraft({ ...draft, wrap: e2.target.checked ? void 0 : false })
+          }
+        ),
+        label: "Wrap tiles"
+      }
+    ),
+    /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { style: { display: "flex", alignItems: "center", gap: 8 }, children: [
+      /* @__PURE__ */ jsxRuntimeExports.jsx(
+        "input",
+        {
+          type: "color",
+          value: draft.backgroundColor ?? "#1e2a38",
+          onChange: (e2) => setDraft({ ...draft, backgroundColor: e2.target.value }),
+          style: { width: 36, height: 36, padding: 2, cursor: "pointer", border: "1px solid rgba(255,255,255,0.23)", borderRadius: 4, background: "none", flexShrink: 0 }
+        }
+      ),
+      /* @__PURE__ */ jsxRuntimeExports.jsx(
+        TextField$1,
+        {
+          label: "Background Color",
+          value: draft.backgroundColor ?? "",
+          placeholder: "Default (theme color)",
+          onChange: (e2) => setDraft({ ...draft, backgroundColor: e2.target.value || void 0 }),
+          variant: "outlined",
+          size: "small",
+          style: { flex: 1 },
+          helperText: "Hex color, e.g. #1e2a38. Clear to use theme default."
+        }
+      )
+    ] }),
+    /* @__PURE__ */ jsxRuntimeExports.jsx(
+      TextField$1,
+      {
+        label: "Connection",
+        value: draft.connection ?? "",
+        onChange: (e2) => setDraft({ ...draft, connection: e2.target.value || void 0 }),
+        variant: "outlined",
+        size: "small",
+        fullWidth: true
+      }
+    ),
+    /* @__PURE__ */ jsxRuntimeExports.jsx(
+      TextField$1,
+      {
+        label: "Tile Size",
+        type: "number",
+        value: draft.tileSize ?? "",
+        onChange: (e2) => setDraft({ ...draft, tileSize: e2.target.value || void 0 }),
+        variant: "outlined",
+        size: "small",
+        fullWidth: true
+      }
+    )
+  ] });
+}
+function SceneForm({ draft, setDraft, connection }) {
+  return /* @__PURE__ */ jsxRuntimeExports.jsxs(FormSection, { children: [
+    /* @__PURE__ */ jsxRuntimeExports.jsx(ScenePicker, { connection, value: draft.scene ?? "", onChange: (v2) => setDraft({ ...draft, scene: v2 }) }),
+    /* @__PURE__ */ jsxRuntimeExports.jsxs(FormControl$1, { variant: "outlined", size: "small", fullWidth: true, children: [
+      /* @__PURE__ */ jsxRuntimeExports.jsx(InputLabel$1, { children: "View Type" }),
+      /* @__PURE__ */ jsxRuntimeExports.jsx(
+        Select$1,
+        {
+          label: "View Type",
+          value: draft.viewType ?? "preview",
+          onChange: (e2) => setDraft({ ...draft, viewType: e2.target.value === "preview" ? void 0 : e2.target.value }),
+          children: VIEW_TYPES.map((vt) => /* @__PURE__ */ jsxRuntimeExports.jsx(MenuItem$1, { value: vt.value, children: vt.label }, vt.value))
+        }
+      )
+    ] }),
+    /* @__PURE__ */ jsxRuntimeExports.jsx(
+      TextField$1,
+      {
+        label: "Title (optional)",
+        value: draft.title ?? "",
+        onChange: (e2) => setDraft({ ...draft, title: e2.target.value || void 0 }),
+        variant: "outlined",
+        size: "small",
+        fullWidth: true
+      }
+    ),
+    /* @__PURE__ */ jsxRuntimeExports.jsx(
+      TextField$1,
+      {
+        label: "Tile Size",
+        type: "number",
+        value: draft.tileSize ?? "",
+        onChange: (e2) => setDraft({ ...draft, tileSize: e2.target.value || void 0 }),
+        variant: "outlined",
+        size: "small",
+        fullWidth: true
+      }
+    )
+  ] });
+}
+function SceneItemForm({ draft, setDraft, connection }) {
+  const si2 = draft.sceneItem ?? {};
+  const patchSI = (partial) => setDraft({ ...draft, sceneItem: { ...si2, ...partial } });
+  return /* @__PURE__ */ jsxRuntimeExports.jsxs(FormSection, { children: [
+    /* @__PURE__ */ jsxRuntimeExports.jsx(
+      ScenePicker,
+      {
+        connection,
+        value: si2.scene ?? "",
+        onChange: (v2) => patchSI({ scene: v2 })
+      }
+    ),
+    /* @__PURE__ */ jsxRuntimeExports.jsx(
+      SceneItemPicker,
+      {
+        connection,
+        scene: si2.scene ?? "",
+        value: si2.item ?? "",
+        onChange: (v2) => patchSI({ item: v2 })
+      }
+    ),
+    /* @__PURE__ */ jsxRuntimeExports.jsxs(FormControl$1, { variant: "outlined", size: "small", fullWidth: true, children: [
+      /* @__PURE__ */ jsxRuntimeExports.jsx(InputLabel$1, { children: "Click Action" }),
+      /* @__PURE__ */ jsxRuntimeExports.jsx(
+        Select$1,
+        {
+          label: "Click Action",
+          value: si2.click ?? "toggleVisible",
+          onChange: (e2) => patchSI({ click: e2.target.value }),
+          children: CLICK_ACTIONS.map((a) => /* @__PURE__ */ jsxRuntimeExports.jsx(MenuItem$1, { value: a, children: a }, a))
+        }
+      )
+    ] }),
+    /* @__PURE__ */ jsxRuntimeExports.jsxs(FormControl$1, { variant: "outlined", size: "small", fullWidth: true, children: [
+      /* @__PURE__ */ jsxRuntimeExports.jsx(InputLabel$1, { children: "Long Press Action" }),
+      /* @__PURE__ */ jsxRuntimeExports.jsx(
+        Select$1,
+        {
+          label: "Long Press Action",
+          value: si2.longPress ?? "toggleVisible",
+          onChange: (e2) => patchSI({ longPress: e2.target.value }),
+          children: CLICK_ACTIONS.map((a) => /* @__PURE__ */ jsxRuntimeExports.jsx(MenuItem$1, { value: a, children: a }, a))
+        }
+      )
+    ] }),
+    /* @__PURE__ */ jsxRuntimeExports.jsxs(FormControl$1, { variant: "outlined", size: "small", fullWidth: true, children: [
+      /* @__PURE__ */ jsxRuntimeExports.jsx(InputLabel$1, { children: "View Type" }),
+      /* @__PURE__ */ jsxRuntimeExports.jsx(
+        Select$1,
+        {
+          label: "View Type",
+          value: draft.viewType ?? "preview",
+          onChange: (e2) => setDraft({ ...draft, viewType: e2.target.value === "preview" ? void 0 : e2.target.value }),
+          children: VIEW_TYPES.map((vt) => /* @__PURE__ */ jsxRuntimeExports.jsx(MenuItem$1, { value: vt.value, children: vt.label }, vt.value))
+        }
+      )
+    ] }),
+    /* @__PURE__ */ jsxRuntimeExports.jsx(
+      TextField$1,
+      {
+        label: "Title (optional)",
+        value: draft.title ?? "",
+        onChange: (e2) => setDraft({ ...draft, title: e2.target.value || void 0 }),
+        variant: "outlined",
+        size: "small",
+        fullWidth: true
+      }
+    ),
+    /* @__PURE__ */ jsxRuntimeExports.jsx(
+      TextField$1,
+      {
+        label: "Tile Size",
+        type: "number",
+        value: draft.tileSize ?? "",
+        onChange: (e2) => setDraft({ ...draft, tileSize: e2.target.value || void 0 }),
+        variant: "outlined",
+        size: "small",
+        fullWidth: true
+      }
+    )
+  ] });
+}
+function ButtonForm({ draft, setDraft }) {
+  return /* @__PURE__ */ jsxRuntimeExports.jsxs(FormSection, { children: [
+    /* @__PURE__ */ jsxRuntimeExports.jsxs(FormControl$1, { variant: "outlined", size: "small", fullWidth: true, children: [
+      /* @__PURE__ */ jsxRuntimeExports.jsx(InputLabel$1, { children: "Button" }),
+      /* @__PURE__ */ jsxRuntimeExports.jsx(
+        Select$1,
+        {
+          label: "Button",
+          value: draft.button ?? "",
+          onChange: (e2) => setDraft({ ...draft, button: e2.target.value }),
+          children: BUTTON_TYPES.map((b2) => /* @__PURE__ */ jsxRuntimeExports.jsx(MenuItem$1, { value: b2, children: b2 }, b2))
+        }
+      )
+    ] }),
+    /* @__PURE__ */ jsxRuntimeExports.jsx(
+      TextField$1,
+      {
+        label: "Title (optional)",
+        value: draft.title ?? "",
+        onChange: (e2) => setDraft({ ...draft, title: e2.target.value || void 0 }),
+        variant: "outlined",
+        size: "small",
+        fullWidth: true
+      }
+    ),
+    /* @__PURE__ */ jsxRuntimeExports.jsx(
+      TextField$1,
+      {
+        label: "Tile Size",
+        type: "number",
+        value: draft.tileSize ?? "",
+        onChange: (e2) => setDraft({ ...draft, tileSize: e2.target.value || void 0 }),
+        variant: "outlined",
+        size: "small",
+        fullWidth: true
+      }
+    )
+  ] });
+}
+function TextForm({ draft, setDraft }) {
+  const sl = draft.statsLines ?? {};
+  const patchSL = (partial) => setDraft({ ...draft, statsLines: { ...sl, ...partial } });
+  const shown = (key2) => sl[key2] !== false;
+  return /* @__PURE__ */ jsxRuntimeExports.jsxs(FormSection, { children: [
+    /* @__PURE__ */ jsxRuntimeExports.jsx(
+      TextField$1,
+      {
+        label: "Text type",
+        value: draft.text ?? "",
+        onChange: (e2) => setDraft({ ...draft, text: e2.target.value || void 0 }),
+        variant: "outlined",
+        size: "small",
+        fullWidth: true,
+        helperText: `e.g. "stats"`
+      }
+    ),
+    draft.text === "stats" && /* @__PURE__ */ jsxRuntimeExports.jsxs(jsxRuntimeExports.Fragment, { children: [
+      /* @__PURE__ */ jsxRuntimeExports.jsx(Typography$1, { variant: "caption", color: "textSecondary", children: "Visible lines" }),
+      [
+        ["fps", "FPS"],
+        ["cpu", "CPU"],
+        ["memory", "Memory"],
+        ["freeDisk", "Free Disk"],
+        ["skippedFrames", "Skipped Frames"]
+      ].map(([key2, label]) => /* @__PURE__ */ jsxRuntimeExports.jsx(
+        FormControlLabel$1,
+        {
+          control: /* @__PURE__ */ jsxRuntimeExports.jsx(
+            Checkbox$1,
+            {
+              checked: shown(key2),
+              onChange: (e2) => patchSL({ [key2]: e2.target.checked ? void 0 : false }),
+              size: "small"
+            }
+          ),
+          label
+        },
+        key2
+      ))
+    ] }),
+    /* @__PURE__ */ jsxRuntimeExports.jsx(
+      TextField$1,
+      {
+        label: "Custom Text (optional)",
+        value: draft.customText ?? "",
+        onChange: (e2) => setDraft({ ...draft, customText: e2.target.value || void 0 }),
+        variant: "outlined",
+        size: "small",
+        fullWidth: true,
+        multiline: true,
+        rows: 2
+      }
+    ),
+    /* @__PURE__ */ jsxRuntimeExports.jsx(
+      TextField$1,
+      {
+        label: "Tile Size",
+        type: "number",
+        value: draft.tileSize ?? "",
+        onChange: (e2) => setDraft({ ...draft, tileSize: e2.target.value || void 0 }),
+        variant: "outlined",
+        size: "small",
+        fullWidth: true
+      }
+    )
+  ] });
+}
+function AudioInputForm({ draft, setDraft }) {
+  const ai2 = draft.audioInput ?? {};
+  const patchAI = (partial) => setDraft({ ...draft, audioInput: { ...ai2, ...partial } });
+  return /* @__PURE__ */ jsxRuntimeExports.jsxs(FormSection, { children: [
+    /* @__PURE__ */ jsxRuntimeExports.jsx(
+      TextField$1,
+      {
+        label: "Input Name",
+        value: ai2.inputName ?? "",
+        onChange: (e2) => patchAI({ inputName: e2.target.value }),
+        variant: "outlined",
+        size: "small",
+        fullWidth: true
+      }
+    ),
+    /* @__PURE__ */ jsxRuntimeExports.jsx(
+      TextField$1,
+      {
+        label: "Max Volume",
+        type: "number",
+        value: ai2.maxVolume ?? "",
+        onChange: (e2) => patchAI({ maxVolume: e2.target.value !== "" ? Number(e2.target.value) : void 0 }),
+        variant: "outlined",
+        size: "small",
+        fullWidth: true
+      }
+    ),
+    /* @__PURE__ */ jsxRuntimeExports.jsxs(FormControl$1, { variant: "outlined", size: "small", fullWidth: true, children: [
+      /* @__PURE__ */ jsxRuntimeExports.jsx(InputLabel$1, { children: "View Type" }),
+      /* @__PURE__ */ jsxRuntimeExports.jsx(
+        Select$1,
+        {
+          label: "View Type",
+          value: draft.viewType ?? "preview",
+          onChange: (e2) => setDraft({ ...draft, viewType: e2.target.value === "preview" ? void 0 : e2.target.value }),
+          children: VIEW_TYPES.map((vt) => /* @__PURE__ */ jsxRuntimeExports.jsx(MenuItem$1, { value: vt.value, children: vt.label }, vt.value))
+        }
+      )
+    ] }),
+    /* @__PURE__ */ jsxRuntimeExports.jsx(
+      TextField$1,
+      {
+        label: "Title (optional)",
+        value: draft.title ?? "",
+        onChange: (e2) => setDraft({ ...draft, title: e2.target.value || void 0 }),
+        variant: "outlined",
+        size: "small",
+        fullWidth: true
+      }
+    ),
+    /* @__PURE__ */ jsxRuntimeExports.jsx(
+      TextField$1,
+      {
+        label: "Tile Size",
+        type: "number",
+        value: draft.tileSize ?? "",
+        onChange: (e2) => setDraft({ ...draft, tileSize: e2.target.value || void 0 }),
+        variant: "outlined",
+        size: "small",
+        fullWidth: true
+      }
+    )
+  ] });
+}
+const TYPE_LABELS = {
+  group: "Group",
+  scene: "Scene Button",
+  sceneItem: "Scene Item Button",
+  button: "Button",
+  text: "Text",
+  audioInput: "Audio Input"
+};
+const TilePropertiesDialog = ({
+  open,
+  tile,
+  connection,
+  onSave,
+  onClose
+}) => {
+  const tileType = detectTileType(tile);
+  const [draft, setDraft] = React$1.useState(tile ?? {});
+  React$1.useEffect(() => {
+    if (open) setDraft(tile ?? {});
+  }, [open, tile]);
+  const handleSave = () => onSave(draft);
+  const formProps = { draft, setDraft, connection };
+  return /* @__PURE__ */ jsxRuntimeExports.jsxs(Dialog$1, { open, onClose, maxWidth: "xs", fullWidth: true, children: [
+    /* @__PURE__ */ jsxRuntimeExports.jsxs(DialogTitle$1, { children: [
+      TYPE_LABELS[tileType],
+      " Properties"
+    ] }),
+    /* @__PURE__ */ jsxRuntimeExports.jsxs(DialogContent$1, { children: [
+      tileType === "group" && /* @__PURE__ */ jsxRuntimeExports.jsx(GroupForm, { ...formProps }),
+      tileType === "scene" && /* @__PURE__ */ jsxRuntimeExports.jsx(SceneForm, { ...formProps }),
+      tileType === "sceneItem" && /* @__PURE__ */ jsxRuntimeExports.jsx(SceneItemForm, { ...formProps }),
+      tileType === "button" && /* @__PURE__ */ jsxRuntimeExports.jsx(ButtonForm, { ...formProps }),
+      tileType === "text" && /* @__PURE__ */ jsxRuntimeExports.jsx(TextForm, { ...formProps }),
+      tileType === "audioInput" && /* @__PURE__ */ jsxRuntimeExports.jsx(AudioInputForm, { ...formProps })
+    ] }),
+    /* @__PURE__ */ jsxRuntimeExports.jsxs(DialogActions$1, { children: [
+      /* @__PURE__ */ jsxRuntimeExports.jsx(Button$2, { onClick: onClose, children: "Cancel" }),
+      /* @__PURE__ */ jsxRuntimeExports.jsx(Button$2, { onClick: handleSave, color: "primary", variant: "contained", children: "Save" })
+    ] })
+  ] });
+};
+const TILE_TYPES = [
+  { type: "group", label: "Group", defaultTile: { group: "New Group", direction: "row", tiles: [] } },
+  { type: "scene", label: "Scene Button", defaultTile: { scene: "" } },
+  { type: "sceneItem", label: "Scene Item Button", defaultTile: { sceneItem: { scene: "", item: "", click: "toggleVisible" } } },
+  { type: "button", label: "Button", defaultTile: { button: "toggleStreaming" } },
+  { type: "text", label: "Text", defaultTile: { text: "stats" } },
+  { type: "audioInput", label: "Audio Input", defaultTile: { audioInput: { inputName: "" } } }
+];
+const AddTileDialog = ({
+  open,
+  connection,
+  onAdd,
+  onClose
+}) => {
+  const [selectedType, setSelectedType] = React$1.useState(null);
+  const [draft, setDraft] = React$1.useState({});
+  const handleSelectType = (type) => {
+    const template = TILE_TYPES.find((t2) => t2.type === type);
+    setSelectedType(type);
+    setDraft({ ...template.defaultTile });
+  };
+  const handleAdd = () => {
+    onAdd(draft);
+    onClose();
+  };
+  React$1.useEffect(() => {
+    if (open) {
+      setSelectedType(null);
+      setDraft({});
+    }
+  }, [open]);
+  const formProps = { draft, setDraft, connection };
+  return /* @__PURE__ */ jsxRuntimeExports.jsxs(Dialog$1, { open, onClose, maxWidth: "xs", fullWidth: true, children: [
+    /* @__PURE__ */ jsxRuntimeExports.jsx(DialogTitle$1, { children: "Add Tile" }),
+    /* @__PURE__ */ jsxRuntimeExports.jsx(DialogContent$1, { children: !selectedType ? /* @__PURE__ */ jsxRuntimeExports.jsx(List$1, { dense: true, children: TILE_TYPES.map(({ type, label }) => /* @__PURE__ */ jsxRuntimeExports.jsx(
+      ListItem$1,
+      {
+        button: true,
+        onClick: () => handleSelectType(type),
+        children: label
+      },
+      type
+    )) }) : /* @__PURE__ */ jsxRuntimeExports.jsxs(jsxRuntimeExports.Fragment, { children: [
+      /* @__PURE__ */ jsxRuntimeExports.jsxs(Typography$1, { variant: "caption", color: "textSecondary", children: [
+        TILE_TYPES.find((t2) => t2.type === selectedType)?.label,
+        " · ",
+        /* @__PURE__ */ jsxRuntimeExports.jsx(
+          "span",
+          {
+            style: { cursor: "pointer", textDecoration: "underline" },
+            onClick: () => setSelectedType(null),
+            children: "change type"
+          }
+        )
+      ] }),
+      selectedType === "group" && /* @__PURE__ */ jsxRuntimeExports.jsx(GroupForm, { ...formProps }),
+      selectedType === "scene" && /* @__PURE__ */ jsxRuntimeExports.jsx(SceneForm, { ...formProps }),
+      selectedType === "sceneItem" && /* @__PURE__ */ jsxRuntimeExports.jsx(SceneItemForm, { ...formProps }),
+      selectedType === "button" && /* @__PURE__ */ jsxRuntimeExports.jsx(ButtonForm, { ...formProps }),
+      selectedType === "text" && /* @__PURE__ */ jsxRuntimeExports.jsx(TextForm, { ...formProps }),
+      selectedType === "audioInput" && /* @__PURE__ */ jsxRuntimeExports.jsx(AudioInputForm, { ...formProps })
+    ] }) }),
+    /* @__PURE__ */ jsxRuntimeExports.jsxs(DialogActions$1, { children: [
+      /* @__PURE__ */ jsxRuntimeExports.jsx(Button$2, { onClick: onClose, children: "Cancel" }),
+      selectedType && /* @__PURE__ */ jsxRuntimeExports.jsx(Button$2, { onClick: handleAdd, color: "primary", variant: "contained", children: "Add" })
+    ] })
+  ] });
+};
+function getTileAt(rootTiles, path) {
+  if (path.length === 0) throw new Error("empty path");
+  if (path.length === 1) return rootTiles[path[0]];
+  return getTileAt(rootTiles[path[0]].tiles, path.slice(1));
+}
+function removeTileAt(rootTiles, path) {
+  if (path.length === 1) return rootTiles.filter((_2, i) => i !== path[0]);
+  return rootTiles.map((t2, i) => {
+    if (i !== path[0]) return t2;
+    return { ...t2, tiles: removeTileAt(t2.tiles, path.slice(1)) };
+  });
+}
+function insertTileAt(rootTiles, containerPath, insertIndex, tile) {
+  if (containerPath.length === 0) {
+    const result = [...rootTiles];
+    result.splice(insertIndex, 0, tile);
+    return result;
+  }
+  return rootTiles.map((t2, i) => {
+    if (i !== containerPath[0]) return t2;
+    return { ...t2, tiles: insertTileAt(t2.tiles ?? [], containerPath.slice(1), insertIndex, tile) };
+  });
+}
+function replaceTileAt(rootTiles, path, newTile) {
+  if (path.length === 1) {
+    return rootTiles.map((t2, i) => i === path[0] ? newTile : t2);
+  }
+  return rootTiles.map((t2, i) => {
+    if (i !== path[0]) return t2;
+    return { ...t2, tiles: replaceTileAt(t2.tiles, path.slice(1), newTile) };
+  });
+}
+function moveTileAt(rootTiles, path, delta) {
+  const idx = path[path.length - 1];
+  const newIdx = idx + delta;
+  if (path.length === 1) {
+    const result = [...rootTiles];
+    [result[idx], result[newIdx]] = [result[newIdx], result[idx]];
+    return result;
+  }
+  return rootTiles.map((t2, i) => {
+    if (i !== path[0]) return t2;
+    return { ...t2, tiles: moveTileAt(t2.tiles, path.slice(1), delta) };
+  });
+}
+const DndCtx = React$1.createContext({
+  dragPath: null,
+  dropTarget: null,
+  startDrag: () => {
+  },
+  endDrag: () => {
+  },
+  setDropTarget: () => {
+  },
+  commitDrop: () => {
+  }
+});
+const EditRoot = qe.div`
+	position: relative;
+	padding: 8px;
+`;
+const RootMenuButton = qe.div`
+	position: absolute;
+	top: 4px;
+	right: 4px;
+	z-index: 10;
+	pointer-events: all;
+`;
+const DragWrapper = qe.div`
+	position: relative;
+	display: inline-block;
+	opacity: ${(p2) => p2.$isDragging ? 0.4 : 1};
+	transition: opacity 0.15s;
+`;
+const TileContent = qe.div`
+	pointer-events: none;
+	user-select: none;
+`;
+const HoverOverlay = qe.div`
+	position: absolute;
+	inset: 0;
+	z-index: 20;
+	display: flex;
+	align-items: flex-start;
+	justify-content: flex-end;
+	cursor: grab;
+	opacity: ${(p2) => p2.$visible ? 1 : 0};
+	background: ${(p2) => p2.$visible ? "rgba(0,0,0,0.18)" : "transparent"};
+	border-radius: 4px;
+	transition: opacity 0.12s, background 0.12s;
+	&:active { cursor: grabbing; }
+`;
+const MenuButtonContainer = qe.div`
+	pointer-events: all;
+`;
+const DropZoneDiv = qe.div`
+	flex-shrink: 0;
+	transition: background 0.1s, flex-basis 0.1s;
+	border-radius: 3px;
+	${(p2) => p2.$horizontal ? Ae`
+					height: 100%;
+					width: ${p2.$active ? "16px" : "4px"};
+					background: ${p2.$active ? p2.theme.primary || "#538c61" : "transparent"};
+			  ` : Ae`
+					width: 100%;
+					height: ${p2.$active ? "16px" : "4px"};
+					background: ${p2.$active ? p2.theme.primary || "#538c61" : "transparent"};
+			  `}
+`;
+const GroupEditWrapper = qe.div`
+	display: flex;
+	flex-direction: column;
+	border: 2px dashed ${(p2) => p2.theme.border || "#888"};
+	border-radius: 6px;
+	padding: 4px;
+	background: ${(p2) => p2.$backgroundColor || p2.theme.groupBackground || "#303030"};
+`;
+const GroupHeader = qe.div`
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	padding: 0 4px;
+	cursor: grab;
+	user-select: none;
+	&:active { cursor: grabbing; }
+	& h3 {
+		margin: 4px 0;
+		font-size: 13px;
+	}
+`;
+const GroupHeaderActions = qe.div`
+	display: flex;
+	align-items: center;
+	pointer-events: all;
+`;
+const TilesGroupRow = qe.div`
+	display: flex;
+	flex-direction: ${(p2) => p2.$direction === "column" ? "column" : "row"};
+	flex-wrap: ${(p2) => p2.$wrap === false ? "nowrap" : "wrap"};
+	align-items: flex-start;
+	gap: 4px;
+	padding: 4px;
+`;
+const SliderMenuItem = qe.div`
+	padding: 4px 16px 4px 16px;
+	min-width: 180px;
+`;
+const DropZone = ({ containerPath, insertAt, horizontal }) => {
+  const { dragPath, dropTarget, setDropTarget, commitDrop } = React$1.useContext(DndCtx);
+  if (!dragPath) return null;
+  const isActive = dropTarget !== null && dropTarget.containerPath.join(",") === containerPath.join(",") && dropTarget.insertAt === insertAt;
+  return /* @__PURE__ */ jsxRuntimeExports.jsx(
+    DropZoneDiv,
+    {
+      $active: isActive,
+      $horizontal: horizontal,
+      onDragOver: (e2) => {
+        e2.preventDefault();
+        e2.stopPropagation();
+        e2.dataTransfer.dropEffect = "move";
+        setDropTarget({ containerPath, insertAt });
+      },
+      onDragLeave: () => {
+        if (isActive) setDropTarget(null);
+      },
+      onDrop: (e2) => {
+        e2.preventDefault();
+        e2.stopPropagation();
+        commitDrop({ containerPath, insertAt });
+      }
+    }
+  );
+};
+const TileMenu = ({
+  anchorPosition,
+  tilePath,
+  tile,
+  isGroup,
+  isRoot,
+  onClose,
+  onOpenProperties,
+  onOpenAdd
+}) => {
+  const { currentConfig, updateCurrentConfig } = useSettings();
+  const { clipboard, setClipboard } = useEditMode();
+  const handleCut = () => {
+    setClipboard(tile);
+    updateCurrentConfig((config2) => ({
+      ...config2,
+      tiles: removeTileAt(config2.tiles, tilePath)
+    }));
+    onClose();
+  };
+  const handlePaste = () => {
+    if (!clipboard) return;
+    const insertPath = tilePath.slice(0, -1);
+    const insertAt = tilePath[tilePath.length - 1] + 1;
+    updateCurrentConfig((config2) => ({
+      ...config2,
+      tiles: insertTileAt(config2.tiles, insertPath, insertAt, clipboard)
+    }));
+    setClipboard(null);
+    onClose();
+  };
+  const handlePasteInto = () => {
+    if (!clipboard) return;
+    if (isRoot) {
+      updateCurrentConfig((config2) => ({
+        ...config2,
+        tiles: [...config2.tiles, clipboard]
+      }));
+    } else {
+      updateCurrentConfig((config2) => {
+        const group = getTileAt(config2.tiles, tilePath);
+        const updatedGroup = { ...group, tiles: [...group.tiles || [], clipboard] };
+        return { ...config2, tiles: replaceTileAt(config2.tiles, tilePath, updatedGroup) };
+      });
+    }
+    setClipboard(null);
+    onClose();
+  };
+  const handleDelete = () => {
+    updateCurrentConfig((config2) => ({
+      ...config2,
+      tiles: removeTileAt(config2.tiles, tilePath)
+    }));
+    onClose();
+  };
+  const currentSize = Number(tile.tileSize || currentConfig.tileSize || 10);
+  const handleSizeChange = (_2, value) => {
+    const size = Array.isArray(value) ? value[0] : value;
+    if (isRoot) {
+      updateCurrentConfig((config2) => ({ ...config2, tileSize: size }));
+    } else {
+      updateCurrentConfig((config2) => ({
+        ...config2,
+        tiles: replaceTileAt(config2.tiles, tilePath, {
+          ...tile,
+          tileSize: String(size)
+        })
+      }));
+    }
+  };
+  return /* @__PURE__ */ jsxRuntimeExports.jsxs(
+    Menu$1,
+    {
+      anchorReference: "anchorPosition",
+      anchorPosition: anchorPosition ?? void 0,
+      open: Boolean(anchorPosition),
+      onClose,
+      keepMounted: true,
+      children: [
+        /* @__PURE__ */ jsxRuntimeExports.jsxs(MenuItem$1, { onClick: () => {
+          onOpenProperties();
+          onClose();
+        }, children: [
+          /* @__PURE__ */ jsxRuntimeExports.jsx(ListItemIcon$1, { children: /* @__PURE__ */ jsxRuntimeExports.jsx(SettingsIcon, { fontSize: "small" }) }),
+          "Properties"
+        ] }),
+        (isGroup || isRoot) && /* @__PURE__ */ jsxRuntimeExports.jsxs(MenuItem$1, { onClick: () => {
+          onOpenAdd();
+          onClose();
+        }, children: [
+          /* @__PURE__ */ jsxRuntimeExports.jsx(ListItemIcon$1, { children: /* @__PURE__ */ jsxRuntimeExports.jsx(AddCircleOutline, { fontSize: "small" }) }),
+          "Add…"
+        ] }),
+        (isGroup || isRoot) && clipboard && /* @__PURE__ */ jsxRuntimeExports.jsxs(MenuItem$1, { onClick: handlePasteInto, children: [
+          /* @__PURE__ */ jsxRuntimeExports.jsx(ListItemIcon$1, { children: /* @__PURE__ */ jsxRuntimeExports.jsx(FileCopy, { fontSize: "small" }) }),
+          "Paste into group"
+        ] }),
+        !isRoot && /* @__PURE__ */ jsxRuntimeExports.jsx(MuiDivider, {}),
+        !isRoot && /* @__PURE__ */ jsxRuntimeExports.jsxs(MenuItem$1, { onClick: handleCut, children: [
+          /* @__PURE__ */ jsxRuntimeExports.jsx(ListItemIcon$1, { children: /* @__PURE__ */ jsxRuntimeExports.jsx(CallSplit, { fontSize: "small" }) }),
+          "Cut"
+        ] }),
+        !isRoot && /* @__PURE__ */ jsxRuntimeExports.jsxs(MenuItem$1, { onClick: handlePaste, disabled: !clipboard, children: [
+          /* @__PURE__ */ jsxRuntimeExports.jsx(ListItemIcon$1, { children: /* @__PURE__ */ jsxRuntimeExports.jsx(FileCopy, { fontSize: "small" }) }),
+          "Paste after"
+        ] }),
+        !isRoot && /* @__PURE__ */ jsxRuntimeExports.jsxs(MenuItem$1, { onClick: handleDelete, children: [
+          /* @__PURE__ */ jsxRuntimeExports.jsx(ListItemIcon$1, { children: /* @__PURE__ */ jsxRuntimeExports.jsx(Delete, { fontSize: "small" }) }),
+          "Delete"
+        ] }),
+        /* @__PURE__ */ jsxRuntimeExports.jsx(MuiDivider, {}),
+        /* @__PURE__ */ jsxRuntimeExports.jsxs(SliderMenuItem, { onClick: (e2) => e2.stopPropagation(), children: [
+          /* @__PURE__ */ jsxRuntimeExports.jsxs(Typography$1, { variant: "caption", display: "block", gutterBottom: true, children: [
+            "Tile Size: ",
+            currentSize
+          ] }),
+          /* @__PURE__ */ jsxRuntimeExports.jsx(
+            Slider$1,
+            {
+              value: currentSize,
+              min: 4,
+              max: 30,
+              step: 1,
+              onChange: handleSizeChange,
+              style: { width: "100%" }
+            }
+          )
+        ] })
+      ]
+    }
+  );
+};
+const EditableLeafTile = ({
+  tile,
+  tilePath,
+  inheritedConnection,
+  inheritedTileSize,
+  parentDirection,
+  siblingCount = 1
+}) => {
+  const { dragPath, startDrag, endDrag } = React$1.useContext(DndCtx);
+  const [hovered, setHovered] = React$1.useState(false);
+  const [menuAnchor, setMenuAnchor] = React$1.useState(null);
+  const [propsOpen, setPropsOpen] = React$1.useState(false);
+  const { updateCurrentConfig } = useSettings();
+  const isDragging = dragPath?.join(",") === tilePath.join(",");
+  const effectiveConnection = tile.connection ?? inheritedConnection;
+  const effectiveTileSize = tile.tileSize ?? inheritedTileSize;
+  const tileIndex = tilePath[tilePath.length - 1];
+  const isColumn = parentDirection === "column";
+  const BackIcon = isColumn ? ArrowUpward : ArrowBack;
+  const FwdIcon = isColumn ? ArrowDownward : ArrowForward;
+  const isFirst = tileIndex === 0;
+  const isLast = tileIndex === siblingCount - 1;
+  const handleMove = (delta) => {
+    updateCurrentConfig((config2) => ({
+      ...config2,
+      tiles: moveTileAt(config2.tiles, tilePath, delta)
+    }));
+  };
+  const renderContent = () => {
+    const common2 = {
+      connection: effectiveConnection,
+      tileSize: String(effectiveTileSize ?? 10)
+    };
+    if ("scene" in tile) return /* @__PURE__ */ jsxRuntimeExports.jsx(SceneButton, { ...common2, scene: tile.scene, title: tile.title, viewType: tile.viewType });
+    if ("sceneItem" in tile) return /* @__PURE__ */ jsxRuntimeExports.jsx(SceneItemButton, { ...common2, sceneItem: tile.sceneItem, title: tile.title, viewType: tile.viewType });
+    if ("button" in tile) return /* @__PURE__ */ jsxRuntimeExports.jsx(Button, { ...common2, button: tile.button, title: tile.title });
+    if ("text" in tile) return /* @__PURE__ */ jsxRuntimeExports.jsx(Text, { ...common2, text: tile.text, statsLines: tile.statsLines, customText: tile.customText });
+    if ("audioInput" in tile) return /* @__PURE__ */ jsxRuntimeExports.jsx(AudioInputTile, { ...common2, audioInput: tile.audioInput, title: tile.title, viewType: tile.viewType });
+    return null;
+  };
+  return /* @__PURE__ */ jsxRuntimeExports.jsxs(jsxRuntimeExports.Fragment, { children: [
+    /* @__PURE__ */ jsxRuntimeExports.jsxs(
+      DragWrapper,
+      {
+        $isDragging: isDragging,
+        draggable: true,
+        onDragStart: (e2) => {
+          e2.stopPropagation();
+          e2.dataTransfer.effectAllowed = "move";
+          startDrag(tilePath);
+        },
+        onDragEnd: endDrag,
+        onMouseEnter: () => setHovered(true),
+        onMouseLeave: () => setHovered(false),
+        children: [
+          /* @__PURE__ */ jsxRuntimeExports.jsx(TileContent, { children: renderContent() }),
+          /* @__PURE__ */ jsxRuntimeExports.jsx(HoverOverlay, { $visible: hovered, onDragStart: (e2) => e2.stopPropagation(), children: /* @__PURE__ */ jsxRuntimeExports.jsxs(MenuButtonContainer, { children: [
+            /* @__PURE__ */ jsxRuntimeExports.jsx(
+              IconButton$1,
+              {
+                size: "small",
+                style: { color: "white", background: "rgba(0,0,0,0.5)", margin: 2 },
+                draggable: false,
+                onDragStart: (e2) => e2.preventDefault(),
+                disabled: isFirst,
+                onClick: (e2) => {
+                  e2.stopPropagation();
+                  handleMove(-1);
+                },
+                children: /* @__PURE__ */ jsxRuntimeExports.jsx(BackIcon, { fontSize: "small" })
+              }
+            ),
+            /* @__PURE__ */ jsxRuntimeExports.jsx(
+              IconButton$1,
+              {
+                size: "small",
+                style: { color: "white", background: "rgba(0,0,0,0.5)", margin: 2 },
+                draggable: false,
+                onDragStart: (e2) => e2.preventDefault(),
+                disabled: isLast,
+                onClick: (e2) => {
+                  e2.stopPropagation();
+                  handleMove(1);
+                },
+                children: /* @__PURE__ */ jsxRuntimeExports.jsx(FwdIcon, { fontSize: "small" })
+              }
+            ),
+            /* @__PURE__ */ jsxRuntimeExports.jsx(
+              IconButton$1,
+              {
+                size: "small",
+                style: { color: "white", background: "rgba(0,0,0,0.5)", margin: 2 },
+                draggable: false,
+                onDragStart: (e2) => e2.preventDefault(),
+                onClick: (e2) => {
+                  e2.stopPropagation();
+                  const rect = e2.currentTarget.getBoundingClientRect();
+                  setMenuAnchor({ top: rect.bottom, left: rect.left });
+                },
+                children: /* @__PURE__ */ jsxRuntimeExports.jsx(MoreVert, { fontSize: "small" })
+              }
+            )
+          ] }) })
+        ]
+      }
+    ),
+    /* @__PURE__ */ jsxRuntimeExports.jsx(
+      TileMenu,
+      {
+        anchorPosition: menuAnchor,
+        tile,
+        tilePath,
+        onClose: () => setMenuAnchor(null),
+        onOpenProperties: () => setPropsOpen(true),
+        onOpenAdd: () => {
+        }
+      }
+    ),
+    /* @__PURE__ */ jsxRuntimeExports.jsx(
+      TilePropertiesDialog,
+      {
+        open: propsOpen,
+        tile,
+        connection: effectiveConnection,
+        onSave: (updated) => {
+          updateCurrentConfig((config2) => ({
+            ...config2,
+            tiles: replaceTileAt(config2.tiles, tilePath, updated)
+          }));
+          setPropsOpen(false);
+        },
+        onClose: () => setPropsOpen(false)
+      }
+    )
+  ] });
+};
+const EditableGroupTile = ({
+  tile,
+  tilePath,
+  inheritedConnection,
+  inheritedTileSize,
+  parentDirection,
+  siblingCount = 1
+}) => {
+  const { dragPath, startDrag, endDrag } = React$1.useContext(DndCtx);
+  const [menuAnchor, setMenuAnchor] = React$1.useState(null);
+  const [propsOpen, setPropsOpen] = React$1.useState(false);
+  const [addOpen, setAddOpen] = React$1.useState(false);
+  const { updateCurrentConfig } = useSettings();
+  const isDragging = dragPath?.join(",") === tilePath.join(",");
+  const effectiveConnection = tile.connection ?? inheritedConnection;
+  const effectiveTileSize = tile.tileSize ?? inheritedTileSize;
+  const tileIndex = tilePath[tilePath.length - 1];
+  const isColumn = parentDirection === "column";
+  const BackIcon = isColumn ? ArrowUpward : ArrowBack;
+  const FwdIcon = isColumn ? ArrowDownward : ArrowForward;
+  const isFirst = tileIndex === 0;
+  const isLast = tileIndex === siblingCount - 1;
+  const handleMove = (delta) => {
+    updateCurrentConfig((config2) => ({
+      ...config2,
+      tiles: moveTileAt(config2.tiles, tilePath, delta)
+    }));
+  };
+  return /* @__PURE__ */ jsxRuntimeExports.jsxs(jsxRuntimeExports.Fragment, { children: [
+    /* @__PURE__ */ jsxRuntimeExports.jsxs(
+      GroupEditWrapper,
+      {
+        onMouseEnter: () => {
+        },
+        onMouseLeave: () => {
+        },
+        $backgroundColor: tile.backgroundColor,
+        style: { opacity: isDragging ? 0.4 : 1 },
+        children: [
+          /* @__PURE__ */ jsxRuntimeExports.jsxs(
+            GroupHeader,
+            {
+              draggable: true,
+              onDragStart: (e2) => {
+                e2.stopPropagation();
+                e2.dataTransfer.effectAllowed = "move";
+                startDrag(tilePath);
+              },
+              onDragEnd: endDrag,
+              children: [
+                /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { style: { display: "flex", alignItems: "center", gap: 4 }, children: [
+                  /* @__PURE__ */ jsxRuntimeExports.jsx(DragIndicator, { style: { opacity: 0.5, fontSize: 18 } }),
+                  /* @__PURE__ */ jsxRuntimeExports.jsx("h3", { children: tile.group || "(group)" })
+                ] }),
+                /* @__PURE__ */ jsxRuntimeExports.jsxs(GroupHeaderActions, { children: [
+                  /* @__PURE__ */ jsxRuntimeExports.jsx(
+                    IconButton$1,
+                    {
+                      size: "small",
+                      draggable: false,
+                      onDragStart: (e2) => e2.preventDefault(),
+                      disabled: isFirst,
+                      onClick: (e2) => {
+                        e2.stopPropagation();
+                        handleMove(-1);
+                      },
+                      children: /* @__PURE__ */ jsxRuntimeExports.jsx(BackIcon, { fontSize: "small" })
+                    }
+                  ),
+                  /* @__PURE__ */ jsxRuntimeExports.jsx(
+                    IconButton$1,
+                    {
+                      size: "small",
+                      draggable: false,
+                      onDragStart: (e2) => e2.preventDefault(),
+                      disabled: isLast,
+                      onClick: (e2) => {
+                        e2.stopPropagation();
+                        handleMove(1);
+                      },
+                      children: /* @__PURE__ */ jsxRuntimeExports.jsx(FwdIcon, { fontSize: "small" })
+                    }
+                  ),
+                  /* @__PURE__ */ jsxRuntimeExports.jsx(
+                    IconButton$1,
+                    {
+                      size: "small",
+                      draggable: false,
+                      onDragStart: (e2) => e2.preventDefault(),
+                      onClick: (e2) => {
+                        e2.stopPropagation();
+                        const rect = e2.currentTarget.getBoundingClientRect();
+                        setMenuAnchor({ top: rect.bottom, left: rect.left });
+                      },
+                      children: /* @__PURE__ */ jsxRuntimeExports.jsx(MoreVert, { fontSize: "small" })
+                    }
+                  )
+                ] })
+              ]
+            }
+          ),
+          /* @__PURE__ */ jsxRuntimeExports.jsx(
+            EditableGroup,
+            {
+              tiles: tile.tiles ?? [],
+              containerPath: tilePath,
+              inheritedConnection: effectiveConnection,
+              inheritedTileSize: effectiveTileSize,
+              direction: tile.direction,
+              wrap: tile.wrap
+            }
+          )
+        ]
+      }
+    ),
+    /* @__PURE__ */ jsxRuntimeExports.jsx(
+      TileMenu,
+      {
+        anchorPosition: menuAnchor,
+        tile,
+        tilePath,
+        isGroup: true,
+        onClose: () => setMenuAnchor(null),
+        onOpenProperties: () => setPropsOpen(true),
+        onOpenAdd: () => setAddOpen(true)
+      }
+    ),
+    /* @__PURE__ */ jsxRuntimeExports.jsx(
+      TilePropertiesDialog,
+      {
+        open: propsOpen,
+        tile,
+        connection: effectiveConnection,
+        onSave: (updated) => {
+          updateCurrentConfig((config2) => ({
+            ...config2,
+            tiles: replaceTileAt(config2.tiles, tilePath, { ...updated, tiles: tile.tiles })
+          }));
+          setPropsOpen(false);
+        },
+        onClose: () => setPropsOpen(false)
+      }
+    ),
+    /* @__PURE__ */ jsxRuntimeExports.jsx(
+      AddTileDialog,
+      {
+        open: addOpen,
+        connection: effectiveConnection,
+        onAdd: (newTile) => {
+          updateCurrentConfig((config2) => {
+            const group = getTileAt(config2.tiles, tilePath);
+            const updated = { ...group, tiles: [...group.tiles || [], newTile] };
+            return { ...config2, tiles: replaceTileAt(config2.tiles, tilePath, updated) };
+          });
+        },
+        onClose: () => setAddOpen(false)
+      }
+    )
+  ] });
+};
+const EditableGroup = ({
+  tiles,
+  containerPath,
+  inheritedConnection,
+  inheritedTileSize,
+  direction,
+  wrap
+}) => {
+  const { dragPath } = React$1.useContext(DndCtx);
+  const isHorizontal = direction !== "column";
+  return /* @__PURE__ */ jsxRuntimeExports.jsxs(TilesGroupRow, { $direction: direction, $wrap: wrap, children: [
+    dragPath && /* @__PURE__ */ jsxRuntimeExports.jsx(DropZone, { containerPath, insertAt: 0, horizontal: isHorizontal }),
+    tiles.map((tile, i) => /* @__PURE__ */ jsxRuntimeExports.jsxs(React$1.Fragment, { children: [
+      tile && "tiles" in tile ? /* @__PURE__ */ jsxRuntimeExports.jsx(
+        EditableGroupTile,
+        {
+          tile,
+          tilePath: [...containerPath, i],
+          inheritedConnection,
+          inheritedTileSize,
+          parentDirection: direction,
+          siblingCount: tiles.length
+        }
+      ) : /* @__PURE__ */ jsxRuntimeExports.jsx(
+        EditableLeafTile,
+        {
+          tile,
+          tilePath: [...containerPath, i],
+          inheritedConnection,
+          inheritedTileSize,
+          parentDirection: direction,
+          siblingCount: tiles.length
+        }
+      ),
+      dragPath && /* @__PURE__ */ jsxRuntimeExports.jsx(DropZone, { containerPath, insertAt: i + 1, horizontal: isHorizontal })
+    ] }, i))
+  ] });
+};
+const EditableTiles = () => {
+  const { currentConfig, updateCurrentConfig } = useSettings();
+  const [dragPath, setDragPath] = React$1.useState(null);
+  const [dropTarget, setDropTarget] = React$1.useState(null);
+  const [rootMenuAnchor, setRootMenuAnchor] = React$1.useState(null);
+  const [rootPropsOpen, setRootPropsOpen] = React$1.useState(false);
+  const [rootAddOpen, setRootAddOpen] = React$1.useState(false);
+  const rootTile = {
+    group: "",
+    tiles: currentConfig.tiles ?? [],
+    tileSize: currentConfig.tileSize,
+    direction: currentConfig.direction,
+    connection: currentConfig.connection,
+    wrap: currentConfig.wrap
+  };
+  const startDrag = React$1.useCallback((path) => {
+    setDragPath(path);
+  }, []);
+  const endDrag = React$1.useCallback(() => {
+    setDragPath(null);
+    setDropTarget(null);
+  }, []);
+  const commitDrop = React$1.useCallback(
+    (target) => {
+      if (!dragPath) return;
+      const src = dragPath;
+      const { containerPath, insertAt } = target;
+      updateCurrentConfig((config2) => {
+        const tile = getTileAt(config2.tiles, src);
+        let newTiles = removeTileAt(config2.tiles, src);
+        let adjustedInsert = insertAt;
+        const srcContainer = src.slice(0, -1);
+        const srcIndex = src[src.length - 1];
+        if (srcContainer.join(",") === containerPath.join(",") && srcIndex < adjustedInsert) {
+          adjustedInsert--;
+        }
+        newTiles = insertTileAt(newTiles, containerPath, adjustedInsert, tile);
+        return { ...config2, tiles: newTiles };
+      });
+      setDragPath(null);
+      setDropTarget(null);
+    },
+    [dragPath, updateCurrentConfig]
+  );
+  React$1.useEffect(() => {
+    const onDragEnd = () => {
+      setDragPath(null);
+      setDropTarget(null);
+    };
+    window.addEventListener("dragend", onDragEnd);
+    return () => window.removeEventListener("dragend", onDragEnd);
+  }, []);
+  const dndValue = React$1.useMemo(
+    () => ({ dragPath, dropTarget, startDrag, endDrag, setDropTarget, commitDrop }),
+    [dragPath, dropTarget, startDrag, endDrag, commitDrop]
+  );
+  return /* @__PURE__ */ jsxRuntimeExports.jsxs(DndCtx.Provider, { value: dndValue, children: [
+    /* @__PURE__ */ jsxRuntimeExports.jsxs(
+      EditRoot,
+      {
+        onContextMenu: (e2) => {
+          e2.preventDefault();
+          setRootMenuAnchor({ top: e2.clientY, left: e2.clientX });
+        },
+        children: [
+          /* @__PURE__ */ jsxRuntimeExports.jsx(RootMenuButton, { children: /* @__PURE__ */ jsxRuntimeExports.jsx(
+            IconButton$1,
+            {
+              size: "small",
+              style: { background: "rgba(0,0,0,0.4)", color: "white" },
+              onClick: (e2) => {
+                const rect = e2.currentTarget.getBoundingClientRect();
+                setRootMenuAnchor({ top: rect.bottom, left: rect.left });
+              },
+              children: /* @__PURE__ */ jsxRuntimeExports.jsx(MoreVert, { fontSize: "small" })
+            }
+          ) }),
+          /* @__PURE__ */ jsxRuntimeExports.jsx(
+            EditableGroup,
+            {
+              tiles: currentConfig.tiles ?? [],
+              containerPath: [],
+              inheritedConnection: currentConfig.connection,
+              inheritedTileSize: currentConfig.tileSize,
+              direction: currentConfig.direction,
+              wrap: currentConfig.wrap
+            }
+          )
+        ]
+      }
+    ),
+    /* @__PURE__ */ jsxRuntimeExports.jsx(
+      TileMenu,
+      {
+        anchorPosition: rootMenuAnchor,
+        tile: rootTile,
+        tilePath: [],
+        isRoot: true,
+        onClose: () => setRootMenuAnchor(null),
+        onOpenProperties: () => setRootPropsOpen(true),
+        onOpenAdd: () => setRootAddOpen(true)
+      }
+    ),
+    /* @__PURE__ */ jsxRuntimeExports.jsx(
+      TilePropertiesDialog,
+      {
+        open: rootPropsOpen,
+        tile: rootTile,
+        connection: currentConfig.connection,
+        onSave: (updated) => {
+          updateCurrentConfig((config2) => ({
+            ...config2,
+            tileSize: updated.tileSize ?? config2.tileSize,
+            direction: updated.direction ?? config2.direction,
+            connection: updated.connection ?? config2.connection,
+            wrap: updated.wrap
+          }));
+          setRootPropsOpen(false);
+        },
+        onClose: () => setRootPropsOpen(false)
+      }
+    ),
+    /* @__PURE__ */ jsxRuntimeExports.jsx(
+      AddTileDialog,
+      {
+        open: rootAddOpen,
+        connection: currentConfig.connection,
+        onAdd: (newTile) => {
+          updateCurrentConfig((config2) => ({
+            ...config2,
+            tiles: [...config2.tiles, newTile]
+          }));
+        },
+        onClose: () => setRootAddOpen(false)
+      }
+    )
+  ] });
+};
 const Main = qe.main`
 	padding: ${(p2) => p2.theme.grid(1)};
 `;
 const Content = () => {
   const {
-    settings: {
+    currentConfig: {
       connections,
       ...tileSettings
     }
   } = useSettings();
+  const { isEditMode } = useEditMode();
   return /* @__PURE__ */ jsxRuntimeExports.jsx(
     Main,
     {
       "data-elementtype": "Main",
-      children: /* @__PURE__ */ jsxRuntimeExports.jsx(
+      children: isEditMode ? /* @__PURE__ */ jsxRuntimeExports.jsx(EditableTiles, {}) : /* @__PURE__ */ jsxRuntimeExports.jsx(
         Tiles,
         {
-          tileSize: "10",
-          direction: "row",
-          ...tileSettings
+          ...tileSettings,
+          tileSize: tileSettings.tileSize ?? "10",
+          direction: tileSettings.direction ?? "row"
         }
       )
     }
   );
+};
+const Banner = qe.div`
+	display: flex;
+	align-items: center;
+	gap: 8px;
+	padding: 8px 12px;
+	background-color: #7a3a00;
+	color: #ffd89b;
+	font-size: 13px;
+	flex-shrink: 0;
+`;
+const BannerText = qe.span`
+	flex: 1;
+`;
+const HttpsWarningBanner = () => {
+  const [dismissed, setDismissed] = React$1.useState(false);
+  if (window.ipcRenderer || window.location.protocol !== "https:" || dismissed) {
+    return null;
+  }
+  return /* @__PURE__ */ jsxRuntimeExports.jsxs(Banner, { children: [
+    /* @__PURE__ */ jsxRuntimeExports.jsx(Warning, { style: { fontSize: 18, flexShrink: 0 } }),
+    /* @__PURE__ */ jsxRuntimeExports.jsx(BannerText, { children: "obs-tiles is loaded over HTTPS, but the OBS WebSocket connection uses an unencrypted WebSocket (ws://). Browsers block mixed content, so the connection will not work. Load obs-tiles over HTTP instead." }),
+    /* @__PURE__ */ jsxRuntimeExports.jsx(IconButton$1, { size: "small", style: { color: "inherit", padding: 2 }, onClick: () => setDismissed(true), children: /* @__PURE__ */ jsxRuntimeExports.jsx(Close, { fontSize: "small" }) })
+  ] });
 };
 const Wrapper = qe.div`
 	display: flex;
@@ -22276,13 +27546,16 @@ const Wrapper = qe.div`
 	color: ${(p2) => p2.theme.text};
 `;
 const Layout = () => {
+  const { autoOpenSelector, closeAutoOpenSelector } = useSettings();
   return /* @__PURE__ */ jsxRuntimeExports.jsxs(Wrapper, { children: [
+    /* @__PURE__ */ jsxRuntimeExports.jsx(HttpsWarningBanner, {}),
     /* @__PURE__ */ jsxRuntimeExports.jsx(Content, {}),
-    /* @__PURE__ */ jsxRuntimeExports.jsx(Footer, {})
+    /* @__PURE__ */ jsxRuntimeExports.jsx(Footer, {}),
+    /* @__PURE__ */ jsxRuntimeExports.jsx(ConfigSelectorDialog, { open: autoOpenSelector, onClose: closeAutoOpenSelector })
   ] });
 };
 const App = () => {
-  return /* @__PURE__ */ jsxRuntimeExports.jsx(ThemeProvider, { children: /* @__PURE__ */ jsxRuntimeExports.jsx(SettingsProvider, { children: /* @__PURE__ */ jsxRuntimeExports.jsx(OBSWebsocketProvider, { children: /* @__PURE__ */ jsxRuntimeExports.jsx(Layout, {}) }) }) });
+  return /* @__PURE__ */ jsxRuntimeExports.jsx(ThemeProvider, { children: /* @__PURE__ */ jsxRuntimeExports.jsx(SettingsProvider, { children: /* @__PURE__ */ jsxRuntimeExports.jsx(OBSWebsocketProvider, { children: /* @__PURE__ */ jsxRuntimeExports.jsx(EditModeProvider, { children: /* @__PURE__ */ jsxRuntimeExports.jsx(Layout, {}) }) }) }) });
 };
 if ("serviceWorker" in navigator) {
   try {
