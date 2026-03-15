@@ -19,10 +19,6 @@ interface SettingsContextType {
 
 	// Config management
 	selectConfig: (index: number) => void
-	addConfig: (name: string) => void
-	deleteConfig: (index: number) => void
-	renameConfig: (index: number, newName: string) => void
-	saveAllConfigs: (configs: ConfigItem[], selectedIndex: number) => void
 	saveFullSettings: (settings: ConfigFileFormat) => void
 	updateCurrentConfig: (updater: (config: ConfigItem) => ConfigItem) => void
 }

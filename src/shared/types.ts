@@ -9,8 +9,8 @@ export interface ConfigItem {
 }
 
 export interface ConfigFileFormat {
-  title?: string
+  title: string
   configs: ConfigItem[]
   currentConfigIndex: number
-  selectConfigAtLaunch?: boolean
+  selectConfigAtLaunch: boolean
 }

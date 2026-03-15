@@ -56,10 +56,14 @@ export const SettingsProvider = ({ children }: SettingsProviderProps) => {
 				}
 			}
 
-			const loaded: ConfigFileFormat = rawSettings ?? { ...DEFAULT_SETTINGS }
+			const loaded: ConfigFileFormat = {
+				...DEFAULT_SETTINGS,
+				...rawSettings,
+			}
 			loaded.currentConfigIndex = Math.min(loaded.currentConfigIndex, loaded.configs.length - 1)
+
 			setSettings(loaded)
-			if ((loaded.selectConfigAtLaunch ?? false) && loaded.configs.length > 1) {
+			if (loaded.selectConfigAtLaunch && loaded.configs.length > 1) {
 				setAutoOpenSelector(true)
 			}
 		}
@@ -74,44 +78,6 @@ export const SettingsProvider = ({ children }: SettingsProviderProps) => {
 	const selectConfig = React.useCallback((index: number) => {
 		setSettings(prev => {
 			const next = { ...prev, currentConfigIndex: index }
-			persistSettings(next)
-			return next
-		})
-	}, [])
-
-	const addConfig = React.useCallback((name: string) => {
-		const newConfig: ConfigItem = { ...DEFAULT_SETTINGS.configs[0], name }
-		setSettings(prev => {
-			const newConfigs = [...prev.configs, newConfig]
-			const next = { ...prev, configs: newConfigs, currentConfigIndex: newConfigs.length - 1 }
-			persistSettings(next)
-			return next
-		})
-	}, [])
-
-	const deleteConfig = React.useCallback((index: number) => {
-		setSettings(prev => {
-			if (prev.configs.length <= 1) return prev
-			const newConfigs = prev.configs.filter((_, i) => i !== index)
-			const next = { ...prev, configs: newConfigs, currentConfigIndex: Math.min(prev.currentConfigIndex, newConfigs.length - 1) }
-			persistSettings(next)
-			return next
-		})
-	}, [])
-
-	const renameConfig = React.useCallback((index: number, newName: string) => {
-		setSettings(prev => {
-			const newConfigs = [...prev.configs]
-			newConfigs[index] = { ...newConfigs[index], name: newName }
-			const next = { ...prev, configs: newConfigs }
-			persistSettings(next)
-			return next
-		})
-	}, [])
-
-	const saveAllConfigs = React.useCallback((newConfigs: ConfigItem[], selectedIndex: number) => {
-		setSettings(prev => {
-			const next = { ...prev, configs: newConfigs, currentConfigIndex: selectedIndex }
 			persistSettings(next)
 			return next
 		})
@@ -136,24 +102,20 @@ export const SettingsProvider = ({ children }: SettingsProviderProps) => {
 		return null
 	}
 
-	const { title = DEFAULT_SETTINGS.title, configs, currentConfigIndex, selectConfigAtLaunch } = settings
+	const { title, configs, currentConfigIndex, selectConfigAtLaunch } = settings
 	const currentConfig = configs[currentConfigIndex]
 
 	return (
 		<SettingsContext.Provider
 			value={{
 				title,
-				selectConfigAtLaunch: selectConfigAtLaunch ?? false,
+				selectConfigAtLaunch,
 				autoOpenSelector,
 				closeAutoOpenSelector,
 				configs,
 				currentConfigIndex,
 				currentConfig,
 				selectConfig,
-				addConfig,
-				deleteConfig,
-				renameConfig,
-				saveAllConfigs,
 				saveFullSettings,
 				updateCurrentConfig,
 			}}

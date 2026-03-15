@@ -4,6 +4,10 @@
 
 ### 2026-03-15
 
+**refactor(SettingsProvider): remove unused config-mutation callbacks**
+
+- Removed `addConfig`, `deleteConfig`, `renameConfig`, and `saveAllConfigs` from provider and context — all config editing goes through `saveFullSettings` (called by `SettingsDialog` on Save)
+
 **refactor(SettingsProvider): consolidate to single ConfigFileFormat state**
 
 - Replaced four separate `title` / `configs` / `currentConfigIndex` / `selectConfigAtLaunch` states with a single `settings: ConfigFileFormat` state
