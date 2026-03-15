@@ -2,6 +2,7 @@
 export const DEFAULT_SETTINGS = {
   title: 'obs-tiles',
   currentConfigIndex: 0,
+  selectConfigAtLaunch: false,
   configs: [
     {
       name: 'Default',

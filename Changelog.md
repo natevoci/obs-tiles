@@ -4,6 +4,13 @@
 
 ### 2026-03-15
 
+**feat(Settings): select config at launch**
+
+- Added `selectConfigAtLaunch` boolean to `ConfigFileFormat` and `DEFAULT_SETTINGS` (default `false`)
+- `SettingsProvider` sets an `autoOpenSelector` flag at load time when the option is enabled and more than one config exists
+- `Layout` renders `<ConfigSelectorDialog>` driven by `autoOpenSelector` / `closeAutoOpenSelector` from context
+- `SettingsDialog` settings panel now includes a "Select config at launch" checkbox; saved with the rest of the settings on Save
+
 **refactor(Footer): extract ConfigSelectorDialog to its own file**
 
 - Moved the config selector `Dialog` into `Footer/ConfigSelectorDialog.tsx` as a controlled component (`open` / `onClose` props)

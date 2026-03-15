@@ -13,6 +13,8 @@ import {
 	Tabs,
 	Tab,
 	Tooltip,
+	Checkbox,
+	FormControlLabel,
 } from '@material-ui/core'
 import { makeStyles } from '@material-ui/core/styles'
 import { Close, Add, Delete, Edit, ExpandMore, ChevronRight, Settings as SettingsIcon } from '@material-ui/icons'
@@ -157,11 +159,13 @@ export const SettingsDialog = ({ onClose }: SettingsDialogProps) => {
 		title: savedTitle,
 		configs: savedConfigs,
 		currentConfigIndex: savedConfigIndex,
+		selectConfigAtLaunch: savedSelectConfigAtLaunch,
 		saveFullSettings,
 	} = useSettings()
 
 	// Local state â€” edits are held locally until Save
 	const [localTitle, setLocalTitle] = React.useState(savedTitle)
+	const [localSelectConfigAtLaunch, setLocalSelectConfigAtLaunch] = React.useState(savedSelectConfigAtLaunch ?? false)
 	const [localConfigs, setLocalConfigs] = React.useState<ConfigItem[]>(() =>
 		savedConfigs.map((c) => ({ ...c })),
 	)
@@ -280,6 +284,7 @@ export const SettingsDialog = ({ onClose }: SettingsDialogProps) => {
 			title: localTitle,
 			configs: finalConfigs,
 			currentConfigIndex: localConfigIndex,
+			selectConfigAtLaunch: localSelectConfigAtLaunch,
 		})
 		onClose()
 	}
@@ -362,6 +367,17 @@ export const SettingsDialog = ({ onClose }: SettingsDialogProps) => {
 								variant="outlined"
 								size="small"
 								fullWidth
+							/>
+							<FormControlLabel
+								control={
+									<Checkbox
+										checked={localSelectConfigAtLaunch}
+										onChange={(e) => setLocalSelectConfigAtLaunch(e.target.checked)}
+										color="primary"
+										size="small"
+									/>
+								}
+								label="Select config at launch"
 							/>
 						</SettingsFormSection>
 					</RightPanelContent>

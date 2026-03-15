@@ -1,7 +1,10 @@
+import React from 'react'
 import styled from 'styled-components'
 
 import { Footer } from './Footer/Footer'
 import { Content } from './Content'
+import { ConfigSelectorDialog } from './Footer/ConfigSelectorDialog'
+import { useSettings } from './Settings/SettingsContext'
 
 const Wrapper = styled.div`
 	display: flex;
@@ -19,10 +22,13 @@ const Wrapper = styled.div`
 `
 
 export const Layout = () => {
+	const { autoOpenSelector, closeAutoOpenSelector } = useSettings()
+
 	return (
 		<Wrapper>
 			<Content />
 			<Footer />
+			<ConfigSelectorDialog open={autoOpenSelector} onClose={closeAutoOpenSelector} />
 		</Wrapper>
 	)
 }

@@ -32,6 +32,8 @@ export const SettingsProvider = ({ children }: SettingsProviderProps) => {
 	const [title, setTitle] = React.useState<string>(DEFAULT_SETTINGS.title)
 	const [configs, setConfigs] = React.useState<ConfigItem[]>([])
 	const [currentConfigIndex, setCurrentConfigIndex] = React.useState(0)
+	const [selectConfigAtLaunch, setSelectConfigAtLaunchState] = React.useState<boolean>(DEFAULT_SETTINGS.selectConfigAtLaunch)
+	const [autoOpenSelector, setAutoOpenSelector] = React.useState(false)
 
 	// Fetch settings on mount
 	React.useEffect(() => {
@@ -59,9 +61,29 @@ export const SettingsProvider = ({ children }: SettingsProviderProps) => {
 			if (stored.title) setTitle(stored.title)
 			setConfigs(stored.configs)
 			setCurrentConfigIndex(Math.min(stored.currentConfigIndex, stored.configs.length - 1))
+			const scal = stored.selectConfigAtLaunch ?? false
+			setSelectConfigAtLaunchState(scal)
+			if (scal && stored.configs.length > 1) {
+				setAutoOpenSelector(true)
+			}
 		}
 
 		load()
+	}, [])
+
+	const setSelectConfigAtLaunch = React.useCallback((value: boolean) => {
+		setSelectConfigAtLaunchState(value)
+		// Persist immediately so the change isn't lost if the user closes without saving
+		persistSettings({
+			title,
+			configs,
+			currentConfigIndex,
+			selectConfigAtLaunch: value,
+		})
+	}, [title, configs, currentConfigIndex])
+
+	const closeAutoOpenSelector = React.useCallback(() => {
+		setAutoOpenSelector(false)
 	}, [])
 
 	const buildBlob = React.useCallback((
@@ -72,7 +94,8 @@ export const SettingsProvider = ({ children }: SettingsProviderProps) => {
 		title: newTitle ?? title,
 		configs: newConfigs,
 		currentConfigIndex: newIndex,
-	}), [title])
+		selectConfigAtLaunch,
+	}), [title, selectConfigAtLaunch])
 
 	const saveConfigs = React.useCallback((newConfigs: ConfigItem[], newIndex?: number) => {
 		setConfigs(newConfigs)
@@ -119,6 +142,7 @@ export const SettingsProvider = ({ children }: SettingsProviderProps) => {
 		if (settings.title !== undefined) setTitle(settings.title)
 		setConfigs(settings.configs)
 		setCurrentConfigIndex(settings.currentConfigIndex)
+		if (settings.selectConfigAtLaunch !== undefined) setSelectConfigAtLaunchState(settings.selectConfigAtLaunch)
 		persistSettings(settings)
 	}, [])
 
@@ -141,6 +165,10 @@ export const SettingsProvider = ({ children }: SettingsProviderProps) => {
 		<SettingsContext.Provider
 			value={{
 				title,
+				selectConfigAtLaunch,
+				setSelectConfigAtLaunch,
+				autoOpenSelector,
+				closeAutoOpenSelector,
 				configs,
 				currentConfigIndex,
 				currentConfig,

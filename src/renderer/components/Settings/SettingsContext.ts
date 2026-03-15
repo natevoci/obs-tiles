@@ -4,6 +4,12 @@ import { ConfigItem, ConfigFileFormat } from '../../../shared/types'
 interface SettingsContextType {
 	// Global settings
 	title: string
+	selectConfigAtLaunch: boolean
+	setSelectConfigAtLaunch: (value: boolean) => void
+
+	// Auto-open at launch
+	autoOpenSelector: boolean
+	closeAutoOpenSelector: () => void
 
 	// All configs
 	configs: ConfigItem[]

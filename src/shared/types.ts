@@ -12,4 +12,5 @@ export interface ConfigFileFormat {
   title?: string
   configs: ConfigItem[]
   currentConfigIndex: number
+  selectConfigAtLaunch?: boolean
 }
