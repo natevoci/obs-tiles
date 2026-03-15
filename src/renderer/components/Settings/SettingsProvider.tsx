@@ -102,18 +102,14 @@ export const SettingsProvider = ({ children }: SettingsProviderProps) => {
 		return null
 	}
 
-	const { title, configs, currentConfigIndex, selectConfigAtLaunch } = settings
-	const currentConfig = configs[currentConfigIndex]
+	const currentConfig = settings.configs[settings.currentConfigIndex]
 
 	return (
 		<SettingsContext.Provider
 			value={{
-				title,
-				selectConfigAtLaunch,
+				settings,
 				autoOpenSelector,
 				closeAutoOpenSelector,
-				configs,
-				currentConfigIndex,
 				currentConfig,
 				selectConfig,
 				saveFullSettings,

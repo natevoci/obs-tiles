@@ -156,20 +156,17 @@ interface SettingsDialogProps {
 export const SettingsDialog = ({ onClose }: SettingsDialogProps) => {
 	const classes = useStyles()
 	const {
-		title: savedTitle,
-		configs: savedConfigs,
-		currentConfigIndex: savedConfigIndex,
-		selectConfigAtLaunch: savedSelectConfigAtLaunch,
+		settings: savedSettings,
 		saveFullSettings,
 	} = useSettings()
 
 	// Local state â€” edits are held locally until Save
-	const [localTitle, setLocalTitle] = React.useState(savedTitle)
-	const [localSelectConfigAtLaunch, setLocalSelectConfigAtLaunch] = React.useState(savedSelectConfigAtLaunch ?? false)
+	const [localTitle, setLocalTitle] = React.useState(savedSettings.title ?? DEFAULT_SETTINGS.title)
+	const [localSelectConfigAtLaunch, setLocalSelectConfigAtLaunch] = React.useState(savedSettings.selectConfigAtLaunch ?? false)
 	const [localConfigs, setLocalConfigs] = React.useState<ConfigItem[]>(() =>
-		savedConfigs.map((c) => ({ ...c })),
+		savedSettings.configs.map((c) => ({ ...c })),
 	)
-	const [localConfigIndex, setLocalConfigIndex] = React.useState(savedConfigIndex)
+	const [localConfigIndex, setLocalConfigIndex] = React.useState(savedSettings.currentConfigIndex)
 
 	// Tree selection
 	const [selected, setSelected] = React.useState<SelectedNode>('settings')
@@ -178,7 +175,7 @@ export const SettingsDialog = ({ onClose }: SettingsDialogProps) => {
 	// Per-config right panel
 	const [activeTab, setActiveTab] = React.useState<'connections' | 'json'>('connections')
 	const [jsonValue, setJsonValue] = React.useState(() =>
-		JSON.stringify(savedConfigs[savedConfigIndex], null, 2),
+		JSON.stringify(savedSettings.configs[savedSettings.currentConfigIndex], null, 2),
 	)
 
 	// Flush JSON text area into localConfigs (used before switching config / saving)

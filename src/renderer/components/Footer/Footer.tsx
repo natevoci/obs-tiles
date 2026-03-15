@@ -43,7 +43,8 @@ const RightActions = styled.div`
 `
 
 export const Footer = () => {
-	const { configs, currentConfigIndex, selectConfig } = useSettings()
+	const { settings } = useSettings()
+	const { configs, currentConfigIndex } = settings
 	const configName = configs[currentConfigIndex]?.name || ''
 
 	const { isEditMode, setEditMode } = useEditMode()

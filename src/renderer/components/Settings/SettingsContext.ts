@@ -2,22 +2,17 @@ import React from 'react'
 import { ConfigItem, ConfigFileFormat } from '../../../shared/types'
 
 interface SettingsContextType {
-	// Global settings
-	title: string
-	selectConfigAtLaunch: boolean
+	// Full settings blob
+	settings: ConfigFileFormat
 
 	// Auto-open at launch
 	autoOpenSelector: boolean
 	closeAutoOpenSelector: () => void
 
-	// All configs
-	configs: ConfigItem[]
-	currentConfigIndex: number
-
-	// Current config
+	// Current config (convenience)
 	currentConfig: ConfigItem
 
-	// Config management
+	// Actions
 	selectConfig: (index: number) => void
 	saveFullSettings: (settings: ConfigFileFormat) => void
 	updateCurrentConfig: (updater: (config: ConfigItem) => ConfigItem) => void

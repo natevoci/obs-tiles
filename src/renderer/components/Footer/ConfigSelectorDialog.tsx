@@ -1,4 +1,3 @@
-import React from 'react'
 import { Dialog, DialogTitle, MenuList, MenuItem, ListItemText } from '@material-ui/core'
 
 import { useSettings } from '../Settings/SettingsContext'
@@ -9,7 +8,8 @@ interface Props {
 }
 
 export const ConfigSelectorDialog = ({ open, onClose }: Props) => {
-	const { configs, currentConfigIndex, selectConfig } = useSettings()
+	const { settings, selectConfig } = useSettings()
+	const { configs, currentConfigIndex } = settings
 
 	return (
 		<Dialog open={open} onClose={onClose}>

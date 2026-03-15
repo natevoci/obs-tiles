@@ -4,6 +4,13 @@
 
 ### 2026-03-15
 
+**refactor(SettingsContext): expose single settings field**
+
+- Replaced `title`, `selectConfigAtLaunch`, `configs`, and `currentConfigIndex` context fields with a single `settings: ConfigFileFormat` object
+- `SettingsProvider` passes `settings` state directly; `currentConfig` kept as convenience derived field
+- Updated all consumers: `SettingsDialog`, `Footer`, `ConfigSelectorDialog` use `settings.*`
+- Removed unused `selectConfig` from `Footer` (handled inside `ConfigSelectorDialog`) and unused `React` import from `ConfigSelectorDialog`
+
 **refactor(SettingsProvider): remove unused config-mutation callbacks**
 
 - Removed `addConfig`, `deleteConfig`, `renameConfig`, and `saveAllConfigs` from provider and context — all config editing goes through `saveFullSettings` (called by `SettingsDialog` on Save)
