@@ -1,9 +1,9 @@
-import React from 'react'
 import styled from 'styled-components'
 
 import { Footer } from './Footer/Footer'
 import { Content } from './Content'
 import { ConfigSelectorDialog } from './Footer/ConfigSelectorDialog'
+import { HttpsWarningBanner } from './HttpsWarningBanner'
 import { useSettings } from './Settings/SettingsContext'
 
 const Wrapper = styled.div`
@@ -26,6 +26,7 @@ export const Layout = () => {
 
 	return (
 		<Wrapper>
+			<HttpsWarningBanner />
 			<Content />
 			<Footer />
 			<ConfigSelectorDialog open={autoOpenSelector} onClose={closeAutoOpenSelector} />

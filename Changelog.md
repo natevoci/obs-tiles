@@ -4,6 +4,12 @@
 
 ### 2026-03-15
 
+**feat(Layout): HTTPS warning banner**
+
+- Added `HttpsWarningBanner` component shown at the top of the page when the app is loaded over HTTPS in web mode
+- OBS WebSocket uses an unencrypted `ws://` connection which browsers block as mixed content when the page is HTTPS
+- Banner is dismissible and only renders in web mode (not Electron) when `window.location.protocol === 'https:'`
+
 **feat(Settings): confirmation dialogs for streaming and recording**
 
 - Added 4 optional boolean settings to `ConfigFileFormat` and `DEFAULT_SETTINGS`: `confirmBeforeStartStreaming`, `confirmBeforeStopStreaming`, `confirmBeforeStartRecording`, `confirmBeforeStopRecording` (all default `false`)
