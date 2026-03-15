@@ -24,6 +24,16 @@
 
 ---
 
+## TODO Maintenance
+
+**After every code change, review `TODO.md`.**
+
+- If the change completed or invalidated any item in `TODO.md`, remove that item.
+- If the change introduces or mentions a planned future improvement (e.g. "future setting", "future feature", "will be added later"), add a concise entry to `TODO.md`.
+- Do not skip this step. `TODO.md` is the single source of truth for planned work.
+
+---
+
 ## Self-Improving Instructions
 
 When a follow-up message contains phrases like:
