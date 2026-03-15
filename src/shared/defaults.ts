@@ -3,6 +3,10 @@ export const DEFAULT_SETTINGS = {
   title: 'obs-tiles',
   currentConfigIndex: 0,
   selectConfigAtLaunch: false,
+  confirmBeforeStartStreaming: false,
+  confirmBeforeStopStreaming: false,
+  confirmBeforeStartRecording: false,
+  confirmBeforeStopRecording: false,
   configs: [
     {
       name: 'Default',

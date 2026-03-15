@@ -13,4 +13,8 @@ export interface ConfigFileFormat {
   configs: ConfigItem[]
   currentConfigIndex: number
   selectConfigAtLaunch: boolean
+  confirmBeforeStartStreaming?: boolean
+  confirmBeforeStopStreaming?: boolean
+  confirmBeforeStartRecording?: boolean
+  confirmBeforeStopRecording?: boolean
 }

@@ -163,6 +163,10 @@ export const SettingsDialog = ({ onClose }: SettingsDialogProps) => {
 	// Local state â€” edits are held locally until Save
 	const [localTitle, setLocalTitle] = React.useState(savedSettings.title ?? DEFAULT_SETTINGS.title)
 	const [localSelectConfigAtLaunch, setLocalSelectConfigAtLaunch] = React.useState(savedSettings.selectConfigAtLaunch ?? false)
+	const [localConfirmBeforeStartStreaming, setLocalConfirmBeforeStartStreaming] = React.useState(savedSettings.confirmBeforeStartStreaming ?? false)
+	const [localConfirmBeforeStopStreaming, setLocalConfirmBeforeStopStreaming] = React.useState(savedSettings.confirmBeforeStopStreaming ?? false)
+	const [localConfirmBeforeStartRecording, setLocalConfirmBeforeStartRecording] = React.useState(savedSettings.confirmBeforeStartRecording ?? false)
+	const [localConfirmBeforeStopRecording, setLocalConfirmBeforeStopRecording] = React.useState(savedSettings.confirmBeforeStopRecording ?? false)
 	const [localConfigs, setLocalConfigs] = React.useState<ConfigItem[]>(() =>
 		savedSettings.configs.map((c) => ({ ...c })),
 	)
@@ -282,6 +286,10 @@ export const SettingsDialog = ({ onClose }: SettingsDialogProps) => {
 			configs: finalConfigs,
 			currentConfigIndex: localConfigIndex,
 			selectConfigAtLaunch: localSelectConfigAtLaunch,
+			confirmBeforeStartStreaming: localConfirmBeforeStartStreaming,
+			confirmBeforeStopStreaming: localConfirmBeforeStopStreaming,
+			confirmBeforeStartRecording: localConfirmBeforeStartRecording,
+			confirmBeforeStopRecording: localConfirmBeforeStopRecording,
 		})
 		onClose()
 	}
@@ -375,6 +383,50 @@ export const SettingsDialog = ({ onClose }: SettingsDialogProps) => {
 									/>
 								}
 								label="Select config at launch"
+							/>
+							<FormControlLabel
+								control={
+									<Checkbox
+										checked={localConfirmBeforeStartStreaming}
+										onChange={(e) => setLocalConfirmBeforeStartStreaming(e.target.checked)}
+										color="primary"
+										size="small"
+									/>
+								}
+								label="Confirm before starting stream"
+							/>
+							<FormControlLabel
+								control={
+									<Checkbox
+										checked={localConfirmBeforeStopStreaming}
+										onChange={(e) => setLocalConfirmBeforeStopStreaming(e.target.checked)}
+										color="primary"
+										size="small"
+									/>
+								}
+								label="Confirm before stopping stream"
+							/>
+							<FormControlLabel
+								control={
+									<Checkbox
+										checked={localConfirmBeforeStartRecording}
+										onChange={(e) => setLocalConfirmBeforeStartRecording(e.target.checked)}
+										color="primary"
+										size="small"
+									/>
+								}
+								label="Confirm before starting recording"
+							/>
+							<FormControlLabel
+								control={
+									<Checkbox
+										checked={localConfirmBeforeStopRecording}
+										onChange={(e) => setLocalConfirmBeforeStopRecording(e.target.checked)}
+										color="primary"
+										size="small"
+									/>
+								}
+								label="Confirm before stopping recording"
 							/>
 						</SettingsFormSection>
 					</RightPanelContent>

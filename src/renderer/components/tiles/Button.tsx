@@ -3,6 +3,8 @@ import styled from 'styled-components'
 import { Button as MUIButton } from '@material-ui/core'
 
 import { useObs, useIsStreaming, useIsRecording } from '~/api/obs'
+import { useSettings } from '~/components/Settings/SettingsContext'
+import { ConfirmDialog } from '~/components/ConfirmDialog'
 import type { ButtonTileConfig } from './Tiles';
 
 interface StyledMUIButtonProps {
@@ -53,14 +55,43 @@ const ButtonComponents: Record<string, (props: any) => React.ReactElement | null
 			isLoading = true,
 		} = useIsStreaming(obs) ?? {}
 
+		const { settings } = useSettings()
+		const [confirmOpen, setConfirmOpen] = React.useState(false)
+		const [pendingAction, setPendingAction] = React.useState<(() => void) | null>(null)
+
+		const handleClick = (action: () => void, needsConfirm: boolean) => {
+			if (needsConfirm) {
+				setPendingAction(() => action)
+				setConfirmOpen(true)
+			} else {
+				action()
+			}
+		}
+
+		const startAction = () => obs.action('startStreaming')
+		const stopAction = () => obs.action('stopStreaming')
+
 		return (
-			<StyledButton
-				tileSize={tileSize}
-				label={isStarted ? 'Stop Streaming' : (isStopped || isLoading) ? 'Start Streaming' : isStarting ? 'Starting...' : isStopping ? 'Stopping' : '...'}
-				color={isStarted ? 'secondary' : isStopped ? 'primary' : 'inherit'}
-				disabled={isStarting || isStopping || isLoading}
-				onClick={isStarted ? () => obs.action('stopStreaming') : isStopped ? () => obs.action('startStreaming') : undefined}
-			/>
+			<>
+				<StyledButton
+					tileSize={tileSize}
+					label={isStarted ? 'Stop Streaming' : (isStopped || isLoading) ? 'Start Streaming' : isStarting ? 'Starting...' : isStopping ? 'Stopping' : '...'}
+					color={isStarted ? 'secondary' : isStopped ? 'primary' : 'inherit'}
+					disabled={isStarting || isStopping || isLoading}
+					onClick={
+						isStarted ? () => handleClick(stopAction, settings.confirmBeforeStopStreaming ?? false)
+						: isStopped ? () => handleClick(startAction, settings.confirmBeforeStartStreaming ?? false)
+						: undefined
+					}
+				/>
+				<ConfirmDialog
+					open={confirmOpen}
+					title={isStarted ? 'Stop Streaming?' : 'Start Streaming?'}
+					message={isStarted ? 'Are you sure you want to stop the stream?' : 'Are you sure you want to start the stream?'}
+					onConfirm={() => { pendingAction?.(); setConfirmOpen(false) }}
+					onCancel={() => setConfirmOpen(false)}
+				/>
+			</>
 		)
 	},
 
@@ -76,14 +107,43 @@ const ButtonComponents: Record<string, (props: any) => React.ReactElement | null
 			isLoading = true,
 		} = useIsRecording(obs) ?? {}
 
+		const { settings } = useSettings()
+		const [confirmOpen, setConfirmOpen] = React.useState(false)
+		const [pendingAction, setPendingAction] = React.useState<(() => void) | null>(null)
+
+		const handleClick = (action: () => void, needsConfirm: boolean) => {
+			if (needsConfirm) {
+				setPendingAction(() => action)
+				setConfirmOpen(true)
+			} else {
+				action()
+			}
+		}
+
+		const startAction = () => obs.action('startRecording')
+		const stopAction = () => obs.action('stopRecording')
+
 		return (
-			<StyledButton
-				tileSize={tileSize}
-				label={isStarted ? 'Stop Recording' : (isStopped || isLoading) ? 'Start Recording' : isStarting ? 'Starting...' : isStopping ? 'Stopping' : '...'}
-				color={isStarted ? 'secondary' : isStopped ? 'primary' : 'inherit'}
-				disabled={isStarting || isStopping || isLoading}
-				onClick={isStarted ? () => obs.action('stopRecording') : isStopped ? () => obs.action('startRecording') : undefined}
-			/>
+			<>
+				<StyledButton
+					tileSize={tileSize}
+					label={isStarted ? 'Stop Recording' : (isStopped || isLoading) ? 'Start Recording' : isStarting ? 'Starting...' : isStopping ? 'Stopping' : '...'}
+					color={isStarted ? 'secondary' : isStopped ? 'primary' : 'inherit'}
+					disabled={isStarting || isStopping || isLoading}
+					onClick={
+						isStarted ? () => handleClick(stopAction, settings.confirmBeforeStopRecording ?? false)
+						: isStopped ? () => handleClick(startAction, settings.confirmBeforeStartRecording ?? false)
+						: undefined
+					}
+				/>
+				<ConfirmDialog
+					open={confirmOpen}
+					title={isStarted ? 'Stop Recording?' : 'Start Recording?'}
+					message={isStarted ? 'Are you sure you want to stop the recording?' : 'Are you sure you want to start the recording?'}
+					onConfirm={() => { pendingAction?.(); setConfirmOpen(false) }}
+					onCancel={() => setConfirmOpen(false)}
+				/>
+			</>
 		)
 	},
 }

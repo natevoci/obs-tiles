@@ -4,6 +4,13 @@
 
 ### 2026-03-15
 
+**feat(Settings): confirmation dialogs for streaming and recording**
+
+- Added 4 optional boolean settings to `ConfigFileFormat` and `DEFAULT_SETTINGS`: `confirmBeforeStartStreaming`, `confirmBeforeStopStreaming`, `confirmBeforeStartRecording`, `confirmBeforeStopRecording` (all default `false`)
+- Added 4 corresponding checkboxes to the Settings panel in `SettingsDialog`
+- Created reusable `ConfirmDialog` component (`components/ConfirmDialog.tsx`) with title, message, Confirm and Cancel actions
+- `Button.tsx` `toggleStreaming` and `toggleRecording` components now read the confirm flags from settings and show `ConfirmDialog` before executing the action when enabled
+
 **refactor(SettingsContext): expose single settings field**
 
 - Replaced `title`, `selectConfigAtLaunch`, `configs`, and `currentConfigIndex` context fields with a single `settings: ConfigFileFormat` object
