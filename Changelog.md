@@ -4,6 +4,13 @@
 
 ### 2026-03-15
 
+**feat(Tiles): background colour property for tile groups**
+
+- Added optional `backgroundColor?: string` field to `GroupTileConfig` interface
+- `TilesGroupWrapper` styled component now accepts `$backgroundColor` prop; falls back to `theme.groupBackground` when not set
+- Updated `isGroupTileConfig` allowed-props list to include `backgroundColor` (suppresses spurious unknown-prop warnings)
+- `GroupForm` in `TilePropertiesDialog` now has a native `<input type="color">` swatch alongside a text field; clearing the field removes the override and restores the theme default
+
 **feat(Layout): HTTPS warning banner**
 
 - Added `HttpsWarningBanner` component shown at the top of the page when the app is loaded over HTTPS in web mode

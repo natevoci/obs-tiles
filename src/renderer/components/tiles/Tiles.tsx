@@ -11,13 +11,17 @@ const validDirections: Record<string, 'column' | 'row'> = {
 	row: 'row',
 }
 
-const TilesGroupWrapper = styled.div`
+interface TilesGroupWrapperProps {
+	$backgroundColor?: string
+}
+
+const TilesGroupWrapper = styled.div<TilesGroupWrapperProps>`
 	display: flex;
 	flex-direction: column;
 	align-items: center;
 	border: 1px solid ${(p: any) => p.theme.border};
 	border-radius: ${(p: any) => p.theme.grid(0.5)};
-	background-color: ${(p: any) => p.theme.groupBackground};
+	background-color: ${(p: any) => p.$backgroundColor || p.theme.groupBackground};
 	padding: 0 ${(p: any) => p.theme.grid(0.5)} ${(p: any) => p.theme.grid(0.5)} ${(p: any) => p.theme.grid(0.5)};
 
 	& h3 {
@@ -59,6 +63,7 @@ export interface GroupTileConfig extends BaseTileConfig {
 	tiles: TileConfig[];
 	direction?: string;
 	wrap?: boolean;
+	backgroundColor?: string;
 }
 
 export interface SceneButtonTileConfig extends BaseTileConfig {
@@ -141,7 +146,7 @@ function isGroupTileConfig(tile: TileConfig): tile is GroupTileConfig {
 		'tiles' in tile &&
 		Array.isArray((tile as any).tiles);
 	if (valid) {
-		warnExtraProps(tile, ['group', 'tiles', 'direction', 'wrap', ...COMMON_TILE_PROPS], 'GroupTileConfig');
+		warnExtraProps(tile, ['group', 'tiles', 'direction', 'wrap', 'backgroundColor', ...COMMON_TILE_PROPS], 'GroupTileConfig');
 	}
 	return valid;
 }
@@ -230,10 +235,11 @@ export const Tiles = ({
 			connection,
 			tileSize,
 		};
-
+		
 		if (isGroupTileConfig(tile)) {
+			console.log('Rendering group tile:', tile.group, " with background color:", tile);
 			return (
-				<TilesGroupWrapper key={tile.group} data-elementtype='TilesGroupWrapper'>
+				<TilesGroupWrapper key={tile.group} data-elementtype='TilesGroupWrapper' $backgroundColor={tile.backgroundColor}>
 					<h3>{tile.group}</h3>
 					<Tiles {...inheritableProps} {...tile} tiles={tile.tiles} />
 				</TilesGroupWrapper>

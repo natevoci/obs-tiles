@@ -228,6 +228,23 @@ function GroupForm({ draft, setDraft }: FormProps) {
 				}
 				label="Wrap tiles"
 			/>
+			<div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
+				<input
+					type="color"
+					value={draft.backgroundColor ?? '#1e2a38'}
+					onChange={(e) => setDraft({ ...draft, backgroundColor: e.target.value })}
+					style={{ width: 36, height: 36, padding: 2, cursor: 'pointer', border: '1px solid rgba(255,255,255,0.23)', borderRadius: 4, background: 'none', flexShrink: 0 }}
+				/>
+				<TextField
+					label="Background Color"
+					value={draft.backgroundColor ?? ''}
+					placeholder="Default (theme color)"
+					onChange={(e) => setDraft({ ...draft, backgroundColor: e.target.value || undefined })}
+					variant="outlined" size="small"
+					style={{ flex: 1 }}
+					helperText="Hex color, e.g. #1e2a38. Clear to use theme default."
+				/>
+			</div>
 			<TextField
 				label="Connection"
 				value={draft.connection ?? ''}

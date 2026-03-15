@@ -92,6 +92,7 @@ export const SettingsProvider = ({ children }: SettingsProviderProps) => {
 		setSettings(prev => {
 			const newConfigs = [...prev.configs]
 			newConfigs[prev.currentConfigIndex] = updater(newConfigs[prev.currentConfigIndex])
+			console.log('Updated current config. New config:', newConfigs[prev.currentConfigIndex]);
 			const next = { ...prev, configs: newConfigs }
 			persistSettings(next)
 			return next

@@ -212,13 +212,17 @@ const DropZoneDiv = styled.div<DropZoneProps>`
 			  `}
 `
 
-const GroupEditWrapper = styled.div`
+interface GroupEditWrapperProps {
+	$backgroundColor?: string
+}
+
+const GroupEditWrapper = styled.div<GroupEditWrapperProps>`
 	display: flex;
 	flex-direction: column;
 	border: 2px dashed ${(p: any) => p.theme.border || '#888'};
 	border-radius: 6px;
 	padding: 4px;
-	background: ${(p: any) => p.theme.groupBackground || '#303030'};
+	background: ${(p: any) => p.$backgroundColor || p.theme.groupBackground || '#303030'};
 `
 
 const GroupHeader = styled.div`
@@ -639,8 +643,9 @@ const EditableGroupTile = ({
 	return (
 		<>
 			<GroupEditWrapper
-			onMouseEnter={() => {}}
-			onMouseLeave={() => {}}
+				onMouseEnter={() => {}}
+				onMouseLeave={() => {}}
+				$backgroundColor={tile.backgroundColor}
 				style={{ opacity: isDragging ? 0.4 : 1 }}
 			>
 				<GroupHeader
