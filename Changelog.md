@@ -4,6 +4,13 @@
 
 ### 2026-03-15
 
+**refactor(SettingsProvider): consolidate to single ConfigFileFormat state**
+
+- Replaced four separate `title` / `configs` / `currentConfigIndex` / `selectConfigAtLaunch` states with a single `settings: ConfigFileFormat` state
+- All mutation callbacks now use the `setSettings(prev => ...)` functional-update pattern — no more stale closure risk, no `buildBlob` helper needed
+- Removed `setSelectConfigAtLaunch` from context and provider (settings are saved atomically via `saveFullSettings`)
+- `ConfigItem` import retained for `addConfig`; `autoOpenSelector` kept as a separate one-time UI flag
+
 **feat(Settings): select config at launch**
 
 - Added `selectConfigAtLaunch` boolean to `ConfigFileFormat` and `DEFAULT_SETTINGS` (default `false`)
