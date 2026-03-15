@@ -77,3 +77,13 @@ window.addEventListener('beforeunload', () => {
 ```
 
 Do not add renderer-side `process.*` checks — `process` is not reliably available in the renderer context.
+
+## Browser-Native Dialogs — Forbidden
+
+Never use `window.prompt`, `window.confirm`, or `window.alert` anywhere in the renderer. These native browser dialogs are not supported in the Electron shell used by this project.
+
+Use MUI dialog components instead:
+- Text input → `NamePromptDialog` (see `src/renderer/components/Settings/SettingsDialog.tsx` for an inline example)
+- Yes/No confirmation → `ConfirmDialog` (`src/renderer/components/ConfirmDialog.tsx`)
+- Error/info messages → inline MUI `Snackbar` or `Dialog`
+

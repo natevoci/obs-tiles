@@ -2,6 +2,23 @@
 
 ## Feature History
 
+### 2026-03-16
+
+**fix(SettingsDialog): NamePromptDialog opening twice when creating new config**
+
+- Root cause 1: dialog was conditionally mounted with `{namePrompt && <NamePromptDialog open />}` — abrupt unmount while `open=true` prevented MUI from restoring focus correctly, allowing focus to return to the `+` button and potentially triggering a second open via focus events. Changed to `open={namePrompt !== null}` so MUI manages the close animation and focus restoration properly.
+- Root cause 2: `handleNewConfig`'s `onConfirm` called `setSelected` and `setJsonValue` as side effects inside `setLocalConfigs`'s updater function, and used a second `setLocalConfigs` call with another side effect. Replaced with a `pendingSelectLastRef` + `useEffect` pattern that selects the newly added config after `localConfigs` updates.
+
+**fix(SettingsDialog): replace window.prompt/confirm with MUI dialogs**
+
+- `window.prompt` (new config name, rename config) and `window.confirm` (delete config) are not supported in Electron
+- Added `NamePromptDialog` component (inline in `SettingsDialog.tsx`) — MUI dialog with a text field, auto-focus, Enter key support, and disabled OK button when input is empty
+- `handleNewConfig` and `handleRename` now open `NamePromptDialog` via `namePrompt` state instead of calling `window.prompt`
+- `handleDelete` now opens the existing `ConfirmDialog` via `deleteConfirm` state; actual deletion moved to `confirmDelete` callback
+- `handleSave` JSON parse error no longer calls `alert()` — replaced with `jsonError` state rendered as an inline error Dialog
+- Added `DialogTitle` to MUI imports; added `ConfirmDialog` import
+- Added permanent rule to `electron.instructions.md`: never use `window.prompt`, `window.confirm`, or `window.alert` in renderer code
+
 ### 2026-03-15
 
 **feat(Tiles): background colour property for tile groups**

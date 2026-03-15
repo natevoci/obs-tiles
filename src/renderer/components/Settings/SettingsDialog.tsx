@@ -2,6 +2,7 @@ import React from 'react'
 import styled from 'styled-components'
 import {
 	Dialog,
+	DialogTitle,
 	AppBar,
 	Toolbar,
 	DialogContent,
@@ -20,6 +21,7 @@ import { makeStyles } from '@material-ui/core/styles'
 import { Close, Add, Delete, Edit, ExpandMore, ChevronRight, Settings as SettingsIcon } from '@material-ui/icons'
 import { ConfigVisualEditor } from './ConfigVisualEditor'
 import { useSettings } from './SettingsContext'
+import { ConfirmDialog } from '../ConfirmDialog'
 import type { ConfigItem } from '../../../shared/types'
 import { DEFAULT_SETTINGS } from '../../../shared/defaults'
 
@@ -140,6 +142,56 @@ const useStyles = makeStyles((theme) => ({
 }))
 
 // ---------------------------------------------------------------------------
+// Name prompt dialog (replaces window.prompt)
+// ---------------------------------------------------------------------------
+
+interface NamePromptDialogProps {
+	open: boolean
+	title: string
+	initialValue: string
+	onConfirm: (value: string) => void
+	onCancel: () => void
+}
+
+const NamePromptDialog = ({ open, title, initialValue, onConfirm, onCancel }: NamePromptDialogProps) => {
+	const [value, setValue] = React.useState(initialValue)
+
+	React.useEffect(() => {
+		if (open) setValue(initialValue)
+	}, [open, initialValue])
+
+	const handleConfirm = () => {
+		const trimmed = value.trim()
+		if (!trimmed) return
+		onConfirm(trimmed)
+	}
+
+	return (
+		<Dialog open={open} onClose={onCancel} fullWidth maxWidth="xs">
+			<DialogTitle>{title}</DialogTitle>
+			<DialogContent>
+				<TextField
+					autoFocus
+					fullWidth
+					variant="outlined"
+					size="small"
+					value={value}
+					onChange={(e) => setValue(e.target.value)}
+					onKeyDown={(e) => { if (e.key === 'Enter') handleConfirm() }}
+					style={{ marginTop: 8 }}
+				/>
+			</DialogContent>
+			<DialogActions>
+				<Button onClick={onCancel}>Cancel</Button>
+				<Button onClick={handleConfirm} color="primary" variant="contained" disabled={!value.trim()}>
+					OK
+				</Button>
+			</DialogActions>
+		</Dialog>
+	)
+}
+
+// ---------------------------------------------------------------------------
 // Types for selected tree node
 // ---------------------------------------------------------------------------
 
@@ -181,6 +233,26 @@ export const SettingsDialog = ({ onClose }: SettingsDialogProps) => {
 	const [jsonValue, setJsonValue] = React.useState(() =>
 		JSON.stringify(savedSettings.configs[savedSettings.currentConfigIndex], null, 2),
 	)
+
+	// Prompt / confirm dialog state
+	const [namePrompt, setNamePrompt] = React.useState<{
+		title: string
+		initialValue: string
+		onConfirm: (name: string) => void
+	} | null>(null)
+	const [deleteConfirm, setDeleteConfirm] = React.useState<{ configIndex: number; configName: string } | null>(null)
+	const [jsonError, setJsonError] = React.useState<string | null>(null)
+
+	// After a new config is appended, select it on the next render (avoids side-effects in state updaters)
+	const pendingSelectLastRef = React.useRef(false)
+	React.useEffect(() => {
+		if (pendingSelectLastRef.current && localConfigs.length > 0) {
+			pendingSelectLastRef.current = false
+			const idx = localConfigs.length - 1
+			setSelected(idx)
+			setJsonValue(JSON.stringify(localConfigs[idx], null, 2))
+		}
+	}, [localConfigs])
 
 	// Flush JSON text area into localConfigs (used before switching config / saving)
 	const flushJson = React.useCallback(
@@ -227,26 +299,31 @@ export const SettingsDialog = ({ onClose }: SettingsDialogProps) => {
 	)
 
 	const handleNewConfig = React.useCallback(() => {
-		const name = window.prompt('New config name:')?.trim()
-		if (!name) return
-		const newConfig: ConfigItem = { ...DEFAULT_SETTINGS.configs[0], name }
-		setLocalConfigs((prev) => {
-			const next = [...prev, newConfig]
-			const newIdx = next.length - 1
-			setSelected(newIdx)
-			setJsonValue(JSON.stringify(newConfig, null, 2))
-			return next
+		setNamePrompt({
+			title: 'New config name',
+			initialValue: '',
+			onConfirm: (name) => {
+				const newConfig: ConfigItem = { ...DEFAULT_SETTINGS.configs[0], name }
+				pendingSelectLastRef.current = true
+				setLocalConfigs((prev) => [...prev, newConfig])
+				setNamePrompt(null)
+			},
 		})
 	}, [])
 
 	const handleRename = React.useCallback(
 		(configIndex: number) => {
-			const newName = window.prompt('Rename config:', localConfigs[configIndex]?.name)?.trim()
-			if (!newName) return
-			setLocalConfigs((prev) => {
-				const next = [...prev]
-				next[configIndex] = { ...next[configIndex], name: newName }
-				return next
+			setNamePrompt({
+				title: 'Rename config',
+				initialValue: localConfigs[configIndex]?.name ?? '',
+				onConfirm: (newName) => {
+					setLocalConfigs((prev) => {
+						const next = [...prev]
+						next[configIndex] = { ...next[configIndex], name: newName }
+						return next
+					})
+					setNamePrompt(null)
+				},
 			})
 		},
 		[localConfigs],
@@ -255,18 +332,24 @@ export const SettingsDialog = ({ onClose }: SettingsDialogProps) => {
 	const handleDelete = React.useCallback(
 		(configIndex: number) => {
 			if (localConfigs.length <= 1) return
-			if (!window.confirm(`Delete config "${localConfigs[configIndex]?.name}"?`)) return
-			setLocalConfigs((prev) => {
-				const next = prev.filter((_, i) => i !== configIndex)
-				const newActive = Math.min(localConfigIndex, next.length - 1)
-				setLocalConfigIndex(newActive)
-				setSelected(newActive)
-				setJsonValue(JSON.stringify(next[newActive], null, 2))
-				return next
-			})
+			setDeleteConfirm({ configIndex, configName: localConfigs[configIndex]?.name ?? '' })
 		},
-		[localConfigs, localConfigIndex],
+		[localConfigs],
 	)
+
+	const confirmDelete = React.useCallback(() => {
+		if (!deleteConfirm) return
+		const { configIndex } = deleteConfirm
+		setLocalConfigs((prev) => {
+			const next = prev.filter((_, i) => i !== configIndex)
+			const newActive = Math.min(localConfigIndex, next.length - 1)
+			setLocalConfigIndex(newActive)
+			setSelected(newActive)
+			setJsonValue(JSON.stringify(next[newActive], null, 2))
+			return next
+		})
+		setDeleteConfirm(null)
+	}, [deleteConfirm, localConfigIndex])
 
 	const handleSave = () => {
 		let finalConfigs = localConfigs
@@ -277,7 +360,7 @@ export const SettingsDialog = ({ onClose }: SettingsDialogProps) => {
 				finalConfigs = [...localConfigs]
 				finalConfigs[selected] = parsed
 			} catch (e) {
-				alert(`Invalid JSON: ${e instanceof Error ? e.message : 'Unknown error'}`)
+				setJsonError(`Invalid JSON: ${e instanceof Error ? e.message : 'Unknown error'}`)
 				return
 			}
 		}
@@ -537,6 +620,34 @@ export const SettingsDialog = ({ onClose }: SettingsDialogProps) => {
 					Cancel
 				</Button>
 			</DialogActions>
+
+			{namePrompt && (
+				<NamePromptDialog
+					open={namePrompt !== null}
+					title={namePrompt.title}
+					initialValue={namePrompt.initialValue}
+					onConfirm={namePrompt.onConfirm}
+					onCancel={() => setNamePrompt(null)}
+				/>
+			)}
+			<ConfirmDialog
+				open={deleteConfirm !== null}
+				title="Delete config"
+				message={`Delete config "${deleteConfirm?.configName}"?`}
+				onConfirm={confirmDelete}
+				onCancel={() => setDeleteConfirm(null)}
+			/>
+			<Dialog open={jsonError !== null} onClose={() => setJsonError(null)} fullWidth maxWidth="xs">
+				<DialogTitle>Invalid JSON</DialogTitle>
+				<DialogContent>
+					<Typography variant="body2" style={{ fontFamily: 'monospace', wordBreak: 'break-all' }}>
+						{jsonError}
+					</Typography>
+				</DialogContent>
+				<DialogActions>
+					<Button onClick={() => setJsonError(null)} color="primary" variant="contained">OK</Button>
+				</DialogActions>
+			</Dialog>
 		</Dialog>
 	)
 }
