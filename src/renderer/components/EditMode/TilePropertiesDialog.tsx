@@ -20,6 +20,7 @@ import {
 } from '@material-ui/core'
 import styled from 'styled-components'
 import { useObs, useSceneList, useSceneItemList } from '~/api/obs'
+import { SCENE_PLACEHOLDER_PROGRAM, SCENE_PLACEHOLDER_PREVIEW } from '../tiles/scenePlaceholders.ts'
 
 // ---------------------------------------------------------------------------
 // Types
@@ -127,12 +128,12 @@ const ScenePicker = ({ connection, value, onChange }: ScenePickerProps) => {
 				))}
 				{(programScene || previewScene) && <Divider />}
 				{programScene && (
-					<MenuItem value={programScene} style={{ fontStyle: 'italic' }}>
+					<MenuItem value={SCENE_PLACEHOLDER_PROGRAM} style={{ fontStyle: 'italic' }}>
 						▶ Program — {programScene}
 					</MenuItem>
 				)}
 				{previewScene && (
-					<MenuItem value={previewScene} style={{ fontStyle: 'italic' }}>
+					<MenuItem value={SCENE_PLACEHOLDER_PREVIEW} style={{ fontStyle: 'italic' }}>
 						○ Preview — {previewScene}
 					</MenuItem>
 				)}

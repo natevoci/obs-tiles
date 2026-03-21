@@ -4,6 +4,14 @@
 
 ### 2026-03-21
 
+**fix(SceneButton): keep Program/Preview ScenePicker selections dynamic**
+
+- Added shared scene placeholder tokens in `scenePlaceholders.ts` (`__OBS_PROGRAM_SCENE__`, `__OBS_PREVIEW_SCENE__`)
+- `ScenePicker` now stores placeholder values for Program/Preview options instead of snapshotting the current scene names
+- `SceneButton` now resolves placeholders against live scene data at render/click time via `resolveScenePlaceholder`
+- Scene tile label and image now follow the latest Program/Preview scenes instead of staying bound to names from edit time
+- Show stable Program/Preview labels for placeholder scenes
+
 **fix(EditableTiles): Move "Paste into group" location**
 
 - Move "Paste into group" into the section with the other cut and paste operations
