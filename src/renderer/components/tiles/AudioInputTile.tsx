@@ -151,9 +151,11 @@ export const AudioInputTile = ({
 	audioInput,
 	title,
 	tileSize = '10',
+	fontSize,
 	viewType = 'preview',
 }: AudioInputTileConfig) => {
 	const size = parseInt(String(tileSize))
+	const labelFontSize = parseInt(String(fontSize ?? tileSize))
 	const { inputName } = audioInput
 
 	const obs = useObs({ connection })
@@ -315,6 +317,7 @@ export const AudioInputTile = ({
 		return (
 			<CheckboxTile
 				size={size}
+				fontSize={labelFontSize}
 				label={title ?? inputName}
 				checked={!isMuted}
 				eventHandlers={{ onClick: handleMuteToggle }}
@@ -330,6 +333,7 @@ export const AudioInputTile = ({
 	return (
 		<TileWrapper
 			size={size}
+			fontSize={labelFontSize}
 			label={title ?? inputName}
 			elementType='AudioInputWrapper'
 			overlay={overlay}

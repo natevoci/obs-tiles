@@ -29,6 +29,7 @@ export const Content = () => {
 				<Tiles
 					{...tileSettings}
 					tileSize={tileSettings.tileSize ?? '10'}
+					fontSize={tileSettings.fontSize ?? tileSettings.tileSize ?? '10'}
 					direction={tileSettings.direction ?? 'row'}
 				/>
 			)}

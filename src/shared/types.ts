@@ -3,6 +3,7 @@ export interface ConfigItem {
   connections: Record<string, any>
   connection: string
   tileSize: number
+  fontSize?: number
   direction: string
   tiles: any[]
   [key: string]: any

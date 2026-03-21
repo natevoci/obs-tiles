@@ -2,7 +2,7 @@
  * EditableTiles – renders the tile tree in inline edit mode.
  *
  * Tiles are non-functional (pointer-events disabled on content).
- * Each tile shows a hover menu for Properties / Add / Cut / Paste / Delete / Tile Size.
+ * Each tile shows a hover menu for Properties / Add / Cut / Paste / Delete / Tile Size / Font Size.
  * Tiles can be dragged to reorder within or across groups.
  */
 import React from 'react'
@@ -381,6 +381,7 @@ const TileMenu = ({
 	}
 
 	const currentSize = Number(tile.tileSize || currentConfig.tileSize || 10)
+	const currentFontSize = Number(tile.fontSize || currentConfig.fontSize || tile.tileSize || currentConfig.tileSize || 10)
 
 	const handleSizeChange = (_: any, value: number | number[]) => {
 		const size = Array.isArray(value) ? value[0] : value
@@ -392,6 +393,21 @@ const TileMenu = ({
 				tiles: replaceTileAt(config.tiles, tilePath, {
 					...tile,
 					tileSize: String(size),
+				}),
+			}))
+		}
+	}
+
+	const handleFontSizeChange = (_: any, value: number | number[]) => {
+		const size = Array.isArray(value) ? value[0] : value
+		if (isRoot) {
+			updateCurrentConfig((config) => ({ ...config, fontSize: size }))
+		} else {
+			updateCurrentConfig((config) => ({
+				...config,
+				tiles: replaceTileAt(config.tiles, tilePath, {
+					...tile,
+					fontSize: String(size),
 				}),
 			}))
 		}
@@ -453,6 +469,17 @@ const TileMenu = ({
 					onChange={handleSizeChange}
 					style={{ width: '100%' }}
 				/>
+				<Typography variant="caption" display="block" gutterBottom style={{ marginTop: 10 }}>
+					Font Size: {currentFontSize}
+				</Typography>
+				<Slider
+					value={currentFontSize}
+					min={4}
+					max={30}
+					step={1}
+					onChange={handleFontSizeChange}
+					style={{ width: '100%' }}
+				/>
 			</SliderMenuItem>
 		</Menu>
 	)
@@ -467,6 +494,7 @@ interface EditableLeafProps {
 	tilePath: number[]
 	inheritedConnection?: string
 	inheritedTileSize?: string | number
+	inheritedFontSize?: string | number
 	parentDirection?: string
 	siblingCount?: number
 }
@@ -476,6 +504,7 @@ const EditableLeafTile = ({
 	tilePath,
 	inheritedConnection,
 	inheritedTileSize,
+	inheritedFontSize,
 	parentDirection,
 	siblingCount = 1,
 }: EditableLeafProps) => {
@@ -488,6 +517,7 @@ const EditableLeafTile = ({
 	const isDragging = dragPath?.join(',') === tilePath.join(',')
 	const effectiveConnection = tile.connection ?? inheritedConnection
 	const effectiveTileSize = tile.tileSize ?? inheritedTileSize
+	const effectiveFontSize = tile.fontSize ?? inheritedFontSize ?? effectiveTileSize
 
 	const tileIndex = tilePath[tilePath.length - 1]
 	const isColumn = parentDirection === 'column'
@@ -507,6 +537,7 @@ const EditableLeafTile = ({
 		const common = {
 			connection: effectiveConnection,
 			tileSize: String(effectiveTileSize ?? 10),
+			fontSize: String(effectiveFontSize ?? effectiveTileSize ?? 10),
 		}
 		if ('scene' in tile) return <SceneButton {...common} scene={tile.scene} title={tile.title} viewType={tile.viewType} />
 		if ('sceneItem' in tile) return <SceneItemButton {...common} sceneItem={tile.sceneItem} title={tile.title} viewType={tile.viewType} />
@@ -604,6 +635,7 @@ interface EditableGroupTileProps {
 	tilePath: number[]
 	inheritedConnection?: string
 	inheritedTileSize?: string | number
+	inheritedFontSize?: string | number
 	parentDirection?: string
 	siblingCount?: number
 }
@@ -613,6 +645,7 @@ const EditableGroupTile = ({
 	tilePath,
 	inheritedConnection,
 	inheritedTileSize,
+	inheritedFontSize,
 	parentDirection,
 	siblingCount = 1,
 }: EditableGroupTileProps) => {
@@ -625,6 +658,7 @@ const EditableGroupTile = ({
 	const isDragging = dragPath?.join(',') === tilePath.join(',')
 	const effectiveConnection = tile.connection ?? inheritedConnection
 	const effectiveTileSize = tile.tileSize ?? inheritedTileSize
+	const effectiveFontSize = tile.fontSize ?? inheritedFontSize ?? effectiveTileSize
 
 	const tileIndex = tilePath[tilePath.length - 1]
 	const isColumn = parentDirection === 'column'
@@ -700,6 +734,7 @@ const EditableGroupTile = ({
 					containerPath={tilePath}
 					inheritedConnection={effectiveConnection}
 					inheritedTileSize={effectiveTileSize}
+					inheritedFontSize={effectiveFontSize}
 					direction={tile.direction}
 					wrap={tile.wrap}
 				/>
@@ -756,6 +791,7 @@ interface EditableGroupProps {
 	containerPath: number[]
 	inheritedConnection?: string
 	inheritedTileSize?: string | number
+	inheritedFontSize?: string | number
 	direction?: string
 	wrap?: boolean
 }
@@ -765,6 +801,7 @@ const EditableGroup = ({
 	containerPath,
 	inheritedConnection,
 	inheritedTileSize,
+	inheritedFontSize,
 	direction,
 	wrap,
 }: EditableGroupProps) => {
@@ -784,6 +821,7 @@ const EditableGroup = ({
 							tilePath={[...containerPath, i]}
 							inheritedConnection={inheritedConnection}
 							inheritedTileSize={inheritedTileSize}
+							inheritedFontSize={inheritedFontSize}
 							parentDirection={direction}
 							siblingCount={tiles.length}
 						/>
@@ -793,6 +831,7 @@ const EditableGroup = ({
 							tilePath={[...containerPath, i]}
 							inheritedConnection={inheritedConnection}
 							inheritedTileSize={inheritedTileSize}
+							inheritedFontSize={inheritedFontSize}
 							parentDirection={direction}
 							siblingCount={tiles.length}
 						/>
@@ -823,6 +862,7 @@ export const EditableTiles = () => {
 		group: '',
 		tiles: currentConfig.tiles ?? [],
 		tileSize: currentConfig.tileSize,
+		fontSize: currentConfig.fontSize,
 		direction: currentConfig.direction,
 		connection: currentConfig.connection,
 		wrap: (currentConfig as any).wrap,
@@ -908,6 +948,7 @@ export const EditableTiles = () => {
 					containerPath={[]}
 					inheritedConnection={currentConfig.connection}
 					inheritedTileSize={currentConfig.tileSize}
+					inheritedFontSize={currentConfig.fontSize ?? currentConfig.tileSize}
 					direction={currentConfig.direction}
 					wrap={(currentConfig as any).wrap}
 				/>
@@ -931,6 +972,7 @@ export const EditableTiles = () => {
 					updateCurrentConfig((config) => ({
 						...config,
 						tileSize: updated.tileSize ?? config.tileSize,
+						fontSize: updated.fontSize ?? config.fontSize,
 						direction: updated.direction ?? config.direction,
 						connection: updated.connection ?? config.connection,
 						wrap: updated.wrap,

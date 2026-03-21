@@ -15,9 +15,11 @@ export const SceneItemButton = ({
 	},
 	title,
 	tileSize = '10',
+	fontSize,
 	viewType = 'preview',
 }: SceneItemButtonTileConfig) => {
 	const size = parseInt(String(tileSize));
+	const labelFontSize = parseInt(String(fontSize ?? tileSize));
 	
 	const obs = useObs({ connection });
 
@@ -74,6 +76,7 @@ export const SceneItemButton = ({
 		return (
 			<CheckboxTile
 				size={size}
+				fontSize={labelFontSize}
 				label={title ?? item}
 				checked={isSelected}
 				eventHandlers={buttonEventListeners}
@@ -98,6 +101,7 @@ export const SceneItemButton = ({
 	return (
 		<TileWrapper
 			size={size}
+			fontSize={labelFontSize}
 			label={title ?? item}
 			isSelected={isSelected}
 			eventHandlers={buttonEventListeners}

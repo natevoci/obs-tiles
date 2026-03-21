@@ -7,11 +7,12 @@ import type { TextTileConfig } from './Tiles';
 
 interface ParagraphProps {
 	$size: number
+	$fontSize: number
 }
 
 const Paragraph = styled.p<ParagraphProps>`
 	width: ${p => p.$size*16}px;
-	font-size: ${p => 14*p.$size/18}px;
+	font-size: ${p => `calc(${p.theme.fontSize.large} * ${p.$fontSize} / 10)`};
 `
 
 interface StyledTextProps {
@@ -30,10 +31,12 @@ const TextComponents: Record<string, (props: any) => React.ReactElement | null> 
 	'stats': ({
 		obs,
 		tileSize,
+		fontSize,
 		statsLines,
 		customText,
 	}) => {
 		const size = parseInt(tileSize)
+		const textSize = parseInt(String(fontSize ?? tileSize))
 
 		const stats = useStats(obs)
 		const videoInfo = useVideoInfo(obs)
@@ -52,19 +55,19 @@ const TextComponents: Record<string, (props: any) => React.ReactElement | null> 
 		// Guard against a fully empty tile — keep a minimum footprint for the
 		// edit-mode overlay controls.
 		if (!anyVisible) {
-			return <StyledText $size={size}><Paragraph $size={size}>&nbsp;</Paragraph></StyledText>
+			return <StyledText $size={size}><Paragraph $size={size} $fontSize={textSize}>&nbsp;</Paragraph></StyledText>
 		}
 
 		// OBS not connected yet — show dash placeholders so tiles remain visible
 		if (!stats) {
 			return (
 				<StyledText $size={size}>
-					{show.fps && <Paragraph $size={size}>FPS: —</Paragraph>}
-					{show.cpu && <Paragraph $size={size}>CPU: —</Paragraph>}
-					{show.memory && <Paragraph $size={size}>Memory: —</Paragraph>}
-					{show.freeDisk && <Paragraph $size={size}>Free Disk: —</Paragraph>}
-					{show.skippedFrames && <Paragraph $size={size}>Skipped Frames: —</Paragraph>}
-					{customText && <Paragraph $size={size}>{customText}</Paragraph>}
+					{show.fps && <Paragraph $size={size} $fontSize={textSize}>FPS: —</Paragraph>}
+					{show.cpu && <Paragraph $size={size} $fontSize={textSize}>CPU: —</Paragraph>}
+					{show.memory && <Paragraph $size={size} $fontSize={textSize}>Memory: —</Paragraph>}
+					{show.freeDisk && <Paragraph $size={size} $fontSize={textSize}>Free Disk: —</Paragraph>}
+					{show.skippedFrames && <Paragraph $size={size} $fontSize={textSize}>Skipped Frames: —</Paragraph>}
+					{customText && <Paragraph $size={size} $fontSize={textSize}>{customText}</Paragraph>}
 				</StyledText>
 			)
 		}
@@ -84,27 +87,27 @@ const TextComponents: Record<string, (props: any) => React.ReactElement | null> 
 			<StyledText $size={size}>
 				{show.fps && (
 					<>
-						<Paragraph $size={size}>FPS: {fps.toFixed(2)}</Paragraph>
+						<Paragraph $size={size} $fontSize={textSize}>FPS: {fps.toFixed(2)}</Paragraph>
 						<LinearProgress variant='determinate' value={Math.round(fpsPerc)} color={fpsPerc > 80 ? 'primary' : 'secondary'} />
 					</>
 				)}
 				{show.cpu && (
 					<>
-						<Paragraph $size={size}>CPU: {cpuUsage.toFixed(0)}%</Paragraph>
+						<Paragraph $size={size} $fontSize={textSize}>CPU: {cpuUsage.toFixed(0)}%</Paragraph>
 						<LinearProgress variant='determinate' value={Math.round(cpuUsage)} color={cpuUsage < 80 ? 'primary' : 'secondary'} />
 					</>
 				)}
 				{show.memory && (
-					<Paragraph $size={size}>Memory: {formatMB(memoryUsage)}</Paragraph>
+					<Paragraph $size={size} $fontSize={textSize}>Memory: {formatMB(memoryUsage)}</Paragraph>
 				)}
 				{show.freeDisk && (
-					<Paragraph $size={size}>Free Disk: {formatMB(freeDiskSpace)}</Paragraph>
+					<Paragraph $size={size} $fontSize={textSize}>Free Disk: {formatMB(freeDiskSpace)}</Paragraph>
 				)}
 				{show.skippedFrames && (
-					<Paragraph $size={size}>Skipped Frames: {outputSkippedFrames}</Paragraph>
+					<Paragraph $size={size} $fontSize={textSize}>Skipped Frames: {outputSkippedFrames}</Paragraph>
 				)}
 				{customText && (
-					<Paragraph $size={size}>{customText}</Paragraph>
+					<Paragraph $size={size} $fontSize={textSize}>{customText}</Paragraph>
 				)}
 			</StyledText>
 		)

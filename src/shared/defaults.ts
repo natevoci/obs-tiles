@@ -19,6 +19,7 @@ export const DEFAULT_SETTINGS = {
       },
       connection: 'main',
       tileSize: 10,
+      fontSize: 10,
       direction: 'column',
       tiles: [
         {

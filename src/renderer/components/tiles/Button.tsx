@@ -9,10 +9,12 @@ import type { ButtonTileConfig } from './Tiles';
 
 interface StyledMUIButtonProps {
 	$size: number
+	$fontSize: number
 }
 
 const StyledMUIButton = styled(MUIButton)<StyledMUIButtonProps>`
 	width: ${p => p.$size*16}px;
+	font-size: ${p => `calc(${p.theme.fontSize.large} * ${p.$fontSize} / 10)`};
 
 	&.MuiButton-contained.Mui-disabled {
 		background-color: ${p => p.theme.disabledBackground};
@@ -22,18 +24,21 @@ const StyledMUIButton = styled(MUIButton)<StyledMUIButtonProps>`
 
 interface StyledButtonProps {
 	tileSize: string | number
+	fontSize?: string | number
 	label: string
 	[key: string]: any
 }
 
 const StyledButton = ({
 	tileSize,
+	fontSize,
 	label,
 	...props
 }: StyledButtonProps) => {
 	return (
 		<StyledMUIButton
 			$size={parseInt(String(tileSize))}
+			$fontSize={parseInt(String(fontSize ?? tileSize))}
 			variant='contained'
 			{...props}
 		>
@@ -46,6 +51,7 @@ const ButtonComponents: Record<string, (props: any) => React.ReactElement | null
 	'toggleStreaming': ({
 		obs,
 		tileSize,
+		fontSize,
 	}) => {
 		const {
 			isStarted = false,
@@ -75,6 +81,7 @@ const ButtonComponents: Record<string, (props: any) => React.ReactElement | null
 			<>
 				<StyledButton
 					tileSize={tileSize}
+					fontSize={fontSize}
 					label={isStarted ? 'Stop Streaming' : (isStopped || isLoading) ? 'Start Streaming' : isStarting ? 'Starting...' : isStopping ? 'Stopping' : '...'}
 					color={isStarted ? 'secondary' : isStopped ? 'primary' : 'inherit'}
 					disabled={isStarting || isStopping || isLoading}
@@ -98,6 +105,7 @@ const ButtonComponents: Record<string, (props: any) => React.ReactElement | null
 	'toggleRecording': ({
 		obs,
 		tileSize,
+		fontSize,
 	}) => {
 		const {
 			isStarted = false,
@@ -127,6 +135,7 @@ const ButtonComponents: Record<string, (props: any) => React.ReactElement | null
 			<>
 				<StyledButton
 					tileSize={tileSize}
+					fontSize={fontSize}
 					label={isStarted ? 'Stop Recording' : (isStopped || isLoading) ? 'Start Recording' : isStarting ? 'Starting...' : isStopping ? 'Stopping' : '...'}
 					color={isStarted ? 'secondary' : isStopped ? 'primary' : 'inherit'}
 					disabled={isStarting || isStopping || isLoading}

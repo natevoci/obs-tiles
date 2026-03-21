@@ -38,6 +38,10 @@ interface SizeProps {
 	$size: number
 }
 
+interface LabelProps {
+	$fontSize: number
+}
+
 const TextOverlay = styled.div<SizeProps>`
 	position: absolute;
 	width: ${p => p.$size * 16}px;
@@ -62,11 +66,11 @@ const ImgOverlay = styled.div<SizeProps>`
 	pointer-events: none;
 `
 
-const Label = styled.p<SizeProps>`
+const Label = styled.p<LabelProps>`
 	text-align: center;
-	font-size: ${p => `calc(${p.theme.fontSize.large} * ${p.$size} / 10)`};
+	font-size: ${p => `calc(${p.theme.fontSize.large} * ${p.$fontSize} / 10)`};
 	width: 100%;
-	height: ${p => `calc((${p.theme.fontSize.large} + 4px) * ${p.$size} / 10 + 3px)`};
+	height: ${p => `calc((${p.theme.fontSize.large} + 4px) * ${p.$fontSize} / 10 + 3px)`};
 	background-color: ${p => p.theme.sceneTextBackground};
 `
 
@@ -81,6 +85,8 @@ export const StyledCircularProgress = styled(CircularProgress)`
 export interface TileWrapperProps {
 	/** Tile size multiplier (default: 10) */
 	size: number
+	/** Label font size multiplier (defaults to size) */
+	fontSize?: number
 	/** Label text shown at bottom of tile */
 	label: string
 	/** Content to render in the main tile area */
@@ -101,6 +107,7 @@ export interface TileWrapperProps {
 
 export const TileWrapper = ({
 	size,
+	fontSize,
 	label,
 	children,
 	overlay,
@@ -111,6 +118,7 @@ export const TileWrapper = ({
 	elementType = 'TileWrapper',
 }: TileWrapperProps) => {
 	const showSelectionIndicator = isSelected || isDeselecting
+	const effectiveFontSize = fontSize ?? size
 
 	return (
 		<Wrapper
@@ -130,7 +138,7 @@ export const TileWrapper = ({
 			</TextOverlay>
 			<div style={{ display: 'contents' }}>{children}</div>
 			<ImgOverlay $size={size} />
-			<Label $size={size}>{label}</Label>
+			<Label $fontSize={effectiveFontSize}>{label}</Label>
 		</Wrapper>
 	)
 }

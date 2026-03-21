@@ -55,6 +55,7 @@ interface BaseTileConfig {
 	title?: string;
 	connection?: string;
 	tileSize?: string | number;
+	fontSize?: string | number;
 }
 
 // Specific tile configs
@@ -124,7 +125,7 @@ type TileConfig =
 
 
 // Common props for all tile types
-const COMMON_TILE_PROPS = ['title', 'connection', 'tileSize'];
+const COMMON_TILE_PROPS = ['title', 'connection', 'tileSize', 'fontSize'];
 
 function warnExtraProps(tile: any, allowed: string[], typeName: string) {
 	if (typeof tile !== 'object' || tile == null) return;
@@ -216,6 +217,7 @@ interface TilesProps {
 	tiles?: TileConfig[]
 	connection?: string
 	tileSize?: string | number
+	fontSize?: string | number
 	direction?: string
 	wrap?: boolean
 	[key: string]: any
@@ -225,6 +227,7 @@ export const Tiles = ({
 	tiles = [],
 	connection,
 	tileSize,
+	fontSize,
 	direction,
 	wrap,
 }: TilesProps) => {
@@ -234,6 +237,7 @@ export const Tiles = ({
 		const inheritableProps = {
 			connection,
 			tileSize,
+			fontSize,
 		};
 		
 		if (isGroupTileConfig(tile)) {

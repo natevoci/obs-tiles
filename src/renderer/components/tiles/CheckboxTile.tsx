@@ -30,8 +30,8 @@ const Container = styled.div<ContainerProps>`
 	}
 `
 
-const Label = styled.span`
-	font-size: ${p => p.theme.fontSize.large};
+const Label = styled.span<{ $fontSize: number }>`
+	font-size: ${p => `calc(${p.theme.fontSize.large} * ${p.$fontSize} / 10)`};
 	overflow: hidden;
 	text-overflow: ellipsis;
 	white-space: nowrap;
@@ -65,6 +65,8 @@ const StyledCheckbox = styled(Checkbox)`
 export interface CheckboxTileProps {
 	/** Tile size multiplier — checkbox width = size * 16px */
 	size: number
+	/** Label font size multiplier (defaults to size) */
+	fontSize?: number
 	/** Label shown to the right of the checkbox */
 	label: string
 	/** Whether the checkbox is checked */
@@ -83,7 +85,8 @@ export interface CheckboxTileProps {
  * but renders as a checkbox row rather than the full preview tile.
  * The checkbox state reflects the tile's "selected" state from Preview mode.
  */
-export const CheckboxTile = ({ size, label, checked, eventHandlers, icon }: CheckboxTileProps) => {
+export const CheckboxTile = ({ size, fontSize, label, checked, eventHandlers, icon }: CheckboxTileProps) => {
+	const effectiveFontSize = fontSize ?? size
     return (
         <Container $size={size} {...eventHandlers}>
             {icon !== undefined ? (
@@ -97,7 +100,7 @@ export const CheckboxTile = ({ size, label, checked, eventHandlers, icon }: Chec
                     onChange={() => {}}
                 />
             )}
-            <Label>{label}</Label>
+			<Label $fontSize={effectiveFontSize}>{label}</Label>
         </Container>
     )
 }

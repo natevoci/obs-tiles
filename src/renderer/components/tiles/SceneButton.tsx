@@ -13,9 +13,11 @@ export const SceneButton = ({
 	scene,
 	title,
 	tileSize = '10',
+	fontSize,
 	viewType = 'preview',
 }: SceneButtonTileConfig) => {
-	const size = parseInt(String(tileSize));
+	const tileSizeInt = parseInt(String(tileSize));
+	const labelFontSize = parseInt(String(fontSize ?? tileSize));
 
 	const obs = useObs({ connection })
 
@@ -43,7 +45,7 @@ export const SceneButton = ({
 	
 	const imageData = useSceneImage(obs, {
 		scene: resolvedScene,
-		tileSize: Math.min(size, 20),
+		tileSize: Math.min(tileSizeInt, 20),
 		refreshTime: isCurrentScene ? 40 : 100,
 	})
 
@@ -67,7 +69,8 @@ export const SceneButton = ({
 	if (viewType === 'checkbox') {
 		return (
 			<CheckboxTile
-				size={size}
+				size={tileSizeInt}
+				fontSize={labelFontSize}
 				label={title ?? defaultLabel}
 				checked={isCurrentScene}
 				eventHandlers={{ onClick: handleClick }}
@@ -77,7 +80,8 @@ export const SceneButton = ({
 
 	return (
 		<TileWrapper
-			size={size}
+			size={tileSizeInt}
+			fontSize={labelFontSize}
 			label={title ?? defaultLabel}
 			onClick={handleClick}
 			isSelected={!suppressOverlay && (isCurrentScene || isPrevScene)}
@@ -85,7 +89,7 @@ export const SceneButton = ({
 			elementType='SceneWrapper'
 			overlay={overlay}
 		>
-			<TileImage src={imageData ?? undefined} $size={size} />
+			<TileImage src={imageData ?? undefined} $size={tileSizeInt} />
 		</TileWrapper>
 	)
 }

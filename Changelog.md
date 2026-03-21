@@ -4,6 +4,20 @@
 
 ### 2026-03-22
 
+**feat(EditMode): add Font Size slider to tile context menu**
+
+- Added a `Font Size` slider directly below `Tile Size` in the inline edit-mode tile menu
+- Wired slider changes for both root config and individual tiles in `EditableTiles.tsx`
+- Uses inheritance-aware fallback (`fontSize` → `tileSize`) so existing tiles remain stable until explicitly adjusted
+
+**feat(Tiles): split text sizing into independent fontSize setting**
+
+- Added optional `fontSize` to shared tile config (`ConfigItem`) and default root config (`fontSize: 10`)
+- Updated tile inheritance/runtime rendering to propagate `fontSize` alongside `tileSize`, with backward-compatible fallback to `tileSize` when `fontSize` is unset
+- Applied `fontSize` in text/label rendering paths (`TileWrapper`, `CheckboxTile`, `SceneButton`, `SceneItemButton`, `AudioInputTile`, `Button`, and `Text`)
+- Updated edit-mode tile previews and group inheritance to resolve and pass effective `fontSize`
+- Added `Font Size` inputs next to `Tile Size` in tile properties dialogs wherever tile size is configurable (group, scene, scene item, button, text, and audio input forms)
+
 **fix(TileWrapper): scale label font size with tile size**
 
 - Updated `Label` in `TileWrapper.tsx` to compute `font-size` from both theme base size and tile `$size`

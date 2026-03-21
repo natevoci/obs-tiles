@@ -204,6 +204,27 @@ interface FormProps {
 	connection?: string
 }
 
+function SizeFields({ draft, setDraft }: { draft: any; setDraft: (d: any) => void }) {
+	return (
+		<div style={{ display: 'flex', gap: 8 }}>
+			<TextField
+				label="Tile Size"
+				type="number"
+				value={draft.tileSize ?? ''}
+				onChange={(e) => setDraft({ ...draft, tileSize: e.target.value || undefined })}
+				variant="outlined" size="small" fullWidth
+			/>
+			<TextField
+				label="Font Size"
+				type="number"
+				value={draft.fontSize ?? ''}
+				onChange={(e) => setDraft({ ...draft, fontSize: e.target.value || undefined })}
+				variant="outlined" size="small" fullWidth
+			/>
+		</div>
+	)
+}
+
 function GroupForm({ draft, setDraft }: FormProps) {
 	return (
 		<FormSection>
@@ -252,13 +273,7 @@ function GroupForm({ draft, setDraft }: FormProps) {
 				onChange={(e) => setDraft({ ...draft, connection: e.target.value || undefined })}
 				variant="outlined" size="small" fullWidth
 			/>
-			<TextField
-				label="Tile Size"
-				type="number"
-				value={draft.tileSize ?? ''}
-				onChange={(e) => setDraft({ ...draft, tileSize: e.target.value || undefined })}
-				variant="outlined" size="small" fullWidth
-			/>
+			<SizeFields draft={draft} setDraft={setDraft} />
 		</FormSection>
 	)
 }
@@ -280,13 +295,7 @@ function SceneForm({ draft, setDraft, connection }: FormProps) {
 				onChange={(e) => setDraft({ ...draft, title: e.target.value || undefined })}
 				variant="outlined" size="small" fullWidth
 			/>
-			<TextField
-				label="Tile Size"
-				type="number"
-				value={draft.tileSize ?? ''}
-				onChange={(e) => setDraft({ ...draft, tileSize: e.target.value || undefined })}
-				variant="outlined" size="small" fullWidth
-			/>
+			<SizeFields draft={draft} setDraft={setDraft} />
 		</FormSection>
 	)
 }
@@ -334,13 +343,7 @@ function SceneItemForm({ draft, setDraft, connection }: FormProps) {
 				onChange={(e) => setDraft({ ...draft, title: e.target.value || undefined })}
 				variant="outlined" size="small" fullWidth
 			/>
-			<TextField
-				label="Tile Size"
-				type="number"
-				value={draft.tileSize ?? ''}
-				onChange={(e) => setDraft({ ...draft, tileSize: e.target.value || undefined })}
-				variant="outlined" size="small" fullWidth
-			/>
+			<SizeFields draft={draft} setDraft={setDraft} />
 		</FormSection>
 	)
 }
@@ -361,13 +364,7 @@ function ButtonForm({ draft, setDraft }: FormProps) {
 				onChange={(e) => setDraft({ ...draft, title: e.target.value || undefined })}
 				variant="outlined" size="small" fullWidth
 			/>
-			<TextField
-				label="Tile Size"
-				type="number"
-				value={draft.tileSize ?? ''}
-				onChange={(e) => setDraft({ ...draft, tileSize: e.target.value || undefined })}
-				variant="outlined" size="small" fullWidth
-			/>
+			<SizeFields draft={draft} setDraft={setDraft} />
 		</FormSection>
 	)
 }
@@ -419,13 +416,7 @@ function TextForm({ draft, setDraft }: FormProps) {
 				multiline
 				rows={2}
 			/>
-			<TextField
-				label="Tile Size"
-				type="number"
-				value={draft.tileSize ?? ''}
-				onChange={(e) => setDraft({ ...draft, tileSize: e.target.value || undefined })}
-				variant="outlined" size="small" fullWidth
-			/>
+			<SizeFields draft={draft} setDraft={setDraft} />
 		</FormSection>
 	)
 }
@@ -461,13 +452,7 @@ function AudioInputForm({ draft, setDraft }: FormProps) {
 				onChange={(e) => setDraft({ ...draft, title: e.target.value || undefined })}
 				variant="outlined" size="small" fullWidth
 			/>
-			<TextField
-				label="Tile Size"
-				type="number"
-				value={draft.tileSize ?? ''}
-				onChange={(e) => setDraft({ ...draft, tileSize: e.target.value || undefined })}
-				variant="outlined" size="small" fullWidth
-			/>
+			<SizeFields draft={draft} setDraft={setDraft} />
 		</FormSection>
 	)
 }
