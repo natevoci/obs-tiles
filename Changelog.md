@@ -4,6 +4,10 @@
 
 ### 2026-03-21
 
+**fix(sceneImage): handle null scene case in fetchScreenshot function**
+
+- Add handling of the case where scene hasn't been set yet when the app is first connecting
+
 **fix(TileWrapper): constrain SelectionIndicator to tile wrapper bounds**
 
 - Moved `SelectionIndicator` to render inside `Wrapper` instead of as a sibling fragment element

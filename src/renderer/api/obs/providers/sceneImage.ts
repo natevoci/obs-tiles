@@ -16,6 +16,9 @@ export const sceneImage = (obs: ConnectionPublic, {
 
 		const fetchScreenshot = () => {
 			if (obs.connected && obs.adapter) {
+				if (!scene)
+					return onChanged(null)
+				
 				obs.adapter.getSourceScreenshot(
 					scene,
 					'jpg',
