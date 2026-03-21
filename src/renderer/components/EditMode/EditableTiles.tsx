@@ -415,12 +415,6 @@ const TileMenu = ({
 					Add…
 				</MenuItem>
 			)}
-			{(isGroup || isRoot) && clipboard && (
-				<MenuItem onClick={handlePasteInto}>
-					<ListItemIcon><FileCopy fontSize="small" /></ListItemIcon>
-					Paste into group
-				</MenuItem>
-			)}
 			{!isRoot && <MuiDivider />}
 			{!isRoot && (
 				<MenuItem onClick={handleCut}>
@@ -432,6 +426,12 @@ const TileMenu = ({
 				<MenuItem onClick={handlePaste} disabled={!clipboard}>
 					<ListItemIcon><FileCopy fontSize="small" /></ListItemIcon>
 					Paste after
+				</MenuItem>
+			)}
+			{(isGroup || isRoot) && clipboard && (
+				<MenuItem onClick={handlePasteInto}>
+					<ListItemIcon><FileCopy fontSize="small" /></ListItemIcon>
+					Paste into group
 				</MenuItem>
 			)}
 			{!isRoot && (

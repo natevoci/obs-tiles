@@ -2,6 +2,12 @@
 
 ## Feature History
 
+### 2026-03-21
+
+**fix(EditableTiles): Move "Paste into group" location**
+
+- Move "Paste into group" into the section with the other cut and paste operations
+
 ### 2026-03-16
 
 **fix(SettingsDialog): NamePromptDialog opening twice when creating new config**
