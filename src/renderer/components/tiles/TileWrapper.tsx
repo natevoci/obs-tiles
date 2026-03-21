@@ -22,6 +22,8 @@ interface SelectionIndicatorProps {
 
 const SelectionIndicator = styled.div<SelectionIndicatorProps>`
 	position: absolute;
+	top: 0;
+	left: 0;
 	width: 100%;
 	height: 100%;
 	border: 1px solid ${p => p.theme.sceneBorder};
@@ -111,7 +113,11 @@ export const TileWrapper = ({
 	const showSelectionIndicator = isSelected || isDeselecting
 
 	return (
-		<>
+		<Wrapper
+			data-elementtype={elementType}
+			onClick={onClick}
+			{...eventHandlers}
+		>
 			{showSelectionIndicator && (
 				<SelectionIndicator
 					data-elementtype='SelectionIndicator'
@@ -119,19 +125,13 @@ export const TileWrapper = ({
 					$isDeselecting={isDeselecting}
 				/>
 			)}
-			<Wrapper
-				data-elementtype={elementType}
-				onClick={onClick}
-				{...eventHandlers}
-			>
-				<TextOverlay $size={size}>
-					<div style={{ display: 'contents' }}>{overlay}</div>
-				</TextOverlay>
-				<div style={{ display: 'contents' }}>{children}</div>
-				<ImgOverlay $size={size} />
-				<Label $size={size}>{label}</Label>
-			</Wrapper>
-		</>
+			<TextOverlay $size={size}>
+				<div style={{ display: 'contents' }}>{overlay}</div>
+			</TextOverlay>
+			<div style={{ display: 'contents' }}>{children}</div>
+			<ImgOverlay $size={size} />
+			<Label $size={size}>{label}</Label>
+		</Wrapper>
 	)
 }
 

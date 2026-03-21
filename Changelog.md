@@ -4,6 +4,12 @@
 
 ### 2026-03-21
 
+**fix(TileWrapper): constrain SelectionIndicator to tile wrapper bounds**
+
+- Moved `SelectionIndicator` to render inside `Wrapper` instead of as a sibling fragment element
+- Added explicit `top: 0` and `left: 0` to the absolute-positioned indicator
+- Prevents indicator height from stretching to match taller sibling tiles in grouped rows
+
 **fix(SceneButton): keep Program/Preview ScenePicker selections dynamic**
 
 - Added shared scene placeholder tokens in `scenePlaceholders.ts` (`__OBS_PROGRAM_SCENE__`, `__OBS_PREVIEW_SCENE__`)
