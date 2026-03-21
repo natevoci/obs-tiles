@@ -2,6 +2,15 @@
 
 ## Feature History
 
+### 2026-03-22
+
+**refactor(Text): use typed stats/video hooks and v5 stats field names**
+
+- Replaced `obs.useDataProvider('stats')` and `obs.useDataProvider('videoInfo')` with `useStats(obs)` and `useVideoInfo(obs)` in `Text.tsx`
+- Updated stats access to v5-normalized field names: `activeFps` and `availableDiskSpace`
+- Updated FPS percentage math to use v5 video settings (`fpsNumerator / fpsDenominator`) instead of a non-existent `videoInfo.fps` field
+- Confirmed v4 adapter `getStats()` maps v4 fields (`fps`, `free-disk-space`, etc.) to v5 abstraction fields (`activeFps`, `availableDiskSpace`, etc.)
+
 ### 2026-03-21
 
 **fix(Electron): add renderer CSP and allow OBS websocket connections**

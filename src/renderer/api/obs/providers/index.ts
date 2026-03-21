@@ -1,3 +1,5 @@
+// This file re-exports all OBS data providers for obs-websocket to load based on the name
+
 export * from './currentScene'
 export * from './isStreaming'
 export * from './isRecording'

@@ -6,6 +6,7 @@ import { SceneItem } from '../abstraction/types'
 // Provider
 // ============================================================================
 
+// Export here and in index.ts for dynamic loading by name
 export const sceneItemList = (obs: ConnectionPublic, {
 	scene,
 }: { scene: string }) => createProvider({

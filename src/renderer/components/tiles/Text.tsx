@@ -2,7 +2,7 @@ import React from 'react'
 import styled from 'styled-components'
 import { LinearProgress } from '@material-ui/core'
 
-import { useObs } from '~/api/obs'
+import { useObs, useStats, useVideoInfo } from '~/api/obs'
 import type { TextTileConfig } from './Tiles';
 
 interface ParagraphProps {
@@ -35,8 +35,8 @@ const TextComponents: Record<string, (props: any) => React.ReactElement | null> 
 	}) => {
 		const size = parseInt(tileSize)
 
-		const stats = obs.useDataProvider('stats')
-		const videoInfo = obs.useDataProvider('videoInfo')
+		const stats = useStats(obs)
+		const videoInfo = useVideoInfo(obs)
 
 		// Default all lines to shown unless explicitly disabled
 		const show = {
@@ -69,11 +69,15 @@ const TextComponents: Record<string, (props: any) => React.ReactElement | null> 
 			)
 		}
 
-		const fps = stats.fps || 0
-		const fpsPerc = videoInfo?.fps > 0 ? 100 * fps / videoInfo?.fps : 0
+		const fps = stats.activeFps || 0
+		const targetFps =
+			(videoInfo?.fpsNumerator && videoInfo?.fpsDenominator)
+				? (videoInfo.fpsNumerator / videoInfo.fpsDenominator)
+				: 0
+		const fpsPerc = targetFps > 0 ? 100 * fps / targetFps : 0
 		const cpuUsage = stats.cpuUsage || 0
 		const memoryUsage = stats.memoryUsage || 0
-		const freeDiskSpace = stats.freeDiskSpace || 0
+		const freeDiskSpace = stats.availableDiskSpace || 0
 		const outputSkippedFrames = stats.outputSkippedFrames || 0
 
 		return (

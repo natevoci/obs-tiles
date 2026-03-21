@@ -19,6 +19,7 @@ export interface RecordingState {
 // Provider
 // ============================================================================
 
+// Export here and in index.ts for dynamic loading by name
 export const isRecording = (obs: ConnectionPublic) => createProvider({
 	init: (onChanged) => {
 		const setData = (state: string) => {

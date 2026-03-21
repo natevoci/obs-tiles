@@ -6,6 +6,7 @@ import { TransitionEvent } from '../abstraction/types'
 // Provider
 // ============================================================================
 
+// Export here and in index.ts for dynamic loading by name
 export const transition = (obs: ConnectionPublic) => createProvider({
 	init: (onChanged) => {
 		// Unified event names

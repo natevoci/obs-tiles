@@ -6,6 +6,7 @@ import { SceneItemProperties } from '../abstraction/types'
 // Provider
 // ============================================================================
 
+// Export here and in index.ts for dynamic loading by name
 export const sceneItemProperties = (
 	obs: ConnectionPublic,
 	{

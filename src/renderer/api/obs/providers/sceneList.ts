@@ -16,6 +16,7 @@ export interface SceneListData {
 // Provider
 // ============================================================================
 
+// Export here and in index.ts for dynamic loading by name
 export const sceneList = (obs: ConnectionPublic) => createProvider({
 	init: (onChanged) => {
 		const fetchSceneList = () => {

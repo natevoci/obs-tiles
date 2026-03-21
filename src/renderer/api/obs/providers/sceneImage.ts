@@ -5,6 +5,7 @@ import { ConnectionPublic } from '../types'
 // Provider
 // ============================================================================
 
+// Export here and in index.ts for dynamic loading by name
 export const sceneImage = (obs: ConnectionPublic, {
 	scene,
 	tileSize,
@@ -18,7 +19,7 @@ export const sceneImage = (obs: ConnectionPublic, {
 			if (obs.connected && obs.adapter) {
 				if (!scene)
 					return onChanged(null)
-				
+
 				obs.adapter.getSourceScreenshot(
 					scene,
 					'jpg',

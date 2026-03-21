@@ -13,6 +13,7 @@ export interface InputMuteData {
 // Provider
 // ============================================================================
 
+// Export here and in index.ts for dynamic loading by name
 export const inputMute = (obs: ConnectionPublic, {
 	inputName,
 }: { inputName: string }) => createProvider({

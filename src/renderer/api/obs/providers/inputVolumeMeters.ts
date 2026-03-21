@@ -22,6 +22,8 @@ export interface InputVolumeMeterData {
  * instead of relying on state updates.
  * 
  * v5 only - v4 does not support volume meters.
+ * 
+ * Export here and in index.ts for dynamic loading by name
  */
 export const inputVolumeMeters = (obs: ConnectionPublic, {
 	inputName,

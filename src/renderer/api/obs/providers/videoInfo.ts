@@ -6,6 +6,7 @@ import { VideoSettings } from '../abstraction/types'
 // Provider
 // ============================================================================
 
+// Export here and in index.ts for dynamic loading by name
 export const videoInfo = (obs: ConnectionPublic, {
 	refreshTime = 60000,
 } = {}) => createProvider({

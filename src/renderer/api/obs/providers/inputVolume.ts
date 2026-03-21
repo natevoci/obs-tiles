@@ -14,6 +14,7 @@ export interface InputVolumeData {
 // Provider
 // ============================================================================
 
+// Export here and in index.ts for dynamic loading by name
 export const inputVolume = (obs: ConnectionPublic, {
 	inputName,
 }: { inputName: string }) => createProvider({

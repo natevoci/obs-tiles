@@ -1,6 +1,5 @@
 import { createProvider } from '../createProvider'
 import { ConnectionPublic } from '../types'
-import { SceneItem } from '../abstraction/types'
 
 // ============================================================================
 // Types
@@ -15,6 +14,7 @@ export interface CurrentSceneData {
 // Provider
 // ============================================================================
 
+// Export here and in index.ts for dynamic loading by name
 export const currentScene = (obs: ConnectionPublic) => createProvider({
 	init: (onChanged) => {
 		if (obs.adapter) {
