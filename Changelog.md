@@ -4,6 +4,14 @@
 
 ### 2026-03-21
 
+**fix(Electron): add renderer CSP and allow OBS websocket connections**
+
+- Added a `Content-Security-Policy` meta tag in `src/renderer/index.html`
+- Policy avoids `unsafe-eval` and keeps script execution to `script-src 'self'`
+- Added `connect-src 'self' ws: wss: http: https:` so OBS WebSocket connections (e.g. `ws://localhost:4455`) and dev connections remain allowed
+- Added `img-src data: blob:` and `style-src 'unsafe-inline'` to support scene image data URLs and styled-components runtime styles
+- Removed `frame-ancestors` from the meta CSP because that directive is ignored when delivered via `<meta>` and triggers a browser warning
+
 **fix(sceneImage): handle null scene case in fetchScreenshot function**
 
 - Add handling of the case where scene hasn't been set yet when the app is first connecting
