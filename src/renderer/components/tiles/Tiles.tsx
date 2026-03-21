@@ -237,7 +237,6 @@ export const Tiles = ({
 		};
 		
 		if (isGroupTileConfig(tile)) {
-			console.log('Rendering group tile:', tile.group, " with background color:", tile);
 			return (
 				<TilesGroupWrapper key={tile.group} data-elementtype='TilesGroupWrapper' $backgroundColor={tile.backgroundColor}>
 					<h3>{tile.group}</h3>
