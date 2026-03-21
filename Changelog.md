@@ -4,6 +4,12 @@
 
 ### 2026-03-22
 
+**fix(TileWrapper): scale label font size with tile size**
+
+- Updated `Label` in `TileWrapper.tsx` to compute `font-size` from both theme base size and tile `$size`
+- Uses `calc(theme.fontSize.large * $size / 10)` so size `10` matches existing appearance while larger/smaller tiles scale proportionally
+- Updated `Label` height to scale with tile size too: `calc(25px * $size / 10)`
+
 **refactor(Text): use typed stats/video hooks and v5 stats field names**
 
 - Replaced `obs.useDataProvider('stats')` and `obs.useDataProvider('videoInfo')` with `useStats(obs)` and `useVideoInfo(obs)` in `Text.tsx`

@@ -64,9 +64,9 @@ const ImgOverlay = styled.div<SizeProps>`
 
 const Label = styled.p<SizeProps>`
 	text-align: center;
-	font-size: ${p => p.theme.fontSize.large};
+	font-size: ${p => `calc(${p.theme.fontSize.large} * ${p.$size} / 10)`};
 	width: 100%;
-	height: 25px;
+	height: ${p => `calc((${p.theme.fontSize.large} + 4px) * ${p.$size} / 10 + 3px)`};
 	background-color: ${p => p.theme.sceneTextBackground};
 `
 
