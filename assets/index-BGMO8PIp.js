@@ -19913,6 +19913,8 @@ const sceneImage = (obs, {
     let attached = true;
     const fetchScreenshot = () => {
       if (obs.connected && obs.adapter) {
+        if (!scene)
+          return onChanged(null);
         obs.adapter.getSourceScreenshot(
           scene,
           "jpg",
@@ -22729,6 +22731,7 @@ const DEFAULT_SETTINGS = {
       },
       connection: "main",
       tileSize: 10,
+      fontSize: 10,
       direction: "column",
       tiles: [
         {
@@ -25065,6 +25068,8 @@ const Wrapper$1 = qe.div`
 `;
 const SelectionIndicator = qe.div`
 	position: absolute;
+	top: 0;
+	left: 0;
 	width: 100%;
 	height: 100%;
 	border: 1px solid ${(p2) => p2.theme.sceneBorder};
@@ -25098,9 +25103,9 @@ const ImgOverlay = qe.div`
 `;
 const Label$1 = qe.p`
 	text-align: center;
-	font-size: ${(p2) => p2.theme.fontSize.large};
+	font-size: ${(p2) => `calc(${p2.theme.fontSize.large} * ${p2.$fontSize} / 10)`};
 	width: 100%;
-	height: 25px;
+	height: ${(p2) => `calc((${p2.theme.fontSize.large} + 4px) * ${p2.$fontSize} / 10 + 3px)`};
 	background-color: ${(p2) => p2.theme.sceneTextBackground};
 `;
 const StyledCircularProgress = qe(CircularProgress$1)`
@@ -25108,6 +25113,7 @@ const StyledCircularProgress = qe(CircularProgress$1)`
 `;
 const TileWrapper$1 = ({
   size,
+  fontSize,
   label,
   children,
   overlay,
@@ -25118,30 +25124,29 @@ const TileWrapper$1 = ({
   elementType = "TileWrapper"
 }) => {
   const showSelectionIndicator = isSelected || isDeselecting;
-  return /* @__PURE__ */ jsxRuntimeExports.jsxs(jsxRuntimeExports.Fragment, { children: [
-    showSelectionIndicator && /* @__PURE__ */ jsxRuntimeExports.jsx(
-      SelectionIndicator,
-      {
-        "data-elementtype": "SelectionIndicator",
-        $isSelected: isSelected,
-        $isDeselecting: isDeselecting
-      }
-    ),
-    /* @__PURE__ */ jsxRuntimeExports.jsxs(
-      Wrapper$1,
-      {
-        "data-elementtype": elementType,
-        onClick,
-        ...eventHandlers,
-        children: [
-          /* @__PURE__ */ jsxRuntimeExports.jsx(TextOverlay, { $size: size, children: /* @__PURE__ */ jsxRuntimeExports.jsx("div", { style: { display: "contents" }, children: overlay }) }),
-          /* @__PURE__ */ jsxRuntimeExports.jsx("div", { style: { display: "contents" }, children }),
-          /* @__PURE__ */ jsxRuntimeExports.jsx(ImgOverlay, { $size: size }),
-          /* @__PURE__ */ jsxRuntimeExports.jsx(Label$1, { $size: size, children: label })
-        ]
-      }
-    )
-  ] });
+  const effectiveFontSize = fontSize ?? size;
+  return /* @__PURE__ */ jsxRuntimeExports.jsxs(
+    Wrapper$1,
+    {
+      "data-elementtype": elementType,
+      onClick,
+      ...eventHandlers,
+      children: [
+        showSelectionIndicator && /* @__PURE__ */ jsxRuntimeExports.jsx(
+          SelectionIndicator,
+          {
+            "data-elementtype": "SelectionIndicator",
+            $isSelected: isSelected,
+            $isDeselecting: isDeselecting
+          }
+        ),
+        /* @__PURE__ */ jsxRuntimeExports.jsx(TextOverlay, { $size: size, children: /* @__PURE__ */ jsxRuntimeExports.jsx("div", { style: { display: "contents" }, children: overlay }) }),
+        /* @__PURE__ */ jsxRuntimeExports.jsx("div", { style: { display: "contents" }, children }),
+        /* @__PURE__ */ jsxRuntimeExports.jsx(ImgOverlay, { $size: size }),
+        /* @__PURE__ */ jsxRuntimeExports.jsx(Label$1, { $fontSize: effectiveFontSize, children: label })
+      ]
+    }
+  );
 };
 const TileImage = qe.img`
 	display: block;
@@ -25181,7 +25186,7 @@ const Container = qe.div`
 	}
 `;
 const Label = qe.span`
-	font-size: ${(p2) => p2.theme.fontSize.large};
+	font-size: ${(p2) => `calc(${p2.theme.fontSize.large} * ${p2.$fontSize} / 10)`};
 	overflow: hidden;
 	text-overflow: ellipsis;
 	white-space: nowrap;
@@ -25200,7 +25205,8 @@ const StyledCheckbox = qe(Checkbox$1)`
 		color: ${(p2) => p2.theme.sceneBorder};
 	}
 `;
-const CheckboxTile = ({ size, label, checked, eventHandlers, icon }) => {
+const CheckboxTile = ({ size, fontSize, label, checked, eventHandlers, icon }) => {
+  const effectiveFontSize = fontSize ?? size;
   return /* @__PURE__ */ jsxRuntimeExports.jsxs(Container, { $size: size, ...eventHandlers, children: [
     icon !== void 0 ? /* @__PURE__ */ jsxRuntimeExports.jsx("div", { style: iconSlotStyle, children: icon }) : /* @__PURE__ */ jsxRuntimeExports.jsx(
       StyledCheckbox,
@@ -25212,7 +25218,7 @@ const CheckboxTile = ({ size, label, checked, eventHandlers, icon }) => {
         }
       }
     ),
-    /* @__PURE__ */ jsxRuntimeExports.jsx(Label, { children: label })
+    /* @__PURE__ */ jsxRuntimeExports.jsx(Label, { $fontSize: effectiveFontSize, children: label })
   ] });
 };
 const MeterContainer = qe.div`
@@ -25328,9 +25334,11 @@ const AudioInputTile = ({
   audioInput,
   title,
   tileSize = "10",
+  fontSize,
   viewType = "preview"
 }) => {
   const size = parseInt(String(tileSize));
+  const labelFontSize = parseInt(String(fontSize ?? tileSize));
   const { inputName } = audioInput;
   const obs = useObs({ connection });
   const volumeData = useInputVolume(obs, { inputName });
@@ -25432,6 +25440,7 @@ const AudioInputTile = ({
       CheckboxTile,
       {
         size,
+        fontSize: labelFontSize,
         label: title ?? inputName,
         checked: !isMuted,
         eventHandlers: { onClick: handleMuteToggle },
@@ -25443,6 +25452,7 @@ const AudioInputTile = ({
     TileWrapper$1,
     {
       size,
+      fontSize: labelFontSize,
       label: title ?? inputName,
       elementType: "AudioInputWrapper",
       overlay,
@@ -25452,6 +25462,7 @@ const AudioInputTile = ({
 };
 const StyledMUIButton = qe(Button$2)`
 	width: ${(p2) => p2.$size * 16}px;
+	font-size: ${(p2) => `calc(${p2.theme.fontSize.large} * ${p2.$fontSize} / 10)`};
 
 	&.MuiButton-contained.Mui-disabled {
 		background-color: ${(p2) => p2.theme.disabledBackground};
@@ -25460,6 +25471,7 @@ const StyledMUIButton = qe(Button$2)`
 `;
 const StyledButton = ({
   tileSize,
+  fontSize,
   label,
   ...props
 }) => {
@@ -25467,6 +25479,7 @@ const StyledButton = ({
     StyledMUIButton,
     {
       $size: parseInt(String(tileSize)),
+      $fontSize: parseInt(String(fontSize ?? tileSize)),
       variant: "contained",
       ...props,
       children: label
@@ -25476,7 +25489,8 @@ const StyledButton = ({
 const ButtonComponents = {
   "toggleStreaming": ({
     obs,
-    tileSize
+    tileSize,
+    fontSize
   }) => {
     const {
       isStarted = false,
@@ -25503,6 +25517,7 @@ const ButtonComponents = {
         StyledButton,
         {
           tileSize,
+          fontSize,
           label: isStarted ? "Stop Streaming" : isStopped || isLoading ? "Start Streaming" : isStarting ? "Starting..." : isStopping ? "Stopping" : "...",
           color: isStarted ? "secondary" : isStopped ? "primary" : "inherit",
           disabled: isStarting || isStopping || isLoading,
@@ -25526,7 +25541,8 @@ const ButtonComponents = {
   },
   "toggleRecording": ({
     obs,
-    tileSize
+    tileSize,
+    fontSize
   }) => {
     const {
       isStarted = false,
@@ -25553,6 +25569,7 @@ const ButtonComponents = {
         StyledButton,
         {
           tileSize,
+          fontSize,
           label: isStarted ? "Stop Recording" : isStopped || isLoading ? "Start Recording" : isStarting ? "Starting..." : isStopping ? "Stopping" : "...",
           color: isStarted ? "secondary" : isStopped ? "primary" : "inherit",
           disabled: isStarting || isStopping || isLoading,
@@ -25586,31 +25603,48 @@ const Button = ({
     ...props
   }) : null;
 };
+const SCENE_PLACEHOLDER_PROGRAM = "__OBS_PROGRAM_SCENE__";
+const SCENE_PLACEHOLDER_PREVIEW = "__OBS_PREVIEW_SCENE__";
+const resolveScenePlaceholder = (scene, sceneList2) => {
+  if (scene === SCENE_PLACEHOLDER_PROGRAM) {
+    return sceneList2?.currentScene ?? "";
+  }
+  if (scene === SCENE_PLACEHOLDER_PREVIEW) {
+    return sceneList2?.currentPreviewSceneName ?? "";
+  }
+  return scene;
+};
 const SceneButton = ({
   connection,
   scene,
   title,
   tileSize = "10",
+  fontSize,
   viewType = "preview"
 }) => {
-  const size = parseInt(String(tileSize));
+  const tileSizeInt = parseInt(String(tileSize));
+  const labelFontSize = parseInt(String(fontSize ?? tileSize));
   const obs = useObs({ connection });
   const currentScene2 = useCurrentScene(obs);
   const sceneList2 = useSceneList(obs);
+  const resolvedScene = resolveScenePlaceholder(scene, sceneList2);
+  const defaultLabel = scene === SCENE_PLACEHOLDER_PROGRAM ? "Program" : scene === SCENE_PLACEHOLDER_PREVIEW ? "Preview" : resolvedScene || scene;
   const transition2 = useTransition(obs);
-  const isPrevScene = currentScene2?.name === scene && transition2?.fromSceneName === scene;
-  const isCurrentScene = transition2?.toSceneName === scene || currentScene2?.name === scene;
-  const isProgramScene = scene === sceneList2?.currentScene;
-  const isPreviewScene = scene === sceneList2?.currentPreviewSceneName;
+  const isPrevScene = currentScene2?.name === resolvedScene && transition2?.fromSceneName === resolvedScene;
+  const isCurrentScene = transition2?.toSceneName === resolvedScene || currentScene2?.name === resolvedScene;
+  const isProgramScene = scene === SCENE_PLACEHOLDER_PROGRAM;
+  const isPreviewScene = scene === SCENE_PLACEHOLDER_PREVIEW;
   const suppressOverlay = isProgramScene || isPreviewScene;
   const imageData = useSceneImage(obs, {
-    scene,
-    tileSize: Math.min(size, 20),
+    scene: resolvedScene,
+    tileSize: Math.min(tileSizeInt, 20),
     refreshTime: isCurrentScene ? 40 : 100
   });
   const handleClick = () => {
     if (obs.connected) {
-      obs.action("setCurrentScene", { scene });
+      if (resolvedScene) {
+        obs.action("setCurrentScene", { scene: resolvedScene });
+      }
     } else {
       obs.reconnect();
     }
@@ -25623,8 +25657,9 @@ const SceneButton = ({
     return /* @__PURE__ */ jsxRuntimeExports.jsx(
       CheckboxTile,
       {
-        size,
-        label: title ?? scene,
+        size: tileSizeInt,
+        fontSize: labelFontSize,
+        label: title ?? defaultLabel,
         checked: isCurrentScene,
         eventHandlers: { onClick: handleClick }
       }
@@ -25633,14 +25668,15 @@ const SceneButton = ({
   return /* @__PURE__ */ jsxRuntimeExports.jsx(
     TileWrapper$1,
     {
-      size,
-      label: title ?? scene,
+      size: tileSizeInt,
+      fontSize: labelFontSize,
+      label: title ?? defaultLabel,
       onClick: handleClick,
       isSelected: !suppressOverlay && (isCurrentScene || isPrevScene),
       isDeselecting: !suppressOverlay && isPrevScene,
       elementType: "SceneWrapper",
       overlay,
-      children: /* @__PURE__ */ jsxRuntimeExports.jsx(TileImage, { src: imageData ?? void 0, $size: size })
+      children: /* @__PURE__ */ jsxRuntimeExports.jsx(TileImage, { src: imageData ?? void 0, $size: tileSizeInt })
     }
   );
 };
@@ -25755,9 +25791,11 @@ const SceneItemButton = ({
   },
   title,
   tileSize = "10",
+  fontSize,
   viewType = "preview"
 }) => {
   const size = parseInt(String(tileSize));
+  const labelFontSize = parseInt(String(fontSize ?? tileSize));
   const obs = useObs({ connection });
   const sceneItemProperties2 = useSceneItemProperties(obs, { scene, item });
   const sceneItemId = sceneItemProperties2?.sceneItemId;
@@ -25802,6 +25840,7 @@ const SceneItemButton = ({
       CheckboxTile,
       {
         size,
+        fontSize: labelFontSize,
         label: title ?? item,
         checked: isSelected,
         eventHandlers: buttonEventListeners
@@ -25819,6 +25858,7 @@ const SceneItemButton = ({
     TileWrapper$1,
     {
       size,
+      fontSize: labelFontSize,
       label: title ?? item,
       isSelected,
       eventHandlers: buttonEventListeners,
@@ -25830,7 +25870,7 @@ const SceneItemButton = ({
 };
 const Paragraph = qe.p`
 	width: ${(p2) => p2.$size * 16}px;
-	font-size: ${(p2) => 14 * p2.$size / 18}px;
+	font-size: ${(p2) => `calc(${p2.theme.fontSize.large} * ${p2.$fontSize} / 10)`};
 `;
 const StyledText = qe.div`
 	width: ${(p2) => p2.$size * 16}px;
@@ -25842,12 +25882,14 @@ const TextComponents = {
   "stats": ({
     obs,
     tileSize,
+    fontSize,
     statsLines,
     customText
   }) => {
     const size = parseInt(tileSize);
-    const stats2 = obs.useDataProvider("stats");
-    const videoInfo2 = obs.useDataProvider("videoInfo");
+    const textSize = parseInt(String(fontSize ?? tileSize));
+    const stats2 = useStats(obs);
+    const videoInfo2 = useVideoInfo(obs);
     const show = {
       fps: statsLines?.fps !== false,
       cpu: statsLines?.cpu !== false,
@@ -25857,53 +25899,54 @@ const TextComponents = {
     };
     const anyVisible = Object.values(show).some(Boolean) || Boolean(customText);
     if (!anyVisible) {
-      return /* @__PURE__ */ jsxRuntimeExports.jsx(StyledText, { $size: size, children: /* @__PURE__ */ jsxRuntimeExports.jsx(Paragraph, { $size: size, children: " " }) });
+      return /* @__PURE__ */ jsxRuntimeExports.jsx(StyledText, { $size: size, children: /* @__PURE__ */ jsxRuntimeExports.jsx(Paragraph, { $size: size, $fontSize: textSize, children: " " }) });
     }
     if (!stats2) {
       return /* @__PURE__ */ jsxRuntimeExports.jsxs(StyledText, { $size: size, children: [
-        show.fps && /* @__PURE__ */ jsxRuntimeExports.jsx(Paragraph, { $size: size, children: "FPS: —" }),
-        show.cpu && /* @__PURE__ */ jsxRuntimeExports.jsx(Paragraph, { $size: size, children: "CPU: —" }),
-        show.memory && /* @__PURE__ */ jsxRuntimeExports.jsx(Paragraph, { $size: size, children: "Memory: —" }),
-        show.freeDisk && /* @__PURE__ */ jsxRuntimeExports.jsx(Paragraph, { $size: size, children: "Free Disk: —" }),
-        show.skippedFrames && /* @__PURE__ */ jsxRuntimeExports.jsx(Paragraph, { $size: size, children: "Skipped Frames: —" }),
-        customText && /* @__PURE__ */ jsxRuntimeExports.jsx(Paragraph, { $size: size, children: customText })
+        show.fps && /* @__PURE__ */ jsxRuntimeExports.jsx(Paragraph, { $size: size, $fontSize: textSize, children: "FPS: —" }),
+        show.cpu && /* @__PURE__ */ jsxRuntimeExports.jsx(Paragraph, { $size: size, $fontSize: textSize, children: "CPU: —" }),
+        show.memory && /* @__PURE__ */ jsxRuntimeExports.jsx(Paragraph, { $size: size, $fontSize: textSize, children: "Memory: —" }),
+        show.freeDisk && /* @__PURE__ */ jsxRuntimeExports.jsx(Paragraph, { $size: size, $fontSize: textSize, children: "Free Disk: —" }),
+        show.skippedFrames && /* @__PURE__ */ jsxRuntimeExports.jsx(Paragraph, { $size: size, $fontSize: textSize, children: "Skipped Frames: —" }),
+        customText && /* @__PURE__ */ jsxRuntimeExports.jsx(Paragraph, { $size: size, $fontSize: textSize, children: customText })
       ] });
     }
-    const fps = stats2.fps || 0;
-    const fpsPerc = videoInfo2?.fps > 0 ? 100 * fps / videoInfo2?.fps : 0;
+    const fps = stats2.activeFps || 0;
+    const targetFps = videoInfo2?.fpsNumerator && videoInfo2?.fpsDenominator ? videoInfo2.fpsNumerator / videoInfo2.fpsDenominator : 0;
+    const fpsPerc = targetFps > 0 ? 100 * fps / targetFps : 0;
     const cpuUsage = stats2.cpuUsage || 0;
     const memoryUsage = stats2.memoryUsage || 0;
-    const freeDiskSpace = stats2.freeDiskSpace || 0;
+    const freeDiskSpace = stats2.availableDiskSpace || 0;
     const outputSkippedFrames = stats2.outputSkippedFrames || 0;
     return /* @__PURE__ */ jsxRuntimeExports.jsxs(StyledText, { $size: size, children: [
       show.fps && /* @__PURE__ */ jsxRuntimeExports.jsxs(jsxRuntimeExports.Fragment, { children: [
-        /* @__PURE__ */ jsxRuntimeExports.jsxs(Paragraph, { $size: size, children: [
+        /* @__PURE__ */ jsxRuntimeExports.jsxs(Paragraph, { $size: size, $fontSize: textSize, children: [
           "FPS: ",
           fps.toFixed(2)
         ] }),
         /* @__PURE__ */ jsxRuntimeExports.jsx(LinearProgress$1, { variant: "determinate", value: Math.round(fpsPerc), color: fpsPerc > 80 ? "primary" : "secondary" })
       ] }),
       show.cpu && /* @__PURE__ */ jsxRuntimeExports.jsxs(jsxRuntimeExports.Fragment, { children: [
-        /* @__PURE__ */ jsxRuntimeExports.jsxs(Paragraph, { $size: size, children: [
+        /* @__PURE__ */ jsxRuntimeExports.jsxs(Paragraph, { $size: size, $fontSize: textSize, children: [
           "CPU: ",
           cpuUsage.toFixed(0),
           "%"
         ] }),
         /* @__PURE__ */ jsxRuntimeExports.jsx(LinearProgress$1, { variant: "determinate", value: Math.round(cpuUsage), color: cpuUsage < 80 ? "primary" : "secondary" })
       ] }),
-      show.memory && /* @__PURE__ */ jsxRuntimeExports.jsxs(Paragraph, { $size: size, children: [
+      show.memory && /* @__PURE__ */ jsxRuntimeExports.jsxs(Paragraph, { $size: size, $fontSize: textSize, children: [
         "Memory: ",
         formatMB(memoryUsage)
       ] }),
-      show.freeDisk && /* @__PURE__ */ jsxRuntimeExports.jsxs(Paragraph, { $size: size, children: [
+      show.freeDisk && /* @__PURE__ */ jsxRuntimeExports.jsxs(Paragraph, { $size: size, $fontSize: textSize, children: [
         "Free Disk: ",
         formatMB(freeDiskSpace)
       ] }),
-      show.skippedFrames && /* @__PURE__ */ jsxRuntimeExports.jsxs(Paragraph, { $size: size, children: [
+      show.skippedFrames && /* @__PURE__ */ jsxRuntimeExports.jsxs(Paragraph, { $size: size, $fontSize: textSize, children: [
         "Skipped Frames: ",
         outputSkippedFrames
       ] }),
-      customText && /* @__PURE__ */ jsxRuntimeExports.jsx(Paragraph, { $size: size, children: customText })
+      customText && /* @__PURE__ */ jsxRuntimeExports.jsx(Paragraph, { $size: size, $fontSize: textSize, children: customText })
     ] });
   }
 };
@@ -25948,7 +25991,7 @@ const TileWrapper = qe.div`
 	margin-right: ${(p2) => p2.theme.grid(0.5)};
 	margin-bottom: ${(p2) => p2.theme.grid(1)};
 `;
-const COMMON_TILE_PROPS = ["title", "connection", "tileSize"];
+const COMMON_TILE_PROPS = ["title", "connection", "tileSize", "fontSize"];
 function warnExtraProps(tile, allowed, typeName) {
   if (typeof tile !== "object" || tile == null) return;
   const extras = Object.keys(tile).filter(
@@ -26009,6 +26052,7 @@ const Tiles = ({
   tiles = [],
   connection,
   tileSize,
+  fontSize,
   direction,
   wrap
 }) => {
@@ -26016,10 +26060,10 @@ const Tiles = ({
     if (!tile) return null;
     const inheritableProps = {
       connection,
-      tileSize
+      tileSize,
+      fontSize
     };
     if (isGroupTileConfig(tile)) {
-      console.log("Rendering group tile:", tile.group, " with background color:", tile);
       return /* @__PURE__ */ jsxRuntimeExports.jsxs(TilesGroupWrapper, { "data-elementtype": "TilesGroupWrapper", $backgroundColor: tile.backgroundColor, children: [
         /* @__PURE__ */ jsxRuntimeExports.jsx("h3", { children: tile.group }),
         /* @__PURE__ */ jsxRuntimeExports.jsx(Tiles, { ...inheritableProps, ...tile, tiles: tile.tiles })
@@ -26163,11 +26207,11 @@ const ScenePicker = ({ connection, value, onChange }) => {
         children: [
           scenes.map((s) => /* @__PURE__ */ jsxRuntimeExports.jsx(MenuItem$1, { value: s, children: s }, s)),
           (programScene || previewScene) && /* @__PURE__ */ jsxRuntimeExports.jsx(MuiDivider, {}),
-          programScene && /* @__PURE__ */ jsxRuntimeExports.jsxs(MenuItem$1, { value: programScene, style: { fontStyle: "italic" }, children: [
+          programScene && /* @__PURE__ */ jsxRuntimeExports.jsxs(MenuItem$1, { value: SCENE_PLACEHOLDER_PROGRAM, style: { fontStyle: "italic" }, children: [
             "▶ Program — ",
             programScene
           ] }),
-          previewScene && /* @__PURE__ */ jsxRuntimeExports.jsxs(MenuItem$1, { value: previewScene, style: { fontStyle: "italic" }, children: [
+          previewScene && /* @__PURE__ */ jsxRuntimeExports.jsxs(MenuItem$1, { value: SCENE_PLACEHOLDER_PREVIEW, style: { fontStyle: "italic" }, children: [
             "○ Preview — ",
             previewScene
           ] })
@@ -26215,6 +26259,34 @@ const SceneItemPicker = ({ connection, scene, value, onChange }) => {
     )
   ] });
 };
+function SizeFields({ draft, setDraft }) {
+  return /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { style: { display: "flex", gap: 8 }, children: [
+    /* @__PURE__ */ jsxRuntimeExports.jsx(
+      TextField$1,
+      {
+        label: "Tile Size",
+        type: "number",
+        value: draft.tileSize ?? "",
+        onChange: (e2) => setDraft({ ...draft, tileSize: e2.target.value || void 0 }),
+        variant: "outlined",
+        size: "small",
+        fullWidth: true
+      }
+    ),
+    /* @__PURE__ */ jsxRuntimeExports.jsx(
+      TextField$1,
+      {
+        label: "Font Size",
+        type: "number",
+        value: draft.fontSize ?? "",
+        onChange: (e2) => setDraft({ ...draft, fontSize: e2.target.value || void 0 }),
+        variant: "outlined",
+        size: "small",
+        fullWidth: true
+      }
+    )
+  ] });
+}
 function GroupForm({ draft, setDraft }) {
   return /* @__PURE__ */ jsxRuntimeExports.jsxs(FormSection, { children: [
     /* @__PURE__ */ jsxRuntimeExports.jsx(
@@ -26288,18 +26360,7 @@ function GroupForm({ draft, setDraft }) {
         fullWidth: true
       }
     ),
-    /* @__PURE__ */ jsxRuntimeExports.jsx(
-      TextField$1,
-      {
-        label: "Tile Size",
-        type: "number",
-        value: draft.tileSize ?? "",
-        onChange: (e2) => setDraft({ ...draft, tileSize: e2.target.value || void 0 }),
-        variant: "outlined",
-        size: "small",
-        fullWidth: true
-      }
-    )
+    /* @__PURE__ */ jsxRuntimeExports.jsx(SizeFields, { draft, setDraft })
   ] });
 }
 function SceneForm({ draft, setDraft, connection }) {
@@ -26328,18 +26389,7 @@ function SceneForm({ draft, setDraft, connection }) {
         fullWidth: true
       }
     ),
-    /* @__PURE__ */ jsxRuntimeExports.jsx(
-      TextField$1,
-      {
-        label: "Tile Size",
-        type: "number",
-        value: draft.tileSize ?? "",
-        onChange: (e2) => setDraft({ ...draft, tileSize: e2.target.value || void 0 }),
-        variant: "outlined",
-        size: "small",
-        fullWidth: true
-      }
-    )
+    /* @__PURE__ */ jsxRuntimeExports.jsx(SizeFields, { draft, setDraft })
   ] });
 }
 function SceneItemForm({ draft, setDraft, connection }) {
@@ -26410,18 +26460,7 @@ function SceneItemForm({ draft, setDraft, connection }) {
         fullWidth: true
       }
     ),
-    /* @__PURE__ */ jsxRuntimeExports.jsx(
-      TextField$1,
-      {
-        label: "Tile Size",
-        type: "number",
-        value: draft.tileSize ?? "",
-        onChange: (e2) => setDraft({ ...draft, tileSize: e2.target.value || void 0 }),
-        variant: "outlined",
-        size: "small",
-        fullWidth: true
-      }
-    )
+    /* @__PURE__ */ jsxRuntimeExports.jsx(SizeFields, { draft, setDraft })
   ] });
 }
 function ButtonForm({ draft, setDraft }) {
@@ -26449,18 +26488,7 @@ function ButtonForm({ draft, setDraft }) {
         fullWidth: true
       }
     ),
-    /* @__PURE__ */ jsxRuntimeExports.jsx(
-      TextField$1,
-      {
-        label: "Tile Size",
-        type: "number",
-        value: draft.tileSize ?? "",
-        onChange: (e2) => setDraft({ ...draft, tileSize: e2.target.value || void 0 }),
-        variant: "outlined",
-        size: "small",
-        fullWidth: true
-      }
-    )
+    /* @__PURE__ */ jsxRuntimeExports.jsx(SizeFields, { draft, setDraft })
   ] });
 }
 function TextForm({ draft, setDraft }) {
@@ -26517,18 +26545,7 @@ function TextForm({ draft, setDraft }) {
         rows: 2
       }
     ),
-    /* @__PURE__ */ jsxRuntimeExports.jsx(
-      TextField$1,
-      {
-        label: "Tile Size",
-        type: "number",
-        value: draft.tileSize ?? "",
-        onChange: (e2) => setDraft({ ...draft, tileSize: e2.target.value || void 0 }),
-        variant: "outlined",
-        size: "small",
-        fullWidth: true
-      }
-    )
+    /* @__PURE__ */ jsxRuntimeExports.jsx(SizeFields, { draft, setDraft })
   ] });
 }
 function AudioInputForm({ draft, setDraft }) {
@@ -26581,18 +26598,7 @@ function AudioInputForm({ draft, setDraft }) {
         fullWidth: true
       }
     ),
-    /* @__PURE__ */ jsxRuntimeExports.jsx(
-      TextField$1,
-      {
-        label: "Tile Size",
-        type: "number",
-        value: draft.tileSize ?? "",
-        onChange: (e2) => setDraft({ ...draft, tileSize: e2.target.value || void 0 }),
-        variant: "outlined",
-        size: "small",
-        fullWidth: true
-      }
-    )
+    /* @__PURE__ */ jsxRuntimeExports.jsx(SizeFields, { draft, setDraft })
   ] });
 }
 const TYPE_LABELS = {
@@ -26933,6 +26939,7 @@ const TileMenu = ({
     onClose();
   };
   const currentSize = Number(tile.tileSize || currentConfig.tileSize || 10);
+  const currentFontSize = Number(tile.fontSize || currentConfig.fontSize || tile.tileSize || currentConfig.tileSize || 10);
   const handleSizeChange = (_2, value) => {
     const size = Array.isArray(value) ? value[0] : value;
     if (isRoot) {
@@ -26943,6 +26950,20 @@ const TileMenu = ({
         tiles: replaceTileAt(config2.tiles, tilePath, {
           ...tile,
           tileSize: String(size)
+        })
+      }));
+    }
+  };
+  const handleFontSizeChange = (_2, value) => {
+    const size = Array.isArray(value) ? value[0] : value;
+    if (isRoot) {
+      updateCurrentConfig((config2) => ({ ...config2, fontSize: size }));
+    } else {
+      updateCurrentConfig((config2) => ({
+        ...config2,
+        tiles: replaceTileAt(config2.tiles, tilePath, {
+          ...tile,
+          fontSize: String(size)
         })
       }));
     }
@@ -26970,10 +26991,6 @@ const TileMenu = ({
           /* @__PURE__ */ jsxRuntimeExports.jsx(ListItemIcon$1, { children: /* @__PURE__ */ jsxRuntimeExports.jsx(AddCircleOutline, { fontSize: "small" }) }),
           "Add…"
         ] }),
-        (isGroup || isRoot) && clipboard && /* @__PURE__ */ jsxRuntimeExports.jsxs(MenuItem$1, { onClick: handlePasteInto, children: [
-          /* @__PURE__ */ jsxRuntimeExports.jsx(ListItemIcon$1, { children: /* @__PURE__ */ jsxRuntimeExports.jsx(FileCopy, { fontSize: "small" }) }),
-          "Paste into group"
-        ] }),
         !isRoot && /* @__PURE__ */ jsxRuntimeExports.jsx(MuiDivider, {}),
         !isRoot && /* @__PURE__ */ jsxRuntimeExports.jsxs(MenuItem$1, { onClick: handleCut, children: [
           /* @__PURE__ */ jsxRuntimeExports.jsx(ListItemIcon$1, { children: /* @__PURE__ */ jsxRuntimeExports.jsx(CallSplit, { fontSize: "small" }) }),
@@ -26982,6 +26999,10 @@ const TileMenu = ({
         !isRoot && /* @__PURE__ */ jsxRuntimeExports.jsxs(MenuItem$1, { onClick: handlePaste, disabled: !clipboard, children: [
           /* @__PURE__ */ jsxRuntimeExports.jsx(ListItemIcon$1, { children: /* @__PURE__ */ jsxRuntimeExports.jsx(FileCopy, { fontSize: "small" }) }),
           "Paste after"
+        ] }),
+        (isGroup || isRoot) && clipboard && /* @__PURE__ */ jsxRuntimeExports.jsxs(MenuItem$1, { onClick: handlePasteInto, children: [
+          /* @__PURE__ */ jsxRuntimeExports.jsx(ListItemIcon$1, { children: /* @__PURE__ */ jsxRuntimeExports.jsx(FileCopy, { fontSize: "small" }) }),
+          "Paste into group"
         ] }),
         !isRoot && /* @__PURE__ */ jsxRuntimeExports.jsxs(MenuItem$1, { onClick: handleDelete, children: [
           /* @__PURE__ */ jsxRuntimeExports.jsx(ListItemIcon$1, { children: /* @__PURE__ */ jsxRuntimeExports.jsx(Delete, { fontSize: "small" }) }),
@@ -27003,6 +27024,21 @@ const TileMenu = ({
               onChange: handleSizeChange,
               style: { width: "100%" }
             }
+          ),
+          /* @__PURE__ */ jsxRuntimeExports.jsxs(Typography$1, { variant: "caption", display: "block", gutterBottom: true, style: { marginTop: 10 }, children: [
+            "Font Size: ",
+            currentFontSize
+          ] }),
+          /* @__PURE__ */ jsxRuntimeExports.jsx(
+            Slider$1,
+            {
+              value: currentFontSize,
+              min: 4,
+              max: 30,
+              step: 1,
+              onChange: handleFontSizeChange,
+              style: { width: "100%" }
+            }
           )
         ] })
       ]
@@ -27014,6 +27050,7 @@ const EditableLeafTile = ({
   tilePath,
   inheritedConnection,
   inheritedTileSize,
+  inheritedFontSize,
   parentDirection,
   siblingCount = 1
 }) => {
@@ -27025,6 +27062,7 @@ const EditableLeafTile = ({
   const isDragging = dragPath?.join(",") === tilePath.join(",");
   const effectiveConnection = tile.connection ?? inheritedConnection;
   const effectiveTileSize = tile.tileSize ?? inheritedTileSize;
+  const effectiveFontSize = tile.fontSize ?? inheritedFontSize ?? effectiveTileSize;
   const tileIndex = tilePath[tilePath.length - 1];
   const isColumn = parentDirection === "column";
   const BackIcon = isColumn ? ArrowUpward : ArrowBack;
@@ -27040,7 +27078,8 @@ const EditableLeafTile = ({
   const renderContent = () => {
     const common2 = {
       connection: effectiveConnection,
-      tileSize: String(effectiveTileSize ?? 10)
+      tileSize: String(effectiveTileSize ?? 10),
+      fontSize: String(effectiveFontSize ?? effectiveTileSize ?? 10)
     };
     if ("scene" in tile) return /* @__PURE__ */ jsxRuntimeExports.jsx(SceneButton, { ...common2, scene: tile.scene, title: tile.title, viewType: tile.viewType });
     if ("sceneItem" in tile) return /* @__PURE__ */ jsxRuntimeExports.jsx(SceneItemButton, { ...common2, sceneItem: tile.sceneItem, title: tile.title, viewType: tile.viewType });
@@ -27150,6 +27189,7 @@ const EditableGroupTile = ({
   tilePath,
   inheritedConnection,
   inheritedTileSize,
+  inheritedFontSize,
   parentDirection,
   siblingCount = 1
 }) => {
@@ -27161,6 +27201,7 @@ const EditableGroupTile = ({
   const isDragging = dragPath?.join(",") === tilePath.join(",");
   const effectiveConnection = tile.connection ?? inheritedConnection;
   const effectiveTileSize = tile.tileSize ?? inheritedTileSize;
+  const effectiveFontSize = tile.fontSize ?? inheritedFontSize ?? effectiveTileSize;
   const tileIndex = tilePath[tilePath.length - 1];
   const isColumn = parentDirection === "column";
   const BackIcon = isColumn ? ArrowUpward : ArrowBack;
@@ -27253,6 +27294,7 @@ const EditableGroupTile = ({
               containerPath: tilePath,
               inheritedConnection: effectiveConnection,
               inheritedTileSize: effectiveTileSize,
+              inheritedFontSize: effectiveFontSize,
               direction: tile.direction,
               wrap: tile.wrap
             }
@@ -27310,6 +27352,7 @@ const EditableGroup = ({
   containerPath,
   inheritedConnection,
   inheritedTileSize,
+  inheritedFontSize,
   direction,
   wrap
 }) => {
@@ -27325,6 +27368,7 @@ const EditableGroup = ({
           tilePath: [...containerPath, i],
           inheritedConnection,
           inheritedTileSize,
+          inheritedFontSize,
           parentDirection: direction,
           siblingCount: tiles.length
         }
@@ -27335,6 +27379,7 @@ const EditableGroup = ({
           tilePath: [...containerPath, i],
           inheritedConnection,
           inheritedTileSize,
+          inheritedFontSize,
           parentDirection: direction,
           siblingCount: tiles.length
         }
@@ -27354,6 +27399,7 @@ const EditableTiles = () => {
     group: "",
     tiles: currentConfig.tiles ?? [],
     tileSize: currentConfig.tileSize,
+    fontSize: currentConfig.fontSize,
     direction: currentConfig.direction,
     connection: currentConfig.connection,
     wrap: currentConfig.wrap
@@ -27427,6 +27473,7 @@ const EditableTiles = () => {
               containerPath: [],
               inheritedConnection: currentConfig.connection,
               inheritedTileSize: currentConfig.tileSize,
+              inheritedFontSize: currentConfig.fontSize ?? currentConfig.tileSize,
               direction: currentConfig.direction,
               wrap: currentConfig.wrap
             }
@@ -27456,6 +27503,7 @@ const EditableTiles = () => {
           updateCurrentConfig((config2) => ({
             ...config2,
             tileSize: updated.tileSize ?? config2.tileSize,
+            fontSize: updated.fontSize ?? config2.fontSize,
             direction: updated.direction ?? config2.direction,
             connection: updated.connection ?? config2.connection,
             wrap: updated.wrap
@@ -27501,6 +27549,7 @@ const Content = () => {
         {
           ...tileSettings,
           tileSize: tileSettings.tileSize ?? "10",
+          fontSize: tileSettings.fontSize ?? tileSettings.tileSize ?? "10",
           direction: tileSettings.direction ?? "row"
         }
       )
