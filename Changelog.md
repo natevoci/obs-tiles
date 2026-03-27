@@ -2,6 +2,12 @@
 
 ## Feature History
 
+### 2026-03-27
+
+**Version 5 release**
+
+- Update version number in package.json
+
 ### 2026-03-22
 
 **feat(EditMode): add Font Size slider to tile context menu**
