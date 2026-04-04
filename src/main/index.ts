@@ -1,4 +1,4 @@
-import { app, BrowserWindow, ipcMain } from 'electron'
+import { app, BrowserWindow, ipcMain, dialog } from 'electron'
 import { fileURLToPath } from 'url'
 import { dirname } from 'path'
 import path from 'path'
@@ -62,6 +62,39 @@ function saveSettings(settings: any): boolean {
   } catch (error) {
     console.error('Error saving settings.json:', error)
     return false
+  }
+}
+
+function backupConfigOnClose() {
+  const settings = loadSettings()
+  const enabled = Boolean(settings?.autoBackupConfigOnClose)
+  const configuredFolder = String(settings?.autoBackupConfigFolder ?? '').trim()
+
+  if (!enabled || !configuredFolder) {
+    return
+  }
+
+  const backupDir = path.isAbsolute(configuredFolder)
+    ? configuredFolder
+    : path.join(basePath, configuredFolder)
+
+  const sourceConfigPath = path.join(dataDir, 'config.json')
+  const targetConfigPath = path.join(backupDir, 'config.json')
+
+  try {
+    fs.mkdirSync(backupDir, { recursive: true })
+
+    if (fs.existsSync(sourceConfigPath)) {
+      fs.copyFileSync(sourceConfigPath, targetConfigPath)
+      return
+    }
+
+    const currentConfigIndex = Number(settings?.currentConfigIndex ?? 0)
+    const configs = Array.isArray(settings?.configs) ? settings.configs : []
+    const fallbackConfig = configs[currentConfigIndex] ?? configs[0] ?? DEFAULT_SETTINGS.configs[0]
+    fs.writeFileSync(targetConfigPath, JSON.stringify(fallbackConfig, null, 2), 'utf-8')
+  } catch (error) {
+    console.error('Error backing up config.json on close:', error)
   }
 }
 
@@ -145,6 +178,7 @@ function createWindow() {
 
   // Save window state on close
   mainWindow.on('close', () => {
+    backupConfigOnClose()
     saveWindowState(mainWindow!)
   })
 
@@ -174,4 +208,18 @@ ipcMain.handle('get-settings', () => {
 
 ipcMain.handle('save-settings', (_event, settings: any) => {
   return saveSettings(settings)
+})
+
+ipcMain.handle('select-folder', async (_event, defaultPath?: string) => {
+  const result = await dialog.showOpenDialog({
+    title: 'Select backup folder',
+    defaultPath: typeof defaultPath === 'string' && defaultPath.trim() ? defaultPath : undefined,
+    properties: ['openDirectory', 'createDirectory'],
+  })
+
+  if (result.canceled || result.filePaths.length === 0) {
+    return null
+  }
+
+  return result.filePaths[0]
 })

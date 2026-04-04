@@ -14,6 +14,8 @@ export interface ConfigFileFormat {
   configs: ConfigItem[]
   currentConfigIndex: number
   selectConfigAtLaunch: boolean
+  autoBackupConfigOnClose?: boolean
+  autoBackupConfigFolder?: string
   confirmBeforeStartStreaming?: boolean
   confirmBeforeStopStreaming?: boolean
   confirmBeforeStartRecording?: boolean

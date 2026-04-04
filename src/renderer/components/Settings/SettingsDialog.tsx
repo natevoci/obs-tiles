@@ -128,6 +128,16 @@ const EmptyHint = styled.div`
 	font-size: 13px;
 `
 
+const BackupFolderRow = styled.div`
+	display: flex;
+	gap: 8px;
+	align-items: flex-start;
+`
+
+const BackupFolderBrowseButton = styled(Button)`
+	flex-shrink: 0;
+`
+
 const useStyles = makeStyles((theme) => ({
 	appBar: { position: 'relative' },
 	title: { marginLeft: theme.spacing(2), flex: 1 },
@@ -215,6 +225,8 @@ export const SettingsDialog = ({ onClose }: SettingsDialogProps) => {
 	// Local state â€” edits are held locally until Save
 	const [localTitle, setLocalTitle] = React.useState(savedSettings.title ?? DEFAULT_SETTINGS.title)
 	const [localSelectConfigAtLaunch, setLocalSelectConfigAtLaunch] = React.useState(savedSettings.selectConfigAtLaunch ?? false)
+	const [localAutoBackupConfigOnClose, setLocalAutoBackupConfigOnClose] = React.useState(savedSettings.autoBackupConfigOnClose ?? false)
+	const [localAutoBackupConfigFolder, setLocalAutoBackupConfigFolder] = React.useState(savedSettings.autoBackupConfigFolder ?? '')
 	const [localConfirmBeforeStartStreaming, setLocalConfirmBeforeStartStreaming] = React.useState(savedSettings.confirmBeforeStartStreaming ?? false)
 	const [localConfirmBeforeStopStreaming, setLocalConfirmBeforeStopStreaming] = React.useState(savedSettings.confirmBeforeStopStreaming ?? false)
 	const [localConfirmBeforeStartRecording, setLocalConfirmBeforeStartRecording] = React.useState(savedSettings.confirmBeforeStartRecording ?? false)
@@ -242,6 +254,18 @@ export const SettingsDialog = ({ onClose }: SettingsDialogProps) => {
 	} | null>(null)
 	const [deleteConfirm, setDeleteConfirm] = React.useState<{ configIndex: number; configName: string } | null>(null)
 	const [jsonError, setJsonError] = React.useState<string | null>(null)
+
+	const handleBrowseBackupFolder = React.useCallback(async () => {
+		if (!window.ipcRenderer) return
+		try {
+			const selectedPath = await window.ipcRenderer.selectFolder(localAutoBackupConfigFolder)
+			if (selectedPath) {
+				setLocalAutoBackupConfigFolder(selectedPath)
+			}
+		} catch (error) {
+			console.error('Failed to select backup folder:', error)
+		}
+	}, [localAutoBackupConfigFolder])
 
 	// After a new config is appended, select it on the next render (avoids side-effects in state updaters)
 	const pendingSelectLastRef = React.useRef(false)
@@ -369,6 +393,8 @@ export const SettingsDialog = ({ onClose }: SettingsDialogProps) => {
 			configs: finalConfigs,
 			currentConfigIndex: localConfigIndex,
 			selectConfigAtLaunch: localSelectConfigAtLaunch,
+			autoBackupConfigOnClose: localAutoBackupConfigOnClose,
+			autoBackupConfigFolder: localAutoBackupConfigFolder,
 			confirmBeforeStartStreaming: localConfirmBeforeStartStreaming,
 			confirmBeforeStopStreaming: localConfirmBeforeStopStreaming,
 			confirmBeforeStartRecording: localConfirmBeforeStartRecording,
@@ -439,6 +465,8 @@ export const SettingsDialog = ({ onClose }: SettingsDialogProps) => {
 
 	const renderRightPanel = () => {
 		if (selected === 'settings') {
+			const isElectron = Boolean(window.ipcRenderer)
+			const backupFolderDisabled = !localAutoBackupConfigOnClose
 			return (
 				<>
 					<RightPanelHeader>
@@ -467,6 +495,40 @@ export const SettingsDialog = ({ onClose }: SettingsDialogProps) => {
 								}
 								label="Select config at launch"
 							/>
+							{isElectron && (
+								<>
+									<FormControlLabel
+										control={
+											<Checkbox
+												checked={localAutoBackupConfigOnClose}
+												onChange={(e) => setLocalAutoBackupConfigOnClose(e.target.checked)}
+												color="primary"
+												size="small"
+											/>
+										}
+										label="Auto backup config on close"
+									/>
+									<BackupFolderRow>
+										<TextField
+											label="Backup folder"
+											value={localAutoBackupConfigFolder}
+											onChange={(e) => setLocalAutoBackupConfigFolder(e.target.value)}
+											variant="outlined"
+											size="small"
+											fullWidth
+											disabled={backupFolderDisabled}
+											helperText="Folder path where config.json is copied when the app closes"
+										/>
+										<BackupFolderBrowseButton
+											variant="outlined"
+											onClick={handleBrowseBackupFolder}
+											disabled={backupFolderDisabled}
+										>
+											Browse
+										</BackupFolderBrowseButton>
+									</BackupFolderRow>
+								</>
+							)}
 							<FormControlLabel
 								control={
 									<Checkbox

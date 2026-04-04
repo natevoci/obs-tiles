@@ -9,4 +9,7 @@ contextBridge.exposeInMainWorld('ipcRenderer', {
   saveSettings: (settings: any) => {
     return ipcRenderer.invoke('save-settings', settings)
   },
+  selectFolder: (defaultPath?: string) => {
+    return ipcRenderer.invoke('select-folder', defaultPath)
+  },
 })

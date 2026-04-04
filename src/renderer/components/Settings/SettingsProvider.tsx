@@ -10,6 +10,7 @@ declare global {
 		ipcRenderer: {
 			getSettings: () => Promise<any>
 			saveSettings: (settings: any) => Promise<boolean>
+			selectFolder: (defaultPath?: string) => Promise<string | null>
 		}
 	}
 }

@@ -55,6 +55,13 @@ is better than pasting a full code block.
 
 ---
 
+## Styling Conventions
+
+- In renderer component code, do not introduce new inline `style={{ ... }}` blocks for layout/styling.
+- Create or extend local `styled-components` in the file instead.
+
+---
+
 
 ## Deployment Modes
 

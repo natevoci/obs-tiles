@@ -2,6 +2,17 @@
 
 ## Feature History
 
+### 2026-04-05
+
+**feat(Settings/Electron): add auto backup config on app close**
+
+- Added new settings fields: `autoBackupConfigOnClose` and `autoBackupConfigFolder`
+- Added an Electron-only checkbox (`Auto backup config on close`) and `Backup folder` text input in `SettingsDialog.tsx`
+- Added a `Browse` button next to the backup folder field that opens the native folder picker via Electron IPC (`select-folder`)
+- Disabled the folder input until the checkbox is enabled
+- Added close-time backup logic in `src/main/index.ts` to write/copy `config.json` into the configured folder when the app closes
+- If `data/config.json` is missing, backup falls back to writing the currently selected config from settings as `config.json`
+
 ### 2026-03-27
 
 **Version 5 release**
