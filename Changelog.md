@@ -4,6 +4,15 @@
 
 ### 2026-04-05
 
+**feat(Tiles): configurable active/inactive refresh times for scene and scene item tiles**
+
+- Added `activeRefreshTime` and `inactiveRefreshTime` to `BaseTileConfig` and `ConfigItem`; both follow the same group/root inheritance pattern as `tileSize`/`fontSize`
+- `SceneButton` and `SceneItemButton` now read these props and use them in `useSceneImage` (defaults: 400 ms active, 1000 ms inactive)
+- `Tiles.tsx` propagates both fields through `inheritableProps` like other base config fields
+- `Content.tsx` passes root-level values into the `Tiles` tree
+- Added `RefreshTimeFields` helper component (styled, no inline styles) to `TilePropertiesDialog.tsx`, shown in Group, Scene, and Scene Item property forms
+- `EditableTiles.tsx` plumbs `inheritedActiveRefreshTime` / `inheritedInactiveRefreshTime` through all levels (leaf, group, EditableGroup, root synthetic tile, and root `onSave`)
+
 **feat(Settings/Electron): add auto backup config on app close**
 
 - Added new settings fields: `autoBackupConfigOnClose` and `autoBackupConfigFolder`

@@ -204,9 +204,14 @@ interface FormProps {
 	connection?: string
 }
 
+const FieldRow = styled.div`
+	display: flex;
+	gap: 8px;
+`
+
 function SizeFields({ draft, setDraft }: { draft: any; setDraft: (d: any) => void }) {
 	return (
-		<div style={{ display: 'flex', gap: 8 }}>
+		<FieldRow>
 			<TextField
 				label="Tile Size"
 				type="number"
@@ -221,7 +226,30 @@ function SizeFields({ draft, setDraft }: { draft: any; setDraft: (d: any) => voi
 				onChange={(e) => setDraft({ ...draft, fontSize: e.target.value || undefined })}
 				variant="outlined" size="small" fullWidth
 			/>
-		</div>
+		</FieldRow>
+	)
+}
+
+function RefreshTimeFields({ draft, setDraft }: { draft: any; setDraft: (d: any) => void }) {
+	return (
+		<FieldRow>
+			<TextField
+				label="Active Refresh (ms)"
+				type="number"
+				value={draft.activeRefreshTime ?? ''}
+				onChange={(e) => setDraft({ ...draft, activeRefreshTime: e.target.value ? Number(e.target.value) : undefined })}
+				variant="outlined" size="small" fullWidth
+				helperText="ms — when tile is active"
+			/>
+			<TextField
+				label="Inactive Refresh (ms)"
+				type="number"
+				value={draft.inactiveRefreshTime ?? ''}
+				onChange={(e) => setDraft({ ...draft, inactiveRefreshTime: e.target.value ? Number(e.target.value) : undefined })}
+				variant="outlined" size="small" fullWidth
+				helperText="ms — when tile is inactive"
+			/>
+		</FieldRow>
 	)
 }
 
@@ -274,6 +302,7 @@ function GroupForm({ draft, setDraft }: FormProps) {
 				variant="outlined" size="small" fullWidth
 			/>
 			<SizeFields draft={draft} setDraft={setDraft} />
+			<RefreshTimeFields draft={draft} setDraft={setDraft} />
 		</FormSection>
 	)
 }
@@ -296,6 +325,7 @@ function SceneForm({ draft, setDraft, connection }: FormProps) {
 				variant="outlined" size="small" fullWidth
 			/>
 			<SizeFields draft={draft} setDraft={setDraft} />
+			<RefreshTimeFields draft={draft} setDraft={setDraft} />
 		</FormSection>
 	)
 }
@@ -344,6 +374,7 @@ function SceneItemForm({ draft, setDraft, connection }: FormProps) {
 				variant="outlined" size="small" fullWidth
 			/>
 			<SizeFields draft={draft} setDraft={setDraft} />
+			<RefreshTimeFields draft={draft} setDraft={setDraft} />
 		</FormSection>
 	)
 }

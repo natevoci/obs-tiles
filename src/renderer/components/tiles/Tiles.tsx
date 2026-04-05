@@ -56,6 +56,8 @@ interface BaseTileConfig {
 	connection?: string;
 	tileSize?: string | number;
 	fontSize?: string | number;
+	activeRefreshTime?: number;
+	inactiveRefreshTime?: number;
 }
 
 // Specific tile configs
@@ -125,7 +127,7 @@ type TileConfig =
 
 
 // Common props for all tile types
-const COMMON_TILE_PROPS = ['title', 'connection', 'tileSize', 'fontSize'];
+const COMMON_TILE_PROPS = ['title', 'connection', 'tileSize', 'fontSize', 'activeRefreshTime', 'inactiveRefreshTime'];
 
 function warnExtraProps(tile: any, allowed: string[], typeName: string) {
 	if (typeof tile !== 'object' || tile == null) return;
@@ -218,6 +220,8 @@ interface TilesProps {
 	connection?: string
 	tileSize?: string | number
 	fontSize?: string | number
+	activeRefreshTime?: number
+	inactiveRefreshTime?: number
 	direction?: string
 	wrap?: boolean
 	[key: string]: any
@@ -228,6 +232,8 @@ export const Tiles = ({
 	connection,
 	tileSize,
 	fontSize,
+	activeRefreshTime,
+	inactiveRefreshTime,
 	direction,
 	wrap,
 }: TilesProps) => {
@@ -238,6 +244,8 @@ export const Tiles = ({
 			connection,
 			tileSize,
 			fontSize,
+			activeRefreshTime,
+			inactiveRefreshTime,
 		};
 		
 		if (isGroupTileConfig(tile)) {

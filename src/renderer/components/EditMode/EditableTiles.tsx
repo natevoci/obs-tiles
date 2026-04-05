@@ -495,6 +495,8 @@ interface EditableLeafProps {
 	inheritedConnection?: string
 	inheritedTileSize?: string | number
 	inheritedFontSize?: string | number
+	inheritedActiveRefreshTime?: number
+	inheritedInactiveRefreshTime?: number
 	parentDirection?: string
 	siblingCount?: number
 }
@@ -505,6 +507,8 @@ const EditableLeafTile = ({
 	inheritedConnection,
 	inheritedTileSize,
 	inheritedFontSize,
+	inheritedActiveRefreshTime,
+	inheritedInactiveRefreshTime,
 	parentDirection,
 	siblingCount = 1,
 }: EditableLeafProps) => {
@@ -518,6 +522,8 @@ const EditableLeafTile = ({
 	const effectiveConnection = tile.connection ?? inheritedConnection
 	const effectiveTileSize = tile.tileSize ?? inheritedTileSize
 	const effectiveFontSize = tile.fontSize ?? inheritedFontSize ?? effectiveTileSize
+	const effectiveActiveRefreshTime = tile.activeRefreshTime ?? inheritedActiveRefreshTime
+	const effectiveInactiveRefreshTime = tile.inactiveRefreshTime ?? inheritedInactiveRefreshTime
 
 	const tileIndex = tilePath[tilePath.length - 1]
 	const isColumn = parentDirection === 'column'
@@ -538,6 +544,8 @@ const EditableLeafTile = ({
 			connection: effectiveConnection,
 			tileSize: String(effectiveTileSize ?? 10),
 			fontSize: String(effectiveFontSize ?? effectiveTileSize ?? 10),
+			...(effectiveActiveRefreshTime !== undefined && { activeRefreshTime: effectiveActiveRefreshTime }),
+			...(effectiveInactiveRefreshTime !== undefined && { inactiveRefreshTime: effectiveInactiveRefreshTime }),
 		}
 		if ('scene' in tile) return <SceneButton {...common} scene={tile.scene} title={tile.title} viewType={tile.viewType} />
 		if ('sceneItem' in tile) return <SceneItemButton {...common} sceneItem={tile.sceneItem} title={tile.title} viewType={tile.viewType} />
@@ -636,6 +644,8 @@ interface EditableGroupTileProps {
 	inheritedConnection?: string
 	inheritedTileSize?: string | number
 	inheritedFontSize?: string | number
+	inheritedActiveRefreshTime?: number
+	inheritedInactiveRefreshTime?: number
 	parentDirection?: string
 	siblingCount?: number
 }
@@ -646,6 +656,8 @@ const EditableGroupTile = ({
 	inheritedConnection,
 	inheritedTileSize,
 	inheritedFontSize,
+	inheritedActiveRefreshTime,
+	inheritedInactiveRefreshTime,
 	parentDirection,
 	siblingCount = 1,
 }: EditableGroupTileProps) => {
@@ -659,6 +671,8 @@ const EditableGroupTile = ({
 	const effectiveConnection = tile.connection ?? inheritedConnection
 	const effectiveTileSize = tile.tileSize ?? inheritedTileSize
 	const effectiveFontSize = tile.fontSize ?? inheritedFontSize ?? effectiveTileSize
+	const effectiveActiveRefreshTime = tile.activeRefreshTime ?? inheritedActiveRefreshTime
+	const effectiveInactiveRefreshTime = tile.inactiveRefreshTime ?? inheritedInactiveRefreshTime
 
 	const tileIndex = tilePath[tilePath.length - 1]
 	const isColumn = parentDirection === 'column'
@@ -735,6 +749,8 @@ const EditableGroupTile = ({
 					inheritedConnection={effectiveConnection}
 					inheritedTileSize={effectiveTileSize}
 					inheritedFontSize={effectiveFontSize}
+					inheritedActiveRefreshTime={effectiveActiveRefreshTime}
+					inheritedInactiveRefreshTime={effectiveInactiveRefreshTime}
 					direction={tile.direction}
 					wrap={tile.wrap}
 				/>
@@ -792,6 +808,8 @@ interface EditableGroupProps {
 	inheritedConnection?: string
 	inheritedTileSize?: string | number
 	inheritedFontSize?: string | number
+	inheritedActiveRefreshTime?: number
+	inheritedInactiveRefreshTime?: number
 	direction?: string
 	wrap?: boolean
 }
@@ -802,6 +820,8 @@ const EditableGroup = ({
 	inheritedConnection,
 	inheritedTileSize,
 	inheritedFontSize,
+	inheritedActiveRefreshTime,
+	inheritedInactiveRefreshTime,
 	direction,
 	wrap,
 }: EditableGroupProps) => {
@@ -822,16 +842,20 @@ const EditableGroup = ({
 							inheritedConnection={inheritedConnection}
 							inheritedTileSize={inheritedTileSize}
 							inheritedFontSize={inheritedFontSize}
-							parentDirection={direction}
-							siblingCount={tiles.length}
-						/>
-					) : (
-						<EditableLeafTile
-							tile={tile}
-							tilePath={[...containerPath, i]}
-							inheritedConnection={inheritedConnection}
-							inheritedTileSize={inheritedTileSize}
-							inheritedFontSize={inheritedFontSize}
+						inheritedActiveRefreshTime={inheritedActiveRefreshTime}
+						inheritedInactiveRefreshTime={inheritedInactiveRefreshTime}
+						parentDirection={direction}
+						siblingCount={tiles.length}
+					/>
+				) : (
+					<EditableLeafTile
+						tile={tile}
+						tilePath={[...containerPath, i]}
+						inheritedConnection={inheritedConnection}
+						inheritedTileSize={inheritedTileSize}
+						inheritedFontSize={inheritedFontSize}
+						inheritedActiveRefreshTime={inheritedActiveRefreshTime}
+						inheritedInactiveRefreshTime={inheritedInactiveRefreshTime}
 							parentDirection={direction}
 							siblingCount={tiles.length}
 						/>
@@ -863,6 +887,8 @@ export const EditableTiles = () => {
 		tiles: currentConfig.tiles ?? [],
 		tileSize: currentConfig.tileSize,
 		fontSize: currentConfig.fontSize,
+		activeRefreshTime: currentConfig.activeRefreshTime,
+		inactiveRefreshTime: currentConfig.inactiveRefreshTime,
 		direction: currentConfig.direction,
 		connection: currentConfig.connection,
 		wrap: (currentConfig as any).wrap,
@@ -949,6 +975,8 @@ export const EditableTiles = () => {
 					inheritedConnection={currentConfig.connection}
 					inheritedTileSize={currentConfig.tileSize}
 					inheritedFontSize={currentConfig.fontSize ?? currentConfig.tileSize}
+					inheritedActiveRefreshTime={currentConfig.activeRefreshTime}
+					inheritedInactiveRefreshTime={currentConfig.inactiveRefreshTime}
 					direction={currentConfig.direction}
 					wrap={(currentConfig as any).wrap}
 				/>
@@ -973,6 +1001,8 @@ export const EditableTiles = () => {
 						...config,
 						tileSize: updated.tileSize ?? config.tileSize,
 						fontSize: updated.fontSize ?? config.fontSize,
+						activeRefreshTime: updated.activeRefreshTime ?? config.activeRefreshTime,
+						inactiveRefreshTime: updated.inactiveRefreshTime ?? config.inactiveRefreshTime,
 						direction: updated.direction ?? config.direction,
 						connection: updated.connection ?? config.connection,
 						wrap: updated.wrap,

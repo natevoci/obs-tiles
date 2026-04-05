@@ -16,6 +16,8 @@ export const SceneItemButton = ({
 	title,
 	tileSize = '10',
 	fontSize,
+	activeRefreshTime,
+	inactiveRefreshTime,
 	viewType = 'preview',
 }: SceneItemButtonTileConfig) => {
 	const size = parseInt(String(tileSize));
@@ -36,7 +38,7 @@ export const SceneItemButton = ({
 	const imageData = useSceneImage(obs, {
 		scene: item,
 		tileSize: Math.min(size, 20),
-		refreshTime: isSelected ? 40 : 100,
+		refreshTime: isSelected ? (activeRefreshTime ?? 400) : (inactiveRefreshTime ?? 1000),
 	});
 
 	const handlers = React.useMemo(

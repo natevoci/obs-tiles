@@ -4,6 +4,8 @@ export interface ConfigItem {
   connection: string
   tileSize: number
   fontSize?: number
+  activeRefreshTime?: number
+  inactiveRefreshTime?: number
   direction: string
   tiles: any[]
   [key: string]: any

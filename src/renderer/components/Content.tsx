@@ -30,6 +30,8 @@ export const Content = () => {
 					{...tileSettings}
 					tileSize={tileSettings.tileSize ?? '10'}
 					fontSize={tileSettings.fontSize ?? tileSettings.tileSize ?? '10'}
+					activeRefreshTime={tileSettings.activeRefreshTime}
+					inactiveRefreshTime={tileSettings.inactiveRefreshTime}
 					direction={tileSettings.direction ?? 'row'}
 				/>
 			)}

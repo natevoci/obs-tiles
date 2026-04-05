@@ -14,6 +14,8 @@ export const SceneButton = ({
 	title,
 	tileSize = '10',
 	fontSize,
+	activeRefreshTime,
+	inactiveRefreshTime,
 	viewType = 'preview',
 }: SceneButtonTileConfig) => {
 	const tileSizeInt = parseInt(String(tileSize));
@@ -46,7 +48,7 @@ export const SceneButton = ({
 	const imageData = useSceneImage(obs, {
 		scene: resolvedScene,
 		tileSize: Math.min(tileSizeInt, 20),
-		refreshTime: isCurrentScene ? 40 : 100,
+		refreshTime: isCurrentScene ? (activeRefreshTime ?? 400) : (inactiveRefreshTime ?? 1000),
 	})
 
 	const handleClick = () => {
