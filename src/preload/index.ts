@@ -8,6 +8,7 @@ const { contextBridge, ipcRenderer } = require('electron')
 const rtspFrameListeners = new Map<Function, Function>()
 const rtspErrorListeners = new Map<Function, Function>()
 const rtspConnectingListeners = new Map<Function, Function>()
+const rtspAudioLevelListeners = new Map<Function, Function>()
 
 // Expose IPC methods for settings management
 contextBridge.exposeInMainWorld('ipcRenderer', {
@@ -65,6 +66,18 @@ contextBridge.exposeInMainWorld('ipcRenderer', {
     if (wrapped) {
       ipcRenderer.removeListener('rtsp-connecting', wrapped as any)
       rtspConnectingListeners.delete(callback)
+    }
+  },
+  onRtspAudioLevel: (callback: (payload: { streamId: string; level: number }) => void) => {
+    const wrapped = (_event: any, payload: any) => callback(payload)
+    rtspAudioLevelListeners.set(callback, wrapped)
+    ipcRenderer.on('rtsp-audio-level', wrapped)
+  },
+  offRtspAudioLevel: (callback: (payload: { streamId: string; level: number }) => void) => {
+    const wrapped = rtspAudioLevelListeners.get(callback)
+    if (wrapped) {
+      ipcRenderer.removeListener('rtsp-audio-level', wrapped as any)
+      rtspAudioLevelListeners.delete(callback)
     }
   },
 })

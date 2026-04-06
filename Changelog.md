@@ -4,6 +4,17 @@
 
 ### 2026-04-07
 
+**feat(RtspStreamTile): real-time audio level meter overlay**
+
+- Main process computes PCM RMS dBFS levels from the raw `s16le` audio data received on the named pipe socket in `RtspManager`
+- Samples are accumulated over ~100 ms windows (9600 int16 samples @ 48 kHz stereo) before computing the level, keeping IPC traffic to ~10 msgs/sec per stream
+- Level is computed regardless of mute state so the meter remains active while muted
+- `rtsp-audio-level` IPC event (`{ streamId, level }`) is sent from main → renderer via `webContents.send`
+- Preload bridge exposes `onRtspAudioLevel` / `offRtspAudioLevel` with listener-map wrapper (same pattern as existing RTSP events)
+- `global.d.ts` Window interface extended with the new method pair
+- `useRtspStream` hook gains `audioLevel: number | null` state; handler registered in the main lifecycle effect; reset to `null` on stream stop and reconnect
+- `RtspStreamTile` renders a 5 px wide `AudioLevelMeterWrapper` strip on the right edge of the image (z-index 8, below mute button), filled from bottom by `AudioLevelBar` whose height drives from 0 % (−60 dBFS) to 100 % (0 dBFS); green→yellow→red gradient; 80 ms CSS ease-out transition
+
 **feat(RtspStreamTile): play/stop button to toggle stream on and off**
 
 - Added `active` state and `toggleActive` callback to `useRtspStream` hook

@@ -206,12 +206,39 @@ export class RtspManager {
       }
       if (entry) entry.speaker = speakerInstance
 
+      // Audio level metering state — accumulates PCM s16le samples (2 bytes each)
+      // and fires an IPC event every ~100 ms worth of audio (9600 int16 samples @ 48kHz stereo).
+      const METER_PERIOD_SAMPLES = 9600  // 48000 Hz × 2 ch × 0.1 s
+      let meterSumOfSquares = 0
+      let meterSampleCount = 0
+
       socket.on('data', (chunk: Buffer) => {
         const current = this.streams.get(options.streamId)
-        if (!current?.muted && speakerInstance) {
+        if (!current) return
+
+        // Audio output (skipped when muted — socket is still drained)
+        if (!current.muted && speakerInstance) {
           try { speakerInstance.write(chunk) } catch {}
         }
-        // When muted the data is consumed (socket drained) but not played
+
+        // Level metering — computed regardless of mute state
+        const samplesInChunk = Math.floor(chunk.length / 2)
+        for (let i = 0; i < samplesInChunk * 2; i += 2) {
+          const s = chunk.readInt16LE(i)
+          meterSumOfSquares += s * s
+        }
+        meterSampleCount += samplesInChunk
+
+        if (meterSampleCount >= METER_PERIOD_SAMPLES) {
+          const rms = Math.sqrt(meterSumOfSquares / meterSampleCount)
+          // dBFS: 0 dB = full-scale (32767), clamp floor at -60
+          const level = rms > 0 ? Math.max(-60, Math.min(0, 20 * Math.log10(rms / 32767))) : -60
+          if (!current.webContents.isDestroyed()) {
+            current.webContents.send('rtsp-audio-level', { streamId: options.streamId, level })
+          }
+          meterSumOfSquares = 0
+          meterSampleCount = 0
+        }
       })
 
       socket.on('close', () => {

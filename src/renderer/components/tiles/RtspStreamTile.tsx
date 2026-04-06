@@ -65,6 +65,41 @@ const PlayButtonWrapper = styled.div`
 	pointer-events: auto;
 `
 
+const AudioLevelMeterWrapper = styled.div`
+	position: absolute;
+	top: 0;
+	bottom: 0;
+	right: 0px;
+	width: 5px;
+	z-index: 8;
+	pointer-events: none;
+	border-radius: 2px;
+	overflow: hidden;
+	background: linear-gradient(
+		to top,
+		#00c853 0%,
+		#00c853 50%,
+		#ffb300 55%,
+		#ffb300 85%,
+		#f44336 86%,
+		#d50000 100%
+	);
+`
+
+interface AudioLevelBarProps {
+	$levelPercent: number
+}
+
+const AudioLevelBar = styled.div<AudioLevelBarProps>`
+	position: absolute;
+	top: 0;
+	left: 0;
+	right: 0;
+	height: ${p => 100 - p.$levelPercent}%;
+	background-color: rgba(0, 0, 0, 0.75);
+	transition: height 80ms ease-out;
+`
+
 const StyledMuteButton = styled(IconButton)`
 	padding: 4px !important;
 	background-color: rgba(0, 0, 0, 0.5) !important;
@@ -116,7 +151,7 @@ export const RtspStreamTile = ({
 		console.log(`[RtspStreamTile] id='${rtspStream}' resolvedUrl='${resolvedStreamUrl}' ffmpegPath='${ffmpegPath}'`)
 	}, [rtspStream, resolvedStreamUrl, ffmpegPath])
 
-	const { frameDataUrl, connecting, error, muted, toggleMute, active, toggleActive } = useRtspStream({
+	const { frameDataUrl, connecting, error, muted, toggleMute, active, toggleActive, audioLevel } = useRtspStream({
 		streamId: `rtsp-${rtspStream}`,
 		streamUrl: resolvedStreamUrl,
 		startMuted,
@@ -135,6 +170,11 @@ export const RtspStreamTile = ({
 		}
 		return null
 	}, [connecting, frameDataUrl, error, tileSizeInt])
+
+	// Audio level meter overlay
+	const levelPercent = audioLevel !== null
+		? Math.round(Math.max(0, ((audioLevel + 60) / 60) * 100))
+		: 0
 
 	// Mute button overlay
 	const muteOverlay = (
@@ -177,6 +217,11 @@ export const RtspStreamTile = ({
 						<OverlayCenter $size={tileSizeInt}>
 							{overlayContent}
 						</OverlayCenter>
+					)}
+					{audioLevel !== null && (
+						<AudioLevelMeterWrapper>
+							<AudioLevelBar $levelPercent={levelPercent} />
+						</AudioLevelMeterWrapper>
 					)}
 					{playOverlay}
 					{muteOverlay}

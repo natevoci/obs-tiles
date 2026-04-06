@@ -23,6 +23,8 @@ declare global {
 			offRtspError: (callback: (payload: { streamId: string; message: string }) => void) => void
 			onRtspConnecting: (callback: (payload: { streamId: string }) => void) => void
 			offRtspConnecting: (callback: (payload: { streamId: string }) => void) => void
+			onRtspAudioLevel: (callback: (payload: { streamId: string; level: number }) => void) => void
+			offRtspAudioLevel: (callback: (payload: { streamId: string; level: number }) => void) => void
 		}
 	}
 }

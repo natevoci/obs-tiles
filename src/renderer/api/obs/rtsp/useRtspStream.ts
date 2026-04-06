@@ -15,6 +15,8 @@ export interface RtspStreamState {
 	active: boolean
 	/** Toggle stream on/off */
 	toggleActive: () => void
+	/** Current audio level in dBFS (-60 to 0), null when no audio data received */
+	audioLevel: number | null
 }
 
 export interface UseRtspStreamOptions {
@@ -44,6 +46,7 @@ export function useRtspStream(options: UseRtspStreamOptions): RtspStreamState {
 	const [error, setError] = React.useState<string | null>(null)
 	const [muted, setMuted] = React.useState(startMuted)
 	const [active, setActive] = React.useState(true)
+	const [audioLevel, setAudioLevel] = React.useState<number | null>(null)
 
 	// Track whether the stream has been started
 	const startedRef = React.useRef(false)
@@ -59,6 +62,7 @@ export function useRtspStream(options: UseRtspStreamOptions): RtspStreamState {
 			setFrameDataUrl(null)
 			setConnecting(false)
 			setError(null)
+			setAudioLevel(null)
 			return
 		}
 
@@ -115,17 +119,25 @@ export function useRtspStream(options: UseRtspStreamOptions): RtspStreamState {
 			setFrameDataUrl(null)
 			setConnecting(true)
 			setError(null)
+			setAudioLevel(null)
 			firstFrame = true
+		}
+
+		const handleAudioLevel = (payload: { streamId: string; level: number }) => {
+			if (payload.streamId !== streamId) return
+			setAudioLevel(payload.level)
 		}
 
 		window.ipcRenderer.onRtspFrame(handleFrame)
 		window.ipcRenderer.onRtspError(handleError)
 		window.ipcRenderer.onRtspConnecting(handleConnecting)
+		window.ipcRenderer.onRtspAudioLevel(handleAudioLevel)
 
 		return () => {
 			window.ipcRenderer.offRtspFrame(handleFrame)
 			window.ipcRenderer.offRtspError(handleError)
 			window.ipcRenderer.offRtspConnecting(handleConnecting)
+			window.ipcRenderer.offRtspAudioLevel(handleAudioLevel)
 			if (startedRef.current) {
 				window.ipcRenderer.rtspStop(streamId).catch(() => {
 					// ignore stop errors
@@ -165,5 +177,6 @@ export function useRtspStream(options: UseRtspStreamOptions): RtspStreamState {
 		toggleMute,
 		active,
 		toggleActive,
+		audioLevel,
 	}
 }
