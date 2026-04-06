@@ -21,5 +21,6 @@ export interface ConfigFileFormat {
   confirmBeforeStartStreaming?: boolean
   confirmBeforeStopStreaming?: boolean
   confirmBeforeStartRecording?: boolean
-  confirmBeforeStopRecording?: boolean
+  confirmBeforeStopRecording?: boolean;
+  ffmpegPath?: string;
 }

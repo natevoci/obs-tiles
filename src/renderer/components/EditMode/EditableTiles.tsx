@@ -42,6 +42,7 @@ import { SceneItemButton } from '../tiles/SceneItemButton'
 import { Button as ButtonTile } from '../tiles/Button'
 import { Text as TextTile } from '../tiles/Text'
 import { AudioInputTile } from '../tiles/AudioInputTile'
+import { RtspStreamTile } from '../tiles/RtspStreamTile'
 
 // ============================================================================
 // Tile tree mutation helpers
@@ -552,6 +553,7 @@ const EditableLeafTile = ({
 		if ('button' in tile) return <ButtonTile {...common} button={tile.button} title={tile.title} />
 		if ('text' in tile) return <TextTile {...common} text={tile.text} statsLines={tile.statsLines} customText={tile.customText} />
 		if ('audioInput' in tile) return <AudioInputTile {...common} audioInput={tile.audioInput} title={tile.title} viewType={tile.viewType} />
+		if ('rtspStream' in tile) return <RtspStreamTile {...common} rtspStream={tile.rtspStream} streamUrl={tile.streamUrl} fps={tile.fps} audioSyncOffsetMs={tile.audioSyncOffsetMs} startMuted={tile.startMuted} title={tile.title} />
 		return null
 	}
 
@@ -934,7 +936,7 @@ export const EditableTiles = () => {
 		[dragPath, updateCurrentConfig],
 	)
 
-	// Global dragend fallback — clear drag state if mouse released outside a drop zone
+	// Global dragend fallback - clear drag state if mouse released outside a drop zone
 	React.useEffect(() => {
 		const onDragEnd = () => {
 			setDragPath(null)

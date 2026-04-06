@@ -5,16 +5,6 @@ import { SettingsContext } from './SettingsContext'
 import { DEFAULT_SETTINGS } from '../../../shared/defaults'
 import type { ConfigItem, ConfigFileFormat } from '../../../shared/types'
 
-declare global {
-	interface Window {
-		ipcRenderer: {
-			getSettings: () => Promise<any>
-			saveSettings: (settings: any) => Promise<boolean>
-			selectFolder: (defaultPath?: string) => Promise<string | null>
-		}
-	}
-}
-
 interface SettingsProviderProps {
 	children: ReactNode
 }

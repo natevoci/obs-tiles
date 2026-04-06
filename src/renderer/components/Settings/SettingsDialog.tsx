@@ -227,6 +227,7 @@ export const SettingsDialog = ({ onClose }: SettingsDialogProps) => {
 	const [localSelectConfigAtLaunch, setLocalSelectConfigAtLaunch] = React.useState(savedSettings.selectConfigAtLaunch ?? false)
 	const [localAutoBackupConfigOnClose, setLocalAutoBackupConfigOnClose] = React.useState(savedSettings.autoBackupConfigOnClose ?? false)
 	const [localAutoBackupConfigFolder, setLocalAutoBackupConfigFolder] = React.useState(savedSettings.autoBackupConfigFolder ?? '')
+	const [localFfmpegPath, setLocalFfmpegPath] = React.useState(savedSettings.ffmpegPath ?? '')
 	const [localConfirmBeforeStartStreaming, setLocalConfirmBeforeStartStreaming] = React.useState(savedSettings.confirmBeforeStartStreaming ?? false)
 	const [localConfirmBeforeStopStreaming, setLocalConfirmBeforeStopStreaming] = React.useState(savedSettings.confirmBeforeStopStreaming ?? false)
 	const [localConfirmBeforeStartRecording, setLocalConfirmBeforeStartRecording] = React.useState(savedSettings.confirmBeforeStartRecording ?? false)
@@ -266,6 +267,18 @@ export const SettingsDialog = ({ onClose }: SettingsDialogProps) => {
 			console.error('Failed to select backup folder:', error)
 		}
 	}, [localAutoBackupConfigFolder])
+
+	const handleBrowseFfmpegPath = React.useCallback(async () => {
+		if (!window.ipcRenderer) return
+		try {
+			const selectedPath = await window.ipcRenderer.selectFolder(localFfmpegPath)
+			if (selectedPath) {
+				setLocalFfmpegPath(selectedPath)
+			}
+		} catch (error) {
+			console.error('Failed to select ffmpeg folder:', error)
+		}
+	}, [localFfmpegPath])
 
 	// After a new config is appended, select it on the next render (avoids side-effects in state updaters)
 	const pendingSelectLastRef = React.useRef(false)
@@ -395,6 +408,7 @@ export const SettingsDialog = ({ onClose }: SettingsDialogProps) => {
 			selectConfigAtLaunch: localSelectConfigAtLaunch,
 			autoBackupConfigOnClose: localAutoBackupConfigOnClose,
 			autoBackupConfigFolder: localAutoBackupConfigFolder,
+			ffmpegPath: localFfmpegPath,
 			confirmBeforeStartStreaming: localConfirmBeforeStartStreaming,
 			confirmBeforeStopStreaming: localConfirmBeforeStopStreaming,
 			confirmBeforeStartRecording: localConfirmBeforeStartRecording,
@@ -526,8 +540,23 @@ export const SettingsDialog = ({ onClose }: SettingsDialogProps) => {
 										>
 											Browse
 										</BackupFolderBrowseButton>
-									</BackupFolderRow>
-								</>
+									</BackupFolderRow>								<BackupFolderRow>
+									<TextField
+										label="FFmpeg binary folder (optional)"
+										value={localFfmpegPath}
+										onChange={(e) => setLocalFfmpegPath(e.target.value)}
+										variant="outlined"
+										size="small"
+										fullWidth
+										helperText="Folder containing ffmpeg.exe for RTSP tiles. Leave blank to use system PATH."
+									/>
+									<BackupFolderBrowseButton
+										variant="outlined"
+										onClick={handleBrowseFfmpegPath}
+									>
+										Browse
+									</BackupFolderBrowseButton>
+								</BackupFolderRow>								</>
 							)}
 							<FormControlLabel
 								control={

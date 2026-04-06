@@ -39,7 +39,7 @@ export const SceneButton = ({
 	const isCurrentScene = transition?.toSceneName === resolvedScene || currentScene?.name === resolvedScene
 
 	// Suppress the selection overlay when this tile is configured to show the live
-	// program or preview scene — those tiles act as monitors, not scene-switchers,
+	// program or preview scene - those tiles act as monitors, not scene-switchers,
 	// so a permanent glow would be misleading.
 	const isProgramScene = scene === SCENE_PLACEHOLDER_PROGRAM
 	const isPreviewScene = scene === SCENE_PLACEHOLDER_PREVIEW

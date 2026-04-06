@@ -63,7 +63,7 @@ const StyledCheckbox = styled(Checkbox)`
 // ============================================================================
 
 export interface CheckboxTileProps {
-	/** Tile size multiplier — checkbox width = size * 16px */
+	/** Tile size multiplier - checkbox width = size * 16px */
 	size: number
 	/** Label font size multiplier (defaults to size) */
 	fontSize?: number
@@ -81,7 +81,7 @@ export interface CheckboxTileProps {
 }
 
 /**
- * Compact checkbox tile — same width as a button tile at the same tileSize,
+ * Compact checkbox tile - same width as a button tile at the same tileSize,
  * but renders as a checkbox row rather than the full preview tile.
  * The checkbox state reflects the tile's "selected" state from Preview mode.
  */
@@ -96,7 +96,7 @@ export const CheckboxTile = ({ size, fontSize, label, checked, eventHandlers, ic
                     checked={checked}
                     color="primary"
                     size="small"
-                    // Controlled — suppress native toggle; interaction is handled by the container
+                    // Controlled - suppress native toggle; interaction is handled by the container
                     onChange={() => {}}
                 />
             )}

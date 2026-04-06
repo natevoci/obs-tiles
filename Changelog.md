@@ -2,6 +2,45 @@
 
 ## Feature History
 
+### 2026-04-07
+
+**feat(RtspStreamTile): play/stop button to toggle stream on and off**
+
+- Added `active` state and `toggleActive` callback to `useRtspStream` hook
+- When stopped (`active=false`), the existing lifecycle effect cleanup fires `rtspStop`; the new effect run resets `frameDataUrl`, `connecting`, and `error` to idle state
+- When restarted (`active=true`), the effect re-runs, TCP-probes, and spawns ffmpeg as normal
+- `PlayButtonWrapper` styled component positions the button in the bottom-left corner, mirroring `MuteButtonWrapper` (bottom-right)
+- Button shows `Stop` icon while stream is active, `PlayArrow` icon while stopped; uses the same `StyledMuteButton` style
+
+**refactor: Split JpegFrameParser and RtspManager into own files; move Window declarations to global.d.ts**
+
+- `src/main/JpegFrameParser.ts` — extracted `JpegFrameParser` class from `main/index.ts`
+- `src/main/RtspManager.ts` — extracted `RtspManager` class and `RtspStartOptions` interface from `main/index.ts`; imports `JpegFrameParser` locally
+- `src/renderer/global.d.ts` — new file containing the `declare global { interface Window { ipcRenderer: ... } }` block previously in `SettingsProvider.tsx`
+- `src/main/index.ts` — now imports `RtspManager` and `RtspStartOptions` from `./RtspManager`; unused Node imports (`spawn`, `ChildProcess`, `net`) removed
+- `src/renderer/components/Settings/SettingsProvider.tsx` — removed `declare global` block (moved to `global.d.ts`)
+
+### 2026-04-06
+
+**feat(Tiles): RTSP Stream tile with live video and audio playback**
+
+- New tile type `rtspStream` — displays a live RTSP video feed inside a standard tile, sizing matches `tileSize * 16 × 9`
+- Stream URL defaults to `rtsp://<connection-host>/live` when not configured; configurable per-tile via `streamUrl`
+- Single `ffmpeg` subprocess per tile: video → stdout (JPEG `image2pipe`), audio → Windows named pipe (`\\.\pipe\rtsp-audio-<id>`)
+- Low-latency ffmpeg flags: `-rtsp_transport tcp -fflags nobuffer -flags low_delay -analyzeduration 0 -probesize 32 -max_delay 0 -reorder_queue_size 0`
+- Hardware acceleration: `-hwaccel d3d11va`
+- Audio playback via `speaker` npm package (native PCM output, `samplesPerFrame: 512` ≈ 12 ms)
+- Mute/unmute is instantaneous — PCM bytes are discarded/forwarded in Node without restarting the ffmpeg process
+- Tile starts muted by default (`startMuted: true`); a `VolumeOff`/`VolumeUp` icon button in the lower-right corner toggles audio
+- Optional `fps` config — when unset, the `-vf fps` filter is omitted and the native stream frame rate is used
+- Optional `audioSyncOffsetMs` for A/V sync adjustment
+- `ffmpegPath` setting in Settings → FFmpeg binary folder (Electron-only, defaults to system PATH)
+- `RtspManager` singleton in Electron main process manages all stream instances with IPC channels: `rtsp-start`, `rtsp-stop`, `rtsp-set-muted` (invoke) and `rtsp-frame`, `rtsp-error` (push)
+- Graceful fallback in browser mode: tile shows "not supported" error overlay
+- `RtspStreamTileConfig` added to shared tile type system (`Tiles.tsx`, `TilePropertiesDialog.tsx`, `EditableTiles.tsx`)
+- Added `speaker` to `dependencies` and `@electron/rebuild` to `devDependencies`; added `yarn rebuild` script
+- `ffmpegPath` field added to `ConfigFileFormat` and `DEFAULT_SETTINGS`
+
 ### 2026-04-05
 
 **feat(Tiles): configurable active/inactive refresh times for scene and scene item tiles**

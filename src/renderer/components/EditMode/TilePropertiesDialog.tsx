@@ -26,7 +26,7 @@ import { SCENE_PLACEHOLDER_PROGRAM, SCENE_PLACEHOLDER_PREVIEW } from '../tiles/s
 // Types
 // ---------------------------------------------------------------------------
 
-export type TileType = 'group' | 'scene' | 'sceneItem' | 'button' | 'text' | 'audioInput'
+export type TileType = 'group' | 'scene' | 'sceneItem' | 'button' | 'text' | 'audioInput' | 'rtspStream'
 
 export interface TilePropertiesDialogProps {
 	open: boolean
@@ -69,6 +69,7 @@ function detectTileType(tile: any): TileType {
 	if ('button' in tile) return 'button'
 	if ('text' in tile) return 'text'
 	if ('audioInput' in tile) return 'audioInput'
+	if ('rtspStream' in tile) return 'rtspStream'
 	return 'button'
 }
 
@@ -96,7 +97,7 @@ const ScenePicker = ({ connection, value, onChange }: ScenePickerProps) => {
 				variant="outlined"
 				size="small"
 				fullWidth
-				helperText="OBS not connected — enter scene name manually"
+				helperText="OBS not connected - enter scene name manually"
 			/>
 		)
 	}
@@ -129,12 +130,12 @@ const ScenePicker = ({ connection, value, onChange }: ScenePickerProps) => {
 				{(programScene || previewScene) && <Divider />}
 				{programScene && (
 					<MenuItem value={SCENE_PLACEHOLDER_PROGRAM} style={{ fontStyle: 'italic' }}>
-						▶ Program — {programScene}
+						▶ Program - {programScene}
 					</MenuItem>
 				)}
 				{previewScene && (
 					<MenuItem value={SCENE_PLACEHOLDER_PREVIEW} style={{ fontStyle: 'italic' }}>
-						○ Preview — {previewScene}
+						○ Preview - {previewScene}
 					</MenuItem>
 				)}
 			</Select>
@@ -162,7 +163,7 @@ const SceneItemPicker = ({ connection, scene, value, onChange }: SceneItemPicker
 				variant="outlined"
 				size="small"
 				fullWidth
-				helperText={!scene ? 'Enter a scene name first' : 'OBS not connected — enter item name manually'}
+				helperText={!scene ? 'Enter a scene name first' : 'OBS not connected - enter item name manually'}
 			/>
 		)
 	}
@@ -239,7 +240,7 @@ function RefreshTimeFields({ draft, setDraft }: { draft: any; setDraft: (d: any)
 				value={draft.activeRefreshTime ?? ''}
 				onChange={(e) => setDraft({ ...draft, activeRefreshTime: e.target.value ? Number(e.target.value) : undefined })}
 				variant="outlined" size="small" fullWidth
-				helperText="ms — when tile is active"
+				helperText="ms - when tile is active"
 			/>
 			<TextField
 				label="Inactive Refresh (ms)"
@@ -247,7 +248,7 @@ function RefreshTimeFields({ draft, setDraft }: { draft: any; setDraft: (d: any)
 				value={draft.inactiveRefreshTime ?? ''}
 				onChange={(e) => setDraft({ ...draft, inactiveRefreshTime: e.target.value ? Number(e.target.value) : undefined })}
 				variant="outlined" size="small" fullWidth
-				helperText="ms — when tile is inactive"
+				helperText="ms - when tile is inactive"
 			/>
 		</FieldRow>
 	)
@@ -488,6 +489,61 @@ function AudioInputForm({ draft, setDraft }: FormProps) {
 	)
 }
 
+function RtspStreamForm({ draft, setDraft }: FormProps) {
+	return (
+		<FormSection>
+			<TextField
+				label="Stream ID"
+				value={draft.rtspStream ?? ''}
+				onChange={(e) => setDraft({ ...draft, rtspStream: e.target.value })}
+				variant="outlined" size="small" fullWidth
+				helperText="Unique identifier for this stream tile"
+			/>
+			<TextField
+				label="Stream URL (optional)"
+				value={draft.streamUrl ?? ''}
+				onChange={(e) => setDraft({ ...draft, streamUrl: e.target.value || undefined })}
+				variant="outlined" size="small" fullWidth
+				helperText="RTSP URL, e.g. rtsp://192.168.1.100/live - defaults to rtsp://<connection-host>/live"
+			/>
+			<FieldRow>
+				<TextField
+					label="FPS (optional)"
+					type="number"
+					value={draft.fps ?? ''}
+					onChange={(e) => setDraft({ ...draft, fps: e.target.value !== '' ? Number(e.target.value) : undefined })}
+					variant="outlined" size="small" fullWidth
+					helperText="Leave blank for native rate"
+				/>
+				<TextField
+					label="Audio Offset (ms)"
+					type="number"
+					value={draft.audioSyncOffsetMs ?? ''}
+					onChange={(e) => setDraft({ ...draft, audioSyncOffsetMs: e.target.value !== '' ? Number(e.target.value) : undefined })}
+					variant="outlined" size="small" fullWidth
+					helperText="Positive = delay audio"
+				/>
+			</FieldRow>
+			<FormControlLabel
+				control={
+					<Checkbox
+						checked={draft.startMuted !== false}
+						onChange={(e) => setDraft({ ...draft, startMuted: e.target.checked ? undefined : false })}
+					/>
+				}
+				label="Start muted"
+			/>
+			<TextField
+				label="Title (optional)"
+				value={draft.title ?? ''}
+				onChange={(e) => setDraft({ ...draft, title: e.target.value || undefined })}
+				variant="outlined" size="small" fullWidth
+			/>
+			<SizeFields draft={draft} setDraft={setDraft} />
+		</FormSection>
+	)
+}
+
 const TYPE_LABELS: Record<TileType, string> = {
 	group: 'Group',
 	scene: 'Scene Button',
@@ -495,6 +551,7 @@ const TYPE_LABELS: Record<TileType, string> = {
 	button: 'Button',
 	text: 'Text',
 	audioInput: 'Audio Input',
+	rtspStream: 'RTSP Stream',
 }
 
 // ---------------------------------------------------------------------------
@@ -531,6 +588,7 @@ export const TilePropertiesDialog = ({
 				{tileType === 'button' && <ButtonForm {...formProps} />}
 				{tileType === 'text' && <TextForm {...formProps} />}
 				{tileType === 'audioInput' && <AudioInputForm {...formProps} />}
+				{tileType === 'rtspStream' && <RtspStreamForm {...formProps} />}
 			</DialogContent>
 			<DialogActions>
 				<Button onClick={onClose}>Cancel</Button>
@@ -551,6 +609,7 @@ const TILE_TYPES: { type: TileType; label: string; defaultTile: any }[] = [
 	{ type: 'button',     label: 'Button',            defaultTile: { button: 'toggleStreaming' } },
 	{ type: 'text',       label: 'Text',              defaultTile: { text: 'stats' } },
 	{ type: 'audioInput', label: 'Audio Input',       defaultTile: { audioInput: { inputName: '' } } },
+	{ type: 'rtspStream', label: 'RTSP Stream',       defaultTile: { rtspStream: 'stream', startMuted: true } },
 ]
 
 export interface AddTileDialogProps {
@@ -620,6 +679,7 @@ export const AddTileDialog = ({
 						{selectedType === 'button' && <ButtonForm {...formProps} />}
 						{selectedType === 'text' && <TextForm {...formProps} />}
 						{selectedType === 'audioInput' && <AudioInputForm {...formProps} />}
+						{selectedType === 'rtspStream' && <RtspStreamForm {...formProps} />}
 					</>
 				)}
 			</DialogContent>

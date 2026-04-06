@@ -4,9 +4,13 @@ import { dirname } from 'path'
 import path from 'path'
 import fs from 'fs'
 import { DEFAULT_SETTINGS } from '../shared/defaults'
+import { RtspManager } from './RtspManager'
+import type { RtspStartOptions } from './RtspManager'
 
 const __filename = fileURLToPath(import.meta.url)
 const __dirname = dirname(__filename)
+
+const rtspManager = new RtspManager()
 
 const isDev = process.env.NODE_ENV === 'development'
 const basePath = isDev ? process.cwd() : path.join(process.resourcesPath, '..')
@@ -190,6 +194,7 @@ function createWindow() {
 app.on('ready', createWindow)
 
 app.on('window-all-closed', () => {
+  rtspManager.stopAll()
   if (process.platform !== 'darwin') {
     app.quit()
   }
@@ -222,4 +227,17 @@ ipcMain.handle('select-folder', async (_event, defaultPath?: string) => {
   }
 
   return result.filePaths[0]
+})
+
+// RTSP IPC handlers
+ipcMain.handle('rtsp-start', async (event, options: RtspStartOptions) => {
+  await rtspManager.start(options, event.sender)
+})
+
+ipcMain.handle('rtsp-stop', async (_event, streamId: string) => {
+  await rtspManager.stop(streamId)
+})
+
+ipcMain.handle('rtsp-set-muted', (_event, streamId: string, muted: boolean) => {
+  rtspManager.setMuted(streamId, muted)
 })

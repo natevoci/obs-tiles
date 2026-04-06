@@ -2,6 +2,7 @@ import styled from 'styled-components'
 
 import { AudioInputTile } from './AudioInputTile'
 import { Button } from './Button'
+import { RtspStreamTile } from './RtspStreamTile'
 import { SceneButton } from './SceneButton'
 import { SceneItemButton } from './SceneItemButton'
 import { Text } from './Text'
@@ -117,13 +118,27 @@ export interface AudioInputTileConfig extends BaseTileConfig {
 	viewType?: 'preview' | 'checkbox';
 }
 
+export interface RtspStreamTileConfig extends BaseTileConfig {
+	/** Discriminator: identifier for the stream (shown as label if title is not set) */
+	rtspStream: string;
+	/** RTSP stream URL. Defaults to rtsp://<connection-host>/live (Electron only). */
+	streamUrl?: string;
+	/** Target frames per second. When unset, uses native stream rate. */
+	fps?: number;
+	/** Audio sync offset in milliseconds (positive = delay audio). Default 0. */
+	audioSyncOffsetMs?: number;
+	/** Start with audio muted. Default true. */
+	startMuted?: boolean;
+}
+
 type TileConfig =
 	| GroupTileConfig
 	| SceneButtonTileConfig
 	| SceneItemButtonTileConfig
 	| ButtonTileConfig
 	| TextTileConfig
-	| AudioInputTileConfig;
+	| AudioInputTileConfig
+	| RtspStreamTileConfig;
 
 
 // Common props for all tile types
@@ -211,6 +226,17 @@ function isAudioInputTileConfig(tile: TileConfig): tile is AudioInputTileConfig 
 		typeof (tile as any).audioInput.inputName === 'string';
 	if (valid) {
 		warnExtraProps(tile, ['audioInput', 'viewType', ...COMMON_TILE_PROPS], 'AudioInputTileConfig');
+	}
+	return valid;
+}
+
+function isRtspStreamTileConfig(tile: TileConfig): tile is RtspStreamTileConfig {
+	const valid =
+		typeof tile === 'object' &&
+		'rtspStream' in tile &&
+		typeof (tile as any).rtspStream === 'string';
+	if (valid) {
+		warnExtraProps(tile, ['rtspStream', 'streamUrl', 'fps', 'audioSyncOffsetMs', 'startMuted', ...COMMON_TILE_PROPS], 'RtspStreamTileConfig');
 	}
 	return valid;
 }
@@ -303,6 +329,16 @@ export const Tiles = ({
 			return (
 				<AudioInputTile 
 					key={tile.audioInput.inputName} 
+					{...inheritableProps}
+					{...tile}
+				/>
+			);
+		}
+
+		if (isRtspStreamTileConfig(tile)) {
+			return (
+				<RtspStreamTile
+					key={tile.rtspStream}
 					{...inheritableProps}
 					{...tile}
 				/>

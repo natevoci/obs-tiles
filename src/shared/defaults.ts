@@ -5,6 +5,7 @@ export const DEFAULT_SETTINGS = {
   selectConfigAtLaunch: false,
   autoBackupConfigOnClose: false,
   autoBackupConfigFolder: '',
+  ffmpegPath: '',
   confirmBeforeStartStreaming: false,
   confirmBeforeStopStreaming: false,
   confirmBeforeStartRecording: false,

@@ -52,21 +52,21 @@ const TextComponents: Record<string, (props: any) => React.ReactElement | null> 
 
 		const anyVisible = Object.values(show).some(Boolean) || Boolean(customText)
 
-		// Guard against a fully empty tile — keep a minimum footprint for the
+		// Guard against a fully empty tile - keep a minimum footprint for the
 		// edit-mode overlay controls.
 		if (!anyVisible) {
 			return <StyledText $size={size}><Paragraph $size={size} $fontSize={textSize}>&nbsp;</Paragraph></StyledText>
 		}
 
-		// OBS not connected yet — show dash placeholders so tiles remain visible
+		// OBS not connected yet - show dash placeholders so tiles remain visible
 		if (!stats) {
 			return (
 				<StyledText $size={size}>
-					{show.fps && <Paragraph $size={size} $fontSize={textSize}>FPS: —</Paragraph>}
-					{show.cpu && <Paragraph $size={size} $fontSize={textSize}>CPU: —</Paragraph>}
-					{show.memory && <Paragraph $size={size} $fontSize={textSize}>Memory: —</Paragraph>}
-					{show.freeDisk && <Paragraph $size={size} $fontSize={textSize}>Free Disk: —</Paragraph>}
-					{show.skippedFrames && <Paragraph $size={size} $fontSize={textSize}>Skipped Frames: —</Paragraph>}
+					{show.fps && <Paragraph $size={size} $fontSize={textSize}>FPS: -</Paragraph>}
+					{show.cpu && <Paragraph $size={size} $fontSize={textSize}>CPU: -</Paragraph>}
+					{show.memory && <Paragraph $size={size} $fontSize={textSize}>Memory: -</Paragraph>}
+					{show.freeDisk && <Paragraph $size={size} $fontSize={textSize}>Free Disk: -</Paragraph>}
+					{show.skippedFrames && <Paragraph $size={size} $fontSize={textSize}>Skipped Frames: -</Paragraph>}
 					{customText && <Paragraph $size={size} $fontSize={textSize}>{customText}</Paragraph>}
 				</StyledText>
 			)
