@@ -4,6 +4,10 @@
 
 ### 2026-04-08
 
+**fix(edit-mode): render YouTubeLiveTile in inline edit mode**
+
+- `EditableTiles.tsx`: imported `YouTubeLiveTile` and added a `'youtubeLive' in tile` branch to `renderContent()`, passing all tile config props through. Without this, YouTube Live tiles were invisible in edit mode.
+
 **refactor(youtube): remove youtubeLive tile ID — single shared instance**
 
 - `YouTubeLiveTileConfig.youtubeLive` changed from `string` to `true` (boolean discriminator). `isYouTubeLiveTileConfig` guard uses `Boolean()` to accept legacy string values in existing configs.
