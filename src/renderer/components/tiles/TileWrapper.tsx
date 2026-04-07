@@ -157,6 +157,14 @@ export const TileImage = styled.img<SizeProps>`
 	}
 `
 
+/** Base styled canvas element. Pair with useSceneCanvas (which provides canvasRef + hasFrame). */
+export const TileCanvasElement = styled.canvas<{ $size: number; $visible: boolean }>`
+	display: block;
+	width: ${p => p.$size * 16}px;
+	height: ${p => p.$size * 9}px;
+	opacity: ${p => p.$visible ? 1 : 0};
+`
+
 export const TileContentArea = styled.div<SizeProps>`
 	display: flex;
 	flex-direction: row;

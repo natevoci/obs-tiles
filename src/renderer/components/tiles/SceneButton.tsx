@@ -1,5 +1,5 @@
-import { useObs, useCurrentScene, useTransition, useSceneImage, useSceneList } from '~/api/obs'
-import { TileWrapper, TileImage, StyledCircularProgress } from './TileWrapper'
+import { useObs, useCurrentScene, useTransition, useSceneCanvas, useSceneList } from '~/api/obs'
+import { TileWrapper, TileCanvasElement, StyledCircularProgress } from './TileWrapper'
 import { CheckboxTile } from './CheckboxTile'
 import type { SceneButtonTileConfig } from './Tiles';
 import { resolveScenePlaceholder, SCENE_PLACEHOLDER_PREVIEW, SCENE_PLACEHOLDER_PROGRAM } from './scenePlaceholders.ts'
@@ -45,7 +45,7 @@ export const SceneButton = ({
 	const isPreviewScene = scene === SCENE_PLACEHOLDER_PREVIEW
 	const suppressOverlay = isProgramScene || isPreviewScene
 	
-	const imageData = useSceneImage(obs, {
+	const { canvasRef, hasFrame } = useSceneCanvas(obs, {
 		scene: resolvedScene,
 		tileSize: Math.min(tileSizeInt, 20),
 		refreshTime: isCurrentScene ? (activeRefreshTime ?? 400) : (inactiveRefreshTime ?? 1000),
@@ -91,7 +91,7 @@ export const SceneButton = ({
 			elementType='SceneWrapper'
 			overlay={overlay}
 		>
-			<TileImage src={imageData ?? undefined} $size={tileSizeInt} />
+			<TileCanvasElement ref={canvasRef} $size={tileSizeInt} $visible={hasFrame} />
 		</TileWrapper>
 	)
 }

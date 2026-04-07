@@ -1,6 +1,6 @@
 import React from 'react';
-import { useObs, useSceneItemProperties, useSceneItemList, useSceneImage } from '~/api/obs';
-import { TileWrapper, TileImage, StyledCircularProgress } from './TileWrapper';
+import { useObs, useSceneCanvas, useSceneItemProperties, useSceneItemList } from '~/api/obs';
+import { TileWrapper, TileCanvasElement, StyledCircularProgress } from './TileWrapper';
 import { CheckboxTile } from './CheckboxTile';
 import { useClickHandler } from './useClickHandler';
 import type { SceneItemButtonTileConfig } from './Tiles';
@@ -35,7 +35,7 @@ export const SceneItemButton = ({
 		? Boolean(sceneItemId && visibleSceneItems?.length && sceneItemId === visibleSceneItems[0]?.sceneItemId)
 		: isVisible;
 
-	const imageData = useSceneImage(obs, {
+	const { canvasRef, hasFrame } = useSceneCanvas(obs, {
 		scene: item,
 		tileSize: Math.min(size, 20),
 		refreshTime: isSelected ? (activeRefreshTime ?? 400) : (inactiveRefreshTime ?? 1000),
@@ -110,7 +110,7 @@ export const SceneItemButton = ({
 			elementType='SceneWrapper'
 			overlay={overlay}
 		>
-			<TileImage src={imageData ?? undefined} $size={size} />
+			<TileCanvasElement ref={canvasRef} $size={size} $visible={hasFrame} />
 		</TileWrapper>
 	)
 }

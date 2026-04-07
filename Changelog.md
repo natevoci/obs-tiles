@@ -4,6 +4,14 @@
 
 ### 2026-04-07
 
+**refactor(tiles): shared canvas decode pipeline; eliminate image data from React state for scene thumbnails**
+
+- Extracted `src/renderer/util/decodeAndDraw.ts` — shared `atob` → `Uint8Array` → `createImageBitmap` → `drawImage` → `bitmap.close()` utility used by all three tile rendering paths
+- Added `useSceneCanvas` hook to `sceneImage.ts`: polls the OBS adapter directly in a `useEffect`, draws each screenshot imperatively onto a canvas, and never stores image data in React state — eliminates the same Chromium bitmap-retention leak for scene thumbnails regardless of refresh rate
+- `SceneButton` and `SceneItemButton` now use `useSceneCanvas` + `TileCanvasElement` instead of `useSceneImage` + `TileImage`
+- `useRtspStream` updated to delegate to `decodeAndDraw` instead of inlining the decode logic
+- `TileCanvas` component and `TileCanvasProps` interface removed from `TileWrapper` as they are no longer used; `TileCanvasElement` (bare styled canvas) and `TileImage` remain exported
+
 **feat(RtspStreamTile): pause stream during edit mode**
 
 - Stream is automatically stopped when entering inline edit mode and resumed when exiting

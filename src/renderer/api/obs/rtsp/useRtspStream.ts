@@ -1,4 +1,5 @@
 import * as React from 'react'
+import { decodeAndDraw } from '~/util/decodeAndDraw'
 
 export interface RtspStreamState {
 	/** Whether at least one frame has been decoded and drawn to the canvas */
@@ -106,19 +107,8 @@ export function useRtspStream(options: UseRtspStreamOptions): RtspStreamState {
 			if (!canvas) return
 			generation++
 			const myGeneration = generation
-			const binary = atob(payload.data)
-			const bytes = new Uint8Array(binary.length)
-			for (let i = 0; i < binary.length; i++) bytes[i] = binary.charCodeAt(i)
-			const blob = new Blob([bytes], { type: 'image/jpeg' })
-			createImageBitmap(blob).then(bitmap => {
-				// Discard if a newer frame has already arrived
-				if (myGeneration !== generation) { bitmap.close(); return }
-				if (canvas.width !== bitmap.width || canvas.height !== bitmap.height) {
-					canvas.width = bitmap.width
-					canvas.height = bitmap.height
-				}
-				canvas.getContext('2d')?.drawImage(bitmap, 0, 0)
-				bitmap.close()
+			decodeAndDraw(payload.data, canvas).then(() => {
+				if (myGeneration !== generation) return
 				if (firstFrame) {
 					console.log(`[useRtspStream] First frame decoded for '${streamId}'`)
 					firstFrame = false
