@@ -5,6 +5,8 @@ import { Content } from './Content'
 import { ConfigSelectorDialog } from './Footer/ConfigSelectorDialog'
 import { HttpsWarningBanner } from './HttpsWarningBanner'
 import { useSettings } from './Settings/SettingsContext'
+import { useObs } from '~/api/obs'
+import { useKeyboardShortcuts } from '../hooks'
 
 const Wrapper = styled.div`
 	display: flex;
@@ -22,7 +24,9 @@ const Wrapper = styled.div`
 `
 
 export const Layout = () => {
-	const { autoOpenSelector, closeAutoOpenSelector } = useSettings()
+	const { autoOpenSelector, closeAutoOpenSelector, currentConfig } = useSettings()
+	const obs = useObs({ connection: currentConfig.connection })
+	useKeyboardShortcuts(currentConfig.shortcuts ?? [], obs)
 
 	return (
 		<Wrapper>

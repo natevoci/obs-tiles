@@ -18,12 +18,16 @@ import {
 	FormControlLabel,
 } from '@material-ui/core'
 import { makeStyles } from '@material-ui/core/styles'
-import { Close, Add, Delete, Edit, ExpandMore, ChevronRight, Settings as SettingsIcon } from '@material-ui/icons'
+import { Close, Add, Delete, Edit, ExpandMore, ChevronRight, Settings as SettingsIcon, Keyboard as KeyboardIcon } from '@material-ui/icons'
 import { ConfigVisualEditor } from './ConfigVisualEditor'
+import { KeyboardShortcutsPanel } from './KeyboardShortcutsPanel'
 import { useSettings } from './SettingsContext'
 import { ConfirmDialog } from '../ConfirmDialog'
-import type { ConfigItem } from '../../../shared/types'
-import { DEFAULT_SETTINGS } from '../../../shared/defaults'
+import type { ConfigItem, KeyboardShortcut } from '../../../shared/types'
+import { DEFAULT_SETTINGS, DEFAULT_SHORTCUTS as DEFAULT_SHORTCUTS_RAW } from '../../../shared/defaults'
+
+const DEFAULT_SHORTCUTS = DEFAULT_SHORTCUTS_RAW as KeyboardShortcut[]
+import { useObs } from '~/api/obs'
 
 // ---------------------------------------------------------------------------
 // Styled components
@@ -205,7 +209,7 @@ const NamePromptDialog = ({ open, title, initialValue, onConfirm, onCancel }: Na
 // Types for selected tree node
 // ---------------------------------------------------------------------------
 
-type SelectedNode = 'settings' | 'configs-group' | number
+type SelectedNode = 'settings' | 'keyboard-shortcuts' | 'configs-group' | number
 
 // ---------------------------------------------------------------------------
 // SettingsDialog
@@ -236,6 +240,12 @@ export const SettingsDialog = ({ onClose }: SettingsDialogProps) => {
 		savedSettings.configs.map((c) => ({ ...c })),
 	)
 	const [localConfigIndex, setLocalConfigIndex] = React.useState(savedSettings.currentConfigIndex)
+	const [localShortcuts, setLocalShortcuts] = React.useState<KeyboardShortcut[]>(
+		() => savedSettings.configs[savedSettings.currentConfigIndex]?.shortcuts ?? []
+	)
+
+	// OBS connection for live dropdowns in the shortcuts panel
+	const obs = useObs({ connection: localConfigs[localConfigIndex]?.connection })
 
 	// Tree selection
 	const [selected, setSelected] = React.useState<SelectedNode>('settings')
@@ -340,7 +350,7 @@ export const SettingsDialog = ({ onClose }: SettingsDialogProps) => {
 			title: 'New config name',
 			initialValue: '',
 			onConfirm: (name) => {
-				const newConfig: ConfigItem = { ...DEFAULT_SETTINGS.configs[0], name }
+				const newConfig: ConfigItem = { ...DEFAULT_SETTINGS.configs[0], name, shortcuts: DEFAULT_SHORTCUTS }
 				pendingSelectLastRef.current = true
 				setLocalConfigs((prev) => [...prev, newConfig])
 				setNamePrompt(null)
@@ -401,9 +411,13 @@ export const SettingsDialog = ({ onClose }: SettingsDialogProps) => {
 				return
 			}
 		}
+		// Merge localShortcuts back into the current config
+		const configsWithShortcuts = finalConfigs.map((cfg, i) =>
+			i === localConfigIndex ? { ...cfg, shortcuts: localShortcuts } : cfg
+		)
 		saveFullSettings({
 			title: localTitle,
-			configs: finalConfigs,
+			configs: configsWithShortcuts,
 			currentConfigIndex: localConfigIndex,
 			selectConfigAtLaunch: localSelectConfigAtLaunch,
 			autoBackupConfigOnClose: localAutoBackupConfigOnClose,
@@ -433,6 +447,18 @@ export const SettingsDialog = ({ onClose }: SettingsDialogProps) => {
 					<SettingsIcon style={{ width: 16, height: 16, opacity: 0.7 }} />
 				</TreeIcon>
 				<TreeLabel>Settings</TreeLabel>
+			</TreeRow>
+
+			{/* Keyboard Shortcuts node */}
+			<TreeRow
+				$depth={0}
+				$selected={selected === 'keyboard-shortcuts'}
+				onClick={() => handleSelectNode('keyboard-shortcuts')}
+			>
+				<TreeIcon>
+					<KeyboardIcon style={{ width: 16, height: 16, opacity: 0.7 }} />
+				</TreeIcon>
+				<TreeLabel>Keyboard Shortcuts</TreeLabel>
 			</TreeRow>
 
 			{/* Configs group */}
@@ -478,6 +504,25 @@ export const SettingsDialog = ({ onClose }: SettingsDialogProps) => {
 	)
 
 	const renderRightPanel = () => {
+		if (selected === 'keyboard-shortcuts') {
+			return (
+				<>
+					<RightPanelHeader>
+						<Typography variant="subtitle1" style={{ fontWeight: 600 }}>
+							Keyboard Shortcuts
+						</Typography>
+					</RightPanelHeader>
+					<RightPanelContent>
+						<KeyboardShortcutsPanel
+							obs={obs}
+							shortcuts={localShortcuts}
+							onChange={setLocalShortcuts}
+						/>
+					</RightPanelContent>
+				</>
+			)
+		}
+
 		if (selected === 'settings') {
 			const isElectron = Boolean(window.ipcRenderer)
 			const backupFolderDisabled = !localAutoBackupConfigOnClose

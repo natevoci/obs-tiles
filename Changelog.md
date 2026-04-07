@@ -4,6 +4,23 @@
 
 ### 2026-04-07
 
+**feat(shortcuts): configurable keyboard shortcuts**
+
+- New "Keyboard Shortcuts" tree node in the Settings dialog (per-config scope)
+- Click-to-record key combo capture: click the field, press any combination, Escape to cancel — normalised to strings like `"Ctrl+Shift+F5"`
+- Five supported actions, all tile-independent (fire even if no matching tile exists in the layout):
+  - **Toggle Recording** — `Ctrl+Shift+R` by default
+  - **Toggle Streaming** — `Ctrl+Shift+S` by default
+  - **Switch to Scene** — live scene dropdown populated from the active OBS connection
+  - **Toggle Scene Item** — scene dropdown + item dropdown (populated per selected scene)
+  - **Toggle Audio Mute** — freetext input name field
+- Global `useKeyboardShortcuts` hook mounted in `Layout` dispatches actions directly via the OBS adapter
+- Shortcut suppression: no shortcuts fire while any MUI dialog is open (checked via `document.querySelector('[role="dialog"]')`)
+- Input guard: no shortcuts fire while focus is inside an `<input>` or `<textarea>`
+- Default shortcuts applied to new configs and migrated to existing configs (on load) that have no `shortcuts` key
+- New files: `KeyCaptureInput.tsx`, `KeyboardShortcutsPanel.tsx`, `useKeyboardShortcuts.ts`
+- Plan document written to `docs/keyboard-shortcuts-plan.md`
+
 **refactor(tiles): shared canvas decode pipeline; eliminate image data from React state for scene thumbnails**
 
 - Extracted `src/renderer/util/decodeAndDraw.ts` — shared `atob` → `Uint8Array` → `createImageBitmap` → `drawImage` → `bitmap.close()` utility used by all three tile rendering paths

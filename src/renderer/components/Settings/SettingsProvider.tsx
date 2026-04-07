@@ -2,8 +2,10 @@ import React, { ReactNode } from 'react'
 import json5 from 'json5'
 
 import { SettingsContext } from './SettingsContext'
-import { DEFAULT_SETTINGS } from '../../../shared/defaults'
-import type { ConfigItem, ConfigFileFormat } from '../../../shared/types'
+import { DEFAULT_SETTINGS, DEFAULT_SHORTCUTS as DEFAULT_SHORTCUTS_RAW } from '../../../shared/defaults'
+import type { ConfigItem, ConfigFileFormat, KeyboardShortcut } from '../../../shared/types'
+
+const DEFAULT_SHORTCUTS = DEFAULT_SHORTCUTS_RAW as KeyboardShortcut[]
 
 interface SettingsProviderProps {
 	children: ReactNode
@@ -52,6 +54,11 @@ export const SettingsProvider = ({ children }: SettingsProviderProps) => {
 				...rawSettings,
 			}
 			loaded.currentConfigIndex = Math.min(loaded.currentConfigIndex, loaded.configs.length - 1)
+
+			// Migration: apply default shortcuts to any config that was saved before shortcuts existed
+			loaded.configs = loaded.configs.map((cfg) =>
+				cfg.shortcuts === undefined ? { ...cfg, shortcuts: DEFAULT_SHORTCUTS } : cfg
+			)
 
 			setSettings(loaded)
 			if (loaded.selectConfigAtLaunch && loaded.configs.length > 1) {

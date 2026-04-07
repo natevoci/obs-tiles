@@ -1,3 +1,9 @@
+// Default keyboard shortcut bindings applied to new and migrated configs
+export const DEFAULT_SHORTCUTS = [
+  { keys: 'Ctrl+Shift+R', action: { type: 'toggleRecording' } },
+  { keys: 'Ctrl+Shift+S', action: { type: 'toggleStreaming' } },
+]
+
 // Default settings for data/settings.json
 export const DEFAULT_SETTINGS = {
   title: 'obs-tiles',
@@ -24,6 +30,7 @@ export const DEFAULT_SETTINGS = {
       tileSize: 10,
       fontSize: 10,
       direction: 'column',
+      shortcuts: DEFAULT_SHORTCUTS,
       tiles: [
         {
           group: 'Scenes',
