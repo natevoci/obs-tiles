@@ -4,10 +4,22 @@
 
 export type ShortcutAction =
   | { type: 'toggleRecording' }
+  | { type: 'startRecording' }
+  | { type: 'stopRecording' }
   | { type: 'toggleStreaming' }
+  | { type: 'startStreaming' }
+  | { type: 'stopStreaming' }
   | { type: 'switchScene'; sceneName: string }
+  | { type: 'switchToPreviousScene' }
   | { type: 'toggleSceneItem'; sceneName: string; sceneItemName: string }
+  | { type: 'moveSceneItemToTop'; sceneName: string; sceneItemName: string }
   | { type: 'toggleAudioMute'; inputName: string }
+  | { type: 'muteAudio'; inputName: string }
+  | { type: 'unmuteAudio'; inputName: string }
+  | { type: 'startRtsp'; streamId: string }
+  | { type: 'stopRtsp'; streamId: string }
+  | { type: 'toggleRtsp'; streamId: string }
+  | { type: 'selectConfig' }
 
 export interface KeyboardShortcut {
   /** Normalised combo string, e.g. "Ctrl+Shift+F5" */

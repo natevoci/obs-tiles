@@ -4,7 +4,6 @@ import {
 	IconButton,
 	MenuItem,
 	Select,
-	TextField,
 	Tooltip,
 	Typography,
 } from '@material-ui/core'
@@ -13,8 +12,33 @@ import { Add, Delete } from '@material-ui/icons'
 import { KeyCaptureInput } from './KeyCaptureInput'
 import { useSceneList } from '~/api/obs/providers'
 import { useSceneItemList } from '~/api/obs/providers'
+import { useSettings } from './SettingsContext'
 import type { ConnectionPublic } from '~/api/obs/types'
 import type { KeyboardShortcut, ShortcutAction } from '../../../shared/types'
+
+// ---------------------------------------------------------------------------
+// Collect all rtspStream IDs from the tile tree (recurses into groups)
+// ---------------------------------------------------------------------------
+function collectRtspStreamIds(tiles: any[]): string[] {
+	const ids: string[] = []
+	for (const tile of tiles) {
+		if (typeof tile.rtspStream === 'string') ids.push(tile.rtspStream)
+		if (Array.isArray(tile.tiles)) ids.push(...collectRtspStreamIds(tile.tiles))
+	}
+	return ids
+}
+
+// ---------------------------------------------------------------------------
+// Collect all audio input names from the tile tree (recurses into groups)
+// ---------------------------------------------------------------------------
+function collectAudioInputNames(tiles: any[]): string[] {
+	const names: string[] = []
+	for (const tile of tiles) {
+		if (typeof tile.audioInput?.inputName === 'string') names.push(tile.audioInput.inputName)
+		if (Array.isArray(tile.tiles)) names.push(...collectAudioInputNames(tile.tiles))
+	}
+	return names
+}
 
 // ---------------------------------------------------------------------------
 // Styled components
@@ -59,19 +83,43 @@ const EmptyHint = styled.div`
 
 const ACTION_TYPES: { value: ShortcutAction['type']; label: string }[] = [
 	{ value: 'toggleRecording', label: 'Toggle Recording' },
+	{ value: 'startRecording', label: 'Start Recording' },
+	{ value: 'stopRecording', label: 'Stop Recording' },
 	{ value: 'toggleStreaming', label: 'Toggle Streaming' },
+	{ value: 'startStreaming', label: 'Start Streaming' },
+	{ value: 'stopStreaming', label: 'Stop Streaming' },
 	{ value: 'switchScene', label: 'Switch to Scene' },
+	{ value: 'switchToPreviousScene', label: 'Previous Scene' },
 	{ value: 'toggleSceneItem', label: 'Toggle Scene Item' },
+	{ value: 'moveSceneItemToTop', label: 'Move Scene Item to Top' },
 	{ value: 'toggleAudioMute', label: 'Toggle Audio Mute' },
+	{ value: 'muteAudio', label: 'Mute Audio' },
+	{ value: 'unmuteAudio', label: 'Unmute Audio' },
+	{ value: 'startRtsp', label: 'Start RTSP Stream' },
+	{ value: 'stopRtsp', label: 'Stop RTSP Stream' },
+	{ value: 'toggleRtsp', label: 'Toggle RTSP Stream' },
+	{ value: 'selectConfig', label: 'Select Config' },
 ]
 
 function defaultActionForType(type: ShortcutAction['type']): ShortcutAction {
 	switch (type) {
 		case 'toggleRecording': return { type: 'toggleRecording' }
+		case 'startRecording': return { type: 'startRecording' }
+		case 'stopRecording': return { type: 'stopRecording' }
 		case 'toggleStreaming': return { type: 'toggleStreaming' }
+		case 'startStreaming': return { type: 'startStreaming' }
+		case 'stopStreaming': return { type: 'stopStreaming' }
 		case 'switchScene': return { type: 'switchScene', sceneName: '' }
+		case 'switchToPreviousScene': return { type: 'switchToPreviousScene' }
 		case 'toggleSceneItem': return { type: 'toggleSceneItem', sceneName: '', sceneItemName: '' }
+		case 'moveSceneItemToTop': return { type: 'moveSceneItemToTop', sceneName: '', sceneItemName: '' }
 		case 'toggleAudioMute': return { type: 'toggleAudioMute', inputName: '' }
+		case 'muteAudio': return { type: 'muteAudio', inputName: '' }
+		case 'unmuteAudio': return { type: 'unmuteAudio', inputName: '' }
+		case 'startRtsp': return { type: 'startRtsp', streamId: '' }
+		case 'stopRtsp': return { type: 'stopRtsp', streamId: '' }
+		case 'toggleRtsp': return { type: 'toggleRtsp', streamId: '' }
+		case 'selectConfig': return { type: 'selectConfig' }
 	}
 }
 
@@ -120,6 +168,10 @@ interface KeyboardShortcutsPanelProps {
 export const KeyboardShortcutsPanel = ({ obs, shortcuts, onChange }: KeyboardShortcutsPanelProps) => {
 	const sceneListData = useSceneList(obs)
 	const sceneNames = sceneListData ? Object.keys(sceneListData.scenes) : []
+
+	const { currentConfig } = useSettings()
+	const rtspStreamIds = collectRtspStreamIds(currentConfig.tiles ?? [])
+	const audioInputNames = collectAudioInputNames(currentConfig.tiles ?? [])
 
 	const handleAddShortcut = () => {
 		onChange([...shortcuts, { keys: '', action: { type: 'toggleRecording' } }])
@@ -195,17 +247,67 @@ export const KeyboardShortcutsPanel = ({ obs, shortcuts, onChange }: KeyboardSho
 			)
 		}
 
-		if (action.type === 'toggleAudioMute') {
+		if (action.type === 'moveSceneItemToTop') {
 			return (
 				<ParamField>
-					<TextField
-						value={action.inputName}
-						onChange={(e) => handleActionParamChange(index, { inputName: e.target.value })}
+					<Select
+						value={action.sceneName}
+						onChange={(e) => handleActionParamChange(index, { sceneName: e.target.value as string, sceneItemName: '' })}
 						variant="outlined"
-						size="small"
-						placeholder="Input name…"
-						style={{ minWidth: 160 }}
-					/>
+						style={{ minWidth: 140, fontSize: 13, height: 32 }}
+						displayEmpty
+					>
+						<MenuItem value="" disabled><em>Scene…</em></MenuItem>
+						{sceneNames.map((name) => (
+							<MenuItem key={name} value={name}>{name}</MenuItem>
+						))}
+					</Select>
+					{action.sceneName && (
+						<SceneItemSelect
+							obs={obs}
+							scene={action.sceneName}
+							value={action.sceneItemName}
+							onChange={(name) => handleActionParamChange(index, { sceneItemName: name })}
+						/>
+					)}
+				</ParamField>
+			)
+		}
+
+		if (action.type === 'toggleAudioMute' || action.type === 'muteAudio' || action.type === 'unmuteAudio') {
+			return (
+				<ParamField>
+					<Select
+						value={action.inputName}
+						onChange={(e) => handleActionParamChange(index, { inputName: e.target.value as string })}
+						variant="outlined"
+						style={{ minWidth: 160, fontSize: 13, height: 32 }}
+						displayEmpty
+					>
+						<MenuItem value="" disabled><em>Input…</em></MenuItem>
+						{audioInputNames.map((name) => (
+							<MenuItem key={name} value={name}>{name}</MenuItem>
+						))}
+					</Select>
+				</ParamField>
+			)
+		}
+
+		if (action.type === 'startRtsp' || action.type === 'stopRtsp' || action.type === 'toggleRtsp') {
+			return (
+				<ParamField>
+					<Select
+						value={action.streamId}
+						onChange={(e) => handleActionParamChange(index, { streamId: e.target.value as string })}
+						variant="outlined"
+						style={{ minWidth: 160, fontSize: 13, height: 32 }}
+						displayEmpty
+					>
+						<MenuItem value="" disabled><em>Stream…</em></MenuItem>
+						{rtspStreamIds.map((id) => (
+							<MenuItem key={id} value={id}>{id}</MenuItem>
+						))}
+					</Select>
 				</ParamField>
 			)
 		}

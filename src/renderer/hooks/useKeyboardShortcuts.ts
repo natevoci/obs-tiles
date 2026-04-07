@@ -2,7 +2,11 @@ import React from 'react'
 import { buildComboString } from '../components/Settings/KeyCaptureInput'
 import {
 	startStopRecording,
+	startRecording,
+	stopRecording,
 	startStopStreaming,
+	startStreaming,
+	stopStreaming,
 	setCurrentScene,
 	toggleSceneItemEnabled,
 } from '../api/obs/actions'
@@ -17,10 +21,14 @@ import type { KeyboardShortcut } from '../../shared/types'
  * Guards:
  *  - No dispatch while any MUI dialog (role="dialog") is open
  *  - No dispatch while focus is inside an <input> or <textarea>
+ *
+ * @param currentSceneName - Used to track the previous scene for switchToPreviousScene.
+ *   Pass the current scene name from useCurrentScene().
  */
 export const useKeyboardShortcuts = (
 	shortcuts: KeyboardShortcut[],
 	obs: ConnectionPublic,
+	currentSceneName?: string,
 ): void => {
 	// Keep a stable ref so the event listener always sees the current shortcuts/obs
 	// without needing to be re-registered on every render.
@@ -28,6 +36,17 @@ export const useKeyboardShortcuts = (
 	const obsRef = React.useRef(obs)
 	shortcutsRef.current = shortcuts
 	obsRef.current = obs
+
+	// Track previous scene for switchToPreviousScene
+	const prevSceneNameRef = React.useRef<string | undefined>(undefined)
+	const currentSceneNameRef = React.useRef<string | undefined>(currentSceneName)
+
+	React.useEffect(() => {
+		if (currentSceneName !== undefined && currentSceneName !== currentSceneNameRef.current) {
+			prevSceneNameRef.current = currentSceneNameRef.current
+			currentSceneNameRef.current = currentSceneName
+		}
+	}, [currentSceneName])
 
 	React.useEffect(() => {
 		const handler = (e: KeyboardEvent) => {
@@ -55,13 +74,35 @@ export const useKeyboardShortcuts = (
 					startStopRecording(currentObs)()
 					break
 
+				case 'startRecording':
+					startRecording(currentObs)()
+					break
+
+				case 'stopRecording':
+					stopRecording(currentObs)()
+					break
+
 				case 'toggleStreaming':
 					startStopStreaming(currentObs)()
+					break
+
+				case 'startStreaming':
+					startStreaming(currentObs)()
+					break
+
+				case 'stopStreaming':
+					stopStreaming(currentObs)()
 					break
 
 				case 'switchScene':
 					setCurrentScene(currentObs)({ scene: action.sceneName })
 					break
+
+				case 'switchToPreviousScene': {
+					const prevScene = prevSceneNameRef.current
+					if (prevScene) setCurrentScene(currentObs)({ scene: prevScene })
+					break
+				}
 
 				case 'toggleSceneItem': {
 					const { sceneName, sceneItemName } = action
@@ -78,8 +119,44 @@ export const useKeyboardShortcuts = (
 					break
 				}
 
+				case 'moveSceneItemToTop': {
+					const { sceneName, sceneItemName } = action
+					if (!currentObs.adapter) break
+					currentObs.adapter.getSceneItemList(sceneName).then((items) => {
+						const item = items.find((it) => it.sourceName === sceneItemName)
+						if (!item) return
+						const topIndex = items.length - 1
+						currentObs.adapter?.setSceneItemIndex(sceneName, item.sceneItemId, topIndex)
+					})
+					break
+				}
+
 				case 'toggleAudioMute':
 					currentObs.adapter?.toggleInputMute(action.inputName)
+					break
+
+				case 'muteAudio':
+					currentObs.adapter?.setInputMute(action.inputName, true)
+					break
+
+				case 'unmuteAudio':
+					currentObs.adapter?.setInputMute(action.inputName, false)
+					break
+
+				case 'startRtsp':
+					window.dispatchEvent(new CustomEvent('rtsp-control', { detail: { command: 'start', streamId: `rtsp-${action.streamId}` } }))
+					break
+
+				case 'stopRtsp':
+					window.dispatchEvent(new CustomEvent('rtsp-control', { detail: { command: 'stop', streamId: `rtsp-${action.streamId}` } }))
+					break
+
+				case 'toggleRtsp':
+					window.dispatchEvent(new CustomEvent('rtsp-control', { detail: { command: 'toggle', streamId: `rtsp-${action.streamId}` } }))
+					break
+
+				case 'selectConfig':
+					window.dispatchEvent(new CustomEvent('obs-tiles-open-config-selector'))
 					break
 			}
 		}

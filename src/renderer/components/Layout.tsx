@@ -5,8 +5,9 @@ import { Content } from './Content'
 import { ConfigSelectorDialog } from './Footer/ConfigSelectorDialog'
 import { HttpsWarningBanner } from './HttpsWarningBanner'
 import { useSettings } from './Settings/SettingsContext'
-import { useObs } from '~/api/obs'
+import { useObs, useCurrentScene } from '~/api/obs'
 import { useKeyboardShortcuts } from '../hooks'
+import React from 'react'
 
 const Wrapper = styled.div`
 	display: flex;
@@ -26,7 +27,16 @@ const Wrapper = styled.div`
 export const Layout = () => {
 	const { autoOpenSelector, closeAutoOpenSelector, currentConfig } = useSettings()
 	const obs = useObs({ connection: currentConfig.connection })
-	useKeyboardShortcuts(currentConfig.shortcuts ?? [], obs)
+	const currentSceneData = useCurrentScene(obs)
+	useKeyboardShortcuts(currentConfig.shortcuts ?? [], obs, currentSceneData?.name)
+
+	// Config selector triggered by keyboard shortcut
+	const [shortcutSelectorOpen, setShortcutSelectorOpen] = React.useState(false)
+	React.useEffect(() => {
+		const handler = () => setShortcutSelectorOpen(true)
+		window.addEventListener('obs-tiles-open-config-selector', handler)
+		return () => window.removeEventListener('obs-tiles-open-config-selector', handler)
+	}, [])
 
 	return (
 		<Wrapper>
@@ -34,6 +44,7 @@ export const Layout = () => {
 			<Content />
 			<Footer />
 			<ConfigSelectorDialog open={autoOpenSelector} onClose={closeAutoOpenSelector} />
+			<ConfigSelectorDialog open={shortcutSelectorOpen} onClose={() => setShortcutSelectorOpen(false)} />
 		</Wrapper>
 	)
 }

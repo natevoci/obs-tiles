@@ -174,6 +174,20 @@ export const RtspStreamTile = ({
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [isEditMode])
 
+	// Listen for rtsp-control keyboard shortcut events
+	React.useEffect(() => {
+		const fullStreamId = `rtsp-${rtspStream}`
+		const handler = (e: Event) => {
+			const { command, streamId } = (e as CustomEvent<{ command: string; streamId: string }>).detail
+			if (streamId !== fullStreamId) return
+			if (command === 'start' && !active) toggleActive()
+			else if (command === 'stop' && active) toggleActive()
+			else if (command === 'toggle') toggleActive()
+		}
+		window.addEventListener('rtsp-control', handler)
+		return () => window.removeEventListener('rtsp-control', handler)
+	}, [active, toggleActive, rtspStream])
+
 	// Overlay content (spinner, error, or nothing)
 	const overlayContent = React.useMemo(() => {
 		if (connecting && !hasFrame) {

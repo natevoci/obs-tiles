@@ -4,6 +4,25 @@
 
 ### 2026-04-07
 
+**feat(shortcuts): additional keyboard shortcut action types**
+
+- Added 12 new shortcut action types:
+  - **Start Recording / Stop Recording** — distinct start/stop (toggle already existed)
+  - **Start Streaming / Stop Streaming** — distinct start/stop (toggle already existed)
+  - **Previous Scene** — switches to the scene that was active before the current one (previous scene tracked via `useCurrentScene`)
+  - **Move Scene Item to Top** — brings a scene item to the front (z-top), same logic as SceneItemButton `moveToTop` handler
+  - **Mute Audio / Unmute Audio** — explicit mute/unmute via `adapter.setInputMute` (toggle already existed)
+  - **Start RTSP / Stop RTSP / Toggle RTSP** — dispatches `rtsp-control` custom event; `RtspStreamTile` listens and calls `toggleActive()` accordingly; Stream ID field matches the tile's `rtspStream` name
+  - **Select Config** — dispatches `obs-tiles-open-config-selector` event; `Layout.tsx` listens and opens `ConfigSelectorDialog`
+- `KeyboardShortcutsPanel` updated with dropdowns/text fields for all new action parameters
+- `useKeyboardShortcuts` now accepts `currentSceneName?` for previous-scene tracking
+
+**fix(shortcuts): display readable names for non-alphanumeric keys**
+
+- Space, arrow keys, Enter, Delete, Tab and other named keys now show readable labels (e.g. `"Space"`, `"Up"`, `"Tab"`) instead of blank or raw `KeyboardEvent.key` values
+
+### 2026-04-07
+
 **feat(shortcuts): configurable keyboard shortcuts**
 
 - New "Keyboard Shortcuts" tree node in the Settings dialog (per-config scope)
