@@ -4,6 +4,13 @@
 
 ### 2026-04-07
 
+**feat(RtspStreamTile): pause stream during edit mode**
+
+- Stream is automatically stopped when entering inline edit mode and resumed when exiting
+- Uses a ref to track whether the stream was active before edit mode, so it only resumes if it was running at the time — manual play/stop changes made during edit mode are not overridden
+
+**fix(EditableTiles): increase max tile size from 30 to 60**
+
 **fix(RtspStreamTile): replace img src data URL with canvas to fix memory leak**
 
 - Each video frame was stored as a base64 data URL in React state and assigned to an `<img src>`, causing Chromium to retain a decoded bitmap per URL and growing private bytes rapidly

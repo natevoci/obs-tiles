@@ -465,7 +465,7 @@ const TileMenu = ({
 				<Slider
 					value={currentSize}
 					min={4}
-					max={30}
+					max={60}
 					step={1}
 					onChange={handleSizeChange}
 					style={{ width: '100%' }}

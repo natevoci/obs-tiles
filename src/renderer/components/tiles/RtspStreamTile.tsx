@@ -4,6 +4,7 @@ import { IconButton } from '@material-ui/core'
 import { VolumeOff, VolumeUp, PlayArrow, Stop } from '@material-ui/icons'
 
 import { useSettings } from '~/components/Settings/SettingsContext'
+import { useEditMode } from '~/components/EditMode/EditModeContext'
 import { TileWrapper, StyledCircularProgress } from './TileWrapper'
 import { useRtspStream } from '~/api/obs/rtsp'
 import type { RtspStreamTileConfig } from './Tiles'
@@ -158,6 +159,20 @@ export const RtspStreamTile = ({
 		audioSyncOffsetMs: audioSyncOffsetMs ?? 0,
 		ffmpegPath,
 	})
+
+	const { isEditMode } = useEditMode()
+	// Remember whether the stream was active when edit mode was entered
+	// so we only auto-resume if we were the ones who stopped it
+	const wasActiveBeforeEditMode = React.useRef(false)
+	React.useEffect(() => {
+		if (isEditMode) {
+			wasActiveBeforeEditMode.current = active
+			if (active) toggleActive()
+		} else {
+			if (wasActiveBeforeEditMode.current && !active) toggleActive()
+		}
+		// eslint-disable-next-line react-hooks/exhaustive-deps
+	}, [isEditMode])
 
 	// Overlay content (spinner, error, or nothing)
 	const overlayContent = React.useMemo(() => {
