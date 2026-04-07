@@ -1,8 +1,10 @@
 import * as React from 'react'
 
 export interface RtspStreamState {
-	/** Current JPEG frame as a data URL (data:image/jpeg;base64,...) */
-	frameDataUrl: string | null
+	/** Whether at least one frame has been decoded and drawn to the canvas */
+	hasFrame: boolean
+	/** Canvas ref — attach this to a <canvas> element to receive video frames */
+	canvasRef: React.RefObject<HTMLCanvasElement>
 	/** Whether the stream is connecting */
 	connecting: boolean
 	/** Current error message, if any */
@@ -41,13 +43,14 @@ const isElectron = typeof window !== 'undefined' && !!window.ipcRenderer
 export function useRtspStream(options: UseRtspStreamOptions): RtspStreamState {
 	const { streamId, streamUrl, startMuted = true, fps, audioSyncOffsetMs = 0, ffmpegPath } = options
 
-	const [frameDataUrl, setFrameDataUrl] = React.useState<string | null>(null)
+	const [hasFrame, setHasFrame] = React.useState(false)
 	const [connecting, setConnecting] = React.useState(false)
 	const [error, setError] = React.useState<string | null>(null)
 	const [muted, setMuted] = React.useState(startMuted)
 	const [active, setActive] = React.useState(true)
 	const [audioLevel, setAudioLevel] = React.useState<number | null>(null)
 
+	const canvasRef = React.useRef<HTMLCanvasElement>(null)
 	// Track whether the stream has been started
 	const startedRef = React.useRef(false)
 
@@ -59,7 +62,7 @@ export function useRtspStream(options: UseRtspStreamOptions): RtspStreamState {
 		}
 
 		if (!active) {
-			setFrameDataUrl(null)
+			setHasFrame(false)
 			setConnecting(false)
 			setError(null)
 			setAudioLevel(null)
@@ -96,14 +99,33 @@ export function useRtspStream(options: UseRtspStreamOptions): RtspStreamState {
 			})
 
 		let firstFrame = true
+		let generation = 0
 		const handleFrame = (payload: { streamId: string; data: string }) => {
 			if (payload.streamId !== streamId) return
-			if (firstFrame) {
-				console.log(`[useRtspStream] First frame received for '${streamId}' (${payload.data.length} base64 chars)`)
-				firstFrame = false
-			}
-			setConnecting(false)
-			setFrameDataUrl(`data:image/jpeg;base64,${payload.data}`)
+			const canvas = canvasRef.current
+			if (!canvas) return
+			generation++
+			const myGeneration = generation
+			const binary = atob(payload.data)
+			const bytes = new Uint8Array(binary.length)
+			for (let i = 0; i < binary.length; i++) bytes[i] = binary.charCodeAt(i)
+			const blob = new Blob([bytes], { type: 'image/jpeg' })
+			createImageBitmap(blob).then(bitmap => {
+				// Discard if a newer frame has already arrived
+				if (myGeneration !== generation) { bitmap.close(); return }
+				if (canvas.width !== bitmap.width || canvas.height !== bitmap.height) {
+					canvas.width = bitmap.width
+					canvas.height = bitmap.height
+				}
+				canvas.getContext('2d')?.drawImage(bitmap, 0, 0)
+				bitmap.close()
+				if (firstFrame) {
+					console.log(`[useRtspStream] First frame decoded for '${streamId}'`)
+					firstFrame = false
+					setConnecting(false)
+					setHasFrame(true)
+				}
+			}).catch(() => {})
 		}
 
 		const handleError = (payload: { streamId: string; message: string }) => {
@@ -116,7 +138,8 @@ export function useRtspStream(options: UseRtspStreamOptions): RtspStreamState {
 		const handleConnecting = (payload: { streamId: string }) => {
 			if (payload.streamId !== streamId) return
 			console.log(`[useRtspStream] Reconnecting '${streamId}' — resetting to connecting state`)
-			setFrameDataUrl(null)
+			generation++ // invalidate any in-flight bitmap decode from previous session
+			setHasFrame(false)
 			setConnecting(true)
 			setError(null)
 			setAudioLevel(null)
@@ -170,7 +193,8 @@ export function useRtspStream(options: UseRtspStreamOptions): RtspStreamState {
 	}, [])
 
 	return {
-		frameDataUrl,
+		hasFrame,
+		canvasRef,
 		connecting,
 		error,
 		muted,

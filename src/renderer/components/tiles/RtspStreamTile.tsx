@@ -16,16 +16,15 @@ interface SizeProps {
 	$size: number
 }
 
-interface StreamImageProps extends SizeProps {
+interface StreamCanvasProps extends SizeProps {
 	$hasFrame: boolean
 }
 
-const StreamImage = styled.img<StreamImageProps>`
+const StreamCanvas = styled.canvas<StreamCanvasProps>`
 	display: block;
 	width: ${p => p.$size * 16}px;
 	height: ${p => p.$size * 9}px;
 	background-color: #000;
-	object-fit: contain;
 	visibility: ${p => p.$hasFrame ? 'visible' : 'hidden'};
 `
 
@@ -151,7 +150,7 @@ export const RtspStreamTile = ({
 		console.log(`[RtspStreamTile] id='${rtspStream}' resolvedUrl='${resolvedStreamUrl}' ffmpegPath='${ffmpegPath}'`)
 	}, [rtspStream, resolvedStreamUrl, ffmpegPath])
 
-	const { frameDataUrl, connecting, error, muted, toggleMute, active, toggleActive, audioLevel } = useRtspStream({
+	const { hasFrame, canvasRef, connecting, error, muted, toggleMute, active, toggleActive, audioLevel } = useRtspStream({
 		streamId: `rtsp-${rtspStream}`,
 		streamUrl: resolvedStreamUrl,
 		startMuted,
@@ -162,14 +161,14 @@ export const RtspStreamTile = ({
 
 	// Overlay content (spinner, error, or nothing)
 	const overlayContent = React.useMemo(() => {
-		if (connecting && !frameDataUrl) {
+		if (connecting && !hasFrame) {
 			return <StyledCircularProgress size={tileSizeInt * 3} />
 		}
 		if (error) {
 			return <ErrorText>{error}</ErrorText>
 		}
 		return null
-	}, [connecting, frameDataUrl, error, tileSizeInt])
+	}, [connecting, hasFrame, error, tileSizeInt])
 
 	// Audio level meter overlay
 	const levelPercent = audioLevel !== null
@@ -229,11 +228,10 @@ export const RtspStreamTile = ({
 			}
 			elementType='RtspStreamTile'
 		>
-			<StreamImage
+			<StreamCanvas
+				ref={canvasRef}
 				$size={tileSizeInt}
-				$hasFrame={!!frameDataUrl}
-				src={frameDataUrl ?? undefined}
-				alt={label}
+				$hasFrame={hasFrame}
 			/>
 		</TileWrapper>
 	)

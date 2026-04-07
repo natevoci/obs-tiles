@@ -4,6 +4,15 @@
 
 ### 2026-04-07
 
+**fix(RtspStreamTile): replace img src data URL with canvas to fix memory leak**
+
+- Each video frame was stored as a base64 data URL in React state and assigned to an `<img src>`, causing Chromium to retain a decoded bitmap per URL and growing private bytes rapidly
+- Replaced `StreamImage` (`<img>`) with `StreamCanvas` (`<canvas>`) in `RtspStreamTile`
+- `useRtspStream` no longer holds `frameDataUrl` state; instead it exposes `canvasRef` and `hasFrame`
+- Each incoming frame is decoded via `createImageBitmap()` (browser-native, no `Buffer`) drawn onto the canvas, then immediately freed with `bitmap.close()`
+- A `generation` counter discards any in-flight decodes that are superseded by a newer frame
+- `hasFrame: boolean` replaces `frameDataUrl` as the visible/spinner guard
+
 **feat(RtspStreamTile): real-time audio level meter overlay**
 
 - Main process computes PCM RMS dBFS levels from the raw `s16le` audio data received on the named pipe socket in `RtspManager`
