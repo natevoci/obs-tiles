@@ -133,8 +133,8 @@ export interface RtspStreamTileConfig extends BaseTileConfig {
 }
 
 export interface YouTubeLiveTileConfig extends BaseTileConfig {
-	/** Discriminator — unique identifier for this tile (used as label when title is not set). */
-	youtubeLive: string;
+	/** Discriminator — presence of this key identifies the tile type. */
+	youtubeLive: true;
 	/** Display mode: 'preview' (default) or 'button' (compact row). */
 	viewType?: 'preview' | 'button';
 	/** Skip CreateBroadcastDialog and go live immediately using default settings. */
@@ -260,7 +260,7 @@ function isYouTubeLiveTileConfig(tile: TileConfig): tile is YouTubeLiveTileConfi
 	const valid =
 		typeof tile === 'object' &&
 		'youtubeLive' in tile &&
-		typeof (tile as any).youtubeLive === 'string';
+		Boolean((tile as any).youtubeLive); // accept true or legacy string values
 	if (valid) {
 		warnExtraProps(tile, ['youtubeLive', 'viewType', 'autoCreateBroadcast', 'defaultTitle', 'defaultDescription', ...COMMON_TILE_PROPS], 'YouTubeLiveTileConfig');
 	}
@@ -374,7 +374,7 @@ export const Tiles = ({
 		if (isYouTubeLiveTileConfig(tile)) {
 			return (
 				<YouTubeLiveTile
-					key={tile.youtubeLive}
+					key="youtube-live"
 					{...inheritableProps}
 					{...tile}
 				/>

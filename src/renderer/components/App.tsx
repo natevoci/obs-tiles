@@ -1,4 +1,5 @@
 import { OBSWebsocketProvider } from '~/api/obs'
+import { YouTubeLiveProvider } from '~/api/youtube'
 import { SettingsProvider } from "~/components/Settings/SettingsProvider"
 import { ThemeProvider } from "~/theme/theme.tsx"
 import { EditModeProvider } from "~/components/EditMode/EditModeContext"
@@ -12,10 +13,12 @@ export const App = () => {
 		<ThemeProvider>
 			<SettingsProvider>
 				<OBSWebsocketProvider>
-					<EditModeProvider>
-						<Layout>
-						</Layout>
-					</EditModeProvider>
+					<YouTubeLiveProvider>
+						<EditModeProvider>
+							<Layout>
+							</Layout>
+						</EditModeProvider>
+					</YouTubeLiveProvider>
 				</OBSWebsocketProvider>
 			</SettingsProvider>
 		</ThemeProvider>

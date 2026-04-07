@@ -2,6 +2,25 @@
 
 ## Feature History
 
+### 2026-04-08
+
+**refactor(youtube): remove youtubeLive tile ID — single shared instance**
+
+- `YouTubeLiveTileConfig.youtubeLive` changed from `string` to `true` (boolean discriminator). `isYouTubeLiveTileConfig` guard uses `Boolean()` to accept legacy string values in existing configs.
+- `ShortcutAction` union: `tileId: string` removed from `startYoutubeLive` and `stopYoutubeLive` action types — no longer needed with a single shared provider instance.
+- `YouTubeLiveTile`: `youtubeLive` prop removed from component interface; label defaults to `title ?? 'YouTube Live'`; keyboard shortcut listener no longer filters by tile ID.
+- `useKeyboardShortcuts`: `youtube-live-control` custom event dispatched without `tileId`.
+- `KeyboardShortcutsPanel`: Removed `collectYouTubeLiveTileIds` helper, `youtubeLiveTileIds` const, and the tile-ID dropdown from `renderParams` for `startYoutubeLive`/`stopYoutubeLive` shortcuts.
+- `TilePropertiesDialog`: "Tile ID" TextField removed from `YouTubeLiveForm`; default tile for AddTileDialog changed to `{ youtubeLive: true }`.
+- `detectTileType`: added missing fallback `return 'button'` to silence TypeScript exhaustiveness error.
+
+**refactor(youtube): shared YouTubeLiveProvider context**
+
+- Added `src/renderer/api/youtube/YouTubeLiveProvider.tsx` — a React context provider that mounts a single `useYouTubeLive` instance for the whole app. The OBS connection is taken from `settings.youtube.obsConnection` (falling back to `currentConfig.connection`), matching the connection configured in YouTube Settings.
+- `YouTubeLiveProvider` and `useYouTubeLiveContext` exported from `~/api/youtube`.
+- `<YouTubeLiveProvider>` mounted inside `<OBSWebsocketProvider>` in `App.tsx`, wrapping `<EditModeProvider>` and all children.
+- `YouTubeLiveTile` now calls `useYouTubeLiveContext()` instead of `useYouTubeLive()` directly — it no longer owns its own state machine, service instances, or polling loop. Multiple tiles and keyboard shortcuts all share the same `yt` instance and see consistent phase state.
+
 ### 2026-04-07
 
 **feat(youtube): edit mode support for YouTubeLiveTile**

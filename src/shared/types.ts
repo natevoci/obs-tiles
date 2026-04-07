@@ -20,8 +20,8 @@ export type ShortcutAction =
   | { type: 'stopRtsp'; streamId: string }
   | { type: 'toggleRtsp'; streamId: string }
   | { type: 'selectConfig' }
-  | { type: 'startYoutubeLive'; tileId: string }
-  | { type: 'stopYoutubeLive'; tileId: string }
+  | { type: 'startYoutubeLive' }
+  | { type: 'stopYoutubeLive' }
 
 export interface KeyboardShortcut {
   /** Normalised combo string, e.g. "Ctrl+Shift+F5" */

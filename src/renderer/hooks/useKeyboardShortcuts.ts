@@ -160,11 +160,11 @@ export const useKeyboardShortcuts = (
 					break
 
 				case 'startYoutubeLive':
-					window.dispatchEvent(new CustomEvent('youtube-live-control', { detail: { command: 'start', tileId: action.tileId } }))
+					window.dispatchEvent(new CustomEvent('youtube-live-control', { detail: { command: 'start' } }))
 					break
 
 				case 'stopYoutubeLive':
-					window.dispatchEvent(new CustomEvent('youtube-live-control', { detail: { command: 'stop', tileId: action.tileId } }))
+					window.dispatchEvent(new CustomEvent('youtube-live-control', { detail: { command: 'stop' } }))
 					break
 			}
 		}

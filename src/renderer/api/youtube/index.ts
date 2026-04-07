@@ -10,3 +10,5 @@ export type {
 
 export { useYouTubeLive } from './useYouTubeLive'
 export type { YouTubeLiveHook, YouTubeLiveState, YouTubeLivePhase } from './useYouTubeLive'
+
+export { YouTubeLiveProvider, useYouTubeLiveContext } from './YouTubeLiveProvider'

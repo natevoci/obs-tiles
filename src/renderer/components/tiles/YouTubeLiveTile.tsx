@@ -13,7 +13,7 @@ import {
 import { useObs } from '~/api/obs'
 import { useSettings } from '~/components/Settings/SettingsContext'
 import { TileWrapper, StyledCircularProgress } from './TileWrapper'
-import { useYouTubeLive, YouTubeAuthService } from '~/api/youtube'
+import { useYouTubeLiveContext, YouTubeAuthService } from '~/api/youtube'
 import { setStreamServiceSettings, startStreaming } from '~/api/obs/actions/streaming'
 import { CreateBroadcastDialog } from '../youtube/CreateBroadcastDialog'
 import { ResumeBroadcastDialog } from '../youtube/ResumeBroadcastDialog'
@@ -224,8 +224,6 @@ const DEFAULT_YT_CONFIG = {
 }
 
 export const YouTubeLiveTile = ({
-	youtubeLive,
-	connection,
 	autoCreateBroadcast = false,
 	defaultTitle,
 	defaultDescription,
@@ -236,11 +234,10 @@ export const YouTubeLiveTile = ({
 }: YouTubeLiveTileConfig) => {
 	const tileSizeInt = parseInt(String(tileSize))
 	const labelFontSize = parseInt(String(fontSize ?? tileSize))
-	const label = title || youtubeLive
+	const label = title ?? 'YouTube Live'
 
 	const { settings, saveFullSettings } = useSettings()
-	const obs = useObs({ connection })
-	const yt = useYouTubeLive(obs, settings.youtube)
+	const { yt, obs } = useYouTubeLiveContext()
 
 	const { phase, isAuthenticated, concurrentViewers, error, existingBroadcasts } = yt
 
@@ -343,14 +340,13 @@ export const YouTubeLiveTile = ({
 	// ── Keyboard shortcut listener ───────────────────────────────────────────────────
 	React.useEffect(() => {
 		const handler = (e: Event) => {
-			const { command, tileId } = (e as CustomEvent<{ command: string; tileId: string }>).detail
-			if (tileId !== youtubeLive) return
+			const { command } = (e as CustomEvent<{ command: string }>).detail
 			if (command === 'start' && phase === 'idle') handleGoLive()
 			else if (command === 'stop' && phase === 'live') yt.stopLive()
 		}
 		window.addEventListener('youtube-live-control', handler)
 		return () => window.removeEventListener('youtube-live-control', handler)
-	}, [youtubeLive, phase, handleGoLive, yt])
+	}, [phase, handleGoLive, yt])
 	// ── Visual state ─────────────────────────────────────────────────────────
 	const { label: phaseLabel, tintColor, isError } = getPhaseVisual(phase, isAuthenticated, IS_ELECTRON)
 	const isBusy = signingIn || ['checking-existing', 'creating-broadcast', 'configuring-obs', 'starting-stream', 'stopping'].includes(phase)

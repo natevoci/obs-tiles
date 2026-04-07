@@ -498,13 +498,6 @@ function AudioInputForm({ draft, setDraft }: FormProps) {
 function YouTubeLiveForm({ draft, setDraft }: FormProps) {
 	return (
 		<FormSection>
-			<TextField
-				label="Tile ID"
-				value={draft.youtubeLive ?? ''}
-				onChange={(e) => setDraft({ ...draft, youtubeLive: e.target.value })}
-				variant="outlined" size="small" fullWidth
-				helperText="Unique identifier for this tile (used as label when no title is set)"
-			/>
 			<FormControl variant="outlined" size="small" fullWidth>
 				<InputLabel>View Type</InputLabel>
 				<Select label="View Type" value={draft.viewType ?? 'preview'}
@@ -671,7 +664,7 @@ const TILE_TYPES: { type: TileType; label: string; defaultTile: any }[] = [
 	{ type: 'text',       label: 'Text',              defaultTile: { text: 'stats' } },
 	{ type: 'audioInput', label: 'Audio Input',       defaultTile: { audioInput: { inputName: '' } } },
 	{ type: 'rtspStream',    label: 'RTSP Stream',    defaultTile: { rtspStream: 'stream', startMuted: true } },
-	{ type: 'youtubeLive',   label: 'YouTube Live',   defaultTile: { youtubeLive: 'yt-live' } },
+	{ type: 'youtubeLive',   label: 'YouTube Live',   defaultTile: { youtubeLive: true } },
 ]
 
 export interface AddTileDialogProps {

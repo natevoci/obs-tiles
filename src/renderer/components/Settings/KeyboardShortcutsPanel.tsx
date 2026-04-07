@@ -41,18 +41,6 @@ function collectAudioInputNames(tiles: any[]): string[] {
 }
 
 // ---------------------------------------------------------------------------
-// Collect all youtubeLive tile IDs from the tile tree (recurses into groups)
-// ---------------------------------------------------------------------------
-function collectYouTubeLiveTileIds(tiles: any[]): string[] {
-	const ids: string[] = []
-	for (const tile of tiles) {
-		if (typeof tile.youtubeLive === 'string') ids.push(tile.youtubeLive)
-		if (Array.isArray(tile.tiles)) ids.push(...collectYouTubeLiveTileIds(tile.tiles))
-	}
-	return ids
-}
-
-// ---------------------------------------------------------------------------
 // Styled components
 // ---------------------------------------------------------------------------
 
@@ -134,8 +122,8 @@ function defaultActionForType(type: ShortcutAction['type']): ShortcutAction {
 		case 'stopRtsp': return { type: 'stopRtsp', streamId: '' }
 		case 'toggleRtsp': return { type: 'toggleRtsp', streamId: '' }
 		case 'selectConfig': return { type: 'selectConfig' }
-		case 'startYoutubeLive': return { type: 'startYoutubeLive', tileId: '' }
-		case 'stopYoutubeLive': return { type: 'stopYoutubeLive', tileId: '' }
+		case 'startYoutubeLive': return { type: 'startYoutubeLive' }
+		case 'stopYoutubeLive': return { type: 'stopYoutubeLive' }
 	}
 }
 
@@ -188,7 +176,6 @@ export const KeyboardShortcutsPanel = ({ obs, shortcuts, onChange }: KeyboardSho
 	const { currentConfig } = useSettings()
 	const rtspStreamIds = collectRtspStreamIds(currentConfig.tiles ?? [])
 	const audioInputNames = collectAudioInputNames(currentConfig.tiles ?? [])
-	const youtubeLiveTileIds = collectYouTubeLiveTileIds(currentConfig.tiles ?? [])
 
 	const handleAddShortcut = () => {
 		onChange([...shortcuts, { keys: '', action: { type: 'toggleRecording' } }])
@@ -322,25 +309,6 @@ export const KeyboardShortcutsPanel = ({ obs, shortcuts, onChange }: KeyboardSho
 					>
 						<MenuItem value="" disabled><em>Stream…</em></MenuItem>
 						{rtspStreamIds.map((id) => (
-							<MenuItem key={id} value={id}>{id}</MenuItem>
-						))}
-					</Select>
-				</ParamField>
-			)
-		}
-
-		if (action.type === 'startYoutubeLive' || action.type === 'stopYoutubeLive') {
-			return (
-				<ParamField>
-					<Select
-						value={action.tileId}
-						onChange={(e) => handleActionParamChange(index, { tileId: e.target.value as string })}
-						variant="outlined"
-						style={{ minWidth: 160, fontSize: 13, height: 32 }}
-						displayEmpty
-					>
-						<MenuItem value="" disabled><em>Tile…</em></MenuItem>
-						{youtubeLiveTileIds.map((id) => (
 							<MenuItem key={id} value={id}>{id}</MenuItem>
 						))}
 					</Select>
