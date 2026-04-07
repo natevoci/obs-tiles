@@ -50,6 +50,22 @@ export function buildComboString(e: KeyboardEvent | React.KeyboardEvent): string
 	if (e.altKey) parts.push('Alt')
 	if (e.metaKey) parts.push('Meta')
 
+	// Numpad keys — map via e.code so Num1 ≠ 1 regardless of NumLock state
+	const NUMPAD_DISPLAY_NAMES: Record<string, string> = {
+		'Numpad0': 'Num0', 'Numpad1': 'Num1', 'Numpad2': 'Num2',
+		'Numpad3': 'Num3', 'Numpad4': 'Num4', 'Numpad5': 'Num5',
+		'Numpad6': 'Num6', 'Numpad7': 'Num7', 'Numpad8': 'Num8',
+		'Numpad9': 'Num9',
+		'NumpadAdd': 'Num+', 'NumpadSubtract': 'Num-',
+		'NumpadMultiply': 'Num*', 'NumpadDivide': 'Num/',
+		'NumpadDecimal': 'Num.', 'NumpadEnter': 'NumEnter',
+		'NumpadEqual': 'Num=',
+	}
+	if (e.code in NUMPAD_DISPLAY_NAMES) {
+		parts.push(NUMPAD_DISPLAY_NAMES[e.code])
+		return parts.join('+')
+	}
+
 	// Normalise the key: single letters → uppercase, special keys → readable name
 	const KEY_DISPLAY_NAMES: Record<string, string> = {
 		' ': 'Space',
@@ -127,9 +143,9 @@ export const KeyCaptureInput = ({ value, onChange }: KeyCaptureInputProps) => {
 			onBlur={handleBlur}
 			title={recording ? 'Press a key combination… (Escape to cancel)' : 'Click to record a key combination'}
 		>
-			{value
-				? value
-				: <Placeholder>{recording ? 'Press keys…' : 'Click to record…'}</Placeholder>
+			{recording
+				? <Placeholder>Press keys…</Placeholder>
+				: value || <Placeholder>Click to record…</Placeholder>
 			}
 		</CaptureField>
 	)
