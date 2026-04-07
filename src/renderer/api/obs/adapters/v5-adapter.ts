@@ -348,6 +348,21 @@ export class V5Adapter implements OBSAdapter {
 		await this._sendRequest('ToggleStream', {})
 	}
 
+	async getStreamServiceSettings(): Promise<{ serviceType: string; settings: Record<string, unknown> }> {
+		const data = await this._sendRequest('GetStreamServiceSettings', {})
+		return {
+			serviceType: data.streamServiceType,
+			settings: data.streamServiceSettings,
+		}
+	}
+
+	async setStreamServiceSettings(serviceType: string, settings: Record<string, unknown>): Promise<void> {
+		await this._sendRequest('SetStreamServiceSettings', {
+			streamServiceType: serviceType,
+			streamServiceSettings: settings,
+		})
+	}
+
 	// =========================================================================
 	// Inputs (Audio)
 	// =========================================================================

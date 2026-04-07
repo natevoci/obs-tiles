@@ -20,6 +20,8 @@ export type ShortcutAction =
   | { type: 'stopRtsp'; streamId: string }
   | { type: 'toggleRtsp'; streamId: string }
   | { type: 'selectConfig' }
+  | { type: 'startYoutubeLive'; tileId: string }
+  | { type: 'stopYoutubeLive'; tileId: string }
 
 export interface KeyboardShortcut {
   /** Normalised combo string, e.g. "Ctrl+Shift+F5" */
@@ -54,5 +56,26 @@ export interface ConfigFileFormat {
   confirmBeforeStopStreaming?: boolean
   confirmBeforeStartRecording?: boolean
   confirmBeforeStopRecording?: boolean;
+  confirmBeforeGoLive?: boolean;
   ffmpegPath?: string;
+  youtube?: YouTubeConfig
+}
+
+// ---------------------------------------------------------------------------
+// YouTube Live Integration
+// ---------------------------------------------------------------------------
+
+export interface YouTubeConfig {
+  clientId: string
+  clientSecret: string
+  refreshToken?: string
+  defaultPrivacyStatus: 'public' | 'unlisted' | 'private'
+  defaultLatency: 'ultraLow' | 'low' | 'normal'
+  defaultTitle: string
+  defaultDescription: string
+  /** When false, Privacy field is hidden in CreateBroadcastDialog */
+  allowPrivacyOverride: boolean
+  /** When false, Latency field is hidden in CreateBroadcastDialog */
+  allowLatencyOverride: boolean
+  obsConnection: string
 }

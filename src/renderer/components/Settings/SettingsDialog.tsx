@@ -18,12 +18,13 @@ import {
 	FormControlLabel,
 } from '@material-ui/core'
 import { makeStyles } from '@material-ui/core/styles'
-import { Close, Add, Delete, Edit, ExpandMore, ChevronRight, Settings as SettingsIcon, Keyboard as KeyboardIcon } from '@material-ui/icons'
+import { Close, Add, Delete, Edit, ExpandMore, ChevronRight, Settings as SettingsIcon, Keyboard as KeyboardIcon, Code as CodeIcon, Subscriptions as YouTubeIcon } from '@material-ui/icons'
 import { ConfigVisualEditor } from './ConfigVisualEditor'
 import { KeyboardShortcutsPanel } from './KeyboardShortcutsPanel'
+import { YouTubeSettingsPanel } from './YouTubeSettingsPanel'
 import { useSettings } from './SettingsContext'
 import { ConfirmDialog } from '../ConfirmDialog'
-import type { ConfigItem, KeyboardShortcut } from '../../../shared/types'
+import type { ConfigItem, KeyboardShortcut, YouTubeConfig } from '../../../shared/types'
 import { DEFAULT_SETTINGS, DEFAULT_SHORTCUTS as DEFAULT_SHORTCUTS_RAW } from '../../../shared/defaults'
 
 const DEFAULT_SHORTCUTS = DEFAULT_SHORTCUTS_RAW as KeyboardShortcut[]
@@ -142,6 +143,15 @@ const BackupFolderBrowseButton = styled(Button)`
 	flex-shrink: 0;
 `
 
+const RawSection = styled.div`
+	display: flex;
+	flex-direction: column;
+	gap: 12px;
+	padding: 20px;
+	overflow-y: auto;
+	flex: 1;
+`
+
 const useStyles = makeStyles((theme) => ({
 	appBar: { position: 'relative' },
 	title: { marginLeft: theme.spacing(2), flex: 1 },
@@ -209,7 +219,7 @@ const NamePromptDialog = ({ open, title, initialValue, onConfirm, onCancel }: Na
 // Types for selected tree node
 // ---------------------------------------------------------------------------
 
-type SelectedNode = 'settings' | 'keyboard-shortcuts' | 'configs-group' | number
+type SelectedNode = 'settings' | 'keyboard-shortcuts' | 'configs-group' | 'obs-raw-request' | 'youtube' | number
 
 // ---------------------------------------------------------------------------
 // SettingsDialog
@@ -236,6 +246,7 @@ export const SettingsDialog = ({ onClose }: SettingsDialogProps) => {
 	const [localConfirmBeforeStopStreaming, setLocalConfirmBeforeStopStreaming] = React.useState(savedSettings.confirmBeforeStopStreaming ?? false)
 	const [localConfirmBeforeStartRecording, setLocalConfirmBeforeStartRecording] = React.useState(savedSettings.confirmBeforeStartRecording ?? false)
 	const [localConfirmBeforeStopRecording, setLocalConfirmBeforeStopRecording] = React.useState(savedSettings.confirmBeforeStopRecording ?? false)
+	const [localConfirmBeforeGoLive, setLocalConfirmBeforeGoLive] = React.useState(savedSettings.confirmBeforeGoLive ?? false)
 	const [localConfigs, setLocalConfigs] = React.useState<ConfigItem[]>(() =>
 		savedSettings.configs.map((c) => ({ ...c })),
 	)
@@ -256,6 +267,37 @@ export const SettingsDialog = ({ onClose }: SettingsDialogProps) => {
 	const [jsonValue, setJsonValue] = React.useState(() =>
 		JSON.stringify(savedSettings.configs[savedSettings.currentConfigIndex], null, 2),
 	)
+
+	// YouTube settings state
+	const [localYouTube, setLocalYouTube] = React.useState<YouTubeConfig>(
+		() => savedSettings.youtube ?? (DEFAULT_SETTINGS.youtube as YouTubeConfig),
+	)
+
+	// OBS Raw Request panel state
+	const [rawRequestName, setRawRequestName] = React.useState('GetStreamServiceSettings')
+	const [rawRequestBody, setRawRequestBody] = React.useState('{}')
+	const [rawResponse, setRawResponse] = React.useState('')
+	const [rawSending, setRawSending] = React.useState(false)
+	const handleSendRawRequest = React.useCallback(async () => {
+		if (!obs?.adapter) return
+		setRawSending(true)
+		setRawResponse('')
+		try {
+			let bodyObj: any = {}
+			try {
+				bodyObj = JSON.parse(rawRequestBody)
+			} catch {
+				setRawResponse('Error: request body is not valid JSON')
+				setRawSending(false)
+				return
+			}
+			const result = await (obs.adapter as any).sendRaw(rawRequestName.trim(), bodyObj)
+			setRawResponse(JSON.stringify(result, null, 2))
+		} catch (e: any) {
+			setRawResponse(`Error: ${e?.message ?? String(e)}`)
+		}
+		setRawSending(false)
+	}, [obs, rawRequestName, rawRequestBody])
 
 	// Prompt / confirm dialog state
 	const [namePrompt, setNamePrompt] = React.useState<{
@@ -427,6 +469,8 @@ export const SettingsDialog = ({ onClose }: SettingsDialogProps) => {
 			confirmBeforeStopStreaming: localConfirmBeforeStopStreaming,
 			confirmBeforeStartRecording: localConfirmBeforeStartRecording,
 			confirmBeforeStopRecording: localConfirmBeforeStopRecording,
+			confirmBeforeGoLive: localConfirmBeforeGoLive,
+			youtube: localYouTube,
 		})
 		onClose()
 	}
@@ -434,6 +478,18 @@ export const SettingsDialog = ({ onClose }: SettingsDialogProps) => {
 	// ---------------------------------------------------------------------------
 	// Render helpers
 	// ---------------------------------------------------------------------------
+
+	const handleYouTubeAuthSaveNow = React.useCallback(
+		(newYouTube: YouTubeConfig) => {
+			setLocalYouTube(newYouTube)
+			// Persist immediately — don't wait for the Save button
+			saveFullSettings({
+				...savedSettings,
+				youtube: newYouTube,
+			})
+		},
+		[savedSettings, saveFullSettings],
+	)
 
 	const renderTree = () => (
 		<>
@@ -459,6 +515,30 @@ export const SettingsDialog = ({ onClose }: SettingsDialogProps) => {
 					<KeyboardIcon style={{ width: 16, height: 16, opacity: 0.7 }} />
 				</TreeIcon>
 				<TreeLabel>Keyboard Shortcuts</TreeLabel>
+			</TreeRow>
+
+			{/* OBS Raw Request node */}
+			<TreeRow
+				$depth={0}
+				$selected={selected === 'obs-raw-request'}
+				onClick={() => handleSelectNode('obs-raw-request')}
+			>
+				<TreeIcon>
+					<CodeIcon style={{ width: 16, height: 16, opacity: 0.7 }} />
+				</TreeIcon>
+				<TreeLabel>OBS Raw Request</TreeLabel>
+			</TreeRow>
+
+			{/* YouTube Live Integration node */}
+			<TreeRow
+				$depth={0}
+				$selected={selected === 'youtube'}
+				onClick={() => handleSelectNode('youtube')}
+			>
+				<TreeIcon>
+					<YouTubeIcon style={{ width: 16, height: 16, opacity: 0.7 }} />
+				</TreeIcon>
+				<TreeLabel>YouTube Live</TreeLabel>
 			</TreeRow>
 
 			{/* Configs group */}
@@ -519,6 +599,96 @@ export const SettingsDialog = ({ onClose }: SettingsDialogProps) => {
 							onChange={setLocalShortcuts}
 						/>
 					</RightPanelContent>
+				</>
+			)
+		}
+
+		if (selected === 'youtube') {
+			const connectionNames = localConfigs[localConfigIndex]
+				? Object.keys(localConfigs[localConfigIndex].connections ?? {})
+				: ['main']
+			return (
+				<>
+					<RightPanelHeader>
+						<Typography variant="subtitle1" style={{ fontWeight: 600 }}>
+							YouTube Live Integration
+						</Typography>
+					</RightPanelHeader>
+					<RightPanelContent>
+						<YouTubeSettingsPanel
+							value={localYouTube}
+							connectionNames={connectionNames.length > 0 ? connectionNames : ['main']}
+							onChange={setLocalYouTube}
+							onSaveNow={handleYouTubeAuthSaveNow}
+						/>
+					</RightPanelContent>
+				</>
+			)
+		}
+
+		if (selected === 'obs-raw-request') {
+			const isConnected = Boolean(obs?.connected)
+			const connectionName = localConfigs[localConfigIndex]?.connection || 'main'
+			const versionLabel = obs?.apiVersion ? `v${obs.apiVersion}` : ''
+			return (
+				<>
+					<RightPanelHeader>
+						<Typography variant="subtitle1" style={{ fontWeight: 600, flex: 1 }}>OBS Raw Request</Typography>
+						<Typography variant="caption" style={{ opacity: 0.6 }}>
+							{isConnected ? `${connectionName} · ${versionLabel}` : `${connectionName} · not connected`}
+						</Typography>
+					</RightPanelHeader>
+					<RawSection>
+						<TextField
+							label="Request name"
+							value={rawRequestName}
+							onChange={(e) => setRawRequestName(e.target.value)}
+							variant="outlined"
+							size="small"
+							fullWidth
+							placeholder="e.g. GetStreamServiceSettings"
+							helperText="OBS WebSocket request type"
+						/>
+						<TextField
+							label="Request body (JSON)"
+							value={rawRequestBody}
+							onChange={(e) => setRawRequestBody(e.target.value)}
+							variant="outlined"
+							multiline
+							minRows={5}
+							fullWidth
+							inputProps={{ style: { fontFamily: 'monospace', fontSize: 13 } }}
+						/>
+						<Button
+							variant="contained"
+							color="primary"
+							onClick={handleSendRawRequest}
+							disabled={!isConnected || rawSending || !rawRequestName.trim()}
+						>
+							{rawSending ? 'Sending…' : 'Send'}
+						</Button>
+						{rawResponse !== '' && (
+							<>
+								<TextField
+									label="Response"
+									value={rawResponse}
+									variant="outlined"
+									multiline
+									minRows={12}
+									fullWidth
+									inputProps={{ style: { fontFamily: 'monospace', fontSize: 13 } }}
+									InputProps={{ readOnly: true }}
+								/>
+								<Button
+									variant="outlined"
+									size="small"
+									onClick={() => { navigator.clipboard.writeText(rawResponse) }}
+								>
+									Copy Response
+								</Button>
+							</>
+						)}
+					</RawSection>
 				</>
 			)
 		}
@@ -646,6 +816,17 @@ export const SettingsDialog = ({ onClose }: SettingsDialogProps) => {
 									/>
 								}
 								label="Confirm before stopping recording"
+							/>
+							<FormControlLabel
+								control={
+									<Checkbox
+										checked={localConfirmBeforeGoLive}
+										onChange={(e) => setLocalConfirmBeforeGoLive(e.target.checked)}
+										color="primary"
+										size="small"
+									/>
+								}
+								label="Confirm before going live (YouTube)"
 							/>
 						</SettingsFormSection>
 					</RightPanelContent>

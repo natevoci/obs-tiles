@@ -214,6 +214,18 @@ export interface OBSAdapter {
 	 */
 	toggleStream(): Promise<void>
 
+	/**
+	 * Get the current stream service settings (RTMP server + key, etc.)
+	 */
+	getStreamServiceSettings(): Promise<{ serviceType: string; settings: Record<string, unknown> }>
+
+	/**
+	 * Update the stream service settings (e.g. to push a new YouTube stream key)
+	 * @param serviceType - e.g. 'rtmp_custom'
+	 * @param settings - Service-specific settings (server, key, etc.)
+	 */
+	setStreamServiceSettings(serviceType: string, settings: Record<string, unknown>): Promise<void>
+
 	// =========================================================================
 	// Inputs (Audio)
 	// =========================================================================

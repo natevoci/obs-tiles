@@ -158,6 +158,14 @@ export const useKeyboardShortcuts = (
 				case 'selectConfig':
 					window.dispatchEvent(new CustomEvent('obs-tiles-open-config-selector'))
 					break
+
+				case 'startYoutubeLive':
+					window.dispatchEvent(new CustomEvent('youtube-live-control', { detail: { command: 'start', tileId: action.tileId } }))
+					break
+
+				case 'stopYoutubeLive':
+					window.dispatchEvent(new CustomEvent('youtube-live-control', { detail: { command: 'stop', tileId: action.tileId } }))
+					break
 			}
 		}
 

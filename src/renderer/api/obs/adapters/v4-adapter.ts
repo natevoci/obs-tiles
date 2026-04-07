@@ -352,6 +352,23 @@ export class V4Adapter implements OBSAdapter {
 		await this._sendRaw('StartStopStreaming', {})
 	}
 
+	async getStreamServiceSettings(): Promise<{ serviceType: string; settings: Record<string, unknown> }> {
+		const data = await this._sendRaw('GetStreamSettings', {})
+		const normalized = camelCaseKeys(data)
+		return {
+			serviceType: normalized.type,
+			settings: normalized.settings ?? {},
+		}
+	}
+
+	async setStreamServiceSettings(serviceType: string, settings: Record<string, unknown>): Promise<void> {
+		await this._sendRaw('SetStreamSettings', {
+			type: serviceType,
+			settings,
+			save: true,
+		})
+	}
+
 	// =========================================================================
 	// Inputs (Audio)
 	// =========================================================================

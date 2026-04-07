@@ -4,6 +4,33 @@
 
 ### 2026-04-07
 
+**feat(youtube): edit mode support for YouTubeLiveTile**
+
+- `TilePropertiesDialog.tsx`: Added `'youtubeLive'` to `TileType` union; `detectTileType` detects `youtubeLive` discriminator; new `YouTubeLiveForm` component with fields for Tile ID, View Type (Preview / Button compact row), Auto-create broadcast checkbox, Default Title (with `{date}` hint), Default Description, display Title, and Tile Size / Font Size.
+- `AddTileDialog`: "YouTube Live" option added to the type-picker list with default tile `{ youtubeLive: 'yt-live' }`; form shown after type is selected.
+- Added `YT_VIEW_TYPES` constant (`preview` / `button`) separate from the existing `VIEW_TYPES` (`preview` / `checkbox`) used by other tile types.
+
+### 2026-04-07
+
+**feat(youtube): YouTube Live integration — Phase 5 (polish)**
+
+- **`confirmBeforeGoLive` setting:** New checkbox in Settings → General — "Confirm before going live (YouTube)". When enabled, clicking Go Live (or triggering via keyboard shortcut) shows a confirmation dialog before starting the broadcast. Added to `ConfigFileFormat`, `defaults.ts` (`false`), and `SettingsDialog.tsx`.
+- **Keyboard shortcuts:** Two new shortcut action types — `startYoutubeLive` (tile ID param) and `stopYoutubeLive` (tile ID param). Registered in `shared/types.ts` `ShortcutAction` union, `KeyboardShortcutsPanel.tsx` (`ACTION_TYPES`, `defaultActionForType`, tile-ID dropdown in `renderParams`), and `useKeyboardShortcuts.ts` (dispatch `youtube-live-control` custom event). `YouTubeLiveTile` listens for the event and routes to `handleGoLive()` / `yt.stopLive()` accordingly.
+- **`{date}` template:** Already implemented in Phases 3–4 (no new code).
+- **End-to-end test:** Manual — no automated test infrastructure.
+
+### 2026-04-07
+
+**feat(youtube): YouTube Live integration — Phases 0–4 complete**
+
+- Added `docs/youtube-live-integration-spec.md` — full design: OAuth 2.0 (PKCE + localhost redirect), broadcast/stream lifecycle, `SetStreamServiceSettings` adapter additions, `YouTubeLiveTile` tile type, settings schema, phased plan.
+- Added OBS Raw Request panel to Settings (permanent diagnostic node): request name, JSON body, Send, read-only response, Copy Response.
+- **Phase 0:** `GetStreamServiceSettings` payload confirmed via probe; v5 field names verified: `server`, `key`, `bwtest`, `use_auth`.
+- **Phase 1:** `getStreamServiceSettings()` / `setStreamServiceSettings(serviceType, settings)` added to `OBSAdapter` interface, v4 adapter (`GetStreamSettings` / `SetStreamSettings` + `save: true`), v5 adapter (`GetStreamServiceSettings` / `SetStreamServiceSettings`), and `streaming.ts` actions. OBS stream key update confirmed working.
+- **Phase 2:** `YouTubeConfig` type added to `shared/types.ts`; `youtube` field added to `ConfigFileFormat`; `YouTubeAuthService` (PKCE + localhost redirect OAuth); `youtube-oauth-start` / `youtube-oauth-result` IPC bridge extracted to `src/main/YouTubeOAuthServer.ts` + registered from `main/index.ts`; `YouTubeSettingsPanel` (GCP setup instructions, credentials, sign-in/out, default broadcast settings with Allow override checkboxes, OBS connection dropdown). YouTube node added to Settings dialog tree.
+- **Phase 3:** `YouTubeLiveService` (createStream, createBroadcast with `enableAutoStop: false`, bindStream, transitionBroadcast, getStreamKey, checkForExistingBroadcasts, getBroadcastStatus); `useYouTubeLive` hook (phase state machine: idle → checking-existing → creating-broadcast → configuring-obs → starting-stream → live → stopping, 30 s status polling, endExistingBroadcast); `CreateBroadcastDialog` (title/description/privacy/latency with allow-override, `{date}` substitution); `ResumeBroadcastDialog` (table with per-row Resume/End + Create new).
+- **Phase 4:** `YouTubeLiveTile` component (`src/renderer/components/tiles/YouTubeLiveTile.tsx`). `YouTubeLiveTileConfig` registered in `Tiles.tsx` (interface, `isYouTubeLiveTileConfig` guard, union member, render branch). Tile states: not-authenticated (red tint, "Sign in to YouTube" / "Manual Key" in web), idle (green tint, "Go Live"), spinner overlay for all busy phases (checking, preparing, configuring OBS, starting, stopping), live state with red LIVE badge + elapsed timer + viewer count, error state with red border. Web mode: `ManualKeyDialog` (stream key → `setStreamServiceSettings` → `startStreaming`). Electron mode: sign-in via `YouTubeAuthService.startOAuthFlow()` with refresh token persisted to settings. `viewType: 'preview' | 'button'` — button mode renders a compact inline row. Elapsed timer via `setInterval` + `useRef`. `ResumeBroadcastDialog` and `CreateBroadcastDialog` wired in; `autoCreateBroadcast` tile-config flag skips the dialog.
+
 **fix(dev): eliminate blank window race condition on `yarn dev`**
 
 - Replaced the HTTP-poll-then-loadURL approach (which failed because Vite accepts TCP connections before JS compilation is complete, returning `ERR_ABORTED -3`) with a retry-on-failure strategy: `loadURL` is called immediately and `did-fail-load` on the main frame triggers a retry every 500ms for up to 20 attempts.

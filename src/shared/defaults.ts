@@ -16,6 +16,19 @@ export const DEFAULT_SETTINGS = {
   confirmBeforeStopStreaming: false,
   confirmBeforeStartRecording: false,
   confirmBeforeStopRecording: false,
+  confirmBeforeGoLive: false,
+  youtube: {
+    clientId: '',
+    clientSecret: '',
+    refreshToken: undefined,
+    defaultPrivacyStatus: 'unlisted',
+    defaultLatency: 'ultraLow',
+    defaultTitle: '{date} Stream',
+    defaultDescription: '',
+    allowPrivacyOverride: true,
+    allowLatencyOverride: true,
+    obsConnection: 'main',
+  },
   configs: [
     {
       name: 'Default',

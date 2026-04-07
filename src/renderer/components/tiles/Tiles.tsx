@@ -6,6 +6,7 @@ import { RtspStreamTile } from './RtspStreamTile'
 import { SceneButton } from './SceneButton'
 import { SceneItemButton } from './SceneItemButton'
 import { Text } from './Text'
+import { YouTubeLiveTile } from './YouTubeLiveTile'
 
 const validDirections: Record<string, 'column' | 'row'> = {
 	column: 'column',
@@ -131,6 +132,19 @@ export interface RtspStreamTileConfig extends BaseTileConfig {
 	startMuted?: boolean;
 }
 
+export interface YouTubeLiveTileConfig extends BaseTileConfig {
+	/** Discriminator — unique identifier for this tile (used as label when title is not set). */
+	youtubeLive: string;
+	/** Display mode: 'preview' (default) or 'button' (compact row). */
+	viewType?: 'preview' | 'button';
+	/** Skip CreateBroadcastDialog and go live immediately using default settings. */
+	autoCreateBroadcast?: boolean;
+	/** Per-tile title template override (supports {date} token). */
+	defaultTitle?: string;
+	/** Per-tile description override. */
+	defaultDescription?: string;
+}
+
 type TileConfig =
 	| GroupTileConfig
 	| SceneButtonTileConfig
@@ -138,7 +152,8 @@ type TileConfig =
 	| ButtonTileConfig
 	| TextTileConfig
 	| AudioInputTileConfig
-	| RtspStreamTileConfig;
+	| RtspStreamTileConfig
+	| YouTubeLiveTileConfig;
 
 
 // Common props for all tile types
@@ -241,6 +256,17 @@ function isRtspStreamTileConfig(tile: TileConfig): tile is RtspStreamTileConfig 
 	return valid;
 }
 
+function isYouTubeLiveTileConfig(tile: TileConfig): tile is YouTubeLiveTileConfig {
+	const valid =
+		typeof tile === 'object' &&
+		'youtubeLive' in tile &&
+		typeof (tile as any).youtubeLive === 'string';
+	if (valid) {
+		warnExtraProps(tile, ['youtubeLive', 'viewType', 'autoCreateBroadcast', 'defaultTitle', 'defaultDescription', ...COMMON_TILE_PROPS], 'YouTubeLiveTileConfig');
+	}
+	return valid;
+}
+
 interface TilesProps {
 	tiles?: TileConfig[]
 	connection?: string
@@ -339,6 +365,16 @@ export const Tiles = ({
 			return (
 				<RtspStreamTile
 					key={tile.rtspStream}
+					{...inheritableProps}
+					{...tile}
+				/>
+			);
+		}
+
+		if (isYouTubeLiveTileConfig(tile)) {
+			return (
+				<YouTubeLiveTile
+					key={tile.youtubeLive}
 					{...inheritableProps}
 					{...tile}
 				/>

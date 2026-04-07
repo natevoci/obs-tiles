@@ -25,6 +25,10 @@ declare global {
 			offRtspConnecting: (callback: (payload: { streamId: string }) => void) => void
 			onRtspAudioLevel: (callback: (payload: { streamId: string; level: number }) => void) => void
 			offRtspAudioLevel: (callback: (payload: { streamId: string; level: number }) => void) => void
+			// YouTube OAuth (Electron-only)
+			youtubeOAuthStart: () => Promise<{ port: number }>
+			youtubeOpenBrowser: (url: string) => void
+			youtubeOAuthResult: () => Promise<{ code: string | null; error: string | null }>
 		}
 	}
 }

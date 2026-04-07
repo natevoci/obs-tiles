@@ -26,7 +26,7 @@ import { SCENE_PLACEHOLDER_PROGRAM, SCENE_PLACEHOLDER_PREVIEW } from '../tiles/s
 // Types
 // ---------------------------------------------------------------------------
 
-export type TileType = 'group' | 'scene' | 'sceneItem' | 'button' | 'text' | 'audioInput' | 'rtspStream'
+export type TileType = 'group' | 'scene' | 'sceneItem' | 'button' | 'text' | 'audioInput' | 'rtspStream' | 'youtubeLive'
 
 export interface TilePropertiesDialogProps {
 	open: boolean
@@ -57,6 +57,11 @@ const VIEW_TYPES: { value: string; label: string }[] = [
 	{ value: 'checkbox', label: 'Checkbox' },
 ]
 
+const YT_VIEW_TYPES: { value: string; label: string }[] = [
+	{ value: 'preview', label: 'Preview (tile)' },
+	{ value: 'button', label: 'Button (compact row)' },
+]
+
 // ---------------------------------------------------------------------------
 // Helper: detect tile type
 // ---------------------------------------------------------------------------
@@ -70,6 +75,7 @@ function detectTileType(tile: any): TileType {
 	if ('text' in tile) return 'text'
 	if ('audioInput' in tile) return 'audioInput'
 	if ('rtspStream' in tile) return 'rtspStream'
+	if ('youtubeLive' in tile) return 'youtubeLive'
 	return 'button'
 }
 
@@ -446,7 +452,7 @@ function TextForm({ draft, setDraft }: FormProps) {
 				onChange={(e) => setDraft({ ...draft, customText: e.target.value || undefined })}
 				variant="outlined" size="small" fullWidth
 				multiline
-				rows={2}
+				minRows={2}
 			/>
 			<SizeFields draft={draft} setDraft={setDraft} />
 		</FormSection>
@@ -478,6 +484,59 @@ function AudioInputForm({ draft, setDraft }: FormProps) {
 					{VIEW_TYPES.map((vt) => <MenuItem key={vt.value} value={vt.value}>{vt.label}</MenuItem>)}
 				</Select>
 			</FormControl>
+			<TextField
+				label="Title (optional)"
+				value={draft.title ?? ''}
+				onChange={(e) => setDraft({ ...draft, title: e.target.value || undefined })}
+				variant="outlined" size="small" fullWidth
+			/>
+			<SizeFields draft={draft} setDraft={setDraft} />
+		</FormSection>
+	)
+}
+
+function YouTubeLiveForm({ draft, setDraft }: FormProps) {
+	return (
+		<FormSection>
+			<TextField
+				label="Tile ID"
+				value={draft.youtubeLive ?? ''}
+				onChange={(e) => setDraft({ ...draft, youtubeLive: e.target.value })}
+				variant="outlined" size="small" fullWidth
+				helperText="Unique identifier for this tile (used as label when no title is set)"
+			/>
+			<FormControl variant="outlined" size="small" fullWidth>
+				<InputLabel>View Type</InputLabel>
+				<Select label="View Type" value={draft.viewType ?? 'preview'}
+					onChange={(e) => setDraft({ ...draft, viewType: e.target.value === 'preview' ? undefined : e.target.value })}>
+					{YT_VIEW_TYPES.map((vt) => <MenuItem key={vt.value} value={vt.value}>{vt.label}</MenuItem>)}
+				</Select>
+			</FormControl>
+			<FormControlLabel
+				control={
+					<Checkbox
+						checked={draft.autoCreateBroadcast === true}
+						onChange={(e) => setDraft({ ...draft, autoCreateBroadcast: e.target.checked ? true : undefined })}
+					/>
+				}
+				label="Auto-create broadcast (skip dialog, use default settings)"
+			/>
+			<TextField
+				label="Default Title (optional)"
+				value={draft.defaultTitle ?? ''}
+				onChange={(e) => setDraft({ ...draft, defaultTitle: e.target.value || undefined })}
+				variant="outlined" size="small" fullWidth
+				helperText="Supports {date} token. Overrides the global YouTube default title."
+			/>
+			<TextField
+				label="Default Description (optional)"
+				value={draft.defaultDescription ?? ''}
+				onChange={(e) => setDraft({ ...draft, defaultDescription: e.target.value || undefined })}
+				variant="outlined" size="small" fullWidth
+				multiline
+				minRows={2}
+				helperText="Overrides the global YouTube default description."
+			/>
 			<TextField
 				label="Title (optional)"
 				value={draft.title ?? ''}
@@ -552,6 +611,7 @@ const TYPE_LABELS: Record<TileType, string> = {
 	text: 'Text',
 	audioInput: 'Audio Input',
 	rtspStream: 'RTSP Stream',
+	youtubeLive: 'YouTube Live',
 }
 
 // ---------------------------------------------------------------------------
@@ -589,6 +649,7 @@ export const TilePropertiesDialog = ({
 				{tileType === 'text' && <TextForm {...formProps} />}
 				{tileType === 'audioInput' && <AudioInputForm {...formProps} />}
 				{tileType === 'rtspStream' && <RtspStreamForm {...formProps} />}
+				{tileType === 'youtubeLive' && <YouTubeLiveForm {...formProps} />}
 			</DialogContent>
 			<DialogActions>
 				<Button onClick={onClose}>Cancel</Button>
@@ -609,7 +670,8 @@ const TILE_TYPES: { type: TileType; label: string; defaultTile: any }[] = [
 	{ type: 'button',     label: 'Button',            defaultTile: { button: 'toggleStreaming' } },
 	{ type: 'text',       label: 'Text',              defaultTile: { text: 'stats' } },
 	{ type: 'audioInput', label: 'Audio Input',       defaultTile: { audioInput: { inputName: '' } } },
-	{ type: 'rtspStream', label: 'RTSP Stream',       defaultTile: { rtspStream: 'stream', startMuted: true } },
+	{ type: 'rtspStream',    label: 'RTSP Stream',    defaultTile: { rtspStream: 'stream', startMuted: true } },
+	{ type: 'youtubeLive',   label: 'YouTube Live',   defaultTile: { youtubeLive: 'yt-live' } },
 ]
 
 export interface AddTileDialogProps {
@@ -680,6 +742,7 @@ export const AddTileDialog = ({
 						{selectedType === 'text' && <TextForm {...formProps} />}
 						{selectedType === 'audioInput' && <AudioInputForm {...formProps} />}
 						{selectedType === 'rtspStream' && <RtspStreamForm {...formProps} />}
+						{selectedType === 'youtubeLive' && <YouTubeLiveForm {...formProps} />}
 					</>
 				)}
 			</DialogContent>

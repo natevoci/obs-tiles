@@ -5,6 +5,7 @@ import path from 'path'
 import fs from 'fs'
 import { DEFAULT_SETTINGS } from '../shared/defaults'
 import { RtspManager } from './RtspManager'
+import { registerYouTubeOAuthIpc } from './YouTubeOAuthServer'
 import type { RtspStartOptions } from './RtspManager'
 
 const __filename = fileURLToPath(import.meta.url)
@@ -260,3 +261,11 @@ ipcMain.handle('rtsp-stop', async (_event, streamId: string) => {
 ipcMain.handle('rtsp-set-muted', (_event, streamId: string, muted: boolean) => {
   rtspManager.setMuted(streamId, muted)
 })
+
+// ---------------------------------------------------------------------------
+// YouTube OAuth IPC
+// ---------------------------------------------------------------------------
+
+registerYouTubeOAuthIpc()
+
+// ---------------------------------------------------------------------------

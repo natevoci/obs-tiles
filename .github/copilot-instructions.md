@@ -59,6 +59,7 @@ is better than pasting a full code block.
 
 - In renderer component code, do not introduce new inline `style={{ ... }}` blocks for layout/styling.
 - Create or extend local `styled-components` in the file instead.
+- For MUI `TextField` with `multiline`, always use `minRows` (not the deprecated `rows` prop).
 
 ---
 
@@ -88,6 +89,9 @@ The app supports both OBS WebSocket v4.9.1 and v5.x through an **adapter abstrac
 
 ### Shared (`src/shared/`)
 - **defaults.ts**: Default configuration template (connections, tiles layout)
+- **types.ts**: Shared TypeScript types
+
+> **Warning — plain JS constraint:** Files in `src/shared/` are consumed by both Vite/TypeScript (renderer) and the Babel-based test runner / Node runtime as plain JavaScript. Do **not** use TypeScript-only syntax in these files — no `as const`, no type assertions (`x as T`), no `satisfies`, no enums, no type-only imports. Keep all runtime values `.ts`-syntax-free; put type constraints in the type definitions instead.
 
 ### Renderer Core (`src/renderer/`)
 - **websocket-client.ts**: Native WebSocket implementation with SHA256 auth, message handling, Proxy wrapper for undefined property warnings

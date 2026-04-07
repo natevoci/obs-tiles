@@ -80,4 +80,19 @@ contextBridge.exposeInMainWorld('ipcRenderer', {
       rtspAudioLevelListeners.delete(callback)
     }
   },
+
+  // YouTube OAuth (Electron-only)
+  youtubeOAuthStart: (): Promise<{ port: number }> => {
+    return ipcRenderer.invoke('youtube-oauth-start')
+  },
+  youtubeOpenBrowser: (url: string) => {
+    ipcRenderer.send('youtube-open-browser', url)
+  },
+  youtubeOAuthResult: (): Promise<{ code: string | null; error: string | null }> => {
+    return new Promise((resolve) => {
+      ipcRenderer.once('youtube-oauth-result', (_event: any, payload: any) => {
+        resolve(payload)
+      })
+    })
+  },
 })
