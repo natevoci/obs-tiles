@@ -174,8 +174,27 @@ function createWindow() {
   })
 
   if (isDev) {
-    mainWindow.loadURL('http://localhost:5173')
+    const DEV_URL = 'http://localhost:5173'
+    const MAX_RETRIES = 20
+    const RETRY_DELAY_MS = 500
+    let loadAttempts = 0
+
     mainWindow.webContents.openDevTools()
+    mainWindow.webContents.on('did-finish-load', () => console.log('[dev] webContents: did-finish-load'))
+    mainWindow.webContents.on('did-fail-load', (_e, code, desc, failedUrl, isMainFrame) => {
+      console.error(`[dev] webContents: did-fail-load — ${code} ${desc} (${failedUrl})`)
+      if (!isMainFrame) return
+      if (loadAttempts < MAX_RETRIES) {
+        console.log(`[dev] Retrying loadURL in ${RETRY_DELAY_MS}ms (attempt ${loadAttempts + 1}/${MAX_RETRIES})...`)
+        setTimeout(() => mainWindow?.loadURL(DEV_URL), RETRY_DELAY_MS)
+      } else {
+        console.error('[dev] Giving up after max retries.')
+      }
+    })
+
+    console.log(`[dev] Loading ${DEV_URL} (attempt 1)...`)
+    loadAttempts++
+    mainWindow.loadURL(DEV_URL)
   } else {
     mainWindow.loadFile(path.join(__dirname, '../renderer/index.html'))
   }

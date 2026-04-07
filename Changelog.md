@@ -4,6 +4,12 @@
 
 ### 2026-04-07
 
+**fix(dev): eliminate blank window race condition on `yarn dev`**
+
+- Replaced the HTTP-poll-then-loadURL approach (which failed because Vite accepts TCP connections before JS compilation is complete, returning `ERR_ABORTED -3`) with a retry-on-failure strategy: `loadURL` is called immediately and `did-fail-load` on the main frame triggers a retry every 500ms for up to 20 attempts.
+
+### 2026-04-07
+
 **feat(shortcuts): additional keyboard shortcut action types**
 
 - Added 12 new shortcut action types:
