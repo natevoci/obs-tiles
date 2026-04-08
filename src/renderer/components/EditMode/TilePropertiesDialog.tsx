@@ -57,11 +57,6 @@ const VIEW_TYPES: { value: string; label: string }[] = [
 	{ value: 'checkbox', label: 'Checkbox' },
 ]
 
-const YT_VIEW_TYPES: { value: string; label: string }[] = [
-	{ value: 'preview', label: 'Preview (tile)' },
-	{ value: 'button', label: 'Button (compact row)' },
-]
-
 // ---------------------------------------------------------------------------
 // Helper: detect tile type
 // ---------------------------------------------------------------------------
@@ -496,15 +491,28 @@ function AudioInputForm({ draft, setDraft }: FormProps) {
 }
 
 function YouTubeLiveForm({ draft, setDraft }: FormProps) {
+	const sl = draft.statsLines ?? {}
+	const patchSL = (partial: any) => setDraft({ ...draft, statsLines: { ...sl, ...partial } })
+
 	return (
 		<FormSection>
-			<FormControl variant="outlined" size="small" fullWidth>
-				<InputLabel>View Type</InputLabel>
-				<Select label="View Type" value={draft.viewType ?? 'preview'}
-					onChange={(e) => setDraft({ ...draft, viewType: e.target.value === 'preview' ? undefined : e.target.value })}>
-					{YT_VIEW_TYPES.map((vt) => <MenuItem key={vt.value} value={vt.value}>{vt.label}</MenuItem>)}
-				</Select>
-			</FormControl>
+			<Typography variant="caption" color="textSecondary">Stat lines (always visible, blank when not live)</Typography>
+			{([
+				['elapsed', 'Elapsed time'],
+				['viewers', 'Concurrent viewers'],
+			] as [string, string][]).map(([key, label]) => (
+				<FormControlLabel
+					key={key}
+					control={
+						<Checkbox
+							checked={sl[key] === true}
+							onChange={(e) => patchSL({ [key]: e.target.checked ? true : undefined })}
+							size="small"
+						/>
+					}
+					label={label}
+				/>
+			))}
 			<FormControlLabel
 				control={
 					<Checkbox

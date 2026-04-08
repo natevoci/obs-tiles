@@ -110,16 +110,6 @@ const WaitingRow = styled.div`
 	gap: 10px;
 `
 
-const InfoBox = styled.div`
-	background: rgba(144, 202, 249, 0.08);
-	border: 1px solid rgba(144, 202, 249, 0.25);
-	border-radius: 4px;
-	padding: 8px 12px;
-	font-size: 12px;
-	color: rgba(255, 255, 255, 0.85);
-	line-height: 1.5;
-`
-
 const ToggleCredsLink = styled.button`
 	background: none;
 	border: none;
@@ -291,9 +281,6 @@ export const YouTubeSettingsPanel = ({
 		{hasBundledCredentials ? (
 			<Section>
 				<SectionLabel>Authentication</SectionLabel>
-				<InfoBox>
-					obs-tiles includes shared Google credentials — no GCP project required.
-				</InfoBox>
 				<AuthRow>
 					<AuthStatus>
 						{isSignedIn
@@ -322,7 +309,7 @@ export const YouTubeSettingsPanel = ({
 					</Typography>
 				)}
 				<ToggleCredsLink onClick={() => setShowCustomCreds(v => !v)}>
-					{showCustomCreds ? '▲ Hide advanced credentials' : '▼ Use your own Google credentials…'}
+					{showCustomCreds ? '▲ Hide advanced credentials' : '▼ Use your own Google app credentials…'}
 				</ToggleCredsLink>
 				{showCustomCreds && (
 					<>

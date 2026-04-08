@@ -135,8 +135,15 @@ export interface RtspStreamTileConfig extends BaseTileConfig {
 export interface YouTubeLiveTileConfig extends BaseTileConfig {
 	/** Discriminator — presence of this key identifies the tile type. */
 	youtubeLive: true;
-	/** Display mode: 'preview' (default) or 'button' (compact row). */
-	viewType?: 'preview' | 'button';
+	/**
+	 * Which stat lines to show below the button.
+	 * All lines are hidden by default when this property is omitted.
+	 * Set a key to true to show that line (label + value, blank when not live).
+	 */
+	statsLines?: {
+		elapsed?: boolean
+		viewers?: boolean
+	}
 	/** Skip CreateBroadcastDialog and go live immediately using default settings. */
 	autoCreateBroadcast?: boolean;
 	/** Per-tile title template override (supports {date} token). */
@@ -262,7 +269,7 @@ function isYouTubeLiveTileConfig(tile: TileConfig): tile is YouTubeLiveTileConfi
 		'youtubeLive' in tile &&
 		Boolean((tile as any).youtubeLive); // accept true or legacy string values
 	if (valid) {
-		warnExtraProps(tile, ['youtubeLive', 'viewType', 'autoCreateBroadcast', 'defaultTitle', 'defaultDescription', ...COMMON_TILE_PROPS], 'YouTubeLiveTileConfig');
+		warnExtraProps(tile, ['youtubeLive', 'statsLines', 'autoCreateBroadcast', 'defaultTitle', 'defaultDescription', ...COMMON_TILE_PROPS], 'YouTubeLiveTileConfig');
 	}
 	return valid;
 }

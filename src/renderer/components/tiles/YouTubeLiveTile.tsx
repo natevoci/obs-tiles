@@ -12,7 +12,7 @@ import {
 
 import { useObs } from '~/api/obs'
 import { useSettings } from '~/components/Settings/SettingsContext'
-import { TileWrapper, StyledCircularProgress } from './TileWrapper'
+import { StyledCircularProgress } from './TileWrapper'
 import { useYouTubeLiveContext, YouTubeAuthService } from '~/api/youtube'
 import { setStreamServiceSettings, startStreaming } from '~/api/obs/actions/streaming'
 import { CreateBroadcastDialog } from '../youtube/CreateBroadcastDialog'
@@ -71,66 +71,33 @@ function getPhaseVisual(
 // Styled components
 // ============================================================================
 
-interface TileBodyProps {
+interface StyledButtonModeProps {
 	$size: number
-	$tintColor?: string
-	$isError?: boolean
 }
 
-const TileBody = styled.div<TileBodyProps>`
+const StyledButtonMode = styled(Button)<StyledButtonModeProps>`
 	width: ${p => p.$size * 16}px;
-	height: ${p => p.$size * 9}px;
+
+	&.MuiButton-contained.Mui-disabled {
+		background-color: ${p => p.theme.disabledBackground};
+		color: ${p => p.theme.disabledText};
+	}
+`
+
+const StatsRow = styled.div`
 	display: flex;
-	flex-direction: column;
-	align-items: center;
-	justify-content: center;
-	gap: 4px;
-	background: ${p => p.$tintColor ? `${p.$tintColor}33` : 'transparent'};
-	border: ${p => p.$isError ? '2px solid #f44336' : 'none'};
-	border-radius: 4px;
-	overflow: hidden;
-	box-sizing: border-box;
-`
-
-const LiveBadge = styled.div`
-	background: #f44336;
-	color: #fff;
+	justify-content: space-between;
 	font-size: 11px;
-	font-weight: 700;
-	letter-spacing: 0.10em;
-	padding: 2px 8px;
-	border-radius: 3px;
-	text-transform: uppercase;
+	color: rgba(255, 255, 255, 0.6);
+	padding-top: 2px;
 `
 
-const LiveStats = styled.div`
-	font-size: 11px;
-	color: rgba(255, 255, 255, 0.7);
-	text-align: center;
+const StatsLabel = styled.span`
+	opacity: 0.75;
+	margin-right: 6px;
 `
 
-const ErrorMsg = styled.div`
-	font-size: 10px;
-	color: #ef9a9a;
-	text-align: center;
-	padding: 0 8px;
-	max-width: 100%;
-	overflow: hidden;
-	text-overflow: ellipsis;
-	white-space: nowrap;
-`
-
-const ButtonRow = styled.div`
-	display: flex;
-	align-items: center;
-	gap: 8px;
-	padding: 4px 8px;
-`
-
-const ButtonModeStatus = styled.span<{ $color?: string }>`
-	font-size: 12px;
-	color: ${p => p.$color ?? 'inherit'};
-`
+const StatsValue = styled.span``
 
 // ============================================================================
 // ManualKeyDialog — web mode only
@@ -227,19 +194,15 @@ export const YouTubeLiveTile = ({
 	autoCreateBroadcast = false,
 	defaultTitle,
 	defaultDescription,
-	title,
 	tileSize = '10',
-	fontSize,
-	viewType = 'preview',
+	statsLines,
 }: YouTubeLiveTileConfig) => {
 	const tileSizeInt = parseInt(String(tileSize))
-	const labelFontSize = parseInt(String(fontSize ?? tileSize))
-	const label = title ?? 'YouTube Live'
 
 	const { settings, saveFullSettings } = useSettings()
 	const { yt, obs } = useYouTubeLiveContext()
 
-	const { phase, isAuthenticated, concurrentViewers, error, existingBroadcasts } = yt
+	const { phase, isAuthenticated, concurrentViewers, existingBroadcasts } = yt
 
 	// ── Elapsed time while live ──────────────────────────────────────────────
 	const liveStartRef = React.useRef<number | null>(null)
@@ -348,7 +311,7 @@ export const YouTubeLiveTile = ({
 		return () => window.removeEventListener('youtube-live-control', handler)
 	}, [phase, handleGoLive, yt])
 	// ── Visual state ─────────────────────────────────────────────────────────
-	const { label: phaseLabel, tintColor, isError } = getPhaseVisual(phase, isAuthenticated, IS_ELECTRON)
+	const { label: phaseLabel, tintColor } = getPhaseVisual(phase, isAuthenticated, IS_ELECTRON)
 	const isBusy = signingIn || ['checking-existing', 'creating-broadcast', 'configuring-obs', 'starting-stream', 'stopping'].includes(phase)
 
 	const dialogs = (
@@ -397,63 +360,40 @@ export const YouTubeLiveTile = ({
 		</>
 	)
 
-	// ── Button view mode ──────────────────────────────────────────────────────
-	if (viewType === 'button') {
-		const buttonLabel = phase === 'live' ? 'Stop' : phaseLabel
-		return (
-			<>
-				<ButtonRow>
-					<ButtonModeStatus $color={tintColor}>{label}</ButtonModeStatus>
-					<Button
-						variant="outlined"
-						size="small"
-						disabled={isBusy}
-						onClick={handleClick}
-						style={tintColor ? { color: tintColor, borderColor: tintColor } : undefined}
-					>
-						{isBusy
-							? <StyledCircularProgress size={14} />
-							: buttonLabel
-						}
-					</Button>
-				</ButtonRow>
-				{dialogs}
-			</>
-		)
-	}
+	// ── Render ──────────────────────────────────────────────────────────────
+	const buttonLabel = phase === 'live' ? 'Stop' : phaseLabel
+	const buttonColor: 'primary' | 'secondary' | 'default' =
+		tintColor === '#f44336' || tintColor === '#b71c1c' ? 'secondary'
+		: tintColor === '#1b5e20' ? 'primary'
+		: 'default'
 
-	// ── Preview view mode (default) ───────────────────────────────────────────
-	const overlay = isBusy
-		? <StyledCircularProgress size={tileSizeInt * 3} />
-		: null
-
-	const content = (
-		<TileBody $size={tileSizeInt} $tintColor={tintColor} $isError={isError}>
-			{phase === 'live' ? (
-				<>
-					<LiveBadge>LIVE</LiveBadge>
-					<LiveStats>
-						{formatElapsed(elapsedSeconds)}
-						{concurrentViewers != null ? ` · ${concurrentViewers} watching` : ''}
-					</LiveStats>
-				</>
-			) : isError && error ? (
-				<ErrorMsg title={error}>{error}</ErrorMsg>
-			) : null}
-		</TileBody>
-	)
+	const statsContent = statsLines
+		? ([
+			[statsLines.elapsed,  'Elapsed', phase === 'live' ? formatElapsed(elapsedSeconds) : ''],
+			[statsLines.viewers,  'Viewers', phase === 'live' && concurrentViewers != null ? String(concurrentViewers) : ''],
+		  ] as [boolean | undefined, string, string][]).filter(([enabled]) => enabled)
+		: []
 
 	return (
 		<>
-			<TileWrapper
-				size={tileSizeInt}
-				fontSize={labelFontSize}
-				label={isBusy ? phaseLabel : label}
-				overlay={overlay}
+			<StyledButtonMode
+				$size={tileSizeInt}
+				variant="contained"
+				color={buttonColor}
+				disabled={isBusy}
 				onClick={handleClick}
 			>
-				{content}
-			</TileWrapper>
+				{isBusy
+					? <StyledCircularProgress size={14} />
+					: buttonLabel
+				}
+			</StyledButtonMode>
+			{statsContent.map(([, label, value]) => (
+				<StatsRow key={label}>
+					<StatsLabel>{label}</StatsLabel>
+					<StatsValue>{value}</StatsValue>
+				</StatsRow>
+			))}
 			{dialogs}
 		</>
 	)

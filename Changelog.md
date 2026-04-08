@@ -2,6 +2,17 @@
 
 ## Feature History
 
+### 2026-04-10
+
+**refactor(youtube): visual style overhaul — button-only tile with per-stat lines**
+
+- Removed `viewType` prop from `YouTubeLiveTileConfig` and all related code. The `'preview'` tile mode is gone; `YouTubeLiveTile` now always renders as a full-width `variant="contained"` MUI button.
+- Button styling matches the streaming/recording buttons in `Button.tsx`: `StyledButtonMode` sets `width: $size * 16px` and uses MUI `color` prop (`'primary'` for green/Go Live, `'secondary'` for red/live or error) so MUI handles white contrast text automatically. `Mui-disabled` state uses `theme.disabledBackground` / `theme.disabledText`.
+- Tile label removed from the button — only the action label (e.g. "Go Live", "Stop", "Starting…") is shown.
+- Removed `TileWrapper`, `TileBody`, `LiveBadge`, `LiveStats`, and `ErrorMsg` styled components; unused `error` / `isError` variables cleaned up.
+- Added `statsLines?: { elapsed?: boolean; viewers?: boolean }` config option (matching `TextTileConfig.statsLines` pattern). Each enabled stat renders as a `StatsRow` (label + value) below the button, always visible — value is blank when not live.
+- `TilePropertiesDialog` `YouTubeLiveForm`: removed View Type select and `YT_VIEW_TYPES` constant; added per-line checkboxes ("Elapsed time", "Concurrent viewers") using the same opt-in pattern as `TextForm`.
+
 ### 2026-04-09
 
 **feat(youtube): bundled OAuth credentials + simplified sign-in**
