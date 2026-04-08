@@ -2,6 +2,27 @@
 
 ## Feature History
 
+### 2026-04-09
+
+**feat(youtube): bundled OAuth credentials + simplified sign-in**
+
+- Added `src/renderer/api/youtube/bundledCredentials.ts` — reads `VITE_YOUTUBE_CLIENT_ID` / `VITE_YOUTUBE_CLIENT_SECRET` env vars injected at build time. Exports `hasBundledCredentials` boolean flag.
+- `useYouTubeLive`: auth service now falls back to bundled credentials when the user has not supplied their own `clientId` / `clientSecret`.
+- `YouTubeSettingsPanel`: dual-mode UI —
+  - **With bundled credentials** (production builds): shows an info box "obs-tiles includes shared Google credentials", sign-in button enabled with no user setup required. A collapsible "Use your own Google credentials…" section exposes the GCP instructions and credential fields for power users who want their own quota.
+  - **Without bundled credentials** (local dev builds without `.env.local`): preserves the existing full GCP setup flow.
+- Added `.env.local.example` (committed) as a template for local dev builds.
+- Added `.env.local` to `.gitignore` to prevent accidental credential commits.
+- `src/renderer/vite.config.ts` and `electron.vite.config.ts`: added explicit `envDir` pointing to the project root so both `yarn web` and `yarn dev` find the same `.env.local`.
+- Both GitHub Actions workflows (Electron package, web deploy) now inject `VITE_YOUTUBE_CLIENT_ID` and `VITE_YOUTUBE_CLIENT_SECRET` from repository secrets.
+- `src/vite-env.d.ts`: declared `ImportMetaEnv` interface with the two new `VITE_` variables.
+
+**fix(youtube-settings): formatted GCP instructions with clickable link**
+
+- `YouTubeSettingsPanel`: replaced the monospace `pre-wrap` instructions text block with a proper `<ol>` list via a `GcpInstructions` component.
+- `console.cloud.google.com` is now a clickable link — opens via `shell.openExternal` in Electron (reusing the existing `youtubeOpenBrowser` IPC channel) or `window.open` in web mode.
+- Added `InstructionsList` and `InstructionsLink` styled components; `InstructionsBox` no longer uses `font-family: monospace` or `white-space: pre-wrap`.
+
 ### 2026-04-08
 
 **fix(edit-mode): render YouTubeLiveTile in inline edit mode**

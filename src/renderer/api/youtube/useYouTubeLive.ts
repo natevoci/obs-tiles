@@ -15,6 +15,7 @@ import type { LiveBroadcastInfo, LiveStreamInfo, CreateBroadcastOptions } from '
 import type { YouTubeConfig } from '../../../shared/types'
 import type { ConnectionPublic } from '../obs/types'
 import { setStreamServiceSettings, startStreaming, stopStreaming } from '../obs/actions/streaming'
+import { BUNDLED_CLIENT_ID, BUNDLED_CLIENT_SECRET } from './bundledCredentials'
 
 // Re-export for convenience
 export type { LiveBroadcastInfo, LiveStreamInfo, CreateBroadcastOptions }
@@ -71,15 +72,17 @@ export function useYouTubeLive(
 
   // Keep auth service in sync with credentials
   React.useEffect(() => {
-    if (!config?.clientId || !config?.clientSecret) {
+    const clientId = config?.clientId || BUNDLED_CLIENT_ID
+    const clientSecret = config?.clientSecret || BUNDLED_CLIENT_SECRET
+    if (!clientId || !clientSecret) {
       authServiceRef.current = null
       setState(prev => ({ ...prev, isAuthenticated: false }))
       return
     }
     authServiceRef.current = new YouTubeAuthService(
-      config.clientId,
-      config.clientSecret,
-      config.refreshToken,
+      clientId,
+      clientSecret,
+      config?.refreshToken,
     )
     setState(prev => ({ ...prev, isAuthenticated: authServiceRef.current!.isAuthenticated }))
   }, [config?.clientId, config?.clientSecret, config?.refreshToken])

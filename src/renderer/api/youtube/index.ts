@@ -12,3 +12,5 @@ export { useYouTubeLive } from './useYouTubeLive'
 export type { YouTubeLiveHook, YouTubeLiveState, YouTubeLivePhase } from './useYouTubeLive'
 
 export { YouTubeLiveProvider, useYouTubeLiveContext } from './YouTubeLiveProvider'
+
+export { BUNDLED_CLIENT_ID, BUNDLED_CLIENT_SECRET, hasBundledCredentials } from './bundledCredentials'

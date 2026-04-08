@@ -2,12 +2,14 @@ import { defineConfig } from 'vite'
 import react from '@vitejs/plugin-react'
 import tsconfigPaths from 'vite-tsconfig-paths'
 import { fileURLToPath } from 'url'
-import { dirname } from 'path'
+import { dirname, resolve } from 'path'
 
 const __filename = fileURLToPath(import.meta.url)
 const __dirname = dirname(__filename)
 
 export default defineConfig({
+	// Load .env.local from the project root (two levels up from src/renderer/)
+	envDir: resolve(__dirname, '../..'),
 	plugins: [
 		react({ include: '**/*.{ts,tsx,js,jsx}' }),
 		tsconfigPaths(),

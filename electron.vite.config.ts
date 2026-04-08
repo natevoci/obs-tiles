@@ -31,6 +31,9 @@ export default defineConfig({
   },
   renderer: {
     root: 'src/renderer',
+    // Load .env.local from the project root (absolute path required — relative paths
+    // are resolved against the renderer root, not the config file location).
+    envDir: __dirname,
     build: {
       outDir: path.resolve(__dirname, 'dist/renderer')
     },

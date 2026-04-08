@@ -18,6 +18,7 @@ import {
 } from '@material-ui/core'
 
 import { YouTubeAuthService } from '../../api/youtube'
+import { BUNDLED_CLIENT_ID, BUNDLED_CLIENT_SECRET, hasBundledCredentials } from '../../api/youtube/bundledCredentials'
 import type { YouTubeConfig } from '../../../shared/types'
 
 // ---------------------------------------------------------------------------
@@ -54,8 +55,21 @@ const InstructionsBox = styled.div`
 	padding: 12px 14px;
 	font-size: 12px;
 	line-height: 1.65;
-	white-space: pre-wrap;
-	font-family: monospace;
+`
+
+const InstructionsList = styled.ol`
+	margin: 8px 0 0 0;
+	padding-left: 20px;
+	display: flex;
+	flex-direction: column;
+	gap: 6px;
+`
+
+const InstructionsLink = styled.a`
+	color: #90caf9;
+	text-decoration: underline;
+	cursor: pointer;
+	&:hover { color: #bbdefb; }
 `
 
 const WarnBox = styled.div`
@@ -94,6 +108,29 @@ const WaitingRow = styled.div`
 	display: flex;
 	align-items: center;
 	gap: 10px;
+`
+
+const InfoBox = styled.div`
+	background: rgba(144, 202, 249, 0.08);
+	border: 1px solid rgba(144, 202, 249, 0.25);
+	border-radius: 4px;
+	padding: 8px 12px;
+	font-size: 12px;
+	color: rgba(255, 255, 255, 0.85);
+	line-height: 1.5;
+`
+
+const ToggleCredsLink = styled.button`
+	background: none;
+	border: none;
+	padding: 0;
+	cursor: pointer;
+	font-size: 12px;
+	color: #90caf9;
+	text-decoration: underline;
+	opacity: 0.8;
+	text-align: left;
+	&:hover { opacity: 1; }
 `
 
 // ---------------------------------------------------------------------------
@@ -144,21 +181,33 @@ const YouTubeAuthDialog = ({ open, waiting, error, onOpenBrowser, onCancel }: Au
 )
 
 // ---------------------------------------------------------------------------
-// GCP instructions text
+// GCP instructions
 // ---------------------------------------------------------------------------
 
-const GCP_INSTRUCTIONS = `To use YouTube Live integration you need a Google Cloud Project
-with the YouTube Data API v3 enabled.
+const GCP_CONSOLE_URL = 'https://console.cloud.google.com'
 
-Steps:
- 1. Go to console.cloud.google.com → New project
- 2. APIs & Services → Enable APIs → "YouTube Data API v3"
- 3. APIs & Services → Credentials → + Create Credentials
-    → OAuth client ID → Application type: Desktop app
- 4. Copy the Client ID and Client Secret below
- 5. APIs & Services → OAuth consent screen
-    → Publishing status: set to "In production"
-    (required to avoid refresh tokens expiring after 7 days)`
+const GcpInstructions = () => {
+	const openLink = (e: React.MouseEvent) => {
+		e.preventDefault()
+		if (window.ipcRenderer) {
+			window.ipcRenderer.youtubeOpenBrowser(GCP_CONSOLE_URL)
+		} else {
+			window.open(GCP_CONSOLE_URL, '_blank', 'noopener,noreferrer')
+		}
+	}
+	return (
+		<InstructionsBox>
+			<div>To use YouTube Live integration you need a Google Cloud Project with the YouTube Data API v3 enabled.</div>
+			<InstructionsList>
+				<li>Go to <InstructionsLink href={GCP_CONSOLE_URL} onClick={openLink}>console.cloud.google.com</InstructionsLink> → New project</li>
+				<li>APIs &amp; Services → Enable APIs → <em>YouTube Data API v3</em></li>
+				<li>APIs &amp; Services → Credentials → + Create Credentials → OAuth client ID → Application type: <em>Desktop app</em></li>
+				<li>Copy the Client ID and Client Secret below</li>
+				<li>APIs &amp; Services → OAuth consent screen → Publishing status: set to <em>In production</em> (required to avoid refresh tokens expiring after 7 days)</li>
+			</InstructionsList>
+		</InstructionsBox>
+	)
+}
 
 // ---------------------------------------------------------------------------
 // YouTubeSettingsPanel
@@ -191,6 +240,10 @@ export const YouTubeSettingsPanel = ({
 	const [authWaiting, setAuthWaiting] = React.useState(false)
 	const [authError, setAuthError] = React.useState<string | null>(null)
 	const cancelledRef = React.useRef(false)
+	// Start expanded if user already has custom credentials stored, or if no bundled creds
+	const [showCustomCreds, setShowCustomCreds] = React.useState(
+		() => !hasBundledCredentials || Boolean(value.clientId || value.clientSecret)
+	)
 
 	const handleSignIn = () => {
 		cancelledRef.current = false
@@ -203,7 +256,9 @@ export const YouTubeSettingsPanel = ({
 		setAuthWaiting(true)
 		setAuthError(null)
 		try {
-			const authService = new YouTubeAuthService(value.clientId, value.clientSecret)
+			const clientId = value.clientId || BUNDLED_CLIENT_ID
+			const clientSecret = value.clientSecret || BUNDLED_CLIENT_SECRET
+			const authService = new YouTubeAuthService(clientId, clientSecret)
 			const refreshToken = await authService.startOAuthFlow()
 			if (!cancelledRef.current) {
 				setAuthDialogOpen(false)
@@ -232,49 +287,18 @@ export const YouTubeSettingsPanel = ({
 
 	return (
 		<PanelRoot>
-			{/* GCP Setup Instructions */}
+		{/* Authentication — switches layout based on whether bundled credentials are available */}
+		{hasBundledCredentials ? (
 			<Section>
-				<SectionLabel>Google Cloud Project setup</SectionLabel>
-				<InstructionsBox>{GCP_INSTRUCTIONS}</InstructionsBox>
-				{!isSignedIn && (
-					<WarnBox>
-						⚠ Make sure to set the OAuth consent screen to "In production" before signing in.
-						Refresh tokens for apps in testing mode expire after 7 days.
-					</WarnBox>
-				)}
-			</Section>
-
-			{/* OAuth Credentials */}
-			<Section>
-				<SectionLabel>OAuth Credentials</SectionLabel>
-				<TextField
-					label="Client ID"
-					value={value.clientId}
-					onChange={(e) => onChange({ ...value, clientId: e.target.value })}
-					variant="outlined"
-					size="small"
-					fullWidth
-					disabled={isSignedIn}
-					helperText={isSignedIn ? 'Sign out to change credentials' : undefined}
-				/>
-				<TextField
-					label="Client Secret"
-					value={value.clientSecret}
-					onChange={(e) => onChange({ ...value, clientSecret: e.target.value })}
-					variant="outlined"
-					size="small"
-					fullWidth
-					type="password"
-					disabled={isSignedIn}
-				/>
-			</Section>
-
-			{/* Authentication Status */}
-			<Section>
-				<SectionLabel>Authentication Status</SectionLabel>
+				<SectionLabel>Authentication</SectionLabel>
+				<InfoBox>
+					obs-tiles includes shared Google credentials — no GCP project required.
+				</InfoBox>
 				<AuthRow>
 					<AuthStatus>
-						{isSignedIn ? 'Signed in (auth token stored)' : 'Not signed in'}
+						{isSignedIn
+							? `Signed in${value.clientId ? ' (using your own credentials)' : ' (using shared credentials)'}`
+							: 'Not signed in'}
 					</AuthStatus>
 					{!isSignedIn ? (
 						<Button
@@ -282,7 +306,7 @@ export const YouTubeSettingsPanel = ({
 							color="primary"
 							size="small"
 							onClick={handleSignIn}
-							disabled={!isElectron || !value.clientId || !value.clientSecret}
+							disabled={!isElectron}
 						>
 							Sign in to YouTube
 						</Button>
@@ -297,7 +321,111 @@ export const YouTubeSettingsPanel = ({
 						OAuth sign-in is only available in the Electron desktop app.
 					</Typography>
 				)}
+				<ToggleCredsLink onClick={() => setShowCustomCreds(v => !v)}>
+					{showCustomCreds ? '▲ Hide advanced credentials' : '▼ Use your own Google credentials…'}
+				</ToggleCredsLink>
+				{showCustomCreds && (
+					<>
+						<GcpInstructions />
+						{!isSignedIn && (
+							<WarnBox>
+								⚠ Make sure to set the OAuth consent screen to "In production" before signing in.
+								Refresh tokens for apps in testing mode expire after 7 days.
+							</WarnBox>
+						)}
+						<TextField
+							label="Client ID"
+							value={value.clientId}
+							onChange={(e) => onChange({ ...value, clientId: e.target.value })}
+							variant="outlined"
+							size="small"
+							fullWidth
+							disabled={isSignedIn}
+							helperText={isSignedIn ? 'Sign out to change credentials' : 'Leave blank to use shared credentials'}
+						/>
+						<TextField
+							label="Client Secret"
+							value={value.clientSecret}
+							onChange={(e) => onChange({ ...value, clientSecret: e.target.value })}
+							variant="outlined"
+							size="small"
+							fullWidth
+							type="password"
+							disabled={isSignedIn}
+						/>
+					</>
+				)}
 			</Section>
+		) : (
+			<>
+				{/* GCP Setup Instructions */}
+				<Section>
+					<SectionLabel>Google Cloud Project setup</SectionLabel>
+					<GcpInstructions />
+					{!isSignedIn && (
+						<WarnBox>
+							⚠ Make sure to set the OAuth consent screen to "In production" before signing in.
+							Refresh tokens for apps in testing mode expire after 7 days.
+						</WarnBox>
+					)}
+				</Section>
+
+				{/* OAuth Credentials */}
+				<Section>
+					<SectionLabel>OAuth Credentials</SectionLabel>
+					<TextField
+						label="Client ID"
+						value={value.clientId}
+						onChange={(e) => onChange({ ...value, clientId: e.target.value })}
+						variant="outlined"
+						size="small"
+						fullWidth
+						disabled={isSignedIn}
+						helperText={isSignedIn ? 'Sign out to change credentials' : undefined}
+					/>
+					<TextField
+						label="Client Secret"
+						value={value.clientSecret}
+						onChange={(e) => onChange({ ...value, clientSecret: e.target.value })}
+						variant="outlined"
+						size="small"
+						fullWidth
+						type="password"
+						disabled={isSignedIn}
+					/>
+				</Section>
+
+				{/* Authentication Status */}
+				<Section>
+					<SectionLabel>Authentication Status</SectionLabel>
+					<AuthRow>
+						<AuthStatus>
+							{isSignedIn ? 'Signed in (auth token stored)' : 'Not signed in'}
+						</AuthStatus>
+						{!isSignedIn ? (
+							<Button
+								variant="contained"
+								color="primary"
+								size="small"
+								onClick={handleSignIn}
+								disabled={!isElectron || !value.clientId || !value.clientSecret}
+							>
+								Sign in to YouTube
+							</Button>
+						) : (
+							<Button variant="outlined" size="small" onClick={handleSignOut}>
+								Sign out
+							</Button>
+						)}
+					</AuthRow>
+					{!isElectron && (
+						<Typography variant="caption" style={{ opacity: 0.6 }}>
+							OAuth sign-in is only available in the Electron desktop app.
+						</Typography>
+					)}
+				</Section>
+			</>
+		)}
 
 			{/* Default Broadcast Settings */}
 			<Section>

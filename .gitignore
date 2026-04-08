@@ -8,3 +8,4 @@
 /data
 /settings.json
 backups/config.json
+.env.local
