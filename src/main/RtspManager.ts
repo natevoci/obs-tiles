@@ -1,5 +1,5 @@
 import path from 'path'
-import { spawn, ChildProcess } from 'child_process'
+import { spawn, spawnSync, ChildProcess } from 'child_process'
 import net from 'net'
 import { JpegFrameParser } from './JpegFrameParser'
 
@@ -17,6 +17,7 @@ interface RtspStreamEntry {
   audioServer: net.Server
   audioSocket: net.Socket | null
   speaker: any | null
+  ffmpegBin: string
   muted: boolean
   webContents: Electron.WebContents
   stopped: boolean                 // set true when explicitly stopped; halts reconnect loop
@@ -95,7 +96,7 @@ export class RtspManager {
     const { options } = entry
     const sanitizedId = options.streamId.replace(/[^a-zA-Z0-9-]/g, '-')
     const pipeName = `\\\\.\\pipe\\rtsp-audio-${sanitizedId}`
-    const ffmpegBin = this.resolveFfmpegPath(options.ffmpegPath)
+    const ffmpegBin = entry.ffmpegBin
     const args = this.buildFfmpegArgs(options, pipeName)
 
     console.log(`[RtspManager] Spawning ffmpeg for '${options.streamId}' -> ${options.streamUrl}`)
@@ -174,6 +175,18 @@ export class RtspManager {
   async start(options: RtspStartOptions, webContents: Electron.WebContents): Promise<void> {
     if (this.streams.has(options.streamId)) {
       await this.stop(options.streamId)
+    }
+
+    const ffmpegResolution = this.resolveFfmpegPath(options.ffmpegPath)
+    if (!ffmpegResolution.ffmpegBin) {
+      console.error(`[RtspManager] ${ffmpegResolution.error}`)
+      if (!webContents.isDestroyed()) {
+        webContents.send('rtsp-error', {
+          streamId: options.streamId,
+          message: ffmpegResolution.error,
+        })
+      }
+      return
     }
 
     this.subscribeWebContents(webContents)
@@ -265,6 +278,7 @@ export class RtspManager {
       audioServer,
       audioSocket: null,
       speaker: null,
+      ffmpegBin: ffmpegResolution.ffmpegBin,
       muted: options.muted,
       webContents,
       stopped: false,
@@ -311,12 +325,36 @@ export class RtspManager {
     try { entry.audioServer.close() } catch {}
   }
 
-  private resolveFfmpegPath(configuredPath: string): string {
+  private resolveFfmpegPath(configuredPath: string): { ffmpegBin: string | null; error: string | null } {
     const trimmed = configuredPath?.trim()
     if (trimmed) {
-      return path.join(trimmed, 'ffmpeg.exe')
+      const configuredBinary = path.join(trimmed, 'ffmpeg.exe')
+      if (this.isExecutableAvailable(configuredBinary)) {
+        return { ffmpegBin: configuredBinary, error: null }
+      }
+
+      return {
+        ffmpegBin: null,
+        error: `ffmpeg.exe was not found at '${configuredBinary}'. Update the ffmpeg path in settings, or install ffmpeg with "winget install ffmpeg" and restart obs-tiles.`,
+      }
     }
-    return 'ffmpeg' // system PATH fallback
+
+    if (this.isExecutableAvailable('ffmpeg')) {
+      return { ffmpegBin: 'ffmpeg', error: null }
+    }
+
+    return {
+      ffmpegBin: null,
+      error: 'ffmpeg was not found on PATH. Configure an ffmpeg path in settings, or run "winget install ffmpeg" and restart obs-tiles.',
+    }
+  }
+
+  private isExecutableAvailable(command: string): boolean {
+    const probe = spawnSync(command, ['-version'], {
+      stdio: 'ignore',
+      windowsHide: true,
+    })
+    return !probe.error && probe.status === 0
   }
 
   private buildFfmpegArgs(options: RtspStartOptions, pipeName: string): string[] {

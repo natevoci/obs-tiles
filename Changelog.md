@@ -4,6 +4,12 @@
 
 ### 2026-05-30
 
+**fix(rtsp): validate ffmpeg availability before stream startup**
+
+- `RtspManager` now validates the ffmpeg binary before creating the RTSP audio pipe or starting reconnect logic.
+- When no explicit ffmpeg path is configured, startup now verifies `ffmpeg` is actually available on system `PATH`.
+- If ffmpeg is missing, RTSP startup aborts immediately and emits a clear `rtsp-error` message telling the user to configure the ffmpeg path or run `winget install ffmpeg` and restart obs-tiles.
+
 **fix(ci): pin Python 3.11 for Electron packaging**
 
 - The Electron packaging workflow now installs Python 3.11 and exports it to `node-gyp` so native module rebuilds do not fail on GitHub Actions images that default to Python 3.12+.
