@@ -1997,7 +1997,7 @@ var Qd = m$3({}, ud, { key: function(a) {
   return "keydown" === a.type || "keyup" === a.type ? a.keyCode : 0;
 }, which: function(a) {
   return "keypress" === a.type ? od(a) : "keydown" === a.type || "keyup" === a.type ? a.keyCode : 0;
-} }), Rd = rd(Qd), Sd = m$3({}, Ad, { pointerId: 0, width: 0, height: 0, pressure: 0, tangentialPressure: 0, tiltX: 0, tiltY: 0, twist: 0, pointerType: 0, isPrimary: 0 }), Td = rd(Sd), Ud = m$3({}, ud, { touches: 0, targetTouches: 0, changedTouches: 0, altKey: 0, metaKey: 0, ctrlKey: 0, shiftKey: 0, getModifierState: zd }), Vd = rd(Ud), Wd = m$3({}, sd, { propertyName: 0, elapsedTime: 0, pseudoElement: 0 }), Xd = rd(Wd), Yd = m$3({}, Ad, {
+} }), Rd = rd(Qd), Sd = m$3({}, Ad, { pointerId: 0, width: 0, height: 0, pressure: 0, tangentialPressure: 0, tiltX: 0, tiltY: 0, twist: 0, pointerType: 0, isPrimary: 0 }), Td$1 = rd(Sd), Ud = m$3({}, ud, { touches: 0, targetTouches: 0, changedTouches: 0, altKey: 0, metaKey: 0, ctrlKey: 0, shiftKey: 0, getModifierState: zd }), Vd = rd(Ud), Wd = m$3({}, sd, { propertyName: 0, elapsedTime: 0, pseudoElement: 0 }), Xd = rd(Wd), Yd = m$3({}, Ad, {
   deltaX: function(a) {
     return "deltaX" in a ? a.deltaX : "wheelDeltaX" in a ? -a.wheelDeltaX : 0;
   },
@@ -2381,7 +2381,7 @@ function jd(a, b2, c2, d2, e2) {
           case "pointerout":
           case "pointerover":
           case "pointerup":
-            k3 = Td;
+            k3 = Td$1;
         }
         var w2 = 0 !== (b2 & 4), z2 = !w2 && "scroll" === a, u2 = w2 ? null !== h3 ? h3 + "Capture" : null : h3;
         w2 = [];
@@ -2410,7 +2410,7 @@ function jd(a, b2, c2, d2, e2) {
             v2 = "onMouseLeave";
             u2 = "onMouseEnter";
             t2 = "mouse";
-            if ("pointerout" === a || "pointerover" === a) w2 = Td, v2 = "onPointerLeave", u2 = "onPointerEnter", t2 = "pointer";
+            if ("pointerout" === a || "pointerover" === a) w2 = Td$1, v2 = "onPointerLeave", u2 = "onPointerEnter", t2 = "pointer";
             z2 = null == k3 ? h3 : ue(k3);
             q2 = null == x2 ? h3 : ue(x2);
             h3 = new w2(v2, t2 + "leave", k3, c2, e3);
@@ -3600,7 +3600,7 @@ function Sh(a) {
   a = { current: a };
   return b2.memoizedState = a;
 }
-function Th() {
+function Th$1() {
   return Ih().memoizedState;
 }
 function Uh(a, b2, c2, d2) {
@@ -3761,7 +3761,7 @@ var Gh = { readContext: vg, useCallback: Ah, useContext: Ah, useEffect: Ah, useI
   b2 = "r:" + (tf++).toString(36);
   Qh(b2);
   return b2;
-}, unstable_isNewReconciler: false }, Eh = { readContext: vg, useCallback: bi, useContext: vg, useEffect: Xh, useImperativeHandle: $h, useLayoutEffect: Yh, useMemo: ci, useReducer: Kh, useRef: Th, useState: function() {
+}, unstable_isNewReconciler: false }, Eh = { readContext: vg, useCallback: bi, useContext: vg, useEffect: Xh, useImperativeHandle: $h, useLayoutEffect: Yh, useMemo: ci, useReducer: Kh, useRef: Th$1, useState: function() {
   return Kh(Jh);
 }, useDebugValue: ai, useDeferredValue: function(a) {
   var b2 = Kh(Jh), c2 = b2[0], d2 = b2[1];
@@ -3778,12 +3778,12 @@ var Gh = { readContext: vg, useCallback: Ah, useContext: Ah, useEffect: Ah, useI
 }, useTransition: function() {
   var a = Kh(Jh)[0];
   return [
-    Th().current,
+    Th$1().current,
     a
   ];
 }, useMutableSource: Ph, useOpaqueIdentifier: function() {
   return Kh(Jh)[0];
-}, unstable_isNewReconciler: false }, Fh = { readContext: vg, useCallback: bi, useContext: vg, useEffect: Xh, useImperativeHandle: $h, useLayoutEffect: Yh, useMemo: ci, useReducer: Lh, useRef: Th, useState: function() {
+}, unstable_isNewReconciler: false }, Fh = { readContext: vg, useCallback: bi, useContext: vg, useEffect: Xh, useImperativeHandle: $h, useLayoutEffect: Yh, useMemo: ci, useReducer: Lh, useRef: Th$1, useState: function() {
   return Lh(Jh);
 }, useDebugValue: ai, useDeferredValue: function(a) {
   var b2 = Lh(Jh), c2 = b2[0], d2 = b2[1];
@@ -3800,7 +3800,7 @@ var Gh = { readContext: vg, useCallback: Ah, useContext: Ah, useEffect: Ah, useI
 }, useTransition: function() {
   var a = Lh(Jh)[0];
   return [
-    Th().current,
+    Th$1().current,
     a
   ];
 }, useMutableSource: Ph, useOpaqueIdentifier: function() {
@@ -19729,6 +19729,1315 @@ const useForceUpdate = () => {
   );
   return fn;
 };
+function stylis_min(W2) {
+  function M2(d2, c2, e2, h2, a) {
+    for (var m2 = 0, b2 = 0, v2 = 0, n2 = 0, q2, g2, x2 = 0, K2 = 0, k2, u2 = k2 = q2 = 0, l2 = 0, r2 = 0, I2 = 0, t2 = 0, B3 = e2.length, J2 = B3 - 1, y2, f2 = "", p2 = "", F3 = "", G3 = "", C2; l2 < B3; ) {
+      g2 = e2.charCodeAt(l2);
+      l2 === J2 && 0 !== b2 + n2 + v2 + m2 && (0 !== b2 && (g2 = 47 === b2 ? 10 : 47), n2 = v2 = m2 = 0, B3++, J2++);
+      if (0 === b2 + n2 + v2 + m2) {
+        if (l2 === J2 && (0 < r2 && (f2 = f2.replace(N2, "")), 0 < f2.trim().length)) {
+          switch (g2) {
+            case 32:
+            case 9:
+            case 59:
+            case 13:
+            case 10:
+              break;
+            default:
+              f2 += e2.charAt(l2);
+          }
+          g2 = 59;
+        }
+        switch (g2) {
+          case 123:
+            f2 = f2.trim();
+            q2 = f2.charCodeAt(0);
+            k2 = 1;
+            for (t2 = ++l2; l2 < B3; ) {
+              switch (g2 = e2.charCodeAt(l2)) {
+                case 123:
+                  k2++;
+                  break;
+                case 125:
+                  k2--;
+                  break;
+                case 47:
+                  switch (g2 = e2.charCodeAt(l2 + 1)) {
+                    case 42:
+                    case 47:
+                      a: {
+                        for (u2 = l2 + 1; u2 < J2; ++u2) {
+                          switch (e2.charCodeAt(u2)) {
+                            case 47:
+                              if (42 === g2 && 42 === e2.charCodeAt(u2 - 1) && l2 + 2 !== u2) {
+                                l2 = u2 + 1;
+                                break a;
+                              }
+                              break;
+                            case 10:
+                              if (47 === g2) {
+                                l2 = u2 + 1;
+                                break a;
+                              }
+                          }
+                        }
+                        l2 = u2;
+                      }
+                  }
+                  break;
+                case 91:
+                  g2++;
+                case 40:
+                  g2++;
+                case 34:
+                case 39:
+                  for (; l2++ < J2 && e2.charCodeAt(l2) !== g2; ) {
+                  }
+              }
+              if (0 === k2) break;
+              l2++;
+            }
+            k2 = e2.substring(t2, l2);
+            0 === q2 && (q2 = (f2 = f2.replace(ca2, "").trim()).charCodeAt(0));
+            switch (q2) {
+              case 64:
+                0 < r2 && (f2 = f2.replace(N2, ""));
+                g2 = f2.charCodeAt(1);
+                switch (g2) {
+                  case 100:
+                  case 109:
+                  case 115:
+                  case 45:
+                    r2 = c2;
+                    break;
+                  default:
+                    r2 = O2;
+                }
+                k2 = M2(c2, r2, k2, g2, a + 1);
+                t2 = k2.length;
+                0 < A2 && (r2 = X2(O2, f2, I2), C2 = H2(3, k2, r2, c2, D2, z2, t2, g2, a, h2), f2 = r2.join(""), void 0 !== C2 && 0 === (t2 = (k2 = C2.trim()).length) && (g2 = 0, k2 = ""));
+                if (0 < t2) switch (g2) {
+                  case 115:
+                    f2 = f2.replace(da2, ea2);
+                  case 100:
+                  case 109:
+                  case 45:
+                    k2 = f2 + "{" + k2 + "}";
+                    break;
+                  case 107:
+                    f2 = f2.replace(fa2, "$1 $2");
+                    k2 = f2 + "{" + k2 + "}";
+                    k2 = 1 === w2 || 2 === w2 && L2("@" + k2, 3) ? "@-webkit-" + k2 + "@" + k2 : "@" + k2;
+                    break;
+                  default:
+                    k2 = f2 + k2, 112 === h2 && (k2 = (p2 += k2, ""));
+                }
+                else k2 = "";
+                break;
+              default:
+                k2 = M2(c2, X2(c2, f2, I2), k2, h2, a + 1);
+            }
+            F3 += k2;
+            k2 = I2 = r2 = u2 = q2 = 0;
+            f2 = "";
+            g2 = e2.charCodeAt(++l2);
+            break;
+          case 125:
+          case 59:
+            f2 = (0 < r2 ? f2.replace(N2, "") : f2).trim();
+            if (1 < (t2 = f2.length)) switch (0 === u2 && (q2 = f2.charCodeAt(0), 45 === q2 || 96 < q2 && 123 > q2) && (t2 = (f2 = f2.replace(" ", ":")).length), 0 < A2 && void 0 !== (C2 = H2(1, f2, c2, d2, D2, z2, p2.length, h2, a, h2)) && 0 === (t2 = (f2 = C2.trim()).length) && (f2 = "\0\0"), q2 = f2.charCodeAt(0), g2 = f2.charCodeAt(1), q2) {
+              case 0:
+                break;
+              case 64:
+                if (105 === g2 || 99 === g2) {
+                  G3 += f2 + e2.charAt(l2);
+                  break;
+                }
+              default:
+                58 !== f2.charCodeAt(t2 - 1) && (p2 += P2(f2, q2, g2, f2.charCodeAt(2)));
+            }
+            I2 = r2 = u2 = q2 = 0;
+            f2 = "";
+            g2 = e2.charCodeAt(++l2);
+        }
+      }
+      switch (g2) {
+        case 13:
+        case 10:
+          47 === b2 ? b2 = 0 : 0 === 1 + q2 && 107 !== h2 && 0 < f2.length && (r2 = 1, f2 += "\0");
+          0 < A2 * Y2 && H2(0, f2, c2, d2, D2, z2, p2.length, h2, a, h2);
+          z2 = 1;
+          D2++;
+          break;
+        case 59:
+        case 125:
+          if (0 === b2 + n2 + v2 + m2) {
+            z2++;
+            break;
+          }
+        default:
+          z2++;
+          y2 = e2.charAt(l2);
+          switch (g2) {
+            case 9:
+            case 32:
+              if (0 === n2 + m2 + b2) switch (x2) {
+                case 44:
+                case 58:
+                case 9:
+                case 32:
+                  y2 = "";
+                  break;
+                default:
+                  32 !== g2 && (y2 = " ");
+              }
+              break;
+            case 0:
+              y2 = "\\0";
+              break;
+            case 12:
+              y2 = "\\f";
+              break;
+            case 11:
+              y2 = "\\v";
+              break;
+            case 38:
+              0 === n2 + b2 + m2 && (r2 = I2 = 1, y2 = "\f" + y2);
+              break;
+            case 108:
+              if (0 === n2 + b2 + m2 + E2 && 0 < u2) switch (l2 - u2) {
+                case 2:
+                  112 === x2 && 58 === e2.charCodeAt(l2 - 3) && (E2 = x2);
+                case 8:
+                  111 === K2 && (E2 = K2);
+              }
+              break;
+            case 58:
+              0 === n2 + b2 + m2 && (u2 = l2);
+              break;
+            case 44:
+              0 === b2 + v2 + n2 + m2 && (r2 = 1, y2 += "\r");
+              break;
+            case 34:
+            case 39:
+              0 === b2 && (n2 = n2 === g2 ? 0 : 0 === n2 ? g2 : n2);
+              break;
+            case 91:
+              0 === n2 + b2 + v2 && m2++;
+              break;
+            case 93:
+              0 === n2 + b2 + v2 && m2--;
+              break;
+            case 41:
+              0 === n2 + b2 + m2 && v2--;
+              break;
+            case 40:
+              if (0 === n2 + b2 + m2) {
+                if (0 === q2) switch (2 * x2 + 3 * K2) {
+                  case 533:
+                    break;
+                  default:
+                    q2 = 1;
+                }
+                v2++;
+              }
+              break;
+            case 64:
+              0 === b2 + v2 + n2 + m2 + u2 + k2 && (k2 = 1);
+              break;
+            case 42:
+            case 47:
+              if (!(0 < n2 + m2 + v2)) switch (b2) {
+                case 0:
+                  switch (2 * g2 + 3 * e2.charCodeAt(l2 + 1)) {
+                    case 235:
+                      b2 = 47;
+                      break;
+                    case 220:
+                      t2 = l2, b2 = 42;
+                  }
+                  break;
+                case 42:
+                  47 === g2 && 42 === x2 && t2 + 2 !== l2 && (33 === e2.charCodeAt(t2 + 2) && (p2 += e2.substring(t2, l2 + 1)), y2 = "", b2 = 0);
+              }
+          }
+          0 === b2 && (f2 += y2);
+      }
+      K2 = x2;
+      x2 = g2;
+      l2++;
+    }
+    t2 = p2.length;
+    if (0 < t2) {
+      r2 = c2;
+      if (0 < A2 && (C2 = H2(2, p2, r2, d2, D2, z2, t2, h2, a, h2), void 0 !== C2 && 0 === (p2 = C2).length)) return G3 + p2 + F3;
+      p2 = r2.join(",") + "{" + p2 + "}";
+      if (0 !== w2 * E2) {
+        2 !== w2 || L2(p2, 2) || (E2 = 0);
+        switch (E2) {
+          case 111:
+            p2 = p2.replace(ha2, ":-moz-$1") + p2;
+            break;
+          case 112:
+            p2 = p2.replace(Q2, "::-webkit-input-$1") + p2.replace(Q2, "::-moz-$1") + p2.replace(Q2, ":-ms-input-$1") + p2;
+        }
+        E2 = 0;
+      }
+    }
+    return G3 + p2 + F3;
+  }
+  function X2(d2, c2, e2) {
+    var h2 = c2.trim().split(ia2);
+    c2 = h2;
+    var a = h2.length, m2 = d2.length;
+    switch (m2) {
+      case 0:
+      case 1:
+        var b2 = 0;
+        for (d2 = 0 === m2 ? "" : d2[0] + " "; b2 < a; ++b2) {
+          c2[b2] = Z2(d2, c2[b2], e2).trim();
+        }
+        break;
+      default:
+        var v2 = b2 = 0;
+        for (c2 = []; b2 < a; ++b2) {
+          for (var n2 = 0; n2 < m2; ++n2) {
+            c2[v2++] = Z2(d2[n2] + " ", h2[b2], e2).trim();
+          }
+        }
+    }
+    return c2;
+  }
+  function Z2(d2, c2, e2) {
+    var h2 = c2.charCodeAt(0);
+    33 > h2 && (h2 = (c2 = c2.trim()).charCodeAt(0));
+    switch (h2) {
+      case 38:
+        return c2.replace(F2, "$1" + d2.trim());
+      case 58:
+        return d2.trim() + c2.replace(F2, "$1" + d2.trim());
+      default:
+        if (0 < 1 * e2 && 0 < c2.indexOf("\f")) return c2.replace(F2, (58 === d2.charCodeAt(0) ? "" : "$1") + d2.trim());
+    }
+    return d2 + c2;
+  }
+  function P2(d2, c2, e2, h2) {
+    var a = d2 + ";", m2 = 2 * c2 + 3 * e2 + 4 * h2;
+    if (944 === m2) {
+      d2 = a.indexOf(":", 9) + 1;
+      var b2 = a.substring(d2, a.length - 1).trim();
+      b2 = a.substring(0, d2).trim() + b2 + ";";
+      return 1 === w2 || 2 === w2 && L2(b2, 1) ? "-webkit-" + b2 + b2 : b2;
+    }
+    if (0 === w2 || 2 === w2 && !L2(a, 1)) return a;
+    switch (m2) {
+      case 1015:
+        return 97 === a.charCodeAt(10) ? "-webkit-" + a + a : a;
+      case 951:
+        return 116 === a.charCodeAt(3) ? "-webkit-" + a + a : a;
+      case 963:
+        return 110 === a.charCodeAt(5) ? "-webkit-" + a + a : a;
+      case 1009:
+        if (100 !== a.charCodeAt(4)) break;
+      case 969:
+      case 942:
+        return "-webkit-" + a + a;
+      case 978:
+        return "-webkit-" + a + "-moz-" + a + a;
+      case 1019:
+      case 983:
+        return "-webkit-" + a + "-moz-" + a + "-ms-" + a + a;
+      case 883:
+        if (45 === a.charCodeAt(8)) return "-webkit-" + a + a;
+        if (0 < a.indexOf("image-set(", 11)) return a.replace(ja2, "$1-webkit-$2") + a;
+        break;
+      case 932:
+        if (45 === a.charCodeAt(4)) switch (a.charCodeAt(5)) {
+          case 103:
+            return "-webkit-box-" + a.replace("-grow", "") + "-webkit-" + a + "-ms-" + a.replace("grow", "positive") + a;
+          case 115:
+            return "-webkit-" + a + "-ms-" + a.replace("shrink", "negative") + a;
+          case 98:
+            return "-webkit-" + a + "-ms-" + a.replace("basis", "preferred-size") + a;
+        }
+        return "-webkit-" + a + "-ms-" + a + a;
+      case 964:
+        return "-webkit-" + a + "-ms-flex-" + a + a;
+      case 1023:
+        if (99 !== a.charCodeAt(8)) break;
+        b2 = a.substring(a.indexOf(":", 15)).replace("flex-", "").replace("space-between", "justify");
+        return "-webkit-box-pack" + b2 + "-webkit-" + a + "-ms-flex-pack" + b2 + a;
+      case 1005:
+        return ka2.test(a) ? a.replace(aa2, ":-webkit-") + a.replace(aa2, ":-moz-") + a : a;
+      case 1e3:
+        b2 = a.substring(13).trim();
+        c2 = b2.indexOf("-") + 1;
+        switch (b2.charCodeAt(0) + b2.charCodeAt(c2)) {
+          case 226:
+            b2 = a.replace(G2, "tb");
+            break;
+          case 232:
+            b2 = a.replace(G2, "tb-rl");
+            break;
+          case 220:
+            b2 = a.replace(G2, "lr");
+            break;
+          default:
+            return a;
+        }
+        return "-webkit-" + a + "-ms-" + b2 + a;
+      case 1017:
+        if (-1 === a.indexOf("sticky", 9)) break;
+      case 975:
+        c2 = (a = d2).length - 10;
+        b2 = (33 === a.charCodeAt(c2) ? a.substring(0, c2) : a).substring(d2.indexOf(":", 7) + 1).trim();
+        switch (m2 = b2.charCodeAt(0) + (b2.charCodeAt(7) | 0)) {
+          case 203:
+            if (111 > b2.charCodeAt(8)) break;
+          case 115:
+            a = a.replace(b2, "-webkit-" + b2) + ";" + a;
+            break;
+          case 207:
+          case 102:
+            a = a.replace(b2, "-webkit-" + (102 < m2 ? "inline-" : "") + "box") + ";" + a.replace(b2, "-webkit-" + b2) + ";" + a.replace(b2, "-ms-" + b2 + "box") + ";" + a;
+        }
+        return a + ";";
+      case 938:
+        if (45 === a.charCodeAt(5)) switch (a.charCodeAt(6)) {
+          case 105:
+            return b2 = a.replace("-items", ""), "-webkit-" + a + "-webkit-box-" + b2 + "-ms-flex-" + b2 + a;
+          case 115:
+            return "-webkit-" + a + "-ms-flex-item-" + a.replace(ba2, "") + a;
+          default:
+            return "-webkit-" + a + "-ms-flex-line-pack" + a.replace("align-content", "").replace(ba2, "") + a;
+        }
+        break;
+      case 973:
+      case 989:
+        if (45 !== a.charCodeAt(3) || 122 === a.charCodeAt(4)) break;
+      case 931:
+      case 953:
+        if (true === la2.test(d2)) return 115 === (b2 = d2.substring(d2.indexOf(":") + 1)).charCodeAt(0) ? P2(d2.replace("stretch", "fill-available"), c2, e2, h2).replace(":fill-available", ":stretch") : a.replace(b2, "-webkit-" + b2) + a.replace(b2, "-moz-" + b2.replace("fill-", "")) + a;
+        break;
+      case 962:
+        if (a = "-webkit-" + a + (102 === a.charCodeAt(5) ? "-ms-" + a : "") + a, 211 === e2 + h2 && 105 === a.charCodeAt(13) && 0 < a.indexOf("transform", 10)) return a.substring(0, a.indexOf(";", 27) + 1).replace(ma2, "$1-webkit-$2") + a;
+    }
+    return a;
+  }
+  function L2(d2, c2) {
+    var e2 = d2.indexOf(1 === c2 ? ":" : "{"), h2 = d2.substring(0, 3 !== c2 ? e2 : 10);
+    e2 = d2.substring(e2 + 1, d2.length - 1);
+    return R2(2 !== c2 ? h2 : h2.replace(na2, "$1"), e2, c2);
+  }
+  function ea2(d2, c2) {
+    var e2 = P2(c2, c2.charCodeAt(0), c2.charCodeAt(1), c2.charCodeAt(2));
+    return e2 !== c2 + ";" ? e2.replace(oa2, " or ($1)").substring(4) : "(" + c2 + ")";
+  }
+  function H2(d2, c2, e2, h2, a, m2, b2, v2, n2, q2) {
+    for (var g2 = 0, x2 = c2, w3; g2 < A2; ++g2) {
+      switch (w3 = S2[g2].call(B2, d2, x2, e2, h2, a, m2, b2, v2, n2, q2)) {
+        case void 0:
+        case false:
+        case true:
+        case null:
+          break;
+        default:
+          x2 = w3;
+      }
+    }
+    if (x2 !== c2) return x2;
+  }
+  function T2(d2) {
+    switch (d2) {
+      case void 0:
+      case null:
+        A2 = S2.length = 0;
+        break;
+      default:
+        if ("function" === typeof d2) S2[A2++] = d2;
+        else if ("object" === typeof d2) for (var c2 = 0, e2 = d2.length; c2 < e2; ++c2) {
+          T2(d2[c2]);
+        }
+        else Y2 = !!d2 | 0;
+    }
+    return T2;
+  }
+  function U2(d2) {
+    d2 = d2.prefix;
+    void 0 !== d2 && (R2 = null, d2 ? "function" !== typeof d2 ? w2 = 1 : (w2 = 2, R2 = d2) : w2 = 0);
+    return U2;
+  }
+  function B2(d2, c2) {
+    var e2 = d2;
+    33 > e2.charCodeAt(0) && (e2 = e2.trim());
+    V2 = e2;
+    e2 = [V2];
+    if (0 < A2) {
+      var h2 = H2(-1, c2, e2, e2, D2, z2, 0, 0, 0, 0);
+      void 0 !== h2 && "string" === typeof h2 && (c2 = h2);
+    }
+    var a = M2(O2, e2, c2, 0, 0);
+    0 < A2 && (h2 = H2(-2, a, e2, e2, D2, z2, a.length, 0, 0, 0), void 0 !== h2 && (a = h2));
+    V2 = "";
+    E2 = 0;
+    z2 = D2 = 1;
+    return a;
+  }
+  var ca2 = /^\0+/g, N2 = /[\0\r\f]/g, aa2 = /: */g, ka2 = /zoo|gra/, ma2 = /([,: ])(transform)/g, ia2 = /,\r+?/g, F2 = /([\t\r\n ])*\f?&/g, fa2 = /@(k\w+)\s*(\S*)\s*/, Q2 = /::(place)/g, ha2 = /:(read-only)/g, G2 = /[svh]\w+-[tblr]{2}/, da2 = /\(\s*(.*)\s*\)/g, oa2 = /([\s\S]*?);/g, ba2 = /-self|flex-/g, na2 = /[^]*?(:[rp][el]a[\w-]+)[^]*/, la2 = /stretch|:\s*\w+\-(?:conte|avail)/, ja2 = /([^-])(image-set\()/, z2 = 1, D2 = 1, E2 = 0, w2 = 1, O2 = [], S2 = [], A2 = 0, R2 = null, Y2 = 0, V2 = "";
+  B2.use = T2;
+  B2.set = U2;
+  void 0 !== W2 && U2(W2);
+  return B2;
+}
+var unitlessKeys = {
+  animationIterationCount: 1,
+  borderImageOutset: 1,
+  borderImageSlice: 1,
+  borderImageWidth: 1,
+  boxFlex: 1,
+  boxFlexGroup: 1,
+  boxOrdinalGroup: 1,
+  columnCount: 1,
+  columns: 1,
+  flex: 1,
+  flexGrow: 1,
+  flexPositive: 1,
+  flexShrink: 1,
+  flexNegative: 1,
+  flexOrder: 1,
+  gridRow: 1,
+  gridRowEnd: 1,
+  gridRowSpan: 1,
+  gridRowStart: 1,
+  gridColumn: 1,
+  gridColumnEnd: 1,
+  gridColumnSpan: 1,
+  gridColumnStart: 1,
+  msGridRow: 1,
+  msGridRowSpan: 1,
+  msGridColumn: 1,
+  msGridColumnSpan: 1,
+  fontWeight: 1,
+  lineHeight: 1,
+  opacity: 1,
+  order: 1,
+  orphans: 1,
+  tabSize: 1,
+  widows: 1,
+  zIndex: 1,
+  zoom: 1,
+  WebkitLineClamp: 1,
+  // SVG-related properties
+  fillOpacity: 1,
+  floodOpacity: 1,
+  stopOpacity: 1,
+  strokeDasharray: 1,
+  strokeDashoffset: 1,
+  strokeMiterlimit: 1,
+  strokeOpacity: 1,
+  strokeWidth: 1
+};
+function memoize(fn) {
+  var cache2 = /* @__PURE__ */ Object.create(null);
+  return function(arg) {
+    if (cache2[arg] === void 0) cache2[arg] = fn(arg);
+    return cache2[arg];
+  };
+}
+var reactPropsRegex = /^((children|dangerouslySetInnerHTML|key|ref|autoFocus|defaultValue|defaultChecked|innerHTML|suppressContentEditableWarning|suppressHydrationWarning|valueLink|abbr|accept|acceptCharset|accessKey|action|allow|allowUserMedia|allowPaymentRequest|allowFullScreen|allowTransparency|alt|async|autoComplete|autoPlay|capture|cellPadding|cellSpacing|challenge|charSet|checked|cite|classID|className|cols|colSpan|content|contentEditable|contextMenu|controls|controlsList|coords|crossOrigin|data|dateTime|decoding|default|defer|dir|disabled|disablePictureInPicture|disableRemotePlayback|download|draggable|encType|enterKeyHint|fetchpriority|fetchPriority|form|formAction|formEncType|formMethod|formNoValidate|formTarget|frameBorder|headers|height|hidden|high|href|hrefLang|htmlFor|httpEquiv|id|inputMode|integrity|is|keyParams|keyType|kind|label|lang|list|loading|loop|low|marginHeight|marginWidth|max|maxLength|media|mediaGroup|method|min|minLength|multiple|muted|name|nonce|noValidate|open|optimum|pattern|placeholder|playsInline|popover|popoverTarget|popoverTargetAction|poster|preload|profile|radioGroup|readOnly|referrerPolicy|rel|required|reversed|role|rows|rowSpan|sandbox|scope|scoped|scrolling|seamless|selected|shape|size|sizes|slot|span|spellCheck|src|srcDoc|srcLang|srcSet|start|step|style|summary|tabIndex|target|title|translate|type|useMap|value|width|wmode|wrap|about|datatype|inlist|prefix|property|resource|typeof|vocab|autoCapitalize|autoCorrect|autoSave|color|incremental|fallback|inert|itemProp|itemScope|itemType|itemID|itemRef|on|option|results|security|unselectable|accentHeight|accumulate|additive|alignmentBaseline|allowReorder|alphabetic|amplitude|arabicForm|ascent|attributeName|attributeType|autoReverse|azimuth|baseFrequency|baselineShift|baseProfile|bbox|begin|bias|by|calcMode|capHeight|clip|clipPathUnits|clipPath|clipRule|colorInterpolation|colorInterpolationFilters|colorProfile|colorRendering|contentScriptType|contentStyleType|cursor|cx|cy|d|decelerate|descent|diffuseConstant|direction|display|divisor|dominantBaseline|dur|dx|dy|edgeMode|elevation|enableBackground|end|exponent|externalResourcesRequired|fill|fillOpacity|fillRule|filter|filterRes|filterUnits|floodColor|floodOpacity|focusable|fontFamily|fontSize|fontSizeAdjust|fontStretch|fontStyle|fontVariant|fontWeight|format|from|fr|fx|fy|g1|g2|glyphName|glyphOrientationHorizontal|glyphOrientationVertical|glyphRef|gradientTransform|gradientUnits|hanging|horizAdvX|horizOriginX|ideographic|imageRendering|in|in2|intercept|k|k1|k2|k3|k4|kernelMatrix|kernelUnitLength|kerning|keyPoints|keySplines|keyTimes|lengthAdjust|letterSpacing|lightingColor|limitingConeAngle|local|markerEnd|markerMid|markerStart|markerHeight|markerUnits|markerWidth|mask|maskContentUnits|maskUnits|mathematical|mode|numOctaves|offset|opacity|operator|order|orient|orientation|origin|overflow|overlinePosition|overlineThickness|panose1|paintOrder|pathLength|patternContentUnits|patternTransform|patternUnits|pointerEvents|points|pointsAtX|pointsAtY|pointsAtZ|preserveAlpha|preserveAspectRatio|primitiveUnits|r|radius|refX|refY|renderingIntent|repeatCount|repeatDur|requiredExtensions|requiredFeatures|restart|result|rotate|rx|ry|scale|seed|shapeRendering|slope|spacing|specularConstant|specularExponent|speed|spreadMethod|startOffset|stdDeviation|stemh|stemv|stitchTiles|stopColor|stopOpacity|strikethroughPosition|strikethroughThickness|string|stroke|strokeDasharray|strokeDashoffset|strokeLinecap|strokeLinejoin|strokeMiterlimit|strokeOpacity|strokeWidth|surfaceScale|systemLanguage|tableValues|targetX|targetY|textAnchor|textDecoration|textRendering|textLength|to|transform|u1|u2|underlinePosition|underlineThickness|unicode|unicodeBidi|unicodeRange|unitsPerEm|vAlphabetic|vHanging|vIdeographic|vMathematical|values|vectorEffect|version|vertAdvY|vertOriginX|vertOriginY|viewBox|viewTarget|visibility|widths|wordSpacing|writingMode|x|xHeight|x1|x2|xChannelSelector|xlinkActuate|xlinkArcrole|xlinkHref|xlinkRole|xlinkShow|xlinkTitle|xlinkType|xmlBase|xmlns|xmlnsXlink|xmlLang|xmlSpace|y|y1|y2|yChannelSelector|z|zoomAndPan|for|class|autofocus)|(([Dd][Aa][Tt][Aa]|[Aa][Rr][Ii][Aa]|x)-.*))$/;
+var isPropValid = /* @__PURE__ */ memoize(
+  function(prop) {
+    return reactPropsRegex.test(prop) || prop.charCodeAt(0) === 111 && prop.charCodeAt(1) === 110 && prop.charCodeAt(2) < 91;
+  }
+  /* Z+1 */
+);
+var define_process_env_default = {};
+function y() {
+  return (y = Object.assign || function(e2) {
+    for (var t2 = 1; t2 < arguments.length; t2++) {
+      var n2 = arguments[t2];
+      for (var r2 in n2) Object.prototype.hasOwnProperty.call(n2, r2) && (e2[r2] = n2[r2]);
+    }
+    return e2;
+  }).apply(this, arguments);
+}
+var v = function(e2, t2) {
+  for (var n2 = [e2[0]], r2 = 0, o2 = t2.length; r2 < o2; r2 += 1) n2.push(t2[r2], e2[r2 + 1]);
+  return n2;
+}, g = function(t2) {
+  return null !== t2 && "object" == typeof t2 && "[object Object]" === (t2.toString ? t2.toString() : Object.prototype.toString.call(t2)) && !reactIsExports.typeOf(t2);
+}, S = Object.freeze([]), w = Object.freeze({});
+function E(e2) {
+  return "function" == typeof e2;
+}
+function b(e2) {
+  return e2.displayName || e2.name || "Component";
+}
+function _(e2) {
+  return e2 && "string" == typeof e2.styledComponentId;
+}
+var N = "undefined" != typeof process && void 0 !== define_process_env_default && (define_process_env_default.REACT_APP_SC_ATTR || define_process_env_default.SC_ATTR) || "data-styled", C = "undefined" != typeof window && "HTMLElement" in window, I = Boolean("boolean" == typeof SC_DISABLE_SPEEDY ? SC_DISABLE_SPEEDY : "undefined" != typeof process && void 0 !== define_process_env_default && (void 0 !== define_process_env_default.REACT_APP_SC_DISABLE_SPEEDY && "" !== define_process_env_default.REACT_APP_SC_DISABLE_SPEEDY ? "false" !== define_process_env_default.REACT_APP_SC_DISABLE_SPEEDY && define_process_env_default.REACT_APP_SC_DISABLE_SPEEDY : void 0 !== define_process_env_default.SC_DISABLE_SPEEDY && "" !== define_process_env_default.SC_DISABLE_SPEEDY ? "false" !== define_process_env_default.SC_DISABLE_SPEEDY && define_process_env_default.SC_DISABLE_SPEEDY : false));
+function D(e2) {
+  for (var t2 = arguments.length, n2 = new Array(t2 > 1 ? t2 - 1 : 0), r2 = 1; r2 < t2; r2++) n2[r2 - 1] = arguments[r2];
+  throw new Error("An error occurred. See https://git.io/JUIaE#" + e2 + " for more information." + (n2.length > 0 ? " Args: " + n2.join(", ") : ""));
+}
+var j = function() {
+  function e2(e3) {
+    this.groupSizes = new Uint32Array(512), this.length = 512, this.tag = e3;
+  }
+  var t2 = e2.prototype;
+  return t2.indexOfGroup = function(e3) {
+    for (var t3 = 0, n2 = 0; n2 < e3; n2++) t3 += this.groupSizes[n2];
+    return t3;
+  }, t2.insertRules = function(e3, t3) {
+    if (e3 >= this.groupSizes.length) {
+      for (var n2 = this.groupSizes, r2 = n2.length, o2 = r2; e3 >= o2; ) (o2 <<= 1) < 0 && D(16, "" + e3);
+      this.groupSizes = new Uint32Array(o2), this.groupSizes.set(n2), this.length = o2;
+      for (var s2 = r2; s2 < o2; s2++) this.groupSizes[s2] = 0;
+    }
+    for (var i2 = this.indexOfGroup(e3 + 1), a2 = 0, c2 = t3.length; a2 < c2; a2++) this.tag.insertRule(i2, t3[a2]) && (this.groupSizes[e3]++, i2++);
+  }, t2.clearGroup = function(e3) {
+    if (e3 < this.length) {
+      var t3 = this.groupSizes[e3], n2 = this.indexOfGroup(e3), r2 = n2 + t3;
+      this.groupSizes[e3] = 0;
+      for (var o2 = n2; o2 < r2; o2++) this.tag.deleteRule(n2);
+    }
+  }, t2.getGroup = function(e3) {
+    var t3 = "";
+    if (e3 >= this.length || 0 === this.groupSizes[e3]) return t3;
+    for (var n2 = this.groupSizes[e3], r2 = this.indexOfGroup(e3), o2 = r2 + n2, s2 = r2; s2 < o2; s2++) t3 += this.tag.getRule(s2) + "/*!sc*/\n";
+    return t3;
+  }, e2;
+}(), T = /* @__PURE__ */ new Map(), x = /* @__PURE__ */ new Map(), k = 1, V = function(e2) {
+  if (T.has(e2)) return T.get(e2);
+  for (; x.has(k); ) k++;
+  var t2 = k++;
+  return T.set(e2, t2), x.set(t2, e2), t2;
+}, B = function(e2) {
+  return x.get(e2);
+}, z = function(e2, t2) {
+  t2 >= k && (k = t2 + 1), T.set(e2, t2), x.set(t2, e2);
+}, M = "style[" + N + '][data-styled-version="5.3.11"]', G = new RegExp("^" + N + '\\.g(\\d+)\\[id="([\\w\\d-]+)"\\].*?"([^"]*)'), L = function(e2, t2, n2) {
+  for (var r2, o2 = n2.split(","), s2 = 0, i2 = o2.length; s2 < i2; s2++) (r2 = o2[s2]) && e2.registerName(t2, r2);
+}, F = function(e2, t2) {
+  for (var n2 = (t2.textContent || "").split("/*!sc*/\n"), r2 = [], o2 = 0, s2 = n2.length; o2 < s2; o2++) {
+    var i2 = n2[o2].trim();
+    if (i2) {
+      var a2 = i2.match(G);
+      if (a2) {
+        var c2 = 0 | parseInt(a2[1], 10), u2 = a2[2];
+        0 !== c2 && (z(u2, c2), L(e2, u2, a2[3]), e2.getTag().insertRules(c2, r2)), r2.length = 0;
+      } else r2.push(i2);
+    }
+  }
+}, Y = function() {
+  return "undefined" != typeof __webpack_nonce__ ? __webpack_nonce__ : null;
+}, q = function(e2) {
+  var t2 = document.head, n2 = e2 || t2, r2 = document.createElement("style"), o2 = function(e3) {
+    for (var t3 = e3.childNodes, n3 = t3.length; n3 >= 0; n3--) {
+      var r3 = t3[n3];
+      if (r3 && 1 === r3.nodeType && r3.hasAttribute(N)) return r3;
+    }
+  }(n2), s2 = void 0 !== o2 ? o2.nextSibling : null;
+  r2.setAttribute(N, "active"), r2.setAttribute("data-styled-version", "5.3.11");
+  var i2 = Y();
+  return i2 && r2.setAttribute("nonce", i2), n2.insertBefore(r2, s2), r2;
+}, H = function() {
+  function e2(e3) {
+    var t3 = this.element = q(e3);
+    t3.appendChild(document.createTextNode("")), this.sheet = function(e4) {
+      if (e4.sheet) return e4.sheet;
+      for (var t4 = document.styleSheets, n2 = 0, r2 = t4.length; n2 < r2; n2++) {
+        var o2 = t4[n2];
+        if (o2.ownerNode === e4) return o2;
+      }
+      D(17);
+    }(t3), this.length = 0;
+  }
+  var t2 = e2.prototype;
+  return t2.insertRule = function(e3, t3) {
+    try {
+      return this.sheet.insertRule(t3, e3), this.length++, true;
+    } catch (e4) {
+      return false;
+    }
+  }, t2.deleteRule = function(e3) {
+    this.sheet.deleteRule(e3), this.length--;
+  }, t2.getRule = function(e3) {
+    var t3 = this.sheet.cssRules[e3];
+    return void 0 !== t3 && "string" == typeof t3.cssText ? t3.cssText : "";
+  }, e2;
+}(), $ = function() {
+  function e2(e3) {
+    var t3 = this.element = q(e3);
+    this.nodes = t3.childNodes, this.length = 0;
+  }
+  var t2 = e2.prototype;
+  return t2.insertRule = function(e3, t3) {
+    if (e3 <= this.length && e3 >= 0) {
+      var n2 = document.createTextNode(t3), r2 = this.nodes[e3];
+      return this.element.insertBefore(n2, r2 || null), this.length++, true;
+    }
+    return false;
+  }, t2.deleteRule = function(e3) {
+    this.element.removeChild(this.nodes[e3]), this.length--;
+  }, t2.getRule = function(e3) {
+    return e3 < this.length ? this.nodes[e3].textContent : "";
+  }, e2;
+}(), W = function() {
+  function e2(e3) {
+    this.rules = [], this.length = 0;
+  }
+  var t2 = e2.prototype;
+  return t2.insertRule = function(e3, t3) {
+    return e3 <= this.length && (this.rules.splice(e3, 0, t3), this.length++, true);
+  }, t2.deleteRule = function(e3) {
+    this.rules.splice(e3, 1), this.length--;
+  }, t2.getRule = function(e3) {
+    return e3 < this.length ? this.rules[e3] : "";
+  }, e2;
+}(), U = C, J = { isServer: !C, useCSSOMInjection: !I }, X = function() {
+  function e2(e3, t3, n2) {
+    void 0 === e3 && (e3 = w), void 0 === t3 && (t3 = {}), this.options = y({}, J, {}, e3), this.gs = t3, this.names = new Map(n2), this.server = !!e3.isServer, !this.server && C && U && (U = false, function(e4) {
+      for (var t4 = document.querySelectorAll(M), n3 = 0, r2 = t4.length; n3 < r2; n3++) {
+        var o2 = t4[n3];
+        o2 && "active" !== o2.getAttribute(N) && (F(e4, o2), o2.parentNode && o2.parentNode.removeChild(o2));
+      }
+    }(this));
+  }
+  e2.registerId = function(e3) {
+    return V(e3);
+  };
+  var t2 = e2.prototype;
+  return t2.reconstructWithOptions = function(t3, n2) {
+    return void 0 === n2 && (n2 = true), new e2(y({}, this.options, {}, t3), this.gs, n2 && this.names || void 0);
+  }, t2.allocateGSInstance = function(e3) {
+    return this.gs[e3] = (this.gs[e3] || 0) + 1;
+  }, t2.getTag = function() {
+    return this.tag || (this.tag = (n2 = (t3 = this.options).isServer, r2 = t3.useCSSOMInjection, o2 = t3.target, e3 = n2 ? new W(o2) : r2 ? new H(o2) : new $(o2), new j(e3)));
+    var e3, t3, n2, r2, o2;
+  }, t2.hasNameForId = function(e3, t3) {
+    return this.names.has(e3) && this.names.get(e3).has(t3);
+  }, t2.registerName = function(e3, t3) {
+    if (V(e3), this.names.has(e3)) this.names.get(e3).add(t3);
+    else {
+      var n2 = /* @__PURE__ */ new Set();
+      n2.add(t3), this.names.set(e3, n2);
+    }
+  }, t2.insertRules = function(e3, t3, n2) {
+    this.registerName(e3, t3), this.getTag().insertRules(V(e3), n2);
+  }, t2.clearNames = function(e3) {
+    this.names.has(e3) && this.names.get(e3).clear();
+  }, t2.clearRules = function(e3) {
+    this.getTag().clearGroup(V(e3)), this.clearNames(e3);
+  }, t2.clearTag = function() {
+    this.tag = void 0;
+  }, t2.toString = function() {
+    return function(e3) {
+      for (var t3 = e3.getTag(), n2 = t3.length, r2 = "", o2 = 0; o2 < n2; o2++) {
+        var s2 = B(o2);
+        if (void 0 !== s2) {
+          var i2 = e3.names.get(s2), a2 = t3.getGroup(o2);
+          if (i2 && a2 && i2.size) {
+            var c2 = N + ".g" + o2 + '[id="' + s2 + '"]', u2 = "";
+            void 0 !== i2 && i2.forEach(function(e4) {
+              e4.length > 0 && (u2 += e4 + ",");
+            }), r2 += "" + a2 + c2 + '{content:"' + u2 + '"}/*!sc*/\n';
+          }
+        }
+      }
+      return r2;
+    }(this);
+  }, e2;
+}(), Z = /(a)(d)/gi, K = function(e2) {
+  return String.fromCharCode(e2 + (e2 > 25 ? 39 : 97));
+};
+function Q(e2) {
+  var t2, n2 = "";
+  for (t2 = Math.abs(e2); t2 > 52; t2 = t2 / 52 | 0) n2 = K(t2 % 52) + n2;
+  return (K(t2 % 52) + n2).replace(Z, "$1-$2");
+}
+var ee = function(e2, t2) {
+  for (var n2 = t2.length; n2; ) e2 = 33 * e2 ^ t2.charCodeAt(--n2);
+  return e2;
+}, te = function(e2) {
+  return ee(5381, e2);
+};
+function ne(e2) {
+  for (var t2 = 0; t2 < e2.length; t2 += 1) {
+    var n2 = e2[t2];
+    if (E(n2) && !_(n2)) return false;
+  }
+  return true;
+}
+var re = te("5.3.11"), oe = function() {
+  function e2(e3, t2, n2) {
+    this.rules = e3, this.staticRulesId = "", this.isStatic = (void 0 === n2 || n2.isStatic) && ne(e3), this.componentId = t2, this.baseHash = ee(re, t2), this.baseStyle = n2, X.registerId(t2);
+  }
+  return e2.prototype.generateAndInjectStyles = function(e3, t2, n2) {
+    var r2 = this.componentId, o2 = [];
+    if (this.baseStyle && o2.push(this.baseStyle.generateAndInjectStyles(e3, t2, n2)), this.isStatic && !n2.hash) if (this.staticRulesId && t2.hasNameForId(r2, this.staticRulesId)) o2.push(this.staticRulesId);
+    else {
+      var s2 = _e(this.rules, e3, t2, n2).join(""), i2 = Q(ee(this.baseHash, s2) >>> 0);
+      if (!t2.hasNameForId(r2, i2)) {
+        var a2 = n2(s2, "." + i2, void 0, r2);
+        t2.insertRules(r2, i2, a2);
+      }
+      o2.push(i2), this.staticRulesId = i2;
+    }
+    else {
+      for (var c2 = this.rules.length, u2 = ee(this.baseHash, n2.hash), l2 = "", d2 = 0; d2 < c2; d2++) {
+        var h2 = this.rules[d2];
+        if ("string" == typeof h2) l2 += h2;
+        else if (h2) {
+          var p2 = _e(h2, e3, t2, n2), f2 = Array.isArray(p2) ? p2.join("") : p2;
+          u2 = ee(u2, f2 + d2), l2 += f2;
+        }
+      }
+      if (l2) {
+        var m2 = Q(u2 >>> 0);
+        if (!t2.hasNameForId(r2, m2)) {
+          var y2 = n2(l2, "." + m2, void 0, r2);
+          t2.insertRules(r2, m2, y2);
+        }
+        o2.push(m2);
+      }
+    }
+    return o2.join(" ");
+  }, e2;
+}(), se = /^\s*\/\/.*$/gm, ie = [":", "[", ".", "#"];
+function ae(e2) {
+  var t2, n2, r2, o2, s2 = w, i2 = s2.options, a2 = void 0 === i2 ? w : i2, c2 = s2.plugins, u2 = void 0 === c2 ? S : c2, l2 = new stylis_min(a2), d2 = [], p2 = /* @__PURE__ */ function(e3) {
+    function t3(t4) {
+      if (t4) try {
+        e3(t4 + "}");
+      } catch (e4) {
+      }
+    }
+    return function(n3, r3, o3, s3, i3, a3, c3, u3, l3, d3) {
+      switch (n3) {
+        case 1:
+          if (0 === l3 && 64 === r3.charCodeAt(0)) return e3(r3 + ";"), "";
+          break;
+        case 2:
+          if (0 === u3) return r3 + "/*|*/";
+          break;
+        case 3:
+          switch (u3) {
+            case 102:
+            case 112:
+              return e3(o3[0] + r3), "";
+            default:
+              return r3 + (0 === d3 ? "/*|*/" : "");
+          }
+        case -2:
+          r3.split("/*|*/}").forEach(t3);
+      }
+    };
+  }(function(e3) {
+    d2.push(e3);
+  }), f2 = function(e3, r3, s3) {
+    return 0 === r3 && -1 !== ie.indexOf(s3[n2.length]) || s3.match(o2) ? e3 : "." + t2;
+  };
+  function m2(e3, s3, i3, a3) {
+    void 0 === a3 && (a3 = "&");
+    var c3 = e3.replace(se, ""), u3 = s3 && i3 ? i3 + " " + s3 + " { " + c3 + " }" : c3;
+    return t2 = a3, n2 = s3, r2 = new RegExp("\\" + n2 + "\\b", "g"), o2 = new RegExp("(\\" + n2 + "\\b){2,}"), l2(i3 || !s3 ? "" : s3, u3);
+  }
+  return l2.use([].concat(u2, [function(e3, t3, o3) {
+    2 === e3 && o3.length && o3[0].lastIndexOf(n2) > 0 && (o3[0] = o3[0].replace(r2, f2));
+  }, p2, function(e3) {
+    if (-2 === e3) {
+      var t3 = d2;
+      return d2 = [], t3;
+    }
+  }])), m2.hash = u2.length ? u2.reduce(function(e3, t3) {
+    return t3.name || D(15), ee(e3, t3.name);
+  }, 5381).toString() : "", m2;
+}
+var ce = React$1.createContext();
+ce.Consumer;
+var le = React$1.createContext(), de = (le.Consumer, new X()), he = ae();
+function pe() {
+  return reactExports.useContext(ce) || de;
+}
+function fe() {
+  return reactExports.useContext(le) || he;
+}
+var ye = function() {
+  function e2(e3, t2) {
+    var n2 = this;
+    this.inject = function(e4, t3) {
+      void 0 === t3 && (t3 = he);
+      var r2 = n2.name + t3.hash;
+      e4.hasNameForId(n2.id, r2) || e4.insertRules(n2.id, r2, t3(n2.rules, r2, "@keyframes"));
+    }, this.toString = function() {
+      return D(12, String(n2.name));
+    }, this.name = e3, this.id = "sc-keyframes-" + e3, this.rules = t2;
+  }
+  return e2.prototype.getName = function(e3) {
+    return void 0 === e3 && (e3 = he), this.name + e3.hash;
+  }, e2;
+}(), ve = /([A-Z])/, ge = /([A-Z])/g, Se = /^ms-/, we = function(e2) {
+  return "-" + e2.toLowerCase();
+};
+function Ee(e2) {
+  return ve.test(e2) ? e2.replace(ge, we).replace(Se, "-ms-") : e2;
+}
+var be = function(e2) {
+  return null == e2 || false === e2 || "" === e2;
+};
+function _e(e2, n2, r2, o2) {
+  if (Array.isArray(e2)) {
+    for (var s2, i2 = [], a2 = 0, c2 = e2.length; a2 < c2; a2 += 1) "" !== (s2 = _e(e2[a2], n2, r2, o2)) && (Array.isArray(s2) ? i2.push.apply(i2, s2) : i2.push(s2));
+    return i2;
+  }
+  if (be(e2)) return "";
+  if (_(e2)) return "." + e2.styledComponentId;
+  if (E(e2)) {
+    if ("function" != typeof (l2 = e2) || l2.prototype && l2.prototype.isReactComponent || !n2) return e2;
+    var u2 = e2(n2);
+    return _e(u2, n2, r2, o2);
+  }
+  var l2;
+  return e2 instanceof ye ? r2 ? (e2.inject(r2, o2), e2.getName(o2)) : e2 : g(e2) ? function e3(t2, n3) {
+    var r3, o3, s3 = [];
+    for (var i3 in t2) t2.hasOwnProperty(i3) && !be(t2[i3]) && (Array.isArray(t2[i3]) && t2[i3].isCss || E(t2[i3]) ? s3.push(Ee(i3) + ":", t2[i3], ";") : g(t2[i3]) ? s3.push.apply(s3, e3(t2[i3], i3)) : s3.push(Ee(i3) + ": " + (r3 = i3, null == (o3 = t2[i3]) || "boolean" == typeof o3 || "" === o3 ? "" : "number" != typeof o3 || 0 === o3 || r3 in unitlessKeys || r3.startsWith("--") ? String(o3).trim() : o3 + "px") + ";"));
+    return n3 ? [n3 + " {"].concat(s3, ["}"]) : s3;
+  }(e2) : e2.toString();
+}
+var Ne = function(e2) {
+  return Array.isArray(e2) && (e2.isCss = true), e2;
+};
+function Ae(e2) {
+  for (var t2 = arguments.length, n2 = new Array(t2 > 1 ? t2 - 1 : 0), r2 = 1; r2 < t2; r2++) n2[r2 - 1] = arguments[r2];
+  return E(e2) || g(e2) ? Ne(_e(v(S, [e2].concat(n2)))) : 0 === n2.length && 1 === e2.length && "string" == typeof e2[0] ? e2 : Ne(_e(v(e2, n2)));
+}
+var Oe = function(e2, t2, n2) {
+  return void 0 === n2 && (n2 = w), e2.theme !== n2.theme && e2.theme || t2 || n2.theme;
+}, Re = /[!"#$%&'()*+,./:;<=>?@[\\\]^`{|}~-]+/g, De = /(^-|-$)/g;
+function je(e2) {
+  return e2.replace(Re, "-").replace(De, "");
+}
+var Te = function(e2) {
+  return Q(te(e2) >>> 0);
+};
+function xe(e2) {
+  return "string" == typeof e2 && true;
+}
+var ke = function(e2) {
+  return "function" == typeof e2 || "object" == typeof e2 && null !== e2 && !Array.isArray(e2);
+}, Ve = function(e2) {
+  return "__proto__" !== e2 && "constructor" !== e2 && "prototype" !== e2;
+};
+function Be(e2, t2, n2) {
+  var r2 = e2[n2];
+  ke(t2) && ke(r2) ? ze(r2, t2) : e2[n2] = t2;
+}
+function ze(e2) {
+  for (var t2 = arguments.length, n2 = new Array(t2 > 1 ? t2 - 1 : 0), r2 = 1; r2 < t2; r2++) n2[r2 - 1] = arguments[r2];
+  for (var o2 = 0, s2 = n2; o2 < s2.length; o2++) {
+    var i2 = s2[o2];
+    if (ke(i2)) for (var a2 in i2) Ve(a2) && Be(e2, i2[a2], a2);
+  }
+  return e2;
+}
+var Me = React$1.createContext();
+Me.Consumer;
+function Le(e2) {
+  var t2 = reactExports.useContext(Me), n2 = reactExports.useMemo(function() {
+    return function(e3, t3) {
+      if (!e3) return D(14);
+      if (E(e3)) {
+        var n3 = e3(t3);
+        return n3;
+      }
+      return Array.isArray(e3) || "object" != typeof e3 ? D(8) : t3 ? y({}, t3, {}, e3) : e3;
+    }(e2.theme, t2);
+  }, [e2.theme, t2]);
+  return e2.children ? React$1.createElement(Me.Provider, { value: n2 }, e2.children) : null;
+}
+var Fe = {};
+function Ye(e2, t2, n2) {
+  var o2 = _(e2), i2 = !xe(e2), a2 = t2.attrs, c2 = void 0 === a2 ? S : a2, l2 = t2.componentId, d2 = void 0 === l2 ? function(e3, t3) {
+    var n3 = "string" != typeof e3 ? "sc" : je(e3);
+    Fe[n3] = (Fe[n3] || 0) + 1;
+    var r2 = n3 + "-" + Te("5.3.11" + n3 + Fe[n3]);
+    return t3 ? t3 + "-" + r2 : r2;
+  }(t2.displayName, t2.parentComponentId) : l2, h2 = t2.displayName, p2 = void 0 === h2 ? function(e3) {
+    return xe(e3) ? "styled." + e3 : "Styled(" + b(e3) + ")";
+  }(e2) : h2, v2 = t2.displayName && t2.componentId ? je(t2.displayName) + "-" + t2.componentId : t2.componentId || d2, g2 = o2 && e2.attrs ? Array.prototype.concat(e2.attrs, c2).filter(Boolean) : c2, N2 = t2.shouldForwardProp;
+  o2 && e2.shouldForwardProp && (N2 = t2.shouldForwardProp ? function(n3, r2, o3) {
+    return e2.shouldForwardProp(n3, r2, o3) && t2.shouldForwardProp(n3, r2, o3);
+  } : e2.shouldForwardProp);
+  var A2, C2 = new oe(n2, v2, o2 ? e2.componentStyle : void 0), I2 = C2.isStatic && 0 === c2.length, P2 = function(e3, t3) {
+    return function(e4, t4, n3, r2) {
+      var o3 = e4.attrs, i3 = e4.componentStyle, a3 = e4.defaultProps, c3 = e4.foldedComponentIds, l3 = e4.shouldForwardProp, d3 = e4.styledComponentId, h3 = e4.target, p3 = function(e5, t5, n4) {
+        void 0 === e5 && (e5 = w);
+        var r3 = y({}, t5, { theme: e5 }), o4 = {};
+        return n4.forEach(function(e6) {
+          var t6, n5, s2, i4 = e6;
+          for (t6 in E(i4) && (i4 = i4(r3)), i4) r3[t6] = o4[t6] = "className" === t6 ? (n5 = o4[t6], s2 = i4[t6], n5 && s2 ? n5 + " " + s2 : n5 || s2) : i4[t6];
+        }), [r3, o4];
+      }(Oe(t4, reactExports.useContext(Me), a3) || w, t4, o3), m2 = p3[0], v3 = p3[1], g3 = function(e5, t5, n4, r3) {
+        var o4 = pe(), s2 = fe(), i4 = t5 ? e5.generateAndInjectStyles(w, o4, s2) : e5.generateAndInjectStyles(n4, o4, s2);
+        return i4;
+      }(i3, r2, m2), S2 = n3, b2 = v3.$as || t4.$as || v3.as || t4.as || h3, _2 = xe(b2), N3 = v3 !== t4 ? y({}, t4, {}, v3) : t4, A3 = {};
+      for (var C3 in N3) "$" !== C3[0] && "as" !== C3 && ("forwardedAs" === C3 ? A3.as = N3[C3] : (l3 ? l3(C3, isPropValid, b2) : !_2 || isPropValid(C3)) && (A3[C3] = N3[C3]));
+      return t4.style && v3.style !== t4.style && (A3.style = y({}, t4.style, {}, v3.style)), A3.className = Array.prototype.concat(c3, d3, g3 !== d3 ? g3 : null, t4.className, v3.className).filter(Boolean).join(" "), A3.ref = S2, reactExports.createElement(b2, A3);
+    }(A2, e3, t3, I2);
+  };
+  return P2.displayName = p2, (A2 = React$1.forwardRef(P2)).attrs = g2, A2.componentStyle = C2, A2.displayName = p2, A2.shouldForwardProp = N2, A2.foldedComponentIds = o2 ? Array.prototype.concat(e2.foldedComponentIds, e2.styledComponentId) : S, A2.styledComponentId = v2, A2.target = o2 ? e2.target : e2, A2.withComponent = function(e3) {
+    var r2 = t2.componentId, o3 = function(e4, t3) {
+      if (null == e4) return {};
+      var n3, r3, o4 = {}, s3 = Object.keys(e4);
+      for (r3 = 0; r3 < s3.length; r3++) n3 = s3[r3], t3.indexOf(n3) >= 0 || (o4[n3] = e4[n3]);
+      return o4;
+    }(t2, ["componentId"]), s2 = r2 && r2 + "-" + (xe(e3) ? e3 : je(b(e3)));
+    return Ye(e3, y({}, o3, { attrs: g2, componentId: s2 }), n2);
+  }, Object.defineProperty(A2, "defaultProps", { get: function() {
+    return this._foldedDefaultProps;
+  }, set: function(t3) {
+    this._foldedDefaultProps = o2 ? ze({}, e2.defaultProps, t3) : t3;
+  } }), Object.defineProperty(A2, "toString", { value: function() {
+    return "." + A2.styledComponentId;
+  } }), i2 && m$1(A2, e2, { attrs: true, componentStyle: true, displayName: true, foldedComponentIds: true, shouldForwardProp: true, styledComponentId: true, target: true, withComponent: true }), A2;
+}
+var qe = function(e2) {
+  return function e3(t2, r2, o2) {
+    if (void 0 === o2 && (o2 = w), !reactIsExports.isValidElementType(r2)) return D(1, String(r2));
+    var s2 = function() {
+      return t2(r2, o2, Ae.apply(void 0, arguments));
+    };
+    return s2.withConfig = function(n2) {
+      return e3(t2, r2, y({}, o2, {}, n2));
+    }, s2.attrs = function(n2) {
+      return e3(t2, r2, y({}, o2, { attrs: Array.prototype.concat(o2.attrs, n2).filter(Boolean) }));
+    }, s2;
+  }(Ye, e2);
+};
+["a", "abbr", "address", "area", "article", "aside", "audio", "b", "base", "bdi", "bdo", "big", "blockquote", "body", "br", "button", "canvas", "caption", "cite", "code", "col", "colgroup", "data", "datalist", "dd", "del", "details", "dfn", "dialog", "div", "dl", "dt", "em", "embed", "fieldset", "figcaption", "figure", "footer", "form", "h1", "h2", "h3", "h4", "h5", "h6", "head", "header", "hgroup", "hr", "html", "i", "iframe", "img", "input", "ins", "kbd", "keygen", "label", "legend", "li", "link", "main", "map", "mark", "marquee", "menu", "menuitem", "meta", "meter", "nav", "noscript", "object", "ol", "optgroup", "option", "output", "p", "param", "picture", "pre", "progress", "q", "rp", "rt", "ruby", "s", "samp", "script", "section", "select", "small", "source", "span", "strong", "style", "sub", "summary", "sup", "table", "tbody", "td", "textarea", "tfoot", "th", "thead", "time", "title", "tr", "track", "u", "ul", "var", "video", "wbr", "circle", "clipPath", "defs", "ellipse", "foreignObject", "g", "image", "line", "linearGradient", "marker", "mask", "path", "pattern", "polygon", "polyline", "radialGradient", "rect", "stop", "svg", "text", "textPath", "tspan"].forEach(function(e2) {
+  qe[e2] = qe(e2);
+});
+const CaptureField = qe.div`
+	display: inline-flex;
+	align-items: center;
+	min-width: 160px;
+	height: 32px;
+	padding: 0 10px;
+	border-radius: 4px;
+	border: 1px solid ${(p2) => p2.$recording ? p2.theme.palette?.primary?.main ?? "#90caf9" : "rgba(255,255,255,0.23)"};
+	background: rgba(255,255,255,0.05);
+	cursor: pointer;
+	user-select: none;
+	font-size: 13px;
+	font-family: monospace;
+	outline: none;
+	transition: border-color 0.15s;
+
+	${(p2) => p2.$recording && Ae`
+		background: rgba(144, 202, 249, 0.08);
+	`}
+
+	&:hover {
+		border-color: rgba(255,255,255,0.5);
+	}
+`;
+const Placeholder = qe.span`
+	opacity: 0.4;
+	font-style: italic;
+	font-family: inherit;
+`;
+function buildComboString(e2) {
+  if (["Control", "Shift", "Alt", "Meta"].includes(e2.key)) return null;
+  const parts = [];
+  if (e2.ctrlKey) parts.push("Ctrl");
+  if (e2.shiftKey) parts.push("Shift");
+  if (e2.altKey) parts.push("Alt");
+  if (e2.metaKey) parts.push("Meta");
+  const NUMPAD_DISPLAY_NAMES = {
+    "Numpad0": "Num0",
+    "Numpad1": "Num1",
+    "Numpad2": "Num2",
+    "Numpad3": "Num3",
+    "Numpad4": "Num4",
+    "Numpad5": "Num5",
+    "Numpad6": "Num6",
+    "Numpad7": "Num7",
+    "Numpad8": "Num8",
+    "Numpad9": "Num9",
+    "NumpadAdd": "Num+",
+    "NumpadSubtract": "Num-",
+    "NumpadMultiply": "Num*",
+    "NumpadDivide": "Num/",
+    "NumpadDecimal": "Num.",
+    "NumpadEnter": "NumEnter",
+    "NumpadEqual": "Num="
+  };
+  if (e2.code in NUMPAD_DISPLAY_NAMES) {
+    parts.push(NUMPAD_DISPLAY_NAMES[e2.code]);
+    return parts.join("+");
+  }
+  const KEY_DISPLAY_NAMES = {
+    " ": "Space",
+    "ArrowUp": "Up",
+    "ArrowDown": "Down",
+    "ArrowLeft": "Left",
+    "ArrowRight": "Right",
+    "Enter": "Enter",
+    "Escape": "Escape",
+    "Backspace": "Backspace",
+    "Delete": "Delete",
+    "Insert": "Insert",
+    "Home": "Home",
+    "End": "End",
+    "PageUp": "PageUp",
+    "PageDown": "PageDown",
+    "Tab": "Tab",
+    "CapsLock": "CapsLock",
+    "PrintScreen": "PrintScreen",
+    "ScrollLock": "ScrollLock",
+    "Pause": "Pause",
+    "NumLock": "NumLock"
+  };
+  const key2 = KEY_DISPLAY_NAMES[e2.key] ?? (e2.key.length === 1 ? e2.key.toUpperCase() : e2.key);
+  parts.push(key2);
+  return parts.join("+");
+}
+const KeyCaptureInput = ({ value, onChange }) => {
+  const [recording, setRecording] = React$1.useState(false);
+  const fieldRef = React$1.useRef(null);
+  const handleClick = () => {
+    setRecording(true);
+    fieldRef.current?.focus();
+  };
+  const handleKeyDown2 = (e2) => {
+    e2.preventDefault();
+    e2.stopPropagation();
+    if (e2.key === "Escape") {
+      setRecording(false);
+      return;
+    }
+    const combo = buildComboString(e2);
+    if (combo) {
+      onChange(combo);
+      setRecording(false);
+    }
+  };
+  const handleBlur = () => {
+    setRecording(false);
+  };
+  return /* @__PURE__ */ jsxRuntimeExports.jsx(
+    CaptureField,
+    {
+      ref: fieldRef,
+      $recording: recording,
+      tabIndex: 0,
+      onClick: handleClick,
+      onKeyDown: handleKeyDown2,
+      onBlur: handleBlur,
+      title: recording ? "Press a key combination… (Escape to cancel)" : "Click to record a key combination",
+      children: recording ? /* @__PURE__ */ jsxRuntimeExports.jsx(Placeholder, { children: "Press keys…" }) : value || /* @__PURE__ */ jsxRuntimeExports.jsx(Placeholder, { children: "Click to record…" })
+    }
+  );
+};
+const setCurrentScene = (obs) => ({
+  scene
+}) => {
+  obs.adapter?.setCurrentProgramScene(scene);
+};
+const startRecording = (obs) => () => {
+  obs.adapter?.startRecord();
+};
+const stopRecording = (obs) => () => {
+  obs.adapter?.stopRecord();
+};
+const startStopRecording = (obs) => () => {
+  obs.adapter?.toggleRecord();
+};
+const startStreaming = (obs) => () => {
+  obs.adapter?.startStream();
+};
+const stopStreaming = (obs) => () => {
+  obs.adapter?.stopStream();
+};
+const startStopStreaming = (obs) => () => {
+  obs.adapter?.toggleStream();
+};
+const getStreamServiceSettings = async (obs) => {
+  return obs.adapter?.getStreamServiceSettings();
+};
+const setStreamServiceSettings = async (obs, serviceType, settings) => {
+  await obs.adapter?.setStreamServiceSettings(serviceType, settings);
+};
+const toggleSceneItemEnabled = (obs) => async ({
+  scene,
+  sceneItemId,
+  currentEnabled
+}) => {
+  if (!obs.adapter) return;
+  await obs.adapter.setSceneItemEnabled(scene, sceneItemId, !currentEnabled);
+};
+const setSceneItemEnabled = (obs) => async ({
+  scene,
+  sceneItemId,
+  enabled
+}) => {
+  if (!obs.adapter) return;
+  await obs.adapter.setSceneItemEnabled(scene, sceneItemId, enabled);
+};
+const setSceneItemIndex = (obs) => async ({
+  scene,
+  sceneItemId,
+  sceneItemIndex
+}) => {
+  if (!obs.adapter) return;
+  await obs.adapter.setSceneItemIndex(scene, sceneItemId, sceneItemIndex);
+};
+const moveSceneItemToTop = (obs) => async ({
+  scene,
+  sceneItemId
+}) => {
+  if (!obs.adapter) return;
+  const items = await obs.adapter.getSceneItemList(scene);
+  if (!items || items.length === 0) return;
+  const topIndex = items.length - 1;
+  await obs.adapter.setSceneItemIndex(scene, sceneItemId, topIndex);
+};
+const moveSceneItemToBottom = (obs) => async ({
+  scene,
+  sceneItemId
+}) => {
+  if (!obs.adapter) return;
+  await obs.adapter.setSceneItemIndex(scene, sceneItemId, 0);
+};
+const actions = /* @__PURE__ */ Object.freeze(/* @__PURE__ */ Object.defineProperty({
+  __proto__: null,
+  getStreamServiceSettings,
+  moveSceneItemToBottom,
+  moveSceneItemToTop,
+  setCurrentScene,
+  setSceneItemEnabled,
+  setSceneItemIndex,
+  setStreamServiceSettings,
+  startRecording,
+  startStopRecording,
+  startStopStreaming,
+  startStreaming,
+  stopRecording,
+  stopStreaming,
+  toggleSceneItemEnabled
+}, Symbol.toStringTag, { value: "Module" }));
+const useKeyboardShortcuts = (shortcuts, obs, currentSceneName) => {
+  const shortcutsRef = React$1.useRef(shortcuts);
+  const obsRef = React$1.useRef(obs);
+  shortcutsRef.current = shortcuts;
+  obsRef.current = obs;
+  const prevSceneNameRef = React$1.useRef(void 0);
+  const currentSceneNameRef = React$1.useRef(currentSceneName);
+  React$1.useEffect(() => {
+    if (currentSceneName !== void 0 && currentSceneName !== currentSceneNameRef.current) {
+      prevSceneNameRef.current = currentSceneNameRef.current;
+      currentSceneNameRef.current = currentSceneName;
+    }
+  }, [currentSceneName]);
+  React$1.useEffect(() => {
+    const handler = (e2) => {
+      if (document.querySelector('[role="dialog"]')) return;
+      const active = document.activeElement;
+      if (active instanceof HTMLInputElement || active instanceof HTMLTextAreaElement) return;
+      const combo = buildComboString(e2);
+      if (!combo) return;
+      const matched = shortcutsRef.current.find((s) => s.keys === combo);
+      if (!matched) return;
+      e2.preventDefault();
+      const currentObs = obsRef.current;
+      const { action } = matched;
+      switch (action.type) {
+        case "toggleRecording":
+          startStopRecording(currentObs)();
+          break;
+        case "startRecording":
+          startRecording(currentObs)();
+          break;
+        case "stopRecording":
+          stopRecording(currentObs)();
+          break;
+        case "toggleStreaming":
+          startStopStreaming(currentObs)();
+          break;
+        case "startStreaming":
+          startStreaming(currentObs)();
+          break;
+        case "stopStreaming":
+          stopStreaming(currentObs)();
+          break;
+        case "switchScene":
+          setCurrentScene(currentObs)({ scene: action.sceneName });
+          break;
+        case "switchToPreviousScene": {
+          const prevScene = prevSceneNameRef.current;
+          if (prevScene) setCurrentScene(currentObs)({ scene: prevScene });
+          break;
+        }
+        case "toggleSceneItem": {
+          const { sceneName, sceneItemName } = action;
+          if (!currentObs.adapter) break;
+          currentObs.adapter.getSceneItemList(sceneName).then((items) => {
+            const item = items.find((it) => it.sourceName === sceneItemName);
+            if (!item) return;
+            toggleSceneItemEnabled(currentObs)({
+              scene: sceneName,
+              sceneItemId: item.sceneItemId,
+              currentEnabled: item.sceneItemEnabled ?? true
+            });
+          });
+          break;
+        }
+        case "moveSceneItemToTop": {
+          const { sceneName, sceneItemName } = action;
+          if (!currentObs.adapter) break;
+          currentObs.adapter.getSceneItemList(sceneName).then((items) => {
+            const item = items.find((it) => it.sourceName === sceneItemName);
+            if (!item) return;
+            const topIndex = items.length - 1;
+            currentObs.adapter?.setSceneItemIndex(sceneName, item.sceneItemId, topIndex);
+          });
+          break;
+        }
+        case "toggleAudioMute":
+          currentObs.adapter?.toggleInputMute(action.inputName);
+          break;
+        case "muteAudio":
+          currentObs.adapter?.setInputMute(action.inputName, true);
+          break;
+        case "unmuteAudio":
+          currentObs.adapter?.setInputMute(action.inputName, false);
+          break;
+        case "startRtsp":
+          window.dispatchEvent(new CustomEvent("rtsp-control", { detail: { command: "start", streamId: `rtsp-${action.streamId}` } }));
+          break;
+        case "stopRtsp":
+          window.dispatchEvent(new CustomEvent("rtsp-control", { detail: { command: "stop", streamId: `rtsp-${action.streamId}` } }));
+          break;
+        case "toggleRtsp":
+          window.dispatchEvent(new CustomEvent("rtsp-control", { detail: { command: "toggle", streamId: `rtsp-${action.streamId}` } }));
+          break;
+        case "selectConfig":
+          window.dispatchEvent(new CustomEvent("obs-tiles-open-config-selector"));
+          break;
+        case "startYoutubeLive":
+          window.dispatchEvent(new CustomEvent("youtube-live-control", { detail: { command: "start" } }));
+          break;
+        case "stopYoutubeLive":
+          window.dispatchEvent(new CustomEvent("youtube-live-control", { detail: { command: "stop" } }));
+          break;
+      }
+    };
+    window.addEventListener("keydown", handler);
+    return () => window.removeEventListener("keydown", handler);
+  }, []);
+};
 class EventTrigger {
   _callbacks = {};
   on(event, fn) {
@@ -19903,6 +21212,20 @@ const isRecording = (obs) => createProvider({
 const useIsRecording = (obs) => {
   return obs.useDataProvider("isRecording");
 };
+async function decodeAndDraw(base64OrDataUrl, canvas) {
+  const base64 = base64OrDataUrl.includes(",") ? base64OrDataUrl.split(",")[1] : base64OrDataUrl;
+  const binary = atob(base64);
+  const bytes = new Uint8Array(binary.length);
+  for (let i = 0; i < binary.length; i++) bytes[i] = binary.charCodeAt(i);
+  const blob = new Blob([bytes], { type: "image/jpeg" });
+  const bitmap = await createImageBitmap(blob);
+  if (canvas.width !== bitmap.width || canvas.height !== bitmap.height) {
+    canvas.width = bitmap.width;
+    canvas.height = bitmap.height;
+  }
+  canvas.getContext("2d")?.drawImage(bitmap, 0, 0);
+  bitmap.close();
+}
 const sceneImage = (obs, {
   scene,
   tileSize,
@@ -19945,6 +21268,42 @@ const sceneImage = (obs, {
 });
 const useSceneImage = (obs, args) => {
   return obs.useDataProvider("sceneImage", args);
+};
+const useSceneCanvas = (obs, { scene, tileSize, refreshTime = 1e3 }) => {
+  const canvasRef = React$1.useRef(null);
+  const [hasFrame, setHasFrame] = React$1.useState(false);
+  const hasFrameRef = React$1.useRef(false);
+  React$1.useEffect(() => {
+    hasFrameRef.current = false;
+    setHasFrame(false);
+    if (!obs.connected || !obs.adapter || !scene) return;
+    let attached = true;
+    let timeout;
+    const fetchAndDraw = () => {
+      if (!attached || !obs.adapter) return;
+      obs.adapter.getSourceScreenshot(scene, "jpg", tileSize * 16, tileSize * 9).then((imageData) => {
+        if (!attached || !imageData) return;
+        const canvas = canvasRef.current;
+        if (!canvas) return;
+        return decodeAndDraw(imageData, canvas).then(() => {
+          if (!attached) return;
+          if (!hasFrameRef.current) {
+            hasFrameRef.current = true;
+            setHasFrame(true);
+          }
+          timeout = setTimeout(fetchAndDraw, refreshTime);
+        });
+      }).catch(() => {
+        if (attached) timeout = setTimeout(fetchAndDraw, refreshTime);
+      });
+    };
+    fetchAndDraw();
+    return () => {
+      attached = false;
+      if (timeout) clearTimeout(timeout);
+    };
+  }, [obs.connected, scene, tileSize, refreshTime]);
+  return { canvasRef, hasFrame };
 };
 const sceneList = (obs) => createProvider({
   init: (onChanged) => {
@@ -20236,6 +21595,7 @@ const factories = /* @__PURE__ */ Object.freeze(/* @__PURE__ */ Object.definePro
   useInputVolumeMeters,
   useIsRecording,
   useIsStreaming,
+  useSceneCanvas,
   useSceneImage,
   useSceneItemList,
   useSceneItemProperties,
@@ -20244,85 +21604,6 @@ const factories = /* @__PURE__ */ Object.freeze(/* @__PURE__ */ Object.definePro
   useTransition,
   useVideoInfo,
   videoInfo
-}, Symbol.toStringTag, { value: "Module" }));
-const setCurrentScene = (obs) => ({
-  scene
-}) => {
-  obs.adapter?.setCurrentProgramScene(scene);
-};
-const startRecording = (obs) => () => {
-  obs.adapter?.startRecord();
-};
-const stopRecording = (obs) => () => {
-  obs.adapter?.stopRecord();
-};
-const startStopRecording = (obs) => () => {
-  obs.adapter?.toggleRecord();
-};
-const startStreaming = (obs) => () => {
-  obs.adapter?.startStream();
-};
-const stopStreaming = (obs) => () => {
-  obs.adapter?.stopStream();
-};
-const startStopStreaming = (obs) => () => {
-  obs.adapter?.toggleStream();
-};
-const toggleSceneItemEnabled = (obs) => async ({
-  scene,
-  sceneItemId,
-  currentEnabled
-}) => {
-  if (!obs.adapter) return;
-  await obs.adapter.setSceneItemEnabled(scene, sceneItemId, !currentEnabled);
-};
-const setSceneItemEnabled = (obs) => async ({
-  scene,
-  sceneItemId,
-  enabled
-}) => {
-  if (!obs.adapter) return;
-  await obs.adapter.setSceneItemEnabled(scene, sceneItemId, enabled);
-};
-const setSceneItemIndex = (obs) => async ({
-  scene,
-  sceneItemId,
-  sceneItemIndex
-}) => {
-  if (!obs.adapter) return;
-  await obs.adapter.setSceneItemIndex(scene, sceneItemId, sceneItemIndex);
-};
-const moveSceneItemToTop = (obs) => async ({
-  scene,
-  sceneItemId
-}) => {
-  if (!obs.adapter) return;
-  const items = await obs.adapter.getSceneItemList(scene);
-  if (!items || items.length === 0) return;
-  const topIndex = items.length - 1;
-  await obs.adapter.setSceneItemIndex(scene, sceneItemId, topIndex);
-};
-const moveSceneItemToBottom = (obs) => async ({
-  scene,
-  sceneItemId
-}) => {
-  if (!obs.adapter) return;
-  await obs.adapter.setSceneItemIndex(scene, sceneItemId, 0);
-};
-const actions = /* @__PURE__ */ Object.freeze(/* @__PURE__ */ Object.defineProperty({
-  __proto__: null,
-  moveSceneItemToBottom,
-  moveSceneItemToTop,
-  setCurrentScene,
-  setSceneItemEnabled,
-  setSceneItemIndex,
-  startRecording,
-  startStopRecording,
-  startStopStreaming,
-  startStreaming,
-  stopRecording,
-  stopStreaming,
-  toggleSceneItemEnabled
 }, Symbol.toStringTag, { value: "Module" }));
 async function sha256Base64(data) {
   const encoder = new TextEncoder();
@@ -20632,6 +21913,21 @@ class V4Adapter {
   }
   async toggleStream() {
     await this._sendRaw("StartStopStreaming", {});
+  }
+  async getStreamServiceSettings() {
+    const data = await this._sendRaw("GetStreamSettings", {});
+    const normalized = camelCaseKeys(data);
+    return {
+      serviceType: normalized.type,
+      settings: normalized.settings ?? {}
+    };
+  }
+  async setStreamServiceSettings(serviceType, settings) {
+    await this._sendRaw("SetStreamSettings", {
+      type: serviceType,
+      settings,
+      save: true
+    });
   }
   // =========================================================================
   // Inputs (Audio)
@@ -21127,6 +22423,19 @@ class V5Adapter {
   async toggleStream() {
     await this._sendRequest("ToggleStream", {});
   }
+  async getStreamServiceSettings() {
+    const data = await this._sendRequest("GetStreamServiceSettings", {});
+    return {
+      serviceType: data.streamServiceType,
+      settings: data.streamServiceSettings
+    };
+  }
+  async setStreamServiceSettings(serviceType, settings) {
+    await this._sendRequest("SetStreamServiceSettings", {
+      streamServiceType: serviceType,
+      streamServiceSettings: settings
+    });
+  }
   // =========================================================================
   // Inputs (Audio)
   // =========================================================================
@@ -21432,16 +22741,22 @@ const OBSWebsocketProvider = ({ children }) => {
   const getConnection = reactExports.useCallback(
     (connectionName) => {
       const connections = connectionsRef.current;
-      if (!connections[connectionName]) {
-        const connSettings = currentConfig.connections[connectionName];
+      const resolvedConnectionName = connectionName ?? Object.keys(currentConfig.connections || {})[0];
+      if (!resolvedConnectionName) {
+        console.error("[obs-websocket] No OBS connections configured.");
+        return null;
+      }
+      if (!connections[resolvedConnectionName]) {
+        const connSettings = currentConfig.connections[resolvedConnectionName];
         if (!connSettings) {
-          throw new Error(`Missing connection information for '${connectionName}'. Available connections (${Object.keys(currentConfig.connections).join(", ")})`);
+          console.error(`Connection settings for '${resolvedConnectionName}' not found. Available connections (${Object.keys(currentConfig.connections).join(", ")})`);
+          return null;
         }
         const connection = {
           adapter: null,
           shouldBeConnected: false,
           public: {
-            name: connectionName,
+            name: resolvedConnectionName,
             connected: false,
             connecting: false,
             failed: false,
@@ -21474,7 +22789,7 @@ const OBSWebsocketProvider = ({ children }) => {
             console.log("[obs-websocket] AudioInput tiles detected, will subscribe to InputVolumeMeters");
           }
           try {
-            console.debug(`[obs-websocket] Connecting to '${connectionName}' at ${connSettings.address} (forceVersion=${forceVersion})`);
+            console.debug(`[obs-websocket] Connecting to '${resolvedConnectionName}' at ${connSettings.address} (forceVersion=${forceVersion})`);
             const adapter = await createAdapter({
               address: connSettings.address,
               password: password || void 0,
@@ -21485,9 +22800,9 @@ const OBSWebsocketProvider = ({ children }) => {
             connection.public.adapter = adapter;
             connection.public.connected = true;
             connection.public.apiVersion = adapter.version;
-            console.log(`[obs-websocket] Connected to ${connectionName} using v${adapter.version} API`);
+            console.log(`[obs-websocket] Connected to ${resolvedConnectionName} using v${adapter.version} API`);
             adapter.on("ConnectionClosed", () => {
-              console.log(`[obs-websocket] Connection closed for ${connectionName}`);
+              console.log(`[obs-websocket] Connection closed for ${resolvedConnectionName}`);
               connection.public.connected = false;
               connection.public.adapter = void 0;
               connection.adapter = null;
@@ -21499,7 +22814,7 @@ const OBSWebsocketProvider = ({ children }) => {
               }, 5e3);
             });
             adapter.on("ConnectionError", (err) => {
-              console.error(`[obs-websocket] Error for ${connectionName}:`, err);
+              console.error(`[obs-websocket] Error for ${resolvedConnectionName}:`, err);
               connection.public.failed = err;
             });
           } catch (err) {
@@ -21514,7 +22829,7 @@ const OBSWebsocketProvider = ({ children }) => {
                 return;
               }
             }
-            console.error(`[obs-websocket] Error connecting to '${connectionName}':`, errorMsg);
+            console.error(`[obs-websocket] Error connecting to '${resolvedConnectionName}':`, errorMsg);
             connection.public.failedConnection = errorMsg;
           } finally {
             connection.public.connecting = false;
@@ -21573,9 +22888,9 @@ const OBSWebsocketProvider = ({ children }) => {
             action(args);
           }
         };
-        connections[connectionName] = connection;
+        connections[resolvedConnectionName] = connection;
       }
-      return connections[connectionName];
+      return connections[resolvedConnectionName];
     },
     [currentConfig?.connections]
   );
@@ -21626,9 +22941,539 @@ const useObs = ({
   connection: name
 }) => {
   const { getConnection } = reactExports.useContext(obsContext);
-  const connection = getConnection(name || "main");
+  const connection = getConnection(name ?? null);
   return connection?.public;
 };
+const TOKEN_ENDPOINT = "https://oauth2.googleapis.com/token";
+const AUTH_ENDPOINT = "https://accounts.google.com/o/oauth2/v2/auth";
+const SCOPE = "https://www.googleapis.com/auth/youtube.force-ssl";
+function generateCodeVerifier() {
+  const array = new Uint8Array(64);
+  crypto.getRandomValues(array);
+  return base64urlEncode(array);
+}
+async function generateCodeChallenge(verifier) {
+  const encoded = new TextEncoder().encode(verifier);
+  const digest = await crypto.subtle.digest("SHA-256", encoded);
+  return base64urlEncode(new Uint8Array(digest));
+}
+function base64urlEncode(buffer2) {
+  let str = "";
+  buffer2.forEach((b2) => {
+    str += String.fromCharCode(b2);
+  });
+  return btoa(str).replace(/\+/g, "-").replace(/\//g, "_").replace(/=/g, "");
+}
+class YouTubeAuthService {
+  clientId;
+  clientSecret;
+  tokens = null;
+  constructor(clientId, clientSecret, storedRefreshToken) {
+    this.clientId = clientId;
+    this.clientSecret = clientSecret;
+    if (storedRefreshToken) {
+      this.tokens = { accessToken: "", expiresAt: 0, refreshToken: storedRefreshToken };
+    }
+  }
+  get isAuthenticated() {
+    return Boolean(this.tokens?.refreshToken);
+  }
+  get refreshToken() {
+    return this.tokens?.refreshToken;
+  }
+  /**
+   * Returns a valid access token, refreshing it silently if expired.
+   * Throws if not authenticated.
+   */
+  async getAccessToken() {
+    if (!this.tokens?.refreshToken) {
+      throw new Error("Not authenticated — call startOAuthFlow() first");
+    }
+    const now2 = Date.now();
+    if (!this.tokens.accessToken || this.tokens.expiresAt - now2 < 6e4) {
+      await this._refreshAccessToken();
+    }
+    return this.tokens.accessToken;
+  }
+  /**
+   * Starts the PKCE OAuth flow (Electron only).
+   * Opens the system browser and waits for the redirect code via IPC.
+   * Returns the refresh token (caller should persist it in settings).
+   */
+  async startOAuthFlow() {
+    if (!window.ipcRenderer) {
+      throw new Error("OAuth flow is only supported in Electron mode");
+    }
+    const codeVerifier = generateCodeVerifier();
+    const codeChallenge = await generateCodeChallenge(codeVerifier);
+    const { port } = await window.ipcRenderer.youtubeOAuthStart();
+    const params = new URLSearchParams({
+      client_id: this.clientId,
+      redirect_uri: `http://localhost:${port}`,
+      response_type: "code",
+      scope: SCOPE,
+      code_challenge: codeChallenge,
+      code_challenge_method: "S256",
+      access_type: "offline",
+      prompt: "consent"
+    });
+    const authUrl = `${AUTH_ENDPOINT}?${params.toString()}`;
+    window.ipcRenderer.youtubeOpenBrowser(authUrl);
+    const { code, error } = await window.ipcRenderer.youtubeOAuthResult();
+    if (error || !code) {
+      throw new Error(error ?? "OAuth flow did not return a code");
+    }
+    const tokens = await this._exchangeCode(code, codeVerifier, `http://localhost:${port}`);
+    this.tokens = tokens;
+    return tokens.refreshToken;
+  }
+  /**
+   * Clear stored tokens (sign out).
+   */
+  clearTokens() {
+    this.tokens = null;
+  }
+  // ---------------------------------------------------------------------------
+  // Private
+  // ---------------------------------------------------------------------------
+  async _exchangeCode(code, codeVerifier, redirectUri) {
+    const body = new URLSearchParams({
+      code,
+      client_id: this.clientId,
+      client_secret: this.clientSecret,
+      redirect_uri: redirectUri,
+      grant_type: "authorization_code",
+      code_verifier: codeVerifier
+    });
+    const resp = await fetch(TOKEN_ENDPOINT, {
+      method: "POST",
+      headers: { "Content-Type": "application/x-www-form-urlencoded" },
+      body: body.toString()
+    });
+    if (!resp.ok) {
+      const text = await resp.text();
+      throw new Error(`Token exchange failed: ${resp.status} ${text}`);
+    }
+    const json = await resp.json();
+    return {
+      accessToken: json.access_token,
+      expiresAt: Date.now() + (json.expires_in ?? 3600) * 1e3,
+      refreshToken: json.refresh_token
+    };
+  }
+  async _refreshAccessToken() {
+    if (!this.tokens?.refreshToken) throw new Error("No refresh token available");
+    const body = new URLSearchParams({
+      client_id: this.clientId,
+      client_secret: this.clientSecret,
+      refresh_token: this.tokens.refreshToken,
+      grant_type: "refresh_token"
+    });
+    const resp = await fetch(TOKEN_ENDPOINT, {
+      method: "POST",
+      headers: { "Content-Type": "application/x-www-form-urlencoded" },
+      body: body.toString()
+    });
+    if (!resp.ok) {
+      const text = await resp.text();
+      if (resp.status === 400) {
+        this.tokens = null;
+        throw new Error("Refresh token revoked — re-authentication required");
+      }
+      throw new Error(`Token refresh failed: ${resp.status} ${text}`);
+    }
+    const json = await resp.json();
+    this.tokens = {
+      ...this.tokens,
+      accessToken: json.access_token,
+      expiresAt: Date.now() + (json.expires_in ?? 3600) * 1e3,
+      // Google may return a new refresh token; keep the old one if not
+      refreshToken: json.refresh_token ?? this.tokens.refreshToken
+    };
+  }
+}
+const API_BASE = "https://www.googleapis.com/youtube/v3";
+class YouTubeApiError extends Error {
+  constructor(message, status, body) {
+    super(message);
+    this.status = status;
+    this.body = body;
+    this.name = "YouTubeApiError";
+  }
+}
+async function apiFetch(url, accessToken, options) {
+  const resp = await fetch(url, {
+    ...options,
+    headers: {
+      Authorization: `Bearer ${accessToken}`,
+      "Content-Type": "application/json",
+      ...options?.headers ?? {}
+    }
+  });
+  if (!resp.ok) {
+    let body;
+    try {
+      body = await resp.json();
+    } catch {
+      body = await resp.text().catch(() => null);
+    }
+    throw new YouTubeApiError(
+      `YouTube API ${resp.status}: ${body?.error?.message ?? resp.statusText}`,
+      resp.status,
+      body
+    );
+  }
+  if (resp.status === 204) return null;
+  return resp.json();
+}
+class YouTubeLiveService {
+  /**
+   * Create a liveStream resource (defines the ingest point).
+   * Returns the stream ID, ingest URL, and stream key.
+   */
+  async createStream(accessToken, title) {
+    const body = {
+      snippet: { title },
+      cdn: {
+        frameRate: "variable",
+        ingestionType: "rtmp",
+        resolution: "variable"
+      }
+    };
+    const data = await apiFetch(
+      `${API_BASE}/liveStreams?part=snippet,cdn`,
+      accessToken,
+      { method: "POST", body: JSON.stringify(body) }
+    );
+    return {
+      streamId: data.id,
+      ingestionAddress: data.cdn.ingestionInfo.ingestionAddress,
+      streamKey: data.cdn.ingestionInfo.streamName
+    };
+  }
+  /**
+   * Create a liveBroadcast resource.
+   *  - enableAutoStart: true  → YouTube auto-transitions to `live` when OBS sends data
+   *  - enableAutoStop:  false → broadcast persists through OBS crashes (user must stop explicitly)
+   */
+  async createBroadcast(accessToken, opts) {
+    const scheduledStartTime = (/* @__PURE__ */ new Date()).toISOString();
+    const body = {
+      snippet: {
+        title: opts.title,
+        description: opts.description ?? "",
+        scheduledStartTime
+      },
+      contentDetails: {
+        enableAutoStart: true,
+        enableAutoStop: false,
+        latencyPreference: opts.latencyPreference,
+        monitorStream: { enableMonitorStream: false }
+      },
+      status: {
+        privacyStatus: opts.privacyStatus,
+        selfDeclaredMadeForKids: false
+      }
+    };
+    const data = await apiFetch(
+      `${API_BASE}/liveBroadcasts?part=snippet,contentDetails,status`,
+      accessToken,
+      { method: "POST", body: JSON.stringify(body) }
+    );
+    return data.id;
+  }
+  /**
+   * Bind a liveStream to a liveBroadcast.
+   */
+  async bindStream(accessToken, broadcastId, streamId) {
+    await apiFetch(
+      `${API_BASE}/liveBroadcasts/bind?id=${encodeURIComponent(broadcastId)}&part=id,contentDetails&streamId=${encodeURIComponent(streamId)}`,
+      accessToken,
+      { method: "POST", body: "{}" }
+    );
+  }
+  /**
+   * Transition a broadcast to a new status.
+   * Use `'complete'` to end the broadcast after OBS stops streaming.
+   */
+  async transitionBroadcast(accessToken, broadcastId, broadcastStatus) {
+    await apiFetch(
+      `${API_BASE}/liveBroadcasts/transition?broadcastStatus=${broadcastStatus}&id=${encodeURIComponent(broadcastId)}&part=id,status`,
+      accessToken,
+      { method: "POST", body: "{}" }
+    );
+  }
+  /**
+   * Fetch the stream key for a given liveStream resource id.
+   * Used when resuming an existing broadcast.
+   */
+  async getStreamKey(accessToken, streamId) {
+    const data = await apiFetch(
+      `${API_BASE}/liveStreams?part=snippet,cdn&id=${encodeURIComponent(streamId)}`,
+      accessToken
+    );
+    const item = data.items?.[0];
+    if (!item) throw new YouTubeApiError("liveStream not found", 404, data);
+    return {
+      streamId: item.id,
+      ingestionAddress: item.cdn.ingestionInfo.ingestionAddress,
+      streamKey: item.cdn.ingestionInfo.streamName
+    };
+  }
+  /**
+   * Check for broadcasts that are currently `active` or in `testing` state.
+   * Deduplicated by broadcastId. Returns up to 20 combined results.
+   *
+   * Note: `broadcastStatus=upcoming` is the correct list-filter for broadcasts
+   * whose lifeCycleStatus is `created`, `ready`, or `testing`.
+   * There is no `testing` filter value on the list endpoint.
+   */
+  async checkForExistingBroadcasts(accessToken) {
+    const [activeData, upcomingData] = await Promise.all([
+      apiFetch(
+        `${API_BASE}/liveBroadcasts?part=snippet,status,contentDetails&broadcastStatus=active&maxResults=10`,
+        accessToken
+      ),
+      apiFetch(
+        `${API_BASE}/liveBroadcasts?part=snippet,status,contentDetails&broadcastStatus=upcoming&maxResults=10`,
+        accessToken
+      )
+    ]);
+    const seen = /* @__PURE__ */ new Set();
+    const results = [];
+    for (const item of [...activeData.items ?? [], ...upcomingData.items ?? []]) {
+      if (seen.has(item.id)) continue;
+      seen.add(item.id);
+      results.push({
+        broadcastId: item.id,
+        title: item.snippet?.title ?? "",
+        scheduledStartTime: item.snippet?.scheduledStartTime ?? "",
+        lifeCycleStatus: item.status?.lifeCycleStatus ?? "",
+        boundStreamId: item.contentDetails?.boundStreamId ?? null
+      });
+    }
+    return results;
+  }
+  /**
+   * Fetch latest status for a single broadcast (used for live polling).
+   */
+  async getBroadcastStatus(accessToken, broadcastId) {
+    const data = await apiFetch(
+      `${API_BASE}/liveBroadcasts?part=snippet,statistics,status&id=${encodeURIComponent(broadcastId)}`,
+      accessToken
+    );
+    const item = data.items?.[0];
+    if (!item) throw new YouTubeApiError("broadcast not found", 404, data);
+    return {
+      lifeCycleStatus: item.status?.lifeCycleStatus ?? "",
+      concurrentViewers: item.statistics?.concurrentViewers != null ? Number(item.statistics.concurrentViewers) : null
+    };
+  }
+}
+const BUNDLED_CLIENT_ID = "";
+const BUNDLED_CLIENT_SECRET = "";
+const hasBundledCredentials = Boolean(BUNDLED_CLIENT_ID);
+const POLL_INTERVAL_MS = 3e4;
+function useYouTubeLive(obs, config2) {
+  const [state, setState] = React$1.useState({
+    phase: "idle",
+    isAuthenticated: Boolean(config2?.refreshToken),
+    broadcastId: null,
+    concurrentViewers: null,
+    error: null,
+    existingBroadcasts: []
+  });
+  const authServiceRef = React$1.useRef(null);
+  const liveServiceRef = React$1.useRef(new YouTubeLiveService());
+  React$1.useEffect(() => {
+    const clientId = config2?.clientId || BUNDLED_CLIENT_ID;
+    const clientSecret = config2?.clientSecret || BUNDLED_CLIENT_SECRET;
+    if (!clientId || !clientSecret) {
+      authServiceRef.current = null;
+      setState((prev) => ({ ...prev, isAuthenticated: false }));
+      return;
+    }
+    authServiceRef.current = new YouTubeAuthService(
+      clientId,
+      clientSecret,
+      config2?.refreshToken
+    );
+    setState((prev) => ({ ...prev, isAuthenticated: authServiceRef.current.isAuthenticated }));
+  }, [config2?.clientId, config2?.clientSecret, config2?.refreshToken]);
+  React$1.useEffect(() => {
+    if (state.phase !== "live" || !state.broadcastId) return;
+    const broadcastId = state.broadcastId;
+    let cancelled = false;
+    const poll = async () => {
+      const auth = authServiceRef.current;
+      if (!auth) return;
+      try {
+        const token2 = await auth.getAccessToken();
+        const status = await liveServiceRef.current.getBroadcastStatus(token2, broadcastId);
+        if (cancelled) return;
+        setState((prev) => ({
+          ...prev,
+          concurrentViewers: status.concurrentViewers,
+          // If YouTube externally ended the broadcast, go back to idle
+          phase: status.lifeCycleStatus === "complete" ? "idle" : prev.phase,
+          broadcastId: status.lifeCycleStatus === "complete" ? null : prev.broadcastId
+        }));
+      } catch (e2) {
+        console.error("[useYouTubeLive] poll error:", e2);
+      }
+    };
+    const id2 = setInterval(poll, POLL_INTERVAL_MS);
+    return () => {
+      cancelled = true;
+      clearInterval(id2);
+    };
+  }, [state.phase, state.broadcastId]);
+  const setError = (message) => setState((prev) => ({ ...prev, phase: "error", error: message }));
+  const checkExistingBroadcasts = React$1.useCallback(async () => {
+    const auth = authServiceRef.current;
+    if (!auth) throw new Error("Not authenticated");
+    setState((prev) => ({ ...prev, phase: "checking-existing", error: null }));
+    try {
+      const token2 = await auth.getAccessToken();
+      const list = await liveServiceRef.current.checkForExistingBroadcasts(token2);
+      setState((prev) => ({ ...prev, phase: "idle", existingBroadcasts: list }));
+      return list;
+    } catch (e2) {
+      setError(_toErrorMessage(e2));
+      return [];
+    }
+  }, []);
+  const goLive = React$1.useCallback(async (opts) => {
+    const auth = authServiceRef.current;
+    if (!auth) return setError("Not authenticated");
+    if (!obs) return setError("OBS is not connected");
+    try {
+      setState((prev) => ({ ...prev, phase: "creating-broadcast", error: null }));
+      const token2 = await auth.getAccessToken();
+      const liveService = liveServiceRef.current;
+      const [stream, broadcastId] = await Promise.all([
+        liveService.createStream(token2, opts.title),
+        liveService.createBroadcast(token2, opts)
+      ]);
+      await liveService.bindStream(token2, broadcastId, stream.streamId);
+      setState((prev) => ({ ...prev, phase: "configuring-obs" }));
+      await setStreamServiceSettings(obs, "rtmp_custom", {
+        server: stream.ingestionAddress,
+        key: stream.streamKey,
+        bwtest: false,
+        use_auth: false
+      });
+      setState((prev) => ({ ...prev, phase: "starting-stream" }));
+      startStreaming(obs)();
+      setState((prev) => ({
+        ...prev,
+        phase: "live",
+        broadcastId,
+        concurrentViewers: null,
+        existingBroadcasts: []
+      }));
+    } catch (e2) {
+      setError(_toErrorMessage(e2));
+    }
+  }, [obs]);
+  const resumeBroadcast = React$1.useCallback(async (broadcast) => {
+    const auth = authServiceRef.current;
+    if (!auth) return setError("Not authenticated");
+    if (!obs) return setError("OBS is not connected");
+    if (!broadcast.boundStreamId) return setError("Broadcast has no bound stream");
+    try {
+      setState((prev) => ({ ...prev, phase: "configuring-obs", error: null }));
+      const token2 = await auth.getAccessToken();
+      const stream = await liveServiceRef.current.getStreamKey(token2, broadcast.boundStreamId);
+      await setStreamServiceSettings(obs, "rtmp_custom", {
+        server: stream.ingestionAddress,
+        key: stream.streamKey,
+        bwtest: false,
+        use_auth: false
+      });
+      setState((prev) => ({ ...prev, phase: "starting-stream" }));
+      startStreaming(obs)();
+      setState((prev) => ({
+        ...prev,
+        phase: "live",
+        broadcastId: broadcast.broadcastId,
+        concurrentViewers: null,
+        existingBroadcasts: []
+      }));
+    } catch (e2) {
+      setError(_toErrorMessage(e2));
+    }
+  }, [obs]);
+  const stopLive = React$1.useCallback(async () => {
+    const auth = authServiceRef.current;
+    if (!obs) return setError("OBS is not connected");
+    setState((prev) => ({ ...prev, phase: "stopping" }));
+    try {
+      stopStreaming(obs)();
+      if (auth && state.broadcastId) {
+        const token2 = await auth.getAccessToken();
+        await liveServiceRef.current.transitionBroadcast(token2, state.broadcastId, "complete");
+      }
+      setState((prev) => ({
+        ...prev,
+        phase: "idle",
+        broadcastId: null,
+        concurrentViewers: null
+      }));
+    } catch (e2) {
+      setState((prev) => ({ ...prev, phase: "idle", broadcastId: null, concurrentViewers: null }));
+      console.error("[useYouTubeLive] stopLive error:", e2);
+    }
+  }, [obs, state.broadcastId]);
+  const endExistingBroadcast = React$1.useCallback(async (broadcastId) => {
+    const auth = authServiceRef.current;
+    if (!auth) return setError("Not authenticated");
+    try {
+      const token2 = await auth.getAccessToken();
+      await liveServiceRef.current.transitionBroadcast(token2, broadcastId, "complete");
+      setState((prev) => ({
+        ...prev,
+        existingBroadcasts: prev.existingBroadcasts.filter((b2) => b2.broadcastId !== broadcastId)
+      }));
+    } catch (e2) {
+      setError(_toErrorMessage(e2));
+    }
+  }, []);
+  const clearError = React$1.useCallback(() => {
+    setState((prev) => ({ ...prev, phase: "idle", error: null }));
+  }, []);
+  return {
+    ...state,
+    checkExistingBroadcasts,
+    goLive,
+    resumeBroadcast,
+    stopLive,
+    endExistingBroadcast,
+    clearError
+  };
+}
+function _toErrorMessage(e2) {
+  if (e2 instanceof YouTubeApiError) return e2.message;
+  if (e2 instanceof Error) return e2.message;
+  return String(e2);
+}
+const YouTubeLiveContext = React$1.createContext(null);
+const YouTubeLiveProvider = ({ children }) => {
+  const { settings, currentConfig } = useSettings();
+  const youtubeObsConnection = settings.youtube?.obsConnection;
+  const hasConfiguredYouTubeConnection = Boolean(
+    youtubeObsConnection && currentConfig.connections?.[youtubeObsConnection]
+  );
+  const obsConnectionName = hasConfiguredYouTubeConnection ? youtubeObsConnection : currentConfig.connection;
+  const obs = useObs({ connection: obsConnectionName });
+  const yt = useYouTubeLive(obs, settings.youtube);
+  return /* @__PURE__ */ jsxRuntimeExports.jsx(YouTubeLiveContext.Provider, { value: { yt, obs }, children });
+};
+function useYouTubeLiveContext() {
+  const ctx = React$1.useContext(YouTubeLiveContext);
+  if (!ctx) throw new Error("useYouTubeLiveContext must be used within YouTubeLiveProvider");
+  return ctx;
+}
 var Space_Separator = /[\u1680\u2000-\u200A\u202F\u205F\u3000]/;
 var ID_Start = /[\xAA\xB5\xBA\xC0-\xD6\xD8-\xF6\xF8-\u02C1\u02C6-\u02D1\u02E0-\u02E4\u02EC\u02EE\u0370-\u0374\u0376\u0377\u037A-\u037D\u037F\u0386\u0388-\u038A\u038C\u038E-\u03A1\u03A3-\u03F5\u03F7-\u0481\u048A-\u052F\u0531-\u0556\u0559\u0561-\u0587\u05D0-\u05EA\u05F0-\u05F2\u0620-\u064A\u066E\u066F\u0671-\u06D3\u06D5\u06E5\u06E6\u06EE\u06EF\u06FA-\u06FC\u06FF\u0710\u0712-\u072F\u074D-\u07A5\u07B1\u07CA-\u07EA\u07F4\u07F5\u07FA\u0800-\u0815\u081A\u0824\u0828\u0840-\u0858\u0860-\u086A\u08A0-\u08B4\u08B6-\u08BD\u0904-\u0939\u093D\u0950\u0958-\u0961\u0971-\u0980\u0985-\u098C\u098F\u0990\u0993-\u09A8\u09AA-\u09B0\u09B2\u09B6-\u09B9\u09BD\u09CE\u09DC\u09DD\u09DF-\u09E1\u09F0\u09F1\u09FC\u0A05-\u0A0A\u0A0F\u0A10\u0A13-\u0A28\u0A2A-\u0A30\u0A32\u0A33\u0A35\u0A36\u0A38\u0A39\u0A59-\u0A5C\u0A5E\u0A72-\u0A74\u0A85-\u0A8D\u0A8F-\u0A91\u0A93-\u0AA8\u0AAA-\u0AB0\u0AB2\u0AB3\u0AB5-\u0AB9\u0ABD\u0AD0\u0AE0\u0AE1\u0AF9\u0B05-\u0B0C\u0B0F\u0B10\u0B13-\u0B28\u0B2A-\u0B30\u0B32\u0B33\u0B35-\u0B39\u0B3D\u0B5C\u0B5D\u0B5F-\u0B61\u0B71\u0B83\u0B85-\u0B8A\u0B8E-\u0B90\u0B92-\u0B95\u0B99\u0B9A\u0B9C\u0B9E\u0B9F\u0BA3\u0BA4\u0BA8-\u0BAA\u0BAE-\u0BB9\u0BD0\u0C05-\u0C0C\u0C0E-\u0C10\u0C12-\u0C28\u0C2A-\u0C39\u0C3D\u0C58-\u0C5A\u0C60\u0C61\u0C80\u0C85-\u0C8C\u0C8E-\u0C90\u0C92-\u0CA8\u0CAA-\u0CB3\u0CB5-\u0CB9\u0CBD\u0CDE\u0CE0\u0CE1\u0CF1\u0CF2\u0D05-\u0D0C\u0D0E-\u0D10\u0D12-\u0D3A\u0D3D\u0D4E\u0D54-\u0D56\u0D5F-\u0D61\u0D7A-\u0D7F\u0D85-\u0D96\u0D9A-\u0DB1\u0DB3-\u0DBB\u0DBD\u0DC0-\u0DC6\u0E01-\u0E30\u0E32\u0E33\u0E40-\u0E46\u0E81\u0E82\u0E84\u0E87\u0E88\u0E8A\u0E8D\u0E94-\u0E97\u0E99-\u0E9F\u0EA1-\u0EA3\u0EA5\u0EA7\u0EAA\u0EAB\u0EAD-\u0EB0\u0EB2\u0EB3\u0EBD\u0EC0-\u0EC4\u0EC6\u0EDC-\u0EDF\u0F00\u0F40-\u0F47\u0F49-\u0F6C\u0F88-\u0F8C\u1000-\u102A\u103F\u1050-\u1055\u105A-\u105D\u1061\u1065\u1066\u106E-\u1070\u1075-\u1081\u108E\u10A0-\u10C5\u10C7\u10CD\u10D0-\u10FA\u10FC-\u1248\u124A-\u124D\u1250-\u1256\u1258\u125A-\u125D\u1260-\u1288\u128A-\u128D\u1290-\u12B0\u12B2-\u12B5\u12B8-\u12BE\u12C0\u12C2-\u12C5\u12C8-\u12D6\u12D8-\u1310\u1312-\u1315\u1318-\u135A\u1380-\u138F\u13A0-\u13F5\u13F8-\u13FD\u1401-\u166C\u166F-\u167F\u1681-\u169A\u16A0-\u16EA\u16EE-\u16F8\u1700-\u170C\u170E-\u1711\u1720-\u1731\u1740-\u1751\u1760-\u176C\u176E-\u1770\u1780-\u17B3\u17D7\u17DC\u1820-\u1877\u1880-\u1884\u1887-\u18A8\u18AA\u18B0-\u18F5\u1900-\u191E\u1950-\u196D\u1970-\u1974\u1980-\u19AB\u19B0-\u19C9\u1A00-\u1A16\u1A20-\u1A54\u1AA7\u1B05-\u1B33\u1B45-\u1B4B\u1B83-\u1BA0\u1BAE\u1BAF\u1BBA-\u1BE5\u1C00-\u1C23\u1C4D-\u1C4F\u1C5A-\u1C7D\u1C80-\u1C88\u1CE9-\u1CEC\u1CEE-\u1CF1\u1CF5\u1CF6\u1D00-\u1DBF\u1E00-\u1F15\u1F18-\u1F1D\u1F20-\u1F45\u1F48-\u1F4D\u1F50-\u1F57\u1F59\u1F5B\u1F5D\u1F5F-\u1F7D\u1F80-\u1FB4\u1FB6-\u1FBC\u1FBE\u1FC2-\u1FC4\u1FC6-\u1FCC\u1FD0-\u1FD3\u1FD6-\u1FDB\u1FE0-\u1FEC\u1FF2-\u1FF4\u1FF6-\u1FFC\u2071\u207F\u2090-\u209C\u2102\u2107\u210A-\u2113\u2115\u2119-\u211D\u2124\u2126\u2128\u212A-\u212D\u212F-\u2139\u213C-\u213F\u2145-\u2149\u214E\u2160-\u2188\u2C00-\u2C2E\u2C30-\u2C5E\u2C60-\u2CE4\u2CEB-\u2CEE\u2CF2\u2CF3\u2D00-\u2D25\u2D27\u2D2D\u2D30-\u2D67\u2D6F\u2D80-\u2D96\u2DA0-\u2DA6\u2DA8-\u2DAE\u2DB0-\u2DB6\u2DB8-\u2DBE\u2DC0-\u2DC6\u2DC8-\u2DCE\u2DD0-\u2DD6\u2DD8-\u2DDE\u2E2F\u3005-\u3007\u3021-\u3029\u3031-\u3035\u3038-\u303C\u3041-\u3096\u309D-\u309F\u30A1-\u30FA\u30FC-\u30FF\u3105-\u312E\u3131-\u318E\u31A0-\u31BA\u31F0-\u31FF\u3400-\u4DB5\u4E00-\u9FEA\uA000-\uA48C\uA4D0-\uA4FD\uA500-\uA60C\uA610-\uA61F\uA62A\uA62B\uA640-\uA66E\uA67F-\uA69D\uA6A0-\uA6EF\uA717-\uA71F\uA722-\uA788\uA78B-\uA7AE\uA7B0-\uA7B7\uA7F7-\uA801\uA803-\uA805\uA807-\uA80A\uA80C-\uA822\uA840-\uA873\uA882-\uA8B3\uA8F2-\uA8F7\uA8FB\uA8FD\uA90A-\uA925\uA930-\uA946\uA960-\uA97C\uA984-\uA9B2\uA9CF\uA9E0-\uA9E4\uA9E6-\uA9EF\uA9FA-\uA9FE\uAA00-\uAA28\uAA40-\uAA42\uAA44-\uAA4B\uAA60-\uAA76\uAA7A\uAA7E-\uAAAF\uAAB1\uAAB5\uAAB6\uAAB9-\uAABD\uAAC0\uAAC2\uAADB-\uAADD\uAAE0-\uAAEA\uAAF2-\uAAF4\uAB01-\uAB06\uAB09-\uAB0E\uAB11-\uAB16\uAB20-\uAB26\uAB28-\uAB2E\uAB30-\uAB5A\uAB5C-\uAB65\uAB70-\uABE2\uAC00-\uD7A3\uD7B0-\uD7C6\uD7CB-\uD7FB\uF900-\uFA6D\uFA70-\uFAD9\uFB00-\uFB06\uFB13-\uFB17\uFB1D\uFB1F-\uFB28\uFB2A-\uFB36\uFB38-\uFB3C\uFB3E\uFB40\uFB41\uFB43\uFB44\uFB46-\uFBB1\uFBD3-\uFD3D\uFD50-\uFD8F\uFD92-\uFDC7\uFDF0-\uFDFB\uFE70-\uFE74\uFE76-\uFEFC\uFF21-\uFF3A\uFF41-\uFF5A\uFF66-\uFFBE\uFFC2-\uFFC7\uFFCA-\uFFCF\uFFD2-\uFFD7\uFFDA-\uFFDC]|\uD800[\uDC00-\uDC0B\uDC0D-\uDC26\uDC28-\uDC3A\uDC3C\uDC3D\uDC3F-\uDC4D\uDC50-\uDC5D\uDC80-\uDCFA\uDD40-\uDD74\uDE80-\uDE9C\uDEA0-\uDED0\uDF00-\uDF1F\uDF2D-\uDF4A\uDF50-\uDF75\uDF80-\uDF9D\uDFA0-\uDFC3\uDFC8-\uDFCF\uDFD1-\uDFD5]|\uD801[\uDC00-\uDC9D\uDCB0-\uDCD3\uDCD8-\uDCFB\uDD00-\uDD27\uDD30-\uDD63\uDE00-\uDF36\uDF40-\uDF55\uDF60-\uDF67]|\uD802[\uDC00-\uDC05\uDC08\uDC0A-\uDC35\uDC37\uDC38\uDC3C\uDC3F-\uDC55\uDC60-\uDC76\uDC80-\uDC9E\uDCE0-\uDCF2\uDCF4\uDCF5\uDD00-\uDD15\uDD20-\uDD39\uDD80-\uDDB7\uDDBE\uDDBF\uDE00\uDE10-\uDE13\uDE15-\uDE17\uDE19-\uDE33\uDE60-\uDE7C\uDE80-\uDE9C\uDEC0-\uDEC7\uDEC9-\uDEE4\uDF00-\uDF35\uDF40-\uDF55\uDF60-\uDF72\uDF80-\uDF91]|\uD803[\uDC00-\uDC48\uDC80-\uDCB2\uDCC0-\uDCF2]|\uD804[\uDC03-\uDC37\uDC83-\uDCAF\uDCD0-\uDCE8\uDD03-\uDD26\uDD50-\uDD72\uDD76\uDD83-\uDDB2\uDDC1-\uDDC4\uDDDA\uDDDC\uDE00-\uDE11\uDE13-\uDE2B\uDE80-\uDE86\uDE88\uDE8A-\uDE8D\uDE8F-\uDE9D\uDE9F-\uDEA8\uDEB0-\uDEDE\uDF05-\uDF0C\uDF0F\uDF10\uDF13-\uDF28\uDF2A-\uDF30\uDF32\uDF33\uDF35-\uDF39\uDF3D\uDF50\uDF5D-\uDF61]|\uD805[\uDC00-\uDC34\uDC47-\uDC4A\uDC80-\uDCAF\uDCC4\uDCC5\uDCC7\uDD80-\uDDAE\uDDD8-\uDDDB\uDE00-\uDE2F\uDE44\uDE80-\uDEAA\uDF00-\uDF19]|\uD806[\uDCA0-\uDCDF\uDCFF\uDE00\uDE0B-\uDE32\uDE3A\uDE50\uDE5C-\uDE83\uDE86-\uDE89\uDEC0-\uDEF8]|\uD807[\uDC00-\uDC08\uDC0A-\uDC2E\uDC40\uDC72-\uDC8F\uDD00-\uDD06\uDD08\uDD09\uDD0B-\uDD30\uDD46]|\uD808[\uDC00-\uDF99]|\uD809[\uDC00-\uDC6E\uDC80-\uDD43]|[\uD80C\uD81C-\uD820\uD840-\uD868\uD86A-\uD86C\uD86F-\uD872\uD874-\uD879][\uDC00-\uDFFF]|\uD80D[\uDC00-\uDC2E]|\uD811[\uDC00-\uDE46]|\uD81A[\uDC00-\uDE38\uDE40-\uDE5E\uDED0-\uDEED\uDF00-\uDF2F\uDF40-\uDF43\uDF63-\uDF77\uDF7D-\uDF8F]|\uD81B[\uDF00-\uDF44\uDF50\uDF93-\uDF9F\uDFE0\uDFE1]|\uD821[\uDC00-\uDFEC]|\uD822[\uDC00-\uDEF2]|\uD82C[\uDC00-\uDD1E\uDD70-\uDEFB]|\uD82F[\uDC00-\uDC6A\uDC70-\uDC7C\uDC80-\uDC88\uDC90-\uDC99]|\uD835[\uDC00-\uDC54\uDC56-\uDC9C\uDC9E\uDC9F\uDCA2\uDCA5\uDCA6\uDCA9-\uDCAC\uDCAE-\uDCB9\uDCBB\uDCBD-\uDCC3\uDCC5-\uDD05\uDD07-\uDD0A\uDD0D-\uDD14\uDD16-\uDD1C\uDD1E-\uDD39\uDD3B-\uDD3E\uDD40-\uDD44\uDD46\uDD4A-\uDD50\uDD52-\uDEA5\uDEA8-\uDEC0\uDEC2-\uDEDA\uDEDC-\uDEFA\uDEFC-\uDF14\uDF16-\uDF34\uDF36-\uDF4E\uDF50-\uDF6E\uDF70-\uDF88\uDF8A-\uDFA8\uDFAA-\uDFC2\uDFC4-\uDFCB]|\uD83A[\uDC00-\uDCC4\uDD00-\uDD43]|\uD83B[\uDE00-\uDE03\uDE05-\uDE1F\uDE21\uDE22\uDE24\uDE27\uDE29-\uDE32\uDE34-\uDE37\uDE39\uDE3B\uDE42\uDE47\uDE49\uDE4B\uDE4D-\uDE4F\uDE51\uDE52\uDE54\uDE57\uDE59\uDE5B\uDE5D\uDE5F\uDE61\uDE62\uDE64\uDE67-\uDE6A\uDE6C-\uDE72\uDE74-\uDE77\uDE79-\uDE7C\uDE7E\uDE80-\uDE89\uDE8B-\uDE9B\uDEA1-\uDEA3\uDEA5-\uDEA9\uDEAB-\uDEBB]|\uD869[\uDC00-\uDED6\uDF00-\uDFFF]|\uD86D[\uDC00-\uDF34\uDF40-\uDFFF]|\uD86E[\uDC00-\uDC1D\uDC20-\uDFFF]|\uD873[\uDC00-\uDEA1\uDEB0-\uDFFF]|\uD87A[\uDC00-\uDFE0]|\uD87E[\uDC00-\uDE1D]/;
 var ID_Continue = /[\xAA\xB5\xBA\xC0-\xD6\xD8-\xF6\xF8-\u02C1\u02C6-\u02D1\u02E0-\u02E4\u02EC\u02EE\u0300-\u0374\u0376\u0377\u037A-\u037D\u037F\u0386\u0388-\u038A\u038C\u038E-\u03A1\u03A3-\u03F5\u03F7-\u0481\u0483-\u0487\u048A-\u052F\u0531-\u0556\u0559\u0561-\u0587\u0591-\u05BD\u05BF\u05C1\u05C2\u05C4\u05C5\u05C7\u05D0-\u05EA\u05F0-\u05F2\u0610-\u061A\u0620-\u0669\u066E-\u06D3\u06D5-\u06DC\u06DF-\u06E8\u06EA-\u06FC\u06FF\u0710-\u074A\u074D-\u07B1\u07C0-\u07F5\u07FA\u0800-\u082D\u0840-\u085B\u0860-\u086A\u08A0-\u08B4\u08B6-\u08BD\u08D4-\u08E1\u08E3-\u0963\u0966-\u096F\u0971-\u0983\u0985-\u098C\u098F\u0990\u0993-\u09A8\u09AA-\u09B0\u09B2\u09B6-\u09B9\u09BC-\u09C4\u09C7\u09C8\u09CB-\u09CE\u09D7\u09DC\u09DD\u09DF-\u09E3\u09E6-\u09F1\u09FC\u0A01-\u0A03\u0A05-\u0A0A\u0A0F\u0A10\u0A13-\u0A28\u0A2A-\u0A30\u0A32\u0A33\u0A35\u0A36\u0A38\u0A39\u0A3C\u0A3E-\u0A42\u0A47\u0A48\u0A4B-\u0A4D\u0A51\u0A59-\u0A5C\u0A5E\u0A66-\u0A75\u0A81-\u0A83\u0A85-\u0A8D\u0A8F-\u0A91\u0A93-\u0AA8\u0AAA-\u0AB0\u0AB2\u0AB3\u0AB5-\u0AB9\u0ABC-\u0AC5\u0AC7-\u0AC9\u0ACB-\u0ACD\u0AD0\u0AE0-\u0AE3\u0AE6-\u0AEF\u0AF9-\u0AFF\u0B01-\u0B03\u0B05-\u0B0C\u0B0F\u0B10\u0B13-\u0B28\u0B2A-\u0B30\u0B32\u0B33\u0B35-\u0B39\u0B3C-\u0B44\u0B47\u0B48\u0B4B-\u0B4D\u0B56\u0B57\u0B5C\u0B5D\u0B5F-\u0B63\u0B66-\u0B6F\u0B71\u0B82\u0B83\u0B85-\u0B8A\u0B8E-\u0B90\u0B92-\u0B95\u0B99\u0B9A\u0B9C\u0B9E\u0B9F\u0BA3\u0BA4\u0BA8-\u0BAA\u0BAE-\u0BB9\u0BBE-\u0BC2\u0BC6-\u0BC8\u0BCA-\u0BCD\u0BD0\u0BD7\u0BE6-\u0BEF\u0C00-\u0C03\u0C05-\u0C0C\u0C0E-\u0C10\u0C12-\u0C28\u0C2A-\u0C39\u0C3D-\u0C44\u0C46-\u0C48\u0C4A-\u0C4D\u0C55\u0C56\u0C58-\u0C5A\u0C60-\u0C63\u0C66-\u0C6F\u0C80-\u0C83\u0C85-\u0C8C\u0C8E-\u0C90\u0C92-\u0CA8\u0CAA-\u0CB3\u0CB5-\u0CB9\u0CBC-\u0CC4\u0CC6-\u0CC8\u0CCA-\u0CCD\u0CD5\u0CD6\u0CDE\u0CE0-\u0CE3\u0CE6-\u0CEF\u0CF1\u0CF2\u0D00-\u0D03\u0D05-\u0D0C\u0D0E-\u0D10\u0D12-\u0D44\u0D46-\u0D48\u0D4A-\u0D4E\u0D54-\u0D57\u0D5F-\u0D63\u0D66-\u0D6F\u0D7A-\u0D7F\u0D82\u0D83\u0D85-\u0D96\u0D9A-\u0DB1\u0DB3-\u0DBB\u0DBD\u0DC0-\u0DC6\u0DCA\u0DCF-\u0DD4\u0DD6\u0DD8-\u0DDF\u0DE6-\u0DEF\u0DF2\u0DF3\u0E01-\u0E3A\u0E40-\u0E4E\u0E50-\u0E59\u0E81\u0E82\u0E84\u0E87\u0E88\u0E8A\u0E8D\u0E94-\u0E97\u0E99-\u0E9F\u0EA1-\u0EA3\u0EA5\u0EA7\u0EAA\u0EAB\u0EAD-\u0EB9\u0EBB-\u0EBD\u0EC0-\u0EC4\u0EC6\u0EC8-\u0ECD\u0ED0-\u0ED9\u0EDC-\u0EDF\u0F00\u0F18\u0F19\u0F20-\u0F29\u0F35\u0F37\u0F39\u0F3E-\u0F47\u0F49-\u0F6C\u0F71-\u0F84\u0F86-\u0F97\u0F99-\u0FBC\u0FC6\u1000-\u1049\u1050-\u109D\u10A0-\u10C5\u10C7\u10CD\u10D0-\u10FA\u10FC-\u1248\u124A-\u124D\u1250-\u1256\u1258\u125A-\u125D\u1260-\u1288\u128A-\u128D\u1290-\u12B0\u12B2-\u12B5\u12B8-\u12BE\u12C0\u12C2-\u12C5\u12C8-\u12D6\u12D8-\u1310\u1312-\u1315\u1318-\u135A\u135D-\u135F\u1380-\u138F\u13A0-\u13F5\u13F8-\u13FD\u1401-\u166C\u166F-\u167F\u1681-\u169A\u16A0-\u16EA\u16EE-\u16F8\u1700-\u170C\u170E-\u1714\u1720-\u1734\u1740-\u1753\u1760-\u176C\u176E-\u1770\u1772\u1773\u1780-\u17D3\u17D7\u17DC\u17DD\u17E0-\u17E9\u180B-\u180D\u1810-\u1819\u1820-\u1877\u1880-\u18AA\u18B0-\u18F5\u1900-\u191E\u1920-\u192B\u1930-\u193B\u1946-\u196D\u1970-\u1974\u1980-\u19AB\u19B0-\u19C9\u19D0-\u19D9\u1A00-\u1A1B\u1A20-\u1A5E\u1A60-\u1A7C\u1A7F-\u1A89\u1A90-\u1A99\u1AA7\u1AB0-\u1ABD\u1B00-\u1B4B\u1B50-\u1B59\u1B6B-\u1B73\u1B80-\u1BF3\u1C00-\u1C37\u1C40-\u1C49\u1C4D-\u1C7D\u1C80-\u1C88\u1CD0-\u1CD2\u1CD4-\u1CF9\u1D00-\u1DF9\u1DFB-\u1F15\u1F18-\u1F1D\u1F20-\u1F45\u1F48-\u1F4D\u1F50-\u1F57\u1F59\u1F5B\u1F5D\u1F5F-\u1F7D\u1F80-\u1FB4\u1FB6-\u1FBC\u1FBE\u1FC2-\u1FC4\u1FC6-\u1FCC\u1FD0-\u1FD3\u1FD6-\u1FDB\u1FE0-\u1FEC\u1FF2-\u1FF4\u1FF6-\u1FFC\u203F\u2040\u2054\u2071\u207F\u2090-\u209C\u20D0-\u20DC\u20E1\u20E5-\u20F0\u2102\u2107\u210A-\u2113\u2115\u2119-\u211D\u2124\u2126\u2128\u212A-\u212D\u212F-\u2139\u213C-\u213F\u2145-\u2149\u214E\u2160-\u2188\u2C00-\u2C2E\u2C30-\u2C5E\u2C60-\u2CE4\u2CEB-\u2CF3\u2D00-\u2D25\u2D27\u2D2D\u2D30-\u2D67\u2D6F\u2D7F-\u2D96\u2DA0-\u2DA6\u2DA8-\u2DAE\u2DB0-\u2DB6\u2DB8-\u2DBE\u2DC0-\u2DC6\u2DC8-\u2DCE\u2DD0-\u2DD6\u2DD8-\u2DDE\u2DE0-\u2DFF\u2E2F\u3005-\u3007\u3021-\u302F\u3031-\u3035\u3038-\u303C\u3041-\u3096\u3099\u309A\u309D-\u309F\u30A1-\u30FA\u30FC-\u30FF\u3105-\u312E\u3131-\u318E\u31A0-\u31BA\u31F0-\u31FF\u3400-\u4DB5\u4E00-\u9FEA\uA000-\uA48C\uA4D0-\uA4FD\uA500-\uA60C\uA610-\uA62B\uA640-\uA66F\uA674-\uA67D\uA67F-\uA6F1\uA717-\uA71F\uA722-\uA788\uA78B-\uA7AE\uA7B0-\uA7B7\uA7F7-\uA827\uA840-\uA873\uA880-\uA8C5\uA8D0-\uA8D9\uA8E0-\uA8F7\uA8FB\uA8FD\uA900-\uA92D\uA930-\uA953\uA960-\uA97C\uA980-\uA9C0\uA9CF-\uA9D9\uA9E0-\uA9FE\uAA00-\uAA36\uAA40-\uAA4D\uAA50-\uAA59\uAA60-\uAA76\uAA7A-\uAAC2\uAADB-\uAADD\uAAE0-\uAAEF\uAAF2-\uAAF6\uAB01-\uAB06\uAB09-\uAB0E\uAB11-\uAB16\uAB20-\uAB26\uAB28-\uAB2E\uAB30-\uAB5A\uAB5C-\uAB65\uAB70-\uABEA\uABEC\uABED\uABF0-\uABF9\uAC00-\uD7A3\uD7B0-\uD7C6\uD7CB-\uD7FB\uF900-\uFA6D\uFA70-\uFAD9\uFB00-\uFB06\uFB13-\uFB17\uFB1D-\uFB28\uFB2A-\uFB36\uFB38-\uFB3C\uFB3E\uFB40\uFB41\uFB43\uFB44\uFB46-\uFBB1\uFBD3-\uFD3D\uFD50-\uFD8F\uFD92-\uFDC7\uFDF0-\uFDFB\uFE00-\uFE0F\uFE20-\uFE2F\uFE33\uFE34\uFE4D-\uFE4F\uFE70-\uFE74\uFE76-\uFEFC\uFF10-\uFF19\uFF21-\uFF3A\uFF3F\uFF41-\uFF5A\uFF66-\uFFBE\uFFC2-\uFFC7\uFFCA-\uFFCF\uFFD2-\uFFD7\uFFDA-\uFFDC]|\uD800[\uDC00-\uDC0B\uDC0D-\uDC26\uDC28-\uDC3A\uDC3C\uDC3D\uDC3F-\uDC4D\uDC50-\uDC5D\uDC80-\uDCFA\uDD40-\uDD74\uDDFD\uDE80-\uDE9C\uDEA0-\uDED0\uDEE0\uDF00-\uDF1F\uDF2D-\uDF4A\uDF50-\uDF7A\uDF80-\uDF9D\uDFA0-\uDFC3\uDFC8-\uDFCF\uDFD1-\uDFD5]|\uD801[\uDC00-\uDC9D\uDCA0-\uDCA9\uDCB0-\uDCD3\uDCD8-\uDCFB\uDD00-\uDD27\uDD30-\uDD63\uDE00-\uDF36\uDF40-\uDF55\uDF60-\uDF67]|\uD802[\uDC00-\uDC05\uDC08\uDC0A-\uDC35\uDC37\uDC38\uDC3C\uDC3F-\uDC55\uDC60-\uDC76\uDC80-\uDC9E\uDCE0-\uDCF2\uDCF4\uDCF5\uDD00-\uDD15\uDD20-\uDD39\uDD80-\uDDB7\uDDBE\uDDBF\uDE00-\uDE03\uDE05\uDE06\uDE0C-\uDE13\uDE15-\uDE17\uDE19-\uDE33\uDE38-\uDE3A\uDE3F\uDE60-\uDE7C\uDE80-\uDE9C\uDEC0-\uDEC7\uDEC9-\uDEE6\uDF00-\uDF35\uDF40-\uDF55\uDF60-\uDF72\uDF80-\uDF91]|\uD803[\uDC00-\uDC48\uDC80-\uDCB2\uDCC0-\uDCF2]|\uD804[\uDC00-\uDC46\uDC66-\uDC6F\uDC7F-\uDCBA\uDCD0-\uDCE8\uDCF0-\uDCF9\uDD00-\uDD34\uDD36-\uDD3F\uDD50-\uDD73\uDD76\uDD80-\uDDC4\uDDCA-\uDDCC\uDDD0-\uDDDA\uDDDC\uDE00-\uDE11\uDE13-\uDE37\uDE3E\uDE80-\uDE86\uDE88\uDE8A-\uDE8D\uDE8F-\uDE9D\uDE9F-\uDEA8\uDEB0-\uDEEA\uDEF0-\uDEF9\uDF00-\uDF03\uDF05-\uDF0C\uDF0F\uDF10\uDF13-\uDF28\uDF2A-\uDF30\uDF32\uDF33\uDF35-\uDF39\uDF3C-\uDF44\uDF47\uDF48\uDF4B-\uDF4D\uDF50\uDF57\uDF5D-\uDF63\uDF66-\uDF6C\uDF70-\uDF74]|\uD805[\uDC00-\uDC4A\uDC50-\uDC59\uDC80-\uDCC5\uDCC7\uDCD0-\uDCD9\uDD80-\uDDB5\uDDB8-\uDDC0\uDDD8-\uDDDD\uDE00-\uDE40\uDE44\uDE50-\uDE59\uDE80-\uDEB7\uDEC0-\uDEC9\uDF00-\uDF19\uDF1D-\uDF2B\uDF30-\uDF39]|\uD806[\uDCA0-\uDCE9\uDCFF\uDE00-\uDE3E\uDE47\uDE50-\uDE83\uDE86-\uDE99\uDEC0-\uDEF8]|\uD807[\uDC00-\uDC08\uDC0A-\uDC36\uDC38-\uDC40\uDC50-\uDC59\uDC72-\uDC8F\uDC92-\uDCA7\uDCA9-\uDCB6\uDD00-\uDD06\uDD08\uDD09\uDD0B-\uDD36\uDD3A\uDD3C\uDD3D\uDD3F-\uDD47\uDD50-\uDD59]|\uD808[\uDC00-\uDF99]|\uD809[\uDC00-\uDC6E\uDC80-\uDD43]|[\uD80C\uD81C-\uD820\uD840-\uD868\uD86A-\uD86C\uD86F-\uD872\uD874-\uD879][\uDC00-\uDFFF]|\uD80D[\uDC00-\uDC2E]|\uD811[\uDC00-\uDE46]|\uD81A[\uDC00-\uDE38\uDE40-\uDE5E\uDE60-\uDE69\uDED0-\uDEED\uDEF0-\uDEF4\uDF00-\uDF36\uDF40-\uDF43\uDF50-\uDF59\uDF63-\uDF77\uDF7D-\uDF8F]|\uD81B[\uDF00-\uDF44\uDF50-\uDF7E\uDF8F-\uDF9F\uDFE0\uDFE1]|\uD821[\uDC00-\uDFEC]|\uD822[\uDC00-\uDEF2]|\uD82C[\uDC00-\uDD1E\uDD70-\uDEFB]|\uD82F[\uDC00-\uDC6A\uDC70-\uDC7C\uDC80-\uDC88\uDC90-\uDC99\uDC9D\uDC9E]|\uD834[\uDD65-\uDD69\uDD6D-\uDD72\uDD7B-\uDD82\uDD85-\uDD8B\uDDAA-\uDDAD\uDE42-\uDE44]|\uD835[\uDC00-\uDC54\uDC56-\uDC9C\uDC9E\uDC9F\uDCA2\uDCA5\uDCA6\uDCA9-\uDCAC\uDCAE-\uDCB9\uDCBB\uDCBD-\uDCC3\uDCC5-\uDD05\uDD07-\uDD0A\uDD0D-\uDD14\uDD16-\uDD1C\uDD1E-\uDD39\uDD3B-\uDD3E\uDD40-\uDD44\uDD46\uDD4A-\uDD50\uDD52-\uDEA5\uDEA8-\uDEC0\uDEC2-\uDEDA\uDEDC-\uDEFA\uDEFC-\uDF14\uDF16-\uDF34\uDF36-\uDF4E\uDF50-\uDF6E\uDF70-\uDF88\uDF8A-\uDFA8\uDFAA-\uDFC2\uDFC4-\uDFCB\uDFCE-\uDFFF]|\uD836[\uDE00-\uDE36\uDE3B-\uDE6C\uDE75\uDE84\uDE9B-\uDE9F\uDEA1-\uDEAF]|\uD838[\uDC00-\uDC06\uDC08-\uDC18\uDC1B-\uDC21\uDC23\uDC24\uDC26-\uDC2A]|\uD83A[\uDC00-\uDCC4\uDCD0-\uDCD6\uDD00-\uDD4A\uDD50-\uDD59]|\uD83B[\uDE00-\uDE03\uDE05-\uDE1F\uDE21\uDE22\uDE24\uDE27\uDE29-\uDE32\uDE34-\uDE37\uDE39\uDE3B\uDE42\uDE47\uDE49\uDE4B\uDE4D-\uDE4F\uDE51\uDE52\uDE54\uDE57\uDE59\uDE5B\uDE5D\uDE5F\uDE61\uDE62\uDE64\uDE67-\uDE6A\uDE6C-\uDE72\uDE74-\uDE77\uDE79-\uDE7C\uDE7E\uDE80-\uDE89\uDE8B-\uDE9B\uDEA1-\uDEA3\uDEA5-\uDEA9\uDEAB-\uDEBB]|\uD869[\uDC00-\uDED6\uDF00-\uDFFF]|\uD86D[\uDC00-\uDF34\uDF40-\uDFFF]|\uD86E[\uDC00-\uDC1D\uDC20-\uDFFF]|\uD873[\uDC00-\uDEA1\uDEB0-\uDFFF]|\uD87A[\uDC00-\uDFE0]|\uD87E[\uDC00-\uDE1D]|\uDB40[\uDD00-\uDDEF]/;
@@ -22711,14 +24556,34 @@ const JSON5 = {
   stringify
 };
 var lib = JSON5;
+const DEFAULT_SHORTCUTS$2 = [
+  { keys: "Ctrl+Shift+R", action: { type: "toggleRecording" } },
+  { keys: "Ctrl+Shift+S", action: { type: "toggleStreaming" } }
+];
 const DEFAULT_SETTINGS = {
   title: "obs-tiles",
   currentConfigIndex: 0,
   selectConfigAtLaunch: false,
+  autoBackupConfigOnClose: false,
+  autoBackupConfigFolder: "",
+  ffmpegPath: "",
   confirmBeforeStartStreaming: false,
   confirmBeforeStopStreaming: false,
   confirmBeforeStartRecording: false,
   confirmBeforeStopRecording: false,
+  confirmBeforeGoLive: false,
+  youtube: {
+    clientId: "",
+    clientSecret: "",
+    refreshToken: void 0,
+    defaultPrivacyStatus: "unlisted",
+    defaultLatency: "ultraLow",
+    defaultTitle: "{date} Stream",
+    defaultDescription: "",
+    allowPrivacyOverride: true,
+    allowLatencyOverride: true,
+    obsConnection: "main"
+  },
   configs: [
     {
       name: "Default",
@@ -22733,6 +24598,7 @@ const DEFAULT_SETTINGS = {
       tileSize: 10,
       fontSize: 10,
       direction: "column",
+      shortcuts: DEFAULT_SHORTCUTS$2,
       tiles: [
         {
           group: "Scenes",
@@ -22771,6 +24637,7 @@ const DEFAULT_SETTINGS = {
     }
   ]
 };
+const DEFAULT_SHORTCUTS$1 = DEFAULT_SHORTCUTS$2;
 function persistSettings(data) {
   if (window.ipcRenderer) {
     window.ipcRenderer.saveSettings(data).catch((error) => {
@@ -22808,6 +24675,9 @@ const SettingsProvider = ({ children }) => {
         ...rawSettings
       };
       loaded.currentConfigIndex = Math.min(loaded.currentConfigIndex, loaded.configs.length - 1);
+      loaded.configs = loaded.configs.map(
+        (cfg) => cfg.shortcuts === void 0 ? { ...cfg, shortcuts: DEFAULT_SHORTCUTS$1 } : cfg
+      );
       setSettings(loaded);
       if (loaded.selectConfigAtLaunch && loaded.configs.length > 1) {
         setAutoOpenSelector(true);
@@ -22859,996 +24729,6 @@ const SettingsProvider = ({ children }) => {
     }
   );
 };
-function stylis_min(W2) {
-  function M2(d2, c2, e2, h2, a) {
-    for (var m2 = 0, b2 = 0, v2 = 0, n2 = 0, q2, g2, x2 = 0, K2 = 0, k2, u2 = k2 = q2 = 0, l2 = 0, r2 = 0, I2 = 0, t2 = 0, B3 = e2.length, J2 = B3 - 1, y2, f2 = "", p2 = "", F3 = "", G3 = "", C2; l2 < B3; ) {
-      g2 = e2.charCodeAt(l2);
-      l2 === J2 && 0 !== b2 + n2 + v2 + m2 && (0 !== b2 && (g2 = 47 === b2 ? 10 : 47), n2 = v2 = m2 = 0, B3++, J2++);
-      if (0 === b2 + n2 + v2 + m2) {
-        if (l2 === J2 && (0 < r2 && (f2 = f2.replace(N2, "")), 0 < f2.trim().length)) {
-          switch (g2) {
-            case 32:
-            case 9:
-            case 59:
-            case 13:
-            case 10:
-              break;
-            default:
-              f2 += e2.charAt(l2);
-          }
-          g2 = 59;
-        }
-        switch (g2) {
-          case 123:
-            f2 = f2.trim();
-            q2 = f2.charCodeAt(0);
-            k2 = 1;
-            for (t2 = ++l2; l2 < B3; ) {
-              switch (g2 = e2.charCodeAt(l2)) {
-                case 123:
-                  k2++;
-                  break;
-                case 125:
-                  k2--;
-                  break;
-                case 47:
-                  switch (g2 = e2.charCodeAt(l2 + 1)) {
-                    case 42:
-                    case 47:
-                      a: {
-                        for (u2 = l2 + 1; u2 < J2; ++u2) {
-                          switch (e2.charCodeAt(u2)) {
-                            case 47:
-                              if (42 === g2 && 42 === e2.charCodeAt(u2 - 1) && l2 + 2 !== u2) {
-                                l2 = u2 + 1;
-                                break a;
-                              }
-                              break;
-                            case 10:
-                              if (47 === g2) {
-                                l2 = u2 + 1;
-                                break a;
-                              }
-                          }
-                        }
-                        l2 = u2;
-                      }
-                  }
-                  break;
-                case 91:
-                  g2++;
-                case 40:
-                  g2++;
-                case 34:
-                case 39:
-                  for (; l2++ < J2 && e2.charCodeAt(l2) !== g2; ) {
-                  }
-              }
-              if (0 === k2) break;
-              l2++;
-            }
-            k2 = e2.substring(t2, l2);
-            0 === q2 && (q2 = (f2 = f2.replace(ca2, "").trim()).charCodeAt(0));
-            switch (q2) {
-              case 64:
-                0 < r2 && (f2 = f2.replace(N2, ""));
-                g2 = f2.charCodeAt(1);
-                switch (g2) {
-                  case 100:
-                  case 109:
-                  case 115:
-                  case 45:
-                    r2 = c2;
-                    break;
-                  default:
-                    r2 = O2;
-                }
-                k2 = M2(c2, r2, k2, g2, a + 1);
-                t2 = k2.length;
-                0 < A2 && (r2 = X2(O2, f2, I2), C2 = H2(3, k2, r2, c2, D2, z2, t2, g2, a, h2), f2 = r2.join(""), void 0 !== C2 && 0 === (t2 = (k2 = C2.trim()).length) && (g2 = 0, k2 = ""));
-                if (0 < t2) switch (g2) {
-                  case 115:
-                    f2 = f2.replace(da2, ea2);
-                  case 100:
-                  case 109:
-                  case 45:
-                    k2 = f2 + "{" + k2 + "}";
-                    break;
-                  case 107:
-                    f2 = f2.replace(fa2, "$1 $2");
-                    k2 = f2 + "{" + k2 + "}";
-                    k2 = 1 === w2 || 2 === w2 && L2("@" + k2, 3) ? "@-webkit-" + k2 + "@" + k2 : "@" + k2;
-                    break;
-                  default:
-                    k2 = f2 + k2, 112 === h2 && (k2 = (p2 += k2, ""));
-                }
-                else k2 = "";
-                break;
-              default:
-                k2 = M2(c2, X2(c2, f2, I2), k2, h2, a + 1);
-            }
-            F3 += k2;
-            k2 = I2 = r2 = u2 = q2 = 0;
-            f2 = "";
-            g2 = e2.charCodeAt(++l2);
-            break;
-          case 125:
-          case 59:
-            f2 = (0 < r2 ? f2.replace(N2, "") : f2).trim();
-            if (1 < (t2 = f2.length)) switch (0 === u2 && (q2 = f2.charCodeAt(0), 45 === q2 || 96 < q2 && 123 > q2) && (t2 = (f2 = f2.replace(" ", ":")).length), 0 < A2 && void 0 !== (C2 = H2(1, f2, c2, d2, D2, z2, p2.length, h2, a, h2)) && 0 === (t2 = (f2 = C2.trim()).length) && (f2 = "\0\0"), q2 = f2.charCodeAt(0), g2 = f2.charCodeAt(1), q2) {
-              case 0:
-                break;
-              case 64:
-                if (105 === g2 || 99 === g2) {
-                  G3 += f2 + e2.charAt(l2);
-                  break;
-                }
-              default:
-                58 !== f2.charCodeAt(t2 - 1) && (p2 += P2(f2, q2, g2, f2.charCodeAt(2)));
-            }
-            I2 = r2 = u2 = q2 = 0;
-            f2 = "";
-            g2 = e2.charCodeAt(++l2);
-        }
-      }
-      switch (g2) {
-        case 13:
-        case 10:
-          47 === b2 ? b2 = 0 : 0 === 1 + q2 && 107 !== h2 && 0 < f2.length && (r2 = 1, f2 += "\0");
-          0 < A2 * Y2 && H2(0, f2, c2, d2, D2, z2, p2.length, h2, a, h2);
-          z2 = 1;
-          D2++;
-          break;
-        case 59:
-        case 125:
-          if (0 === b2 + n2 + v2 + m2) {
-            z2++;
-            break;
-          }
-        default:
-          z2++;
-          y2 = e2.charAt(l2);
-          switch (g2) {
-            case 9:
-            case 32:
-              if (0 === n2 + m2 + b2) switch (x2) {
-                case 44:
-                case 58:
-                case 9:
-                case 32:
-                  y2 = "";
-                  break;
-                default:
-                  32 !== g2 && (y2 = " ");
-              }
-              break;
-            case 0:
-              y2 = "\\0";
-              break;
-            case 12:
-              y2 = "\\f";
-              break;
-            case 11:
-              y2 = "\\v";
-              break;
-            case 38:
-              0 === n2 + b2 + m2 && (r2 = I2 = 1, y2 = "\f" + y2);
-              break;
-            case 108:
-              if (0 === n2 + b2 + m2 + E2 && 0 < u2) switch (l2 - u2) {
-                case 2:
-                  112 === x2 && 58 === e2.charCodeAt(l2 - 3) && (E2 = x2);
-                case 8:
-                  111 === K2 && (E2 = K2);
-              }
-              break;
-            case 58:
-              0 === n2 + b2 + m2 && (u2 = l2);
-              break;
-            case 44:
-              0 === b2 + v2 + n2 + m2 && (r2 = 1, y2 += "\r");
-              break;
-            case 34:
-            case 39:
-              0 === b2 && (n2 = n2 === g2 ? 0 : 0 === n2 ? g2 : n2);
-              break;
-            case 91:
-              0 === n2 + b2 + v2 && m2++;
-              break;
-            case 93:
-              0 === n2 + b2 + v2 && m2--;
-              break;
-            case 41:
-              0 === n2 + b2 + m2 && v2--;
-              break;
-            case 40:
-              if (0 === n2 + b2 + m2) {
-                if (0 === q2) switch (2 * x2 + 3 * K2) {
-                  case 533:
-                    break;
-                  default:
-                    q2 = 1;
-                }
-                v2++;
-              }
-              break;
-            case 64:
-              0 === b2 + v2 + n2 + m2 + u2 + k2 && (k2 = 1);
-              break;
-            case 42:
-            case 47:
-              if (!(0 < n2 + m2 + v2)) switch (b2) {
-                case 0:
-                  switch (2 * g2 + 3 * e2.charCodeAt(l2 + 1)) {
-                    case 235:
-                      b2 = 47;
-                      break;
-                    case 220:
-                      t2 = l2, b2 = 42;
-                  }
-                  break;
-                case 42:
-                  47 === g2 && 42 === x2 && t2 + 2 !== l2 && (33 === e2.charCodeAt(t2 + 2) && (p2 += e2.substring(t2, l2 + 1)), y2 = "", b2 = 0);
-              }
-          }
-          0 === b2 && (f2 += y2);
-      }
-      K2 = x2;
-      x2 = g2;
-      l2++;
-    }
-    t2 = p2.length;
-    if (0 < t2) {
-      r2 = c2;
-      if (0 < A2 && (C2 = H2(2, p2, r2, d2, D2, z2, t2, h2, a, h2), void 0 !== C2 && 0 === (p2 = C2).length)) return G3 + p2 + F3;
-      p2 = r2.join(",") + "{" + p2 + "}";
-      if (0 !== w2 * E2) {
-        2 !== w2 || L2(p2, 2) || (E2 = 0);
-        switch (E2) {
-          case 111:
-            p2 = p2.replace(ha2, ":-moz-$1") + p2;
-            break;
-          case 112:
-            p2 = p2.replace(Q2, "::-webkit-input-$1") + p2.replace(Q2, "::-moz-$1") + p2.replace(Q2, ":-ms-input-$1") + p2;
-        }
-        E2 = 0;
-      }
-    }
-    return G3 + p2 + F3;
-  }
-  function X2(d2, c2, e2) {
-    var h2 = c2.trim().split(ia2);
-    c2 = h2;
-    var a = h2.length, m2 = d2.length;
-    switch (m2) {
-      case 0:
-      case 1:
-        var b2 = 0;
-        for (d2 = 0 === m2 ? "" : d2[0] + " "; b2 < a; ++b2) {
-          c2[b2] = Z2(d2, c2[b2], e2).trim();
-        }
-        break;
-      default:
-        var v2 = b2 = 0;
-        for (c2 = []; b2 < a; ++b2) {
-          for (var n2 = 0; n2 < m2; ++n2) {
-            c2[v2++] = Z2(d2[n2] + " ", h2[b2], e2).trim();
-          }
-        }
-    }
-    return c2;
-  }
-  function Z2(d2, c2, e2) {
-    var h2 = c2.charCodeAt(0);
-    33 > h2 && (h2 = (c2 = c2.trim()).charCodeAt(0));
-    switch (h2) {
-      case 38:
-        return c2.replace(F2, "$1" + d2.trim());
-      case 58:
-        return d2.trim() + c2.replace(F2, "$1" + d2.trim());
-      default:
-        if (0 < 1 * e2 && 0 < c2.indexOf("\f")) return c2.replace(F2, (58 === d2.charCodeAt(0) ? "" : "$1") + d2.trim());
-    }
-    return d2 + c2;
-  }
-  function P2(d2, c2, e2, h2) {
-    var a = d2 + ";", m2 = 2 * c2 + 3 * e2 + 4 * h2;
-    if (944 === m2) {
-      d2 = a.indexOf(":", 9) + 1;
-      var b2 = a.substring(d2, a.length - 1).trim();
-      b2 = a.substring(0, d2).trim() + b2 + ";";
-      return 1 === w2 || 2 === w2 && L2(b2, 1) ? "-webkit-" + b2 + b2 : b2;
-    }
-    if (0 === w2 || 2 === w2 && !L2(a, 1)) return a;
-    switch (m2) {
-      case 1015:
-        return 97 === a.charCodeAt(10) ? "-webkit-" + a + a : a;
-      case 951:
-        return 116 === a.charCodeAt(3) ? "-webkit-" + a + a : a;
-      case 963:
-        return 110 === a.charCodeAt(5) ? "-webkit-" + a + a : a;
-      case 1009:
-        if (100 !== a.charCodeAt(4)) break;
-      case 969:
-      case 942:
-        return "-webkit-" + a + a;
-      case 978:
-        return "-webkit-" + a + "-moz-" + a + a;
-      case 1019:
-      case 983:
-        return "-webkit-" + a + "-moz-" + a + "-ms-" + a + a;
-      case 883:
-        if (45 === a.charCodeAt(8)) return "-webkit-" + a + a;
-        if (0 < a.indexOf("image-set(", 11)) return a.replace(ja2, "$1-webkit-$2") + a;
-        break;
-      case 932:
-        if (45 === a.charCodeAt(4)) switch (a.charCodeAt(5)) {
-          case 103:
-            return "-webkit-box-" + a.replace("-grow", "") + "-webkit-" + a + "-ms-" + a.replace("grow", "positive") + a;
-          case 115:
-            return "-webkit-" + a + "-ms-" + a.replace("shrink", "negative") + a;
-          case 98:
-            return "-webkit-" + a + "-ms-" + a.replace("basis", "preferred-size") + a;
-        }
-        return "-webkit-" + a + "-ms-" + a + a;
-      case 964:
-        return "-webkit-" + a + "-ms-flex-" + a + a;
-      case 1023:
-        if (99 !== a.charCodeAt(8)) break;
-        b2 = a.substring(a.indexOf(":", 15)).replace("flex-", "").replace("space-between", "justify");
-        return "-webkit-box-pack" + b2 + "-webkit-" + a + "-ms-flex-pack" + b2 + a;
-      case 1005:
-        return ka2.test(a) ? a.replace(aa2, ":-webkit-") + a.replace(aa2, ":-moz-") + a : a;
-      case 1e3:
-        b2 = a.substring(13).trim();
-        c2 = b2.indexOf("-") + 1;
-        switch (b2.charCodeAt(0) + b2.charCodeAt(c2)) {
-          case 226:
-            b2 = a.replace(G2, "tb");
-            break;
-          case 232:
-            b2 = a.replace(G2, "tb-rl");
-            break;
-          case 220:
-            b2 = a.replace(G2, "lr");
-            break;
-          default:
-            return a;
-        }
-        return "-webkit-" + a + "-ms-" + b2 + a;
-      case 1017:
-        if (-1 === a.indexOf("sticky", 9)) break;
-      case 975:
-        c2 = (a = d2).length - 10;
-        b2 = (33 === a.charCodeAt(c2) ? a.substring(0, c2) : a).substring(d2.indexOf(":", 7) + 1).trim();
-        switch (m2 = b2.charCodeAt(0) + (b2.charCodeAt(7) | 0)) {
-          case 203:
-            if (111 > b2.charCodeAt(8)) break;
-          case 115:
-            a = a.replace(b2, "-webkit-" + b2) + ";" + a;
-            break;
-          case 207:
-          case 102:
-            a = a.replace(b2, "-webkit-" + (102 < m2 ? "inline-" : "") + "box") + ";" + a.replace(b2, "-webkit-" + b2) + ";" + a.replace(b2, "-ms-" + b2 + "box") + ";" + a;
-        }
-        return a + ";";
-      case 938:
-        if (45 === a.charCodeAt(5)) switch (a.charCodeAt(6)) {
-          case 105:
-            return b2 = a.replace("-items", ""), "-webkit-" + a + "-webkit-box-" + b2 + "-ms-flex-" + b2 + a;
-          case 115:
-            return "-webkit-" + a + "-ms-flex-item-" + a.replace(ba2, "") + a;
-          default:
-            return "-webkit-" + a + "-ms-flex-line-pack" + a.replace("align-content", "").replace(ba2, "") + a;
-        }
-        break;
-      case 973:
-      case 989:
-        if (45 !== a.charCodeAt(3) || 122 === a.charCodeAt(4)) break;
-      case 931:
-      case 953:
-        if (true === la2.test(d2)) return 115 === (b2 = d2.substring(d2.indexOf(":") + 1)).charCodeAt(0) ? P2(d2.replace("stretch", "fill-available"), c2, e2, h2).replace(":fill-available", ":stretch") : a.replace(b2, "-webkit-" + b2) + a.replace(b2, "-moz-" + b2.replace("fill-", "")) + a;
-        break;
-      case 962:
-        if (a = "-webkit-" + a + (102 === a.charCodeAt(5) ? "-ms-" + a : "") + a, 211 === e2 + h2 && 105 === a.charCodeAt(13) && 0 < a.indexOf("transform", 10)) return a.substring(0, a.indexOf(";", 27) + 1).replace(ma2, "$1-webkit-$2") + a;
-    }
-    return a;
-  }
-  function L2(d2, c2) {
-    var e2 = d2.indexOf(1 === c2 ? ":" : "{"), h2 = d2.substring(0, 3 !== c2 ? e2 : 10);
-    e2 = d2.substring(e2 + 1, d2.length - 1);
-    return R2(2 !== c2 ? h2 : h2.replace(na2, "$1"), e2, c2);
-  }
-  function ea2(d2, c2) {
-    var e2 = P2(c2, c2.charCodeAt(0), c2.charCodeAt(1), c2.charCodeAt(2));
-    return e2 !== c2 + ";" ? e2.replace(oa2, " or ($1)").substring(4) : "(" + c2 + ")";
-  }
-  function H2(d2, c2, e2, h2, a, m2, b2, v2, n2, q2) {
-    for (var g2 = 0, x2 = c2, w3; g2 < A2; ++g2) {
-      switch (w3 = S2[g2].call(B2, d2, x2, e2, h2, a, m2, b2, v2, n2, q2)) {
-        case void 0:
-        case false:
-        case true:
-        case null:
-          break;
-        default:
-          x2 = w3;
-      }
-    }
-    if (x2 !== c2) return x2;
-  }
-  function T2(d2) {
-    switch (d2) {
-      case void 0:
-      case null:
-        A2 = S2.length = 0;
-        break;
-      default:
-        if ("function" === typeof d2) S2[A2++] = d2;
-        else if ("object" === typeof d2) for (var c2 = 0, e2 = d2.length; c2 < e2; ++c2) {
-          T2(d2[c2]);
-        }
-        else Y2 = !!d2 | 0;
-    }
-    return T2;
-  }
-  function U2(d2) {
-    d2 = d2.prefix;
-    void 0 !== d2 && (R2 = null, d2 ? "function" !== typeof d2 ? w2 = 1 : (w2 = 2, R2 = d2) : w2 = 0);
-    return U2;
-  }
-  function B2(d2, c2) {
-    var e2 = d2;
-    33 > e2.charCodeAt(0) && (e2 = e2.trim());
-    V2 = e2;
-    e2 = [V2];
-    if (0 < A2) {
-      var h2 = H2(-1, c2, e2, e2, D2, z2, 0, 0, 0, 0);
-      void 0 !== h2 && "string" === typeof h2 && (c2 = h2);
-    }
-    var a = M2(O2, e2, c2, 0, 0);
-    0 < A2 && (h2 = H2(-2, a, e2, e2, D2, z2, a.length, 0, 0, 0), void 0 !== h2 && (a = h2));
-    V2 = "";
-    E2 = 0;
-    z2 = D2 = 1;
-    return a;
-  }
-  var ca2 = /^\0+/g, N2 = /[\0\r\f]/g, aa2 = /: */g, ka2 = /zoo|gra/, ma2 = /([,: ])(transform)/g, ia2 = /,\r+?/g, F2 = /([\t\r\n ])*\f?&/g, fa2 = /@(k\w+)\s*(\S*)\s*/, Q2 = /::(place)/g, ha2 = /:(read-only)/g, G2 = /[svh]\w+-[tblr]{2}/, da2 = /\(\s*(.*)\s*\)/g, oa2 = /([\s\S]*?);/g, ba2 = /-self|flex-/g, na2 = /[^]*?(:[rp][el]a[\w-]+)[^]*/, la2 = /stretch|:\s*\w+\-(?:conte|avail)/, ja2 = /([^-])(image-set\()/, z2 = 1, D2 = 1, E2 = 0, w2 = 1, O2 = [], S2 = [], A2 = 0, R2 = null, Y2 = 0, V2 = "";
-  B2.use = T2;
-  B2.set = U2;
-  void 0 !== W2 && U2(W2);
-  return B2;
-}
-var unitlessKeys = {
-  animationIterationCount: 1,
-  borderImageOutset: 1,
-  borderImageSlice: 1,
-  borderImageWidth: 1,
-  boxFlex: 1,
-  boxFlexGroup: 1,
-  boxOrdinalGroup: 1,
-  columnCount: 1,
-  columns: 1,
-  flex: 1,
-  flexGrow: 1,
-  flexPositive: 1,
-  flexShrink: 1,
-  flexNegative: 1,
-  flexOrder: 1,
-  gridRow: 1,
-  gridRowEnd: 1,
-  gridRowSpan: 1,
-  gridRowStart: 1,
-  gridColumn: 1,
-  gridColumnEnd: 1,
-  gridColumnSpan: 1,
-  gridColumnStart: 1,
-  msGridRow: 1,
-  msGridRowSpan: 1,
-  msGridColumn: 1,
-  msGridColumnSpan: 1,
-  fontWeight: 1,
-  lineHeight: 1,
-  opacity: 1,
-  order: 1,
-  orphans: 1,
-  tabSize: 1,
-  widows: 1,
-  zIndex: 1,
-  zoom: 1,
-  WebkitLineClamp: 1,
-  // SVG-related properties
-  fillOpacity: 1,
-  floodOpacity: 1,
-  stopOpacity: 1,
-  strokeDasharray: 1,
-  strokeDashoffset: 1,
-  strokeMiterlimit: 1,
-  strokeOpacity: 1,
-  strokeWidth: 1
-};
-function memoize(fn) {
-  var cache2 = /* @__PURE__ */ Object.create(null);
-  return function(arg) {
-    if (cache2[arg] === void 0) cache2[arg] = fn(arg);
-    return cache2[arg];
-  };
-}
-var reactPropsRegex = /^((children|dangerouslySetInnerHTML|key|ref|autoFocus|defaultValue|defaultChecked|innerHTML|suppressContentEditableWarning|suppressHydrationWarning|valueLink|abbr|accept|acceptCharset|accessKey|action|allow|allowUserMedia|allowPaymentRequest|allowFullScreen|allowTransparency|alt|async|autoComplete|autoPlay|capture|cellPadding|cellSpacing|challenge|charSet|checked|cite|classID|className|cols|colSpan|content|contentEditable|contextMenu|controls|controlsList|coords|crossOrigin|data|dateTime|decoding|default|defer|dir|disabled|disablePictureInPicture|disableRemotePlayback|download|draggable|encType|enterKeyHint|fetchpriority|fetchPriority|form|formAction|formEncType|formMethod|formNoValidate|formTarget|frameBorder|headers|height|hidden|high|href|hrefLang|htmlFor|httpEquiv|id|inputMode|integrity|is|keyParams|keyType|kind|label|lang|list|loading|loop|low|marginHeight|marginWidth|max|maxLength|media|mediaGroup|method|min|minLength|multiple|muted|name|nonce|noValidate|open|optimum|pattern|placeholder|playsInline|popover|popoverTarget|popoverTargetAction|poster|preload|profile|radioGroup|readOnly|referrerPolicy|rel|required|reversed|role|rows|rowSpan|sandbox|scope|scoped|scrolling|seamless|selected|shape|size|sizes|slot|span|spellCheck|src|srcDoc|srcLang|srcSet|start|step|style|summary|tabIndex|target|title|translate|type|useMap|value|width|wmode|wrap|about|datatype|inlist|prefix|property|resource|typeof|vocab|autoCapitalize|autoCorrect|autoSave|color|incremental|fallback|inert|itemProp|itemScope|itemType|itemID|itemRef|on|option|results|security|unselectable|accentHeight|accumulate|additive|alignmentBaseline|allowReorder|alphabetic|amplitude|arabicForm|ascent|attributeName|attributeType|autoReverse|azimuth|baseFrequency|baselineShift|baseProfile|bbox|begin|bias|by|calcMode|capHeight|clip|clipPathUnits|clipPath|clipRule|colorInterpolation|colorInterpolationFilters|colorProfile|colorRendering|contentScriptType|contentStyleType|cursor|cx|cy|d|decelerate|descent|diffuseConstant|direction|display|divisor|dominantBaseline|dur|dx|dy|edgeMode|elevation|enableBackground|end|exponent|externalResourcesRequired|fill|fillOpacity|fillRule|filter|filterRes|filterUnits|floodColor|floodOpacity|focusable|fontFamily|fontSize|fontSizeAdjust|fontStretch|fontStyle|fontVariant|fontWeight|format|from|fr|fx|fy|g1|g2|glyphName|glyphOrientationHorizontal|glyphOrientationVertical|glyphRef|gradientTransform|gradientUnits|hanging|horizAdvX|horizOriginX|ideographic|imageRendering|in|in2|intercept|k|k1|k2|k3|k4|kernelMatrix|kernelUnitLength|kerning|keyPoints|keySplines|keyTimes|lengthAdjust|letterSpacing|lightingColor|limitingConeAngle|local|markerEnd|markerMid|markerStart|markerHeight|markerUnits|markerWidth|mask|maskContentUnits|maskUnits|mathematical|mode|numOctaves|offset|opacity|operator|order|orient|orientation|origin|overflow|overlinePosition|overlineThickness|panose1|paintOrder|pathLength|patternContentUnits|patternTransform|patternUnits|pointerEvents|points|pointsAtX|pointsAtY|pointsAtZ|preserveAlpha|preserveAspectRatio|primitiveUnits|r|radius|refX|refY|renderingIntent|repeatCount|repeatDur|requiredExtensions|requiredFeatures|restart|result|rotate|rx|ry|scale|seed|shapeRendering|slope|spacing|specularConstant|specularExponent|speed|spreadMethod|startOffset|stdDeviation|stemh|stemv|stitchTiles|stopColor|stopOpacity|strikethroughPosition|strikethroughThickness|string|stroke|strokeDasharray|strokeDashoffset|strokeLinecap|strokeLinejoin|strokeMiterlimit|strokeOpacity|strokeWidth|surfaceScale|systemLanguage|tableValues|targetX|targetY|textAnchor|textDecoration|textRendering|textLength|to|transform|u1|u2|underlinePosition|underlineThickness|unicode|unicodeBidi|unicodeRange|unitsPerEm|vAlphabetic|vHanging|vIdeographic|vMathematical|values|vectorEffect|version|vertAdvY|vertOriginX|vertOriginY|viewBox|viewTarget|visibility|widths|wordSpacing|writingMode|x|xHeight|x1|x2|xChannelSelector|xlinkActuate|xlinkArcrole|xlinkHref|xlinkRole|xlinkShow|xlinkTitle|xlinkType|xmlBase|xmlns|xmlnsXlink|xmlLang|xmlSpace|y|y1|y2|yChannelSelector|z|zoomAndPan|for|class|autofocus)|(([Dd][Aa][Tt][Aa]|[Aa][Rr][Ii][Aa]|x)-.*))$/;
-var isPropValid = /* @__PURE__ */ memoize(
-  function(prop) {
-    return reactPropsRegex.test(prop) || prop.charCodeAt(0) === 111 && prop.charCodeAt(1) === 110 && prop.charCodeAt(2) < 91;
-  }
-  /* Z+1 */
-);
-var define_process_env_default = {};
-function y() {
-  return (y = Object.assign || function(e2) {
-    for (var t2 = 1; t2 < arguments.length; t2++) {
-      var n2 = arguments[t2];
-      for (var r2 in n2) Object.prototype.hasOwnProperty.call(n2, r2) && (e2[r2] = n2[r2]);
-    }
-    return e2;
-  }).apply(this, arguments);
-}
-var v = function(e2, t2) {
-  for (var n2 = [e2[0]], r2 = 0, o2 = t2.length; r2 < o2; r2 += 1) n2.push(t2[r2], e2[r2 + 1]);
-  return n2;
-}, g = function(t2) {
-  return null !== t2 && "object" == typeof t2 && "[object Object]" === (t2.toString ? t2.toString() : Object.prototype.toString.call(t2)) && !reactIsExports.typeOf(t2);
-}, S = Object.freeze([]), w = Object.freeze({});
-function E(e2) {
-  return "function" == typeof e2;
-}
-function b(e2) {
-  return e2.displayName || e2.name || "Component";
-}
-function _(e2) {
-  return e2 && "string" == typeof e2.styledComponentId;
-}
-var N = "undefined" != typeof process && void 0 !== define_process_env_default && (define_process_env_default.REACT_APP_SC_ATTR || define_process_env_default.SC_ATTR) || "data-styled", C = "undefined" != typeof window && "HTMLElement" in window, I = Boolean("boolean" == typeof SC_DISABLE_SPEEDY ? SC_DISABLE_SPEEDY : "undefined" != typeof process && void 0 !== define_process_env_default && (void 0 !== define_process_env_default.REACT_APP_SC_DISABLE_SPEEDY && "" !== define_process_env_default.REACT_APP_SC_DISABLE_SPEEDY ? "false" !== define_process_env_default.REACT_APP_SC_DISABLE_SPEEDY && define_process_env_default.REACT_APP_SC_DISABLE_SPEEDY : void 0 !== define_process_env_default.SC_DISABLE_SPEEDY && "" !== define_process_env_default.SC_DISABLE_SPEEDY ? "false" !== define_process_env_default.SC_DISABLE_SPEEDY && define_process_env_default.SC_DISABLE_SPEEDY : false));
-function D(e2) {
-  for (var t2 = arguments.length, n2 = new Array(t2 > 1 ? t2 - 1 : 0), r2 = 1; r2 < t2; r2++) n2[r2 - 1] = arguments[r2];
-  throw new Error("An error occurred. See https://git.io/JUIaE#" + e2 + " for more information." + (n2.length > 0 ? " Args: " + n2.join(", ") : ""));
-}
-var j = function() {
-  function e2(e3) {
-    this.groupSizes = new Uint32Array(512), this.length = 512, this.tag = e3;
-  }
-  var t2 = e2.prototype;
-  return t2.indexOfGroup = function(e3) {
-    for (var t3 = 0, n2 = 0; n2 < e3; n2++) t3 += this.groupSizes[n2];
-    return t3;
-  }, t2.insertRules = function(e3, t3) {
-    if (e3 >= this.groupSizes.length) {
-      for (var n2 = this.groupSizes, r2 = n2.length, o2 = r2; e3 >= o2; ) (o2 <<= 1) < 0 && D(16, "" + e3);
-      this.groupSizes = new Uint32Array(o2), this.groupSizes.set(n2), this.length = o2;
-      for (var s2 = r2; s2 < o2; s2++) this.groupSizes[s2] = 0;
-    }
-    for (var i2 = this.indexOfGroup(e3 + 1), a2 = 0, c2 = t3.length; a2 < c2; a2++) this.tag.insertRule(i2, t3[a2]) && (this.groupSizes[e3]++, i2++);
-  }, t2.clearGroup = function(e3) {
-    if (e3 < this.length) {
-      var t3 = this.groupSizes[e3], n2 = this.indexOfGroup(e3), r2 = n2 + t3;
-      this.groupSizes[e3] = 0;
-      for (var o2 = n2; o2 < r2; o2++) this.tag.deleteRule(n2);
-    }
-  }, t2.getGroup = function(e3) {
-    var t3 = "";
-    if (e3 >= this.length || 0 === this.groupSizes[e3]) return t3;
-    for (var n2 = this.groupSizes[e3], r2 = this.indexOfGroup(e3), o2 = r2 + n2, s2 = r2; s2 < o2; s2++) t3 += this.tag.getRule(s2) + "/*!sc*/\n";
-    return t3;
-  }, e2;
-}(), T = /* @__PURE__ */ new Map(), x = /* @__PURE__ */ new Map(), k = 1, V = function(e2) {
-  if (T.has(e2)) return T.get(e2);
-  for (; x.has(k); ) k++;
-  var t2 = k++;
-  return T.set(e2, t2), x.set(t2, e2), t2;
-}, B = function(e2) {
-  return x.get(e2);
-}, z = function(e2, t2) {
-  t2 >= k && (k = t2 + 1), T.set(e2, t2), x.set(t2, e2);
-}, M = "style[" + N + '][data-styled-version="5.3.11"]', G = new RegExp("^" + N + '\\.g(\\d+)\\[id="([\\w\\d-]+)"\\].*?"([^"]*)'), L = function(e2, t2, n2) {
-  for (var r2, o2 = n2.split(","), s2 = 0, i2 = o2.length; s2 < i2; s2++) (r2 = o2[s2]) && e2.registerName(t2, r2);
-}, F = function(e2, t2) {
-  for (var n2 = (t2.textContent || "").split("/*!sc*/\n"), r2 = [], o2 = 0, s2 = n2.length; o2 < s2; o2++) {
-    var i2 = n2[o2].trim();
-    if (i2) {
-      var a2 = i2.match(G);
-      if (a2) {
-        var c2 = 0 | parseInt(a2[1], 10), u2 = a2[2];
-        0 !== c2 && (z(u2, c2), L(e2, u2, a2[3]), e2.getTag().insertRules(c2, r2)), r2.length = 0;
-      } else r2.push(i2);
-    }
-  }
-}, Y = function() {
-  return "undefined" != typeof __webpack_nonce__ ? __webpack_nonce__ : null;
-}, q = function(e2) {
-  var t2 = document.head, n2 = e2 || t2, r2 = document.createElement("style"), o2 = function(e3) {
-    for (var t3 = e3.childNodes, n3 = t3.length; n3 >= 0; n3--) {
-      var r3 = t3[n3];
-      if (r3 && 1 === r3.nodeType && r3.hasAttribute(N)) return r3;
-    }
-  }(n2), s2 = void 0 !== o2 ? o2.nextSibling : null;
-  r2.setAttribute(N, "active"), r2.setAttribute("data-styled-version", "5.3.11");
-  var i2 = Y();
-  return i2 && r2.setAttribute("nonce", i2), n2.insertBefore(r2, s2), r2;
-}, H = function() {
-  function e2(e3) {
-    var t3 = this.element = q(e3);
-    t3.appendChild(document.createTextNode("")), this.sheet = function(e4) {
-      if (e4.sheet) return e4.sheet;
-      for (var t4 = document.styleSheets, n2 = 0, r2 = t4.length; n2 < r2; n2++) {
-        var o2 = t4[n2];
-        if (o2.ownerNode === e4) return o2;
-      }
-      D(17);
-    }(t3), this.length = 0;
-  }
-  var t2 = e2.prototype;
-  return t2.insertRule = function(e3, t3) {
-    try {
-      return this.sheet.insertRule(t3, e3), this.length++, true;
-    } catch (e4) {
-      return false;
-    }
-  }, t2.deleteRule = function(e3) {
-    this.sheet.deleteRule(e3), this.length--;
-  }, t2.getRule = function(e3) {
-    var t3 = this.sheet.cssRules[e3];
-    return void 0 !== t3 && "string" == typeof t3.cssText ? t3.cssText : "";
-  }, e2;
-}(), $ = function() {
-  function e2(e3) {
-    var t3 = this.element = q(e3);
-    this.nodes = t3.childNodes, this.length = 0;
-  }
-  var t2 = e2.prototype;
-  return t2.insertRule = function(e3, t3) {
-    if (e3 <= this.length && e3 >= 0) {
-      var n2 = document.createTextNode(t3), r2 = this.nodes[e3];
-      return this.element.insertBefore(n2, r2 || null), this.length++, true;
-    }
-    return false;
-  }, t2.deleteRule = function(e3) {
-    this.element.removeChild(this.nodes[e3]), this.length--;
-  }, t2.getRule = function(e3) {
-    return e3 < this.length ? this.nodes[e3].textContent : "";
-  }, e2;
-}(), W = function() {
-  function e2(e3) {
-    this.rules = [], this.length = 0;
-  }
-  var t2 = e2.prototype;
-  return t2.insertRule = function(e3, t3) {
-    return e3 <= this.length && (this.rules.splice(e3, 0, t3), this.length++, true);
-  }, t2.deleteRule = function(e3) {
-    this.rules.splice(e3, 1), this.length--;
-  }, t2.getRule = function(e3) {
-    return e3 < this.length ? this.rules[e3] : "";
-  }, e2;
-}(), U = C, J = { isServer: !C, useCSSOMInjection: !I }, X = function() {
-  function e2(e3, t3, n2) {
-    void 0 === e3 && (e3 = w), void 0 === t3 && (t3 = {}), this.options = y({}, J, {}, e3), this.gs = t3, this.names = new Map(n2), this.server = !!e3.isServer, !this.server && C && U && (U = false, function(e4) {
-      for (var t4 = document.querySelectorAll(M), n3 = 0, r2 = t4.length; n3 < r2; n3++) {
-        var o2 = t4[n3];
-        o2 && "active" !== o2.getAttribute(N) && (F(e4, o2), o2.parentNode && o2.parentNode.removeChild(o2));
-      }
-    }(this));
-  }
-  e2.registerId = function(e3) {
-    return V(e3);
-  };
-  var t2 = e2.prototype;
-  return t2.reconstructWithOptions = function(t3, n2) {
-    return void 0 === n2 && (n2 = true), new e2(y({}, this.options, {}, t3), this.gs, n2 && this.names || void 0);
-  }, t2.allocateGSInstance = function(e3) {
-    return this.gs[e3] = (this.gs[e3] || 0) + 1;
-  }, t2.getTag = function() {
-    return this.tag || (this.tag = (n2 = (t3 = this.options).isServer, r2 = t3.useCSSOMInjection, o2 = t3.target, e3 = n2 ? new W(o2) : r2 ? new H(o2) : new $(o2), new j(e3)));
-    var e3, t3, n2, r2, o2;
-  }, t2.hasNameForId = function(e3, t3) {
-    return this.names.has(e3) && this.names.get(e3).has(t3);
-  }, t2.registerName = function(e3, t3) {
-    if (V(e3), this.names.has(e3)) this.names.get(e3).add(t3);
-    else {
-      var n2 = /* @__PURE__ */ new Set();
-      n2.add(t3), this.names.set(e3, n2);
-    }
-  }, t2.insertRules = function(e3, t3, n2) {
-    this.registerName(e3, t3), this.getTag().insertRules(V(e3), n2);
-  }, t2.clearNames = function(e3) {
-    this.names.has(e3) && this.names.get(e3).clear();
-  }, t2.clearRules = function(e3) {
-    this.getTag().clearGroup(V(e3)), this.clearNames(e3);
-  }, t2.clearTag = function() {
-    this.tag = void 0;
-  }, t2.toString = function() {
-    return function(e3) {
-      for (var t3 = e3.getTag(), n2 = t3.length, r2 = "", o2 = 0; o2 < n2; o2++) {
-        var s2 = B(o2);
-        if (void 0 !== s2) {
-          var i2 = e3.names.get(s2), a2 = t3.getGroup(o2);
-          if (i2 && a2 && i2.size) {
-            var c2 = N + ".g" + o2 + '[id="' + s2 + '"]', u2 = "";
-            void 0 !== i2 && i2.forEach(function(e4) {
-              e4.length > 0 && (u2 += e4 + ",");
-            }), r2 += "" + a2 + c2 + '{content:"' + u2 + '"}/*!sc*/\n';
-          }
-        }
-      }
-      return r2;
-    }(this);
-  }, e2;
-}(), Z = /(a)(d)/gi, K = function(e2) {
-  return String.fromCharCode(e2 + (e2 > 25 ? 39 : 97));
-};
-function Q(e2) {
-  var t2, n2 = "";
-  for (t2 = Math.abs(e2); t2 > 52; t2 = t2 / 52 | 0) n2 = K(t2 % 52) + n2;
-  return (K(t2 % 52) + n2).replace(Z, "$1-$2");
-}
-var ee = function(e2, t2) {
-  for (var n2 = t2.length; n2; ) e2 = 33 * e2 ^ t2.charCodeAt(--n2);
-  return e2;
-}, te = function(e2) {
-  return ee(5381, e2);
-};
-function ne(e2) {
-  for (var t2 = 0; t2 < e2.length; t2 += 1) {
-    var n2 = e2[t2];
-    if (E(n2) && !_(n2)) return false;
-  }
-  return true;
-}
-var re = te("5.3.11"), oe = function() {
-  function e2(e3, t2, n2) {
-    this.rules = e3, this.staticRulesId = "", this.isStatic = (void 0 === n2 || n2.isStatic) && ne(e3), this.componentId = t2, this.baseHash = ee(re, t2), this.baseStyle = n2, X.registerId(t2);
-  }
-  return e2.prototype.generateAndInjectStyles = function(e3, t2, n2) {
-    var r2 = this.componentId, o2 = [];
-    if (this.baseStyle && o2.push(this.baseStyle.generateAndInjectStyles(e3, t2, n2)), this.isStatic && !n2.hash) if (this.staticRulesId && t2.hasNameForId(r2, this.staticRulesId)) o2.push(this.staticRulesId);
-    else {
-      var s2 = _e(this.rules, e3, t2, n2).join(""), i2 = Q(ee(this.baseHash, s2) >>> 0);
-      if (!t2.hasNameForId(r2, i2)) {
-        var a2 = n2(s2, "." + i2, void 0, r2);
-        t2.insertRules(r2, i2, a2);
-      }
-      o2.push(i2), this.staticRulesId = i2;
-    }
-    else {
-      for (var c2 = this.rules.length, u2 = ee(this.baseHash, n2.hash), l2 = "", d2 = 0; d2 < c2; d2++) {
-        var h2 = this.rules[d2];
-        if ("string" == typeof h2) l2 += h2;
-        else if (h2) {
-          var p2 = _e(h2, e3, t2, n2), f2 = Array.isArray(p2) ? p2.join("") : p2;
-          u2 = ee(u2, f2 + d2), l2 += f2;
-        }
-      }
-      if (l2) {
-        var m2 = Q(u2 >>> 0);
-        if (!t2.hasNameForId(r2, m2)) {
-          var y2 = n2(l2, "." + m2, void 0, r2);
-          t2.insertRules(r2, m2, y2);
-        }
-        o2.push(m2);
-      }
-    }
-    return o2.join(" ");
-  }, e2;
-}(), se = /^\s*\/\/.*$/gm, ie = [":", "[", ".", "#"];
-function ae(e2) {
-  var t2, n2, r2, o2, s2 = w, i2 = s2.options, a2 = void 0 === i2 ? w : i2, c2 = s2.plugins, u2 = void 0 === c2 ? S : c2, l2 = new stylis_min(a2), d2 = [], p2 = /* @__PURE__ */ function(e3) {
-    function t3(t4) {
-      if (t4) try {
-        e3(t4 + "}");
-      } catch (e4) {
-      }
-    }
-    return function(n3, r3, o3, s3, i3, a3, c3, u3, l3, d3) {
-      switch (n3) {
-        case 1:
-          if (0 === l3 && 64 === r3.charCodeAt(0)) return e3(r3 + ";"), "";
-          break;
-        case 2:
-          if (0 === u3) return r3 + "/*|*/";
-          break;
-        case 3:
-          switch (u3) {
-            case 102:
-            case 112:
-              return e3(o3[0] + r3), "";
-            default:
-              return r3 + (0 === d3 ? "/*|*/" : "");
-          }
-        case -2:
-          r3.split("/*|*/}").forEach(t3);
-      }
-    };
-  }(function(e3) {
-    d2.push(e3);
-  }), f2 = function(e3, r3, s3) {
-    return 0 === r3 && -1 !== ie.indexOf(s3[n2.length]) || s3.match(o2) ? e3 : "." + t2;
-  };
-  function m2(e3, s3, i3, a3) {
-    void 0 === a3 && (a3 = "&");
-    var c3 = e3.replace(se, ""), u3 = s3 && i3 ? i3 + " " + s3 + " { " + c3 + " }" : c3;
-    return t2 = a3, n2 = s3, r2 = new RegExp("\\" + n2 + "\\b", "g"), o2 = new RegExp("(\\" + n2 + "\\b){2,}"), l2(i3 || !s3 ? "" : s3, u3);
-  }
-  return l2.use([].concat(u2, [function(e3, t3, o3) {
-    2 === e3 && o3.length && o3[0].lastIndexOf(n2) > 0 && (o3[0] = o3[0].replace(r2, f2));
-  }, p2, function(e3) {
-    if (-2 === e3) {
-      var t3 = d2;
-      return d2 = [], t3;
-    }
-  }])), m2.hash = u2.length ? u2.reduce(function(e3, t3) {
-    return t3.name || D(15), ee(e3, t3.name);
-  }, 5381).toString() : "", m2;
-}
-var ce = React$1.createContext();
-ce.Consumer;
-var le = React$1.createContext(), de = (le.Consumer, new X()), he = ae();
-function pe() {
-  return reactExports.useContext(ce) || de;
-}
-function fe() {
-  return reactExports.useContext(le) || he;
-}
-var ye = function() {
-  function e2(e3, t2) {
-    var n2 = this;
-    this.inject = function(e4, t3) {
-      void 0 === t3 && (t3 = he);
-      var r2 = n2.name + t3.hash;
-      e4.hasNameForId(n2.id, r2) || e4.insertRules(n2.id, r2, t3(n2.rules, r2, "@keyframes"));
-    }, this.toString = function() {
-      return D(12, String(n2.name));
-    }, this.name = e3, this.id = "sc-keyframes-" + e3, this.rules = t2;
-  }
-  return e2.prototype.getName = function(e3) {
-    return void 0 === e3 && (e3 = he), this.name + e3.hash;
-  }, e2;
-}(), ve = /([A-Z])/, ge = /([A-Z])/g, Se = /^ms-/, we = function(e2) {
-  return "-" + e2.toLowerCase();
-};
-function Ee(e2) {
-  return ve.test(e2) ? e2.replace(ge, we).replace(Se, "-ms-") : e2;
-}
-var be = function(e2) {
-  return null == e2 || false === e2 || "" === e2;
-};
-function _e(e2, n2, r2, o2) {
-  if (Array.isArray(e2)) {
-    for (var s2, i2 = [], a2 = 0, c2 = e2.length; a2 < c2; a2 += 1) "" !== (s2 = _e(e2[a2], n2, r2, o2)) && (Array.isArray(s2) ? i2.push.apply(i2, s2) : i2.push(s2));
-    return i2;
-  }
-  if (be(e2)) return "";
-  if (_(e2)) return "." + e2.styledComponentId;
-  if (E(e2)) {
-    if ("function" != typeof (l2 = e2) || l2.prototype && l2.prototype.isReactComponent || !n2) return e2;
-    var u2 = e2(n2);
-    return _e(u2, n2, r2, o2);
-  }
-  var l2;
-  return e2 instanceof ye ? r2 ? (e2.inject(r2, o2), e2.getName(o2)) : e2 : g(e2) ? function e3(t2, n3) {
-    var r3, o3, s3 = [];
-    for (var i3 in t2) t2.hasOwnProperty(i3) && !be(t2[i3]) && (Array.isArray(t2[i3]) && t2[i3].isCss || E(t2[i3]) ? s3.push(Ee(i3) + ":", t2[i3], ";") : g(t2[i3]) ? s3.push.apply(s3, e3(t2[i3], i3)) : s3.push(Ee(i3) + ": " + (r3 = i3, null == (o3 = t2[i3]) || "boolean" == typeof o3 || "" === o3 ? "" : "number" != typeof o3 || 0 === o3 || r3 in unitlessKeys || r3.startsWith("--") ? String(o3).trim() : o3 + "px") + ";"));
-    return n3 ? [n3 + " {"].concat(s3, ["}"]) : s3;
-  }(e2) : e2.toString();
-}
-var Ne = function(e2) {
-  return Array.isArray(e2) && (e2.isCss = true), e2;
-};
-function Ae(e2) {
-  for (var t2 = arguments.length, n2 = new Array(t2 > 1 ? t2 - 1 : 0), r2 = 1; r2 < t2; r2++) n2[r2 - 1] = arguments[r2];
-  return E(e2) || g(e2) ? Ne(_e(v(S, [e2].concat(n2)))) : 0 === n2.length && 1 === e2.length && "string" == typeof e2[0] ? e2 : Ne(_e(v(e2, n2)));
-}
-var Oe = function(e2, t2, n2) {
-  return void 0 === n2 && (n2 = w), e2.theme !== n2.theme && e2.theme || t2 || n2.theme;
-}, Re = /[!"#$%&'()*+,./:;<=>?@[\\\]^`{|}~-]+/g, De = /(^-|-$)/g;
-function je(e2) {
-  return e2.replace(Re, "-").replace(De, "");
-}
-var Te = function(e2) {
-  return Q(te(e2) >>> 0);
-};
-function xe(e2) {
-  return "string" == typeof e2 && true;
-}
-var ke = function(e2) {
-  return "function" == typeof e2 || "object" == typeof e2 && null !== e2 && !Array.isArray(e2);
-}, Ve = function(e2) {
-  return "__proto__" !== e2 && "constructor" !== e2 && "prototype" !== e2;
-};
-function Be(e2, t2, n2) {
-  var r2 = e2[n2];
-  ke(t2) && ke(r2) ? ze(r2, t2) : e2[n2] = t2;
-}
-function ze(e2) {
-  for (var t2 = arguments.length, n2 = new Array(t2 > 1 ? t2 - 1 : 0), r2 = 1; r2 < t2; r2++) n2[r2 - 1] = arguments[r2];
-  for (var o2 = 0, s2 = n2; o2 < s2.length; o2++) {
-    var i2 = s2[o2];
-    if (ke(i2)) for (var a2 in i2) Ve(a2) && Be(e2, i2[a2], a2);
-  }
-  return e2;
-}
-var Me = React$1.createContext();
-Me.Consumer;
-function Le(e2) {
-  var t2 = reactExports.useContext(Me), n2 = reactExports.useMemo(function() {
-    return function(e3, t3) {
-      if (!e3) return D(14);
-      if (E(e3)) {
-        var n3 = e3(t3);
-        return n3;
-      }
-      return Array.isArray(e3) || "object" != typeof e3 ? D(8) : t3 ? y({}, t3, {}, e3) : e3;
-    }(e2.theme, t2);
-  }, [e2.theme, t2]);
-  return e2.children ? React$1.createElement(Me.Provider, { value: n2 }, e2.children) : null;
-}
-var Fe = {};
-function Ye(e2, t2, n2) {
-  var o2 = _(e2), i2 = !xe(e2), a2 = t2.attrs, c2 = void 0 === a2 ? S : a2, l2 = t2.componentId, d2 = void 0 === l2 ? function(e3, t3) {
-    var n3 = "string" != typeof e3 ? "sc" : je(e3);
-    Fe[n3] = (Fe[n3] || 0) + 1;
-    var r2 = n3 + "-" + Te("5.3.11" + n3 + Fe[n3]);
-    return t3 ? t3 + "-" + r2 : r2;
-  }(t2.displayName, t2.parentComponentId) : l2, h2 = t2.displayName, p2 = void 0 === h2 ? function(e3) {
-    return xe(e3) ? "styled." + e3 : "Styled(" + b(e3) + ")";
-  }(e2) : h2, v2 = t2.displayName && t2.componentId ? je(t2.displayName) + "-" + t2.componentId : t2.componentId || d2, g2 = o2 && e2.attrs ? Array.prototype.concat(e2.attrs, c2).filter(Boolean) : c2, N2 = t2.shouldForwardProp;
-  o2 && e2.shouldForwardProp && (N2 = t2.shouldForwardProp ? function(n3, r2, o3) {
-    return e2.shouldForwardProp(n3, r2, o3) && t2.shouldForwardProp(n3, r2, o3);
-  } : e2.shouldForwardProp);
-  var A2, C2 = new oe(n2, v2, o2 ? e2.componentStyle : void 0), I2 = C2.isStatic && 0 === c2.length, P2 = function(e3, t3) {
-    return function(e4, t4, n3, r2) {
-      var o3 = e4.attrs, i3 = e4.componentStyle, a3 = e4.defaultProps, c3 = e4.foldedComponentIds, l3 = e4.shouldForwardProp, d3 = e4.styledComponentId, h3 = e4.target, p3 = function(e5, t5, n4) {
-        void 0 === e5 && (e5 = w);
-        var r3 = y({}, t5, { theme: e5 }), o4 = {};
-        return n4.forEach(function(e6) {
-          var t6, n5, s2, i4 = e6;
-          for (t6 in E(i4) && (i4 = i4(r3)), i4) r3[t6] = o4[t6] = "className" === t6 ? (n5 = o4[t6], s2 = i4[t6], n5 && s2 ? n5 + " " + s2 : n5 || s2) : i4[t6];
-        }), [r3, o4];
-      }(Oe(t4, reactExports.useContext(Me), a3) || w, t4, o3), m2 = p3[0], v3 = p3[1], g3 = function(e5, t5, n4, r3) {
-        var o4 = pe(), s2 = fe(), i4 = t5 ? e5.generateAndInjectStyles(w, o4, s2) : e5.generateAndInjectStyles(n4, o4, s2);
-        return i4;
-      }(i3, r2, m2), S2 = n3, b2 = v3.$as || t4.$as || v3.as || t4.as || h3, _2 = xe(b2), N3 = v3 !== t4 ? y({}, t4, {}, v3) : t4, A3 = {};
-      for (var C3 in N3) "$" !== C3[0] && "as" !== C3 && ("forwardedAs" === C3 ? A3.as = N3[C3] : (l3 ? l3(C3, isPropValid, b2) : !_2 || isPropValid(C3)) && (A3[C3] = N3[C3]));
-      return t4.style && v3.style !== t4.style && (A3.style = y({}, t4.style, {}, v3.style)), A3.className = Array.prototype.concat(c3, d3, g3 !== d3 ? g3 : null, t4.className, v3.className).filter(Boolean).join(" "), A3.ref = S2, reactExports.createElement(b2, A3);
-    }(A2, e3, t3, I2);
-  };
-  return P2.displayName = p2, (A2 = React$1.forwardRef(P2)).attrs = g2, A2.componentStyle = C2, A2.displayName = p2, A2.shouldForwardProp = N2, A2.foldedComponentIds = o2 ? Array.prototype.concat(e2.foldedComponentIds, e2.styledComponentId) : S, A2.styledComponentId = v2, A2.target = o2 ? e2.target : e2, A2.withComponent = function(e3) {
-    var r2 = t2.componentId, o3 = function(e4, t3) {
-      if (null == e4) return {};
-      var n3, r3, o4 = {}, s3 = Object.keys(e4);
-      for (r3 = 0; r3 < s3.length; r3++) n3 = s3[r3], t3.indexOf(n3) >= 0 || (o4[n3] = e4[n3]);
-      return o4;
-    }(t2, ["componentId"]), s2 = r2 && r2 + "-" + (xe(e3) ? e3 : je(b(e3)));
-    return Ye(e3, y({}, o3, { attrs: g2, componentId: s2 }), n2);
-  }, Object.defineProperty(A2, "defaultProps", { get: function() {
-    return this._foldedDefaultProps;
-  }, set: function(t3) {
-    this._foldedDefaultProps = o2 ? ze({}, e2.defaultProps, t3) : t3;
-  } }), Object.defineProperty(A2, "toString", { value: function() {
-    return "." + A2.styledComponentId;
-  } }), i2 && m$1(A2, e2, { attrs: true, componentStyle: true, displayName: true, foldedComponentIds: true, shouldForwardProp: true, styledComponentId: true, target: true, withComponent: true }), A2;
-}
-var qe = function(e2) {
-  return function e3(t2, r2, o2) {
-    if (void 0 === o2 && (o2 = w), !reactIsExports.isValidElementType(r2)) return D(1, String(r2));
-    var s2 = function() {
-      return t2(r2, o2, Ae.apply(void 0, arguments));
-    };
-    return s2.withConfig = function(n2) {
-      return e3(t2, r2, y({}, o2, {}, n2));
-    }, s2.attrs = function(n2) {
-      return e3(t2, r2, y({}, o2, { attrs: Array.prototype.concat(o2.attrs, n2).filter(Boolean) }));
-    }, s2;
-  }(Ye, e2);
-};
-["a", "abbr", "address", "area", "article", "aside", "audio", "b", "base", "bdi", "bdo", "big", "blockquote", "body", "br", "button", "canvas", "caption", "cite", "code", "col", "colgroup", "data", "datalist", "dd", "del", "details", "dfn", "dialog", "div", "dl", "dt", "em", "embed", "fieldset", "figcaption", "figure", "footer", "form", "h1", "h2", "h3", "h4", "h5", "h6", "head", "header", "hgroup", "hr", "html", "i", "iframe", "img", "input", "ins", "kbd", "keygen", "label", "legend", "li", "link", "main", "map", "mark", "marquee", "menu", "menuitem", "meta", "meter", "nav", "noscript", "object", "ol", "optgroup", "option", "output", "p", "param", "picture", "pre", "progress", "q", "rp", "rt", "ruby", "s", "samp", "script", "section", "select", "small", "source", "span", "strong", "style", "sub", "summary", "sup", "table", "tbody", "td", "textarea", "tfoot", "th", "thead", "time", "title", "tr", "track", "u", "ul", "var", "video", "wbr", "circle", "clipPath", "defs", "ellipse", "foreignObject", "g", "image", "line", "linearGradient", "marker", "mask", "path", "pattern", "polygon", "polyline", "radialGradient", "rect", "stop", "svg", "text", "textPath", "tspan"].forEach(function(e2) {
-  qe[e2] = qe(e2);
-});
 const GRID_BASE = 8;
 const gridUnitsToPixels = (val = 1) => `${val * GRID_BASE}px`;
 const colors = {
@@ -23999,6 +24879,9 @@ const ChevronRight = createSvgIcon$1(/* @__PURE__ */ reactExports.createElement(
 const Close = createSvgIcon$1(/* @__PURE__ */ reactExports.createElement("path", {
   d: "M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"
 }));
+const CodeIcon = createSvgIcon$1(/* @__PURE__ */ reactExports.createElement("path", {
+  d: "M9.4 16.6L4.8 12l4.6-4.6L8 6l-6 6 6 6 1.4-1.4zm5.2 0l4.6-4.6-4.6-4.6L16 6l6 6-6 6-1.4-1.4z"
+}));
 const Delete = createSvgIcon$1(/* @__PURE__ */ reactExports.createElement("path", {
   d: "M6 19c0 1.1.9 2 2 2h8c1.1 0 2-.9 2-2V7H6v12zM19 4h-3.5l-1-1h-5l-1 1H5v2h14V4z"
 }));
@@ -24017,14 +24900,26 @@ const FileCopy = createSvgIcon$1(/* @__PURE__ */ reactExports.createElement("pat
 const HighlightOff = createSvgIcon$1(/* @__PURE__ */ reactExports.createElement("path", {
   d: "M14.59 8L12 10.59 9.41 8 8 9.41 10.59 12 8 14.59 9.41 16 12 13.41 14.59 16 16 14.59 13.41 12 16 9.41 14.59 8zM12 2C6.47 2 2 6.47 2 12s4.47 10 10 10 10-4.47 10-10S17.53 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8z"
 }));
+const KeyboardIcon = createSvgIcon$1(/* @__PURE__ */ reactExports.createElement("path", {
+  d: "M20 5H4c-1.1 0-1.99.9-1.99 2L2 17c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V7c0-1.1-.9-2-2-2zm-9 3h2v2h-2V8zm0 3h2v2h-2v-2zM8 8h2v2H8V8zm0 3h2v2H8v-2zm-1 2H5v-2h2v2zm0-3H5V8h2v2zm9 7H8v-2h8v2zm0-4h-2v-2h2v2zm0-3h-2V8h2v2zm3 3h-2v-2h2v2zm0-3h-2V8h2v2z"
+}));
 const MoreVert = createSvgIcon$1(/* @__PURE__ */ reactExports.createElement("path", {
   d: "M12 8c1.1 0 2-.9 2-2s-.9-2-2-2-2 .9-2 2 .9 2 2 2zm0 2c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2zm0 6c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2z"
+}));
+const PlayArrow = createSvgIcon$1(/* @__PURE__ */ reactExports.createElement("path", {
+  d: "M8 5v14l11-7z"
 }));
 const SettingsIcon$1 = createSvgIcon$1(/* @__PURE__ */ reactExports.createElement("path", {
   d: "M19.14 12.94c.04-.3.06-.61.06-.94 0-.32-.02-.64-.07-.94l2.03-1.58c.18-.14.23-.41.12-.61l-1.92-3.32c-.12-.22-.37-.29-.59-.22l-2.39.96c-.5-.38-1.03-.7-1.62-.94l-.36-2.54c-.04-.24-.24-.41-.48-.41h-3.84c-.24 0-.43.17-.47.41l-.36 2.54c-.59.24-1.13.57-1.62.94l-2.39-.96c-.22-.08-.47 0-.59.22L2.74 8.87c-.12.21-.08.47.12.61l2.03 1.58c-.05.3-.09.63-.09.94s.02.64.07.94l-2.03 1.58c-.18.14-.23.41-.12.61l1.92 3.32c.12.22.37.29.59.22l2.39-.96c.5.38 1.03.7 1.62.94l.36 2.54c.05.24.24.41.48.41h3.84c.24 0 .44-.17.47-.41l.36-2.54c.59-.24 1.13-.56 1.62-.94l2.39.96c.22.08.47 0 .59-.22l1.92-3.32c.12-.22.07-.47-.12-.61l-2.01-1.58zM12 15.6c-1.98 0-3.6-1.62-3.6-3.6s1.62-3.6 3.6-3.6 3.6 1.62 3.6 3.6-1.62 3.6-3.6 3.6z"
 }));
 const SettingsIcon = createSvgIcon$1(/* @__PURE__ */ reactExports.createElement("path", {
   d: "M12 10c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2zm7-7H5c-1.11 0-2 .9-2 2v14c0 1.1.89 2 2 2h14c1.11 0 2-.9 2-2V5c0-1.1-.89-2-2-2zm-1.75 9c0 .23-.02.46-.05.68l1.48 1.16c.13.11.17.3.08.45l-1.4 2.42c-.09.15-.27.21-.43.15l-1.74-.7c-.36.28-.76.51-1.18.69l-.26 1.85c-.03.17-.18.3-.35.3h-2.8c-.17 0-.32-.13-.35-.29l-.26-1.85c-.43-.18-.82-.41-1.18-.69l-1.74.7c-.16.06-.34 0-.43-.15l-1.4-2.42c-.09-.15-.05-.34.08-.45l1.48-1.16c-.03-.23-.05-.46-.05-.69 0-.23.02-.46.05-.68l-1.48-1.16c-.13-.11-.17-.3-.08-.45l1.4-2.42c.09-.15.27-.21.43-.15l1.74.7c.36-.28.76-.51 1.18-.69l.26-1.85c.03-.17.18-.3.35-.3h2.8c.17 0 .32.13.35.29l.26 1.85c.43.18.82.41 1.18.69l1.74-.7c.16-.06.34 0 .43.15l1.4 2.42c.09.15.05.34-.08.45l-1.48 1.16c.03.23.05.46.05.69z"
+}));
+const Stop = createSvgIcon$1(/* @__PURE__ */ reactExports.createElement("path", {
+  d: "M6 6h12v12H6z"
+}));
+const YouTubeIcon = createSvgIcon$1(/* @__PURE__ */ reactExports.createElement("path", {
+  d: "M20 8H4V6h16v2zm-2-6H6v2h12V2zm4 10v8c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2v-8c0-1.1.9-2 2-2h16c1.1 0 2 .9 2 2zm-6 4l-6-3.27v6.53L16 16z"
 }));
 const VolumeOff = createSvgIcon$1(/* @__PURE__ */ reactExports.createElement("path", {
   d: "M16.5 12c0-1.77-1.02-3.29-2.5-4.03v2.21l2.45 2.45c.03-.2.05-.41.05-.63zm2.5 0c0 .94-.2 1.82-.54 2.64l1.51 1.51C20.63 14.91 21 13.5 21 12c0-4.28-2.99-7.86-7-8.77v2.06c2.89.86 5 3.54 5 6.71zM4.27 3L3 4.27 7.73 9H3v6h4l5 5v-6.73l4.25 4.25c-.67.52-1.42.93-2.25 1.18v2.06c1.38-.31 2.63-.95 3.69-1.81L19.73 21 21 19.73l-9-9L4.27 3zM12 4L9.91 6.09 12 8.18V4z"
@@ -24433,6 +25328,710 @@ const ConfigVisualEditor = ({ config: config2, onChange }) => {
     /* @__PURE__ */ jsxRuntimeExports.jsx(DetailPanel, { children: /* @__PURE__ */ jsxRuntimeExports.jsx(jsxRuntimeExports.Fragment, { children: renderDetailForm(config2 || {}, selectedNode, onChange) }) })
   ] });
 };
+function collectRtspStreamIds(tiles) {
+  const ids = [];
+  for (const tile of tiles) {
+    if (typeof tile.rtspStream === "string") ids.push(tile.rtspStream);
+    if (Array.isArray(tile.tiles)) ids.push(...collectRtspStreamIds(tile.tiles));
+  }
+  return ids;
+}
+function collectAudioInputNames(tiles) {
+  const names = [];
+  for (const tile of tiles) {
+    if (typeof tile.audioInput?.inputName === "string") names.push(tile.audioInput.inputName);
+    if (Array.isArray(tile.tiles)) names.push(...collectAudioInputNames(tile.tiles));
+  }
+  return names;
+}
+const PanelRoot$1 = qe.div`
+	display: flex;
+	flex-direction: column;
+	flex: 1;
+	overflow-y: auto;
+	padding: 16px 20px;
+	gap: 8px;
+`;
+const ShortcutRow = qe.div`
+	display: flex;
+	align-items: center;
+	gap: 8px;
+	flex-wrap: wrap;
+	padding: 8px 10px;
+	border-radius: 4px;
+	border: 1px solid rgba(255,255,255,0.1);
+	background: rgba(255,255,255,0.03);
+`;
+const ParamField = qe.div`
+	display: flex;
+	align-items: center;
+	gap: 6px;
+	flex-wrap: wrap;
+`;
+const EmptyHint$1 = qe.div`
+	padding: 20px;
+	opacity: 0.5;
+	font-size: 13px;
+`;
+const ACTION_TYPES = [
+  { value: "toggleRecording", label: "Toggle Recording" },
+  { value: "startRecording", label: "Start Recording" },
+  { value: "stopRecording", label: "Stop Recording" },
+  { value: "toggleStreaming", label: "Toggle Streaming" },
+  { value: "startStreaming", label: "Start Streaming" },
+  { value: "stopStreaming", label: "Stop Streaming" },
+  { value: "switchScene", label: "Switch to Scene" },
+  { value: "switchToPreviousScene", label: "Previous Scene" },
+  { value: "toggleSceneItem", label: "Toggle Scene Item" },
+  { value: "moveSceneItemToTop", label: "Move Scene Item to Top" },
+  { value: "toggleAudioMute", label: "Toggle Audio Mute" },
+  { value: "muteAudio", label: "Mute Audio" },
+  { value: "unmuteAudio", label: "Unmute Audio" },
+  { value: "startRtsp", label: "Start RTSP Stream" },
+  { value: "stopRtsp", label: "Stop RTSP Stream" },
+  { value: "toggleRtsp", label: "Toggle RTSP Stream" },
+  { value: "selectConfig", label: "Select Config" },
+  { value: "startYoutubeLive", label: "Start YouTube Live" },
+  { value: "stopYoutubeLive", label: "Stop YouTube Live" }
+];
+function defaultActionForType(type) {
+  switch (type) {
+    case "toggleRecording":
+      return { type: "toggleRecording" };
+    case "startRecording":
+      return { type: "startRecording" };
+    case "stopRecording":
+      return { type: "stopRecording" };
+    case "toggleStreaming":
+      return { type: "toggleStreaming" };
+    case "startStreaming":
+      return { type: "startStreaming" };
+    case "stopStreaming":
+      return { type: "stopStreaming" };
+    case "switchScene":
+      return { type: "switchScene", sceneName: "" };
+    case "switchToPreviousScene":
+      return { type: "switchToPreviousScene" };
+    case "toggleSceneItem":
+      return { type: "toggleSceneItem", sceneName: "", sceneItemName: "" };
+    case "moveSceneItemToTop":
+      return { type: "moveSceneItemToTop", sceneName: "", sceneItemName: "" };
+    case "toggleAudioMute":
+      return { type: "toggleAudioMute", inputName: "" };
+    case "muteAudio":
+      return { type: "muteAudio", inputName: "" };
+    case "unmuteAudio":
+      return { type: "unmuteAudio", inputName: "" };
+    case "startRtsp":
+      return { type: "startRtsp", streamId: "" };
+    case "stopRtsp":
+      return { type: "stopRtsp", streamId: "" };
+    case "toggleRtsp":
+      return { type: "toggleRtsp", streamId: "" };
+    case "selectConfig":
+      return { type: "selectConfig" };
+    case "startYoutubeLive":
+      return { type: "startYoutubeLive" };
+    case "stopYoutubeLive":
+      return { type: "stopYoutubeLive" };
+  }
+}
+const SceneItemSelect = ({ obs, scene, value, onChange }) => {
+  const items = useSceneItemList(obs, { scene });
+  return /* @__PURE__ */ jsxRuntimeExports.jsxs(
+    Select$1,
+    {
+      value,
+      onChange: (e2) => onChange(e2.target.value),
+      variant: "outlined",
+      style: { minWidth: 140, fontSize: 13, height: 32 },
+      displayEmpty: true,
+      children: [
+        /* @__PURE__ */ jsxRuntimeExports.jsx(MenuItem$1, { value: "", disabled: true, children: /* @__PURE__ */ jsxRuntimeExports.jsx("em", { children: "Scene item…" }) }),
+        (items ?? []).map((item) => /* @__PURE__ */ jsxRuntimeExports.jsx(MenuItem$1, { value: item.sourceName, children: item.sourceName }, item.sceneItemId))
+      ]
+    }
+  );
+};
+const KeyboardShortcutsPanel = ({ obs, shortcuts, onChange }) => {
+  const sceneListData = useSceneList(obs);
+  const sceneNames = sceneListData ? Object.keys(sceneListData.scenes) : [];
+  const { currentConfig } = useSettings();
+  const rtspStreamIds = collectRtspStreamIds(currentConfig.tiles ?? []);
+  const audioInputNames = collectAudioInputNames(currentConfig.tiles ?? []);
+  const handleAddShortcut = () => {
+    onChange([...shortcuts, { keys: "", action: { type: "toggleRecording" } }]);
+  };
+  const handleDelete = (index) => {
+    onChange(shortcuts.filter((_2, i) => i !== index));
+  };
+  const handleKeysChange = (index, keys2) => {
+    const next = [...shortcuts];
+    next[index] = { ...next[index], keys: keys2 };
+    onChange(next);
+  };
+  const handleActionTypeChange = (index, type) => {
+    const next = [...shortcuts];
+    next[index] = { ...next[index], action: defaultActionForType(type) };
+    onChange(next);
+  };
+  const handleActionParamChange = (index, patch) => {
+    const next = [...shortcuts];
+    next[index] = { ...next[index], action: { ...next[index].action, ...patch } };
+    onChange(next);
+  };
+  const renderParams = (shortcut, index) => {
+    const { action } = shortcut;
+    if (action.type === "switchScene") {
+      return /* @__PURE__ */ jsxRuntimeExports.jsx(ParamField, { children: /* @__PURE__ */ jsxRuntimeExports.jsxs(
+        Select$1,
+        {
+          value: action.sceneName,
+          onChange: (e2) => handleActionParamChange(index, { sceneName: e2.target.value }),
+          variant: "outlined",
+          style: { minWidth: 160, fontSize: 13, height: 32 },
+          displayEmpty: true,
+          children: [
+            /* @__PURE__ */ jsxRuntimeExports.jsx(MenuItem$1, { value: "", disabled: true, children: /* @__PURE__ */ jsxRuntimeExports.jsx("em", { children: "Scene…" }) }),
+            sceneNames.map((name) => /* @__PURE__ */ jsxRuntimeExports.jsx(MenuItem$1, { value: name, children: name }, name))
+          ]
+        }
+      ) });
+    }
+    if (action.type === "toggleSceneItem") {
+      return /* @__PURE__ */ jsxRuntimeExports.jsxs(ParamField, { children: [
+        /* @__PURE__ */ jsxRuntimeExports.jsxs(
+          Select$1,
+          {
+            value: action.sceneName,
+            onChange: (e2) => handleActionParamChange(index, { sceneName: e2.target.value, sceneItemName: "" }),
+            variant: "outlined",
+            style: { minWidth: 140, fontSize: 13, height: 32 },
+            displayEmpty: true,
+            children: [
+              /* @__PURE__ */ jsxRuntimeExports.jsx(MenuItem$1, { value: "", disabled: true, children: /* @__PURE__ */ jsxRuntimeExports.jsx("em", { children: "Scene…" }) }),
+              sceneNames.map((name) => /* @__PURE__ */ jsxRuntimeExports.jsx(MenuItem$1, { value: name, children: name }, name))
+            ]
+          }
+        ),
+        action.sceneName && /* @__PURE__ */ jsxRuntimeExports.jsx(
+          SceneItemSelect,
+          {
+            obs,
+            scene: action.sceneName,
+            value: action.sceneItemName,
+            onChange: (name) => handleActionParamChange(index, { sceneItemName: name })
+          }
+        )
+      ] });
+    }
+    if (action.type === "moveSceneItemToTop") {
+      return /* @__PURE__ */ jsxRuntimeExports.jsxs(ParamField, { children: [
+        /* @__PURE__ */ jsxRuntimeExports.jsxs(
+          Select$1,
+          {
+            value: action.sceneName,
+            onChange: (e2) => handleActionParamChange(index, { sceneName: e2.target.value, sceneItemName: "" }),
+            variant: "outlined",
+            style: { minWidth: 140, fontSize: 13, height: 32 },
+            displayEmpty: true,
+            children: [
+              /* @__PURE__ */ jsxRuntimeExports.jsx(MenuItem$1, { value: "", disabled: true, children: /* @__PURE__ */ jsxRuntimeExports.jsx("em", { children: "Scene…" }) }),
+              sceneNames.map((name) => /* @__PURE__ */ jsxRuntimeExports.jsx(MenuItem$1, { value: name, children: name }, name))
+            ]
+          }
+        ),
+        action.sceneName && /* @__PURE__ */ jsxRuntimeExports.jsx(
+          SceneItemSelect,
+          {
+            obs,
+            scene: action.sceneName,
+            value: action.sceneItemName,
+            onChange: (name) => handleActionParamChange(index, { sceneItemName: name })
+          }
+        )
+      ] });
+    }
+    if (action.type === "toggleAudioMute" || action.type === "muteAudio" || action.type === "unmuteAudio") {
+      return /* @__PURE__ */ jsxRuntimeExports.jsx(ParamField, { children: /* @__PURE__ */ jsxRuntimeExports.jsxs(
+        Select$1,
+        {
+          value: action.inputName,
+          onChange: (e2) => handleActionParamChange(index, { inputName: e2.target.value }),
+          variant: "outlined",
+          style: { minWidth: 160, fontSize: 13, height: 32 },
+          displayEmpty: true,
+          children: [
+            /* @__PURE__ */ jsxRuntimeExports.jsx(MenuItem$1, { value: "", disabled: true, children: /* @__PURE__ */ jsxRuntimeExports.jsx("em", { children: "Input…" }) }),
+            audioInputNames.map((name) => /* @__PURE__ */ jsxRuntimeExports.jsx(MenuItem$1, { value: name, children: name }, name))
+          ]
+        }
+      ) });
+    }
+    if (action.type === "startRtsp" || action.type === "stopRtsp" || action.type === "toggleRtsp") {
+      return /* @__PURE__ */ jsxRuntimeExports.jsx(ParamField, { children: /* @__PURE__ */ jsxRuntimeExports.jsxs(
+        Select$1,
+        {
+          value: action.streamId,
+          onChange: (e2) => handleActionParamChange(index, { streamId: e2.target.value }),
+          variant: "outlined",
+          style: { minWidth: 160, fontSize: 13, height: 32 },
+          displayEmpty: true,
+          children: [
+            /* @__PURE__ */ jsxRuntimeExports.jsx(MenuItem$1, { value: "", disabled: true, children: /* @__PURE__ */ jsxRuntimeExports.jsx("em", { children: "Stream…" }) }),
+            rtspStreamIds.map((id2) => /* @__PURE__ */ jsxRuntimeExports.jsx(MenuItem$1, { value: id2, children: id2 }, id2))
+          ]
+        }
+      ) });
+    }
+    return null;
+  };
+  return /* @__PURE__ */ jsxRuntimeExports.jsxs(PanelRoot$1, { children: [
+    /* @__PURE__ */ jsxRuntimeExports.jsx(Typography$1, { variant: "body2", style: { opacity: 0.6, marginBottom: 4 }, children: "Shortcuts are scoped to this configuration. They fire regardless of which tiles are in the layout." }),
+    shortcuts.length === 0 && /* @__PURE__ */ jsxRuntimeExports.jsx(EmptyHint$1, { children: 'No shortcuts configured. Click "Add Shortcut" to create one.' }),
+    shortcuts.map((shortcut, index) => /* @__PURE__ */ jsxRuntimeExports.jsxs(ShortcutRow, { children: [
+      /* @__PURE__ */ jsxRuntimeExports.jsx(
+        KeyCaptureInput,
+        {
+          value: shortcut.keys,
+          onChange: (keys2) => handleKeysChange(index, keys2)
+        }
+      ),
+      /* @__PURE__ */ jsxRuntimeExports.jsx(
+        Select$1,
+        {
+          value: shortcut.action.type,
+          onChange: (e2) => handleActionTypeChange(index, e2.target.value),
+          variant: "outlined",
+          style: { minWidth: 180, fontSize: 13, height: 32 },
+          children: ACTION_TYPES.map((opt) => /* @__PURE__ */ jsxRuntimeExports.jsx(MenuItem$1, { value: opt.value, children: opt.label }, opt.value))
+        }
+      ),
+      renderParams(shortcut, index),
+      /* @__PURE__ */ jsxRuntimeExports.jsx(Tooltip$1, { title: "Delete shortcut", children: /* @__PURE__ */ jsxRuntimeExports.jsx(IconButton$1, { size: "small", onClick: () => handleDelete(index), children: /* @__PURE__ */ jsxRuntimeExports.jsx(Delete, { fontSize: "small" }) }) })
+    ] }, index)),
+    /* @__PURE__ */ jsxRuntimeExports.jsx("div", { children: /* @__PURE__ */ jsxRuntimeExports.jsx(
+      Button$2,
+      {
+        startIcon: /* @__PURE__ */ jsxRuntimeExports.jsx(Add, {}),
+        variant: "outlined",
+        size: "small",
+        onClick: handleAddShortcut,
+        style: { marginTop: 8 },
+        children: "Add Shortcut"
+      }
+    ) })
+  ] });
+};
+const PanelRoot = qe.div`
+	display: flex;
+	flex-direction: column;
+	gap: 24px;
+	padding: 20px;
+	overflow-y: auto;
+	flex: 1;
+`;
+const Section = qe.div`
+	display: flex;
+	flex-direction: column;
+	gap: 12px;
+`;
+const SectionLabel = qe.div`
+	font-size: 11px;
+	font-weight: 600;
+	text-transform: uppercase;
+	letter-spacing: 0.08em;
+	opacity: 0.55;
+`;
+const InstructionsBox = qe.div`
+	background: rgba(255, 255, 255, 0.04);
+	border: 1px solid rgba(255, 255, 255, 0.10);
+	border-radius: 4px;
+	padding: 12px 14px;
+	font-size: 12px;
+	line-height: 1.65;
+`;
+const InstructionsList = qe.ol`
+	margin: 8px 0 0 0;
+	padding-left: 20px;
+	display: flex;
+	flex-direction: column;
+	gap: 6px;
+`;
+const InstructionsLink = qe.a`
+	color: #90caf9;
+	text-decoration: underline;
+	cursor: pointer;
+	&:hover { color: #bbdefb; }
+`;
+const WarnBox = qe.div`
+	background: rgba(255, 193, 7, 0.12);
+	border: 1px solid rgba(255, 193, 7, 0.35);
+	border-radius: 4px;
+	padding: 8px 12px;
+	font-size: 12px;
+	color: #ffc107;
+	line-height: 1.5;
+`;
+const OverrideRow = qe.div`
+	display: flex;
+	align-items: center;
+	gap: 12px;
+`;
+const FlexFormControl = qe(FormControl$1)`
+	flex: 1;
+`;
+const AuthRow = qe.div`
+	display: flex;
+	align-items: center;
+	gap: 12px;
+`;
+const AuthStatus = qe.div`
+	flex: 1;
+	font-size: 13px;
+	opacity: 0.8;
+`;
+const WaitingRow = qe.div`
+	display: flex;
+	align-items: center;
+	gap: 10px;
+`;
+const ToggleCredsLink = qe.button`
+	background: none;
+	border: none;
+	padding: 0;
+	cursor: pointer;
+	font-size: 12px;
+	color: #90caf9;
+	text-decoration: underline;
+	opacity: 0.8;
+	text-align: left;
+	&:hover { opacity: 1; }
+`;
+const YouTubeAuthDialog = ({ open, waiting, error, onOpenBrowser, onCancel }) => /* @__PURE__ */ jsxRuntimeExports.jsxs(Dialog$1, { open, onClose: onCancel, fullWidth: true, maxWidth: "xs", children: [
+  /* @__PURE__ */ jsxRuntimeExports.jsx(DialogTitle$1, { children: "Sign in to YouTube" }),
+  /* @__PURE__ */ jsxRuntimeExports.jsxs(DialogContent$1, { children: [
+    /* @__PURE__ */ jsxRuntimeExports.jsx(Typography$1, { variant: "body2", gutterBottom: true, children: "Your browser will open to sign in. After approving, return to obs-tiles." }),
+    waiting && /* @__PURE__ */ jsxRuntimeExports.jsxs(WaitingRow, { children: [
+      /* @__PURE__ */ jsxRuntimeExports.jsx(CircularProgress$1, { size: 16 }),
+      /* @__PURE__ */ jsxRuntimeExports.jsx(Typography$1, { variant: "body2", children: "Waiting for authorization…" })
+    ] }),
+    error && /* @__PURE__ */ jsxRuntimeExports.jsx(Typography$1, { variant: "body2", color: "error", style: { marginTop: 8 }, children: error })
+  ] }),
+  /* @__PURE__ */ jsxRuntimeExports.jsxs(DialogActions$1, { children: [
+    !waiting && !error && /* @__PURE__ */ jsxRuntimeExports.jsx(Button$2, { onClick: onOpenBrowser, color: "primary", variant: "contained", children: "Open browser" }),
+    error && /* @__PURE__ */ jsxRuntimeExports.jsx(Button$2, { onClick: onOpenBrowser, color: "primary", variant: "outlined", children: "Retry" }),
+    /* @__PURE__ */ jsxRuntimeExports.jsx(Button$2, { onClick: onCancel, children: "Cancel" })
+  ] })
+] });
+const GCP_CONSOLE_URL = "https://console.cloud.google.com";
+const GcpInstructions = () => {
+  const openLink = (e2) => {
+    e2.preventDefault();
+    if (window.ipcRenderer) {
+      window.ipcRenderer.youtubeOpenBrowser(GCP_CONSOLE_URL);
+    } else {
+      window.open(GCP_CONSOLE_URL, "_blank", "noopener,noreferrer");
+    }
+  };
+  return /* @__PURE__ */ jsxRuntimeExports.jsxs(InstructionsBox, { children: [
+    /* @__PURE__ */ jsxRuntimeExports.jsx("div", { children: "To use YouTube Live integration you need a Google Cloud Project with the YouTube Data API v3 enabled." }),
+    /* @__PURE__ */ jsxRuntimeExports.jsxs(InstructionsList, { children: [
+      /* @__PURE__ */ jsxRuntimeExports.jsxs("li", { children: [
+        "Go to ",
+        /* @__PURE__ */ jsxRuntimeExports.jsx(InstructionsLink, { href: GCP_CONSOLE_URL, onClick: openLink, children: "console.cloud.google.com" }),
+        " → New project"
+      ] }),
+      /* @__PURE__ */ jsxRuntimeExports.jsxs("li", { children: [
+        "APIs & Services → Enable APIs → ",
+        /* @__PURE__ */ jsxRuntimeExports.jsx("em", { children: "YouTube Data API v3" })
+      ] }),
+      /* @__PURE__ */ jsxRuntimeExports.jsxs("li", { children: [
+        "APIs & Services → Credentials → + Create Credentials → OAuth client ID → Application type: ",
+        /* @__PURE__ */ jsxRuntimeExports.jsx("em", { children: "Desktop app" })
+      ] }),
+      /* @__PURE__ */ jsxRuntimeExports.jsx("li", { children: "Copy the Client ID and Client Secret below" }),
+      /* @__PURE__ */ jsxRuntimeExports.jsxs("li", { children: [
+        "APIs & Services → OAuth consent screen → Publishing status: set to ",
+        /* @__PURE__ */ jsxRuntimeExports.jsx("em", { children: "In production" }),
+        " (required to avoid refresh tokens expiring after 7 days)"
+      ] })
+    ] })
+  ] });
+};
+const YouTubeSettingsPanel = ({
+  value,
+  connectionNames,
+  onChange,
+  onSaveNow
+}) => {
+  const isElectron2 = Boolean(window.ipcRenderer);
+  const [authDialogOpen, setAuthDialogOpen] = React$1.useState(false);
+  const [authWaiting, setAuthWaiting] = React$1.useState(false);
+  const [authError, setAuthError] = React$1.useState(null);
+  const cancelledRef = React$1.useRef(false);
+  const [showCustomCreds, setShowCustomCreds] = React$1.useState(
+    () => !hasBundledCredentials || Boolean(value.clientId || value.clientSecret)
+  );
+  const handleSignIn = () => {
+    cancelledRef.current = false;
+    setAuthError(null);
+    setAuthWaiting(false);
+    setAuthDialogOpen(true);
+  };
+  const handleOpenBrowser = async () => {
+    setAuthWaiting(true);
+    setAuthError(null);
+    try {
+      const clientId = value.clientId || BUNDLED_CLIENT_ID;
+      const clientSecret = value.clientSecret || BUNDLED_CLIENT_SECRET;
+      const authService = new YouTubeAuthService(clientId, clientSecret);
+      const refreshToken = await authService.startOAuthFlow();
+      if (!cancelledRef.current) {
+        setAuthDialogOpen(false);
+        onSaveNow({ ...value, refreshToken });
+      }
+    } catch (err) {
+      if (!cancelledRef.current) {
+        setAuthError(err?.message ?? "Authentication failed");
+        setAuthWaiting(false);
+      }
+    }
+  };
+  const handleCancelAuth = () => {
+    cancelledRef.current = true;
+    setAuthDialogOpen(false);
+    setAuthWaiting(false);
+    setAuthError(null);
+  };
+  const handleSignOut = () => {
+    onSaveNow({ ...value, refreshToken: void 0 });
+  };
+  const isSignedIn = Boolean(value.refreshToken);
+  return /* @__PURE__ */ jsxRuntimeExports.jsxs(PanelRoot, { children: [
+    hasBundledCredentials ? /* @__PURE__ */ jsxRuntimeExports.jsxs(Section, { children: [
+      /* @__PURE__ */ jsxRuntimeExports.jsx(SectionLabel, { children: "Authentication" }),
+      /* @__PURE__ */ jsxRuntimeExports.jsxs(AuthRow, { children: [
+        /* @__PURE__ */ jsxRuntimeExports.jsx(AuthStatus, { children: isSignedIn ? `Signed in${value.clientId ? " (using your own credentials)" : " (using shared credentials)"}` : "Not signed in" }),
+        !isSignedIn ? /* @__PURE__ */ jsxRuntimeExports.jsx(
+          Button$2,
+          {
+            variant: "contained",
+            color: "primary",
+            size: "small",
+            onClick: handleSignIn,
+            disabled: !isElectron2,
+            children: "Sign in to YouTube"
+          }
+        ) : /* @__PURE__ */ jsxRuntimeExports.jsx(Button$2, { variant: "outlined", size: "small", onClick: handleSignOut, children: "Sign out" })
+      ] }),
+      !isElectron2 && /* @__PURE__ */ jsxRuntimeExports.jsx(Typography$1, { variant: "caption", style: { opacity: 0.6 }, children: "OAuth sign-in is only available in the Electron desktop app." }),
+      /* @__PURE__ */ jsxRuntimeExports.jsx(ToggleCredsLink, { onClick: () => setShowCustomCreds((v2) => !v2), children: showCustomCreds ? "▲ Hide advanced credentials" : "▼ Use your own Google app credentials…" }),
+      showCustomCreds && /* @__PURE__ */ jsxRuntimeExports.jsxs(jsxRuntimeExports.Fragment, { children: [
+        /* @__PURE__ */ jsxRuntimeExports.jsx(GcpInstructions, {}),
+        !isSignedIn && /* @__PURE__ */ jsxRuntimeExports.jsx(WarnBox, { children: '⚠ Make sure to set the OAuth consent screen to "In production" before signing in. Refresh tokens for apps in testing mode expire after 7 days.' }),
+        /* @__PURE__ */ jsxRuntimeExports.jsx(
+          TextField$1,
+          {
+            label: "Client ID",
+            value: value.clientId,
+            onChange: (e2) => onChange({ ...value, clientId: e2.target.value }),
+            variant: "outlined",
+            size: "small",
+            fullWidth: true,
+            disabled: isSignedIn,
+            helperText: isSignedIn ? "Sign out to change credentials" : "Leave blank to use shared credentials"
+          }
+        ),
+        /* @__PURE__ */ jsxRuntimeExports.jsx(
+          TextField$1,
+          {
+            label: "Client Secret",
+            value: value.clientSecret,
+            onChange: (e2) => onChange({ ...value, clientSecret: e2.target.value }),
+            variant: "outlined",
+            size: "small",
+            fullWidth: true,
+            type: "password",
+            disabled: isSignedIn
+          }
+        )
+      ] })
+    ] }) : /* @__PURE__ */ jsxRuntimeExports.jsxs(jsxRuntimeExports.Fragment, { children: [
+      /* @__PURE__ */ jsxRuntimeExports.jsxs(Section, { children: [
+        /* @__PURE__ */ jsxRuntimeExports.jsx(SectionLabel, { children: "Google Cloud Project setup" }),
+        /* @__PURE__ */ jsxRuntimeExports.jsx(GcpInstructions, {}),
+        !isSignedIn && /* @__PURE__ */ jsxRuntimeExports.jsx(WarnBox, { children: '⚠ Make sure to set the OAuth consent screen to "In production" before signing in. Refresh tokens for apps in testing mode expire after 7 days.' })
+      ] }),
+      /* @__PURE__ */ jsxRuntimeExports.jsxs(Section, { children: [
+        /* @__PURE__ */ jsxRuntimeExports.jsx(SectionLabel, { children: "OAuth Credentials" }),
+        /* @__PURE__ */ jsxRuntimeExports.jsx(
+          TextField$1,
+          {
+            label: "Client ID",
+            value: value.clientId,
+            onChange: (e2) => onChange({ ...value, clientId: e2.target.value }),
+            variant: "outlined",
+            size: "small",
+            fullWidth: true,
+            disabled: isSignedIn,
+            helperText: isSignedIn ? "Sign out to change credentials" : void 0
+          }
+        ),
+        /* @__PURE__ */ jsxRuntimeExports.jsx(
+          TextField$1,
+          {
+            label: "Client Secret",
+            value: value.clientSecret,
+            onChange: (e2) => onChange({ ...value, clientSecret: e2.target.value }),
+            variant: "outlined",
+            size: "small",
+            fullWidth: true,
+            type: "password",
+            disabled: isSignedIn
+          }
+        )
+      ] }),
+      /* @__PURE__ */ jsxRuntimeExports.jsxs(Section, { children: [
+        /* @__PURE__ */ jsxRuntimeExports.jsx(SectionLabel, { children: "Authentication Status" }),
+        /* @__PURE__ */ jsxRuntimeExports.jsxs(AuthRow, { children: [
+          /* @__PURE__ */ jsxRuntimeExports.jsx(AuthStatus, { children: isSignedIn ? "Signed in (auth token stored)" : "Not signed in" }),
+          !isSignedIn ? /* @__PURE__ */ jsxRuntimeExports.jsx(
+            Button$2,
+            {
+              variant: "contained",
+              color: "primary",
+              size: "small",
+              onClick: handleSignIn,
+              disabled: !isElectron2 || !value.clientId || !value.clientSecret,
+              children: "Sign in to YouTube"
+            }
+          ) : /* @__PURE__ */ jsxRuntimeExports.jsx(Button$2, { variant: "outlined", size: "small", onClick: handleSignOut, children: "Sign out" })
+        ] }),
+        !isElectron2 && /* @__PURE__ */ jsxRuntimeExports.jsx(Typography$1, { variant: "caption", style: { opacity: 0.6 }, children: "OAuth sign-in is only available in the Electron desktop app." })
+      ] })
+    ] }),
+    /* @__PURE__ */ jsxRuntimeExports.jsxs(Section, { children: [
+      /* @__PURE__ */ jsxRuntimeExports.jsx(SectionLabel, { children: "Default broadcast settings" }),
+      /* @__PURE__ */ jsxRuntimeExports.jsxs(OverrideRow, { children: [
+        /* @__PURE__ */ jsxRuntimeExports.jsxs(FlexFormControl, { variant: "outlined", size: "small", children: [
+          /* @__PURE__ */ jsxRuntimeExports.jsx(InputLabel$1, { children: "Privacy" }),
+          /* @__PURE__ */ jsxRuntimeExports.jsxs(
+            Select$1,
+            {
+              label: "Privacy",
+              value: value.defaultPrivacyStatus,
+              onChange: (e2) => onChange({ ...value, defaultPrivacyStatus: e2.target.value }),
+              children: [
+                /* @__PURE__ */ jsxRuntimeExports.jsx(MenuItem$1, { value: "public", children: "Public" }),
+                /* @__PURE__ */ jsxRuntimeExports.jsx(MenuItem$1, { value: "unlisted", children: "Unlisted" }),
+                /* @__PURE__ */ jsxRuntimeExports.jsx(MenuItem$1, { value: "private", children: "Private" })
+              ]
+            }
+          )
+        ] }),
+        /* @__PURE__ */ jsxRuntimeExports.jsx(
+          FormControlLabel$1,
+          {
+            control: /* @__PURE__ */ jsxRuntimeExports.jsx(
+              Checkbox$1,
+              {
+                checked: value.allowPrivacyOverride,
+                onChange: (e2) => onChange({ ...value, allowPrivacyOverride: e2.target.checked }),
+                color: "primary",
+                size: "small"
+              }
+            ),
+            label: "Allow override"
+          }
+        )
+      ] }),
+      /* @__PURE__ */ jsxRuntimeExports.jsxs(OverrideRow, { children: [
+        /* @__PURE__ */ jsxRuntimeExports.jsxs(FlexFormControl, { variant: "outlined", size: "small", children: [
+          /* @__PURE__ */ jsxRuntimeExports.jsx(InputLabel$1, { children: "Latency" }),
+          /* @__PURE__ */ jsxRuntimeExports.jsxs(
+            Select$1,
+            {
+              label: "Latency",
+              value: value.defaultLatency,
+              onChange: (e2) => onChange({ ...value, defaultLatency: e2.target.value }),
+              children: [
+                /* @__PURE__ */ jsxRuntimeExports.jsx(MenuItem$1, { value: "ultraLow", children: "Ultra Low" }),
+                /* @__PURE__ */ jsxRuntimeExports.jsx(MenuItem$1, { value: "low", children: "Low" }),
+                /* @__PURE__ */ jsxRuntimeExports.jsx(MenuItem$1, { value: "normal", children: "Normal" })
+              ]
+            }
+          )
+        ] }),
+        /* @__PURE__ */ jsxRuntimeExports.jsx(
+          FormControlLabel$1,
+          {
+            control: /* @__PURE__ */ jsxRuntimeExports.jsx(
+              Checkbox$1,
+              {
+                checked: value.allowLatencyOverride,
+                onChange: (e2) => onChange({ ...value, allowLatencyOverride: e2.target.checked }),
+                color: "primary",
+                size: "small"
+              }
+            ),
+            label: "Allow override"
+          }
+        )
+      ] }),
+      /* @__PURE__ */ jsxRuntimeExports.jsx(
+        TextField$1,
+        {
+          label: "Title template",
+          value: value.defaultTitle,
+          onChange: (e2) => onChange({ ...value, defaultTitle: e2.target.value }),
+          variant: "outlined",
+          size: "small",
+          fullWidth: true,
+          helperText: "{date} is replaced with today's date (YYYY-MM-DD)"
+        }
+      ),
+      /* @__PURE__ */ jsxRuntimeExports.jsx(
+        TextField$1,
+        {
+          label: "Description",
+          value: value.defaultDescription,
+          onChange: (e2) => onChange({ ...value, defaultDescription: e2.target.value }),
+          variant: "outlined",
+          size: "small",
+          fullWidth: true,
+          multiline: true,
+          minRows: 2
+        }
+      )
+    ] }),
+    /* @__PURE__ */ jsxRuntimeExports.jsxs(Section, { children: [
+      /* @__PURE__ */ jsxRuntimeExports.jsx(SectionLabel, { children: "OBS connection for stream key updates" }),
+      /* @__PURE__ */ jsxRuntimeExports.jsxs(FormControl$1, { variant: "outlined", size: "small", style: { maxWidth: 260 }, children: [
+        /* @__PURE__ */ jsxRuntimeExports.jsx(InputLabel$1, { children: "Connection" }),
+        /* @__PURE__ */ jsxRuntimeExports.jsx(
+          Select$1,
+          {
+            label: "Connection",
+            value: value.obsConnection,
+            onChange: (e2) => onChange({ ...value, obsConnection: e2.target.value }),
+            children: connectionNames.map((name) => /* @__PURE__ */ jsxRuntimeExports.jsx(MenuItem$1, { value: name, children: name }, name))
+          }
+        )
+      ] })
+    ] }),
+    /* @__PURE__ */ jsxRuntimeExports.jsx(
+      YouTubeAuthDialog,
+      {
+        open: authDialogOpen,
+        waiting: authWaiting,
+        error: authError,
+        onOpenBrowser: handleOpenBrowser,
+        onCancel: handleCancelAuth
+      }
+    )
+  ] });
+};
 const ConfirmDialog = ({ open, title, message, onConfirm, onCancel }) => /* @__PURE__ */ jsxRuntimeExports.jsxs(Dialog$1, { open, onClose: onCancel, children: [
   /* @__PURE__ */ jsxRuntimeExports.jsx(DialogTitle$1, { children: title }),
   /* @__PURE__ */ jsxRuntimeExports.jsx(DialogContent$1, { children: /* @__PURE__ */ jsxRuntimeExports.jsx(DialogContentText$1, { children: message }) }),
@@ -24441,6 +26040,7 @@ const ConfirmDialog = ({ open, title, message, onConfirm, onCancel }) => /* @__P
     /* @__PURE__ */ jsxRuntimeExports.jsx(Button$2, { onClick: onConfirm, color: "primary", variant: "contained", autoFocus: true, children: "Confirm" })
   ] })
 ] });
+const DEFAULT_SHORTCUTS = DEFAULT_SHORTCUTS$2;
 const DialogBody = qe.div`
 	display: flex;
 	flex-direction: row;
@@ -24528,6 +26128,22 @@ const EmptyHint = qe.div`
 	color: ${(p2) => p2.theme.palette?.text?.secondary ?? "#888"};
 	font-size: 13px;
 `;
+const BackupFolderRow = qe.div`
+	display: flex;
+	gap: 8px;
+	align-items: flex-start;
+`;
+const BackupFolderBrowseButton = qe(Button$2)`
+	flex-shrink: 0;
+`;
+const RawSection = qe.div`
+	display: flex;
+	flex-direction: column;
+	gap: 12px;
+	padding: 20px;
+	overflow-y: auto;
+	flex: 1;
+`;
 const useStyles = makeStyles((theme) => ({
   appBar: { position: "relative" },
   title: { marginLeft: theme.spacing(2), flex: 1 },
@@ -24581,23 +26197,80 @@ const SettingsDialog = ({ onClose }) => {
   } = useSettings();
   const [localTitle, setLocalTitle] = React$1.useState(savedSettings.title ?? DEFAULT_SETTINGS.title);
   const [localSelectConfigAtLaunch, setLocalSelectConfigAtLaunch] = React$1.useState(savedSettings.selectConfigAtLaunch ?? false);
+  const [localAutoBackupConfigOnClose, setLocalAutoBackupConfigOnClose] = React$1.useState(savedSettings.autoBackupConfigOnClose ?? false);
+  const [localAutoBackupConfigFolder, setLocalAutoBackupConfigFolder] = React$1.useState(savedSettings.autoBackupConfigFolder ?? "");
+  const [localFfmpegPath, setLocalFfmpegPath] = React$1.useState(savedSettings.ffmpegPath ?? "");
   const [localConfirmBeforeStartStreaming, setLocalConfirmBeforeStartStreaming] = React$1.useState(savedSettings.confirmBeforeStartStreaming ?? false);
   const [localConfirmBeforeStopStreaming, setLocalConfirmBeforeStopStreaming] = React$1.useState(savedSettings.confirmBeforeStopStreaming ?? false);
   const [localConfirmBeforeStartRecording, setLocalConfirmBeforeStartRecording] = React$1.useState(savedSettings.confirmBeforeStartRecording ?? false);
   const [localConfirmBeforeStopRecording, setLocalConfirmBeforeStopRecording] = React$1.useState(savedSettings.confirmBeforeStopRecording ?? false);
+  const [localConfirmBeforeGoLive, setLocalConfirmBeforeGoLive] = React$1.useState(savedSettings.confirmBeforeGoLive ?? false);
   const [localConfigs, setLocalConfigs] = React$1.useState(
     () => savedSettings.configs.map((c2) => ({ ...c2 }))
   );
   const [localConfigIndex, setLocalConfigIndex] = React$1.useState(savedSettings.currentConfigIndex);
+  const [localShortcuts, setLocalShortcuts] = React$1.useState(
+    () => savedSettings.configs[savedSettings.currentConfigIndex]?.shortcuts ?? []
+  );
+  const obs = useObs({ connection: localConfigs[localConfigIndex]?.connection });
   const [selected, setSelected] = React$1.useState("settings");
   const [configsExpanded, setConfigsExpanded] = React$1.useState(true);
   const [activeTab, setActiveTab] = React$1.useState("connections");
   const [jsonValue, setJsonValue] = React$1.useState(
     () => JSON.stringify(savedSettings.configs[savedSettings.currentConfigIndex], null, 2)
   );
+  const [localYouTube, setLocalYouTube] = React$1.useState(
+    () => savedSettings.youtube ?? DEFAULT_SETTINGS.youtube
+  );
+  const [rawRequestName, setRawRequestName] = React$1.useState("GetStreamServiceSettings");
+  const [rawRequestBody, setRawRequestBody] = React$1.useState("{}");
+  const [rawResponse, setRawResponse] = React$1.useState("");
+  const [rawSending, setRawSending] = React$1.useState(false);
+  const handleSendRawRequest = React$1.useCallback(async () => {
+    if (!obs?.adapter) return;
+    setRawSending(true);
+    setRawResponse("");
+    try {
+      let bodyObj = {};
+      try {
+        bodyObj = JSON.parse(rawRequestBody);
+      } catch {
+        setRawResponse("Error: request body is not valid JSON");
+        setRawSending(false);
+        return;
+      }
+      const result = await obs.adapter.sendRaw(rawRequestName.trim(), bodyObj);
+      setRawResponse(JSON.stringify(result, null, 2));
+    } catch (e2) {
+      setRawResponse(`Error: ${e2?.message ?? String(e2)}`);
+    }
+    setRawSending(false);
+  }, [obs, rawRequestName, rawRequestBody]);
   const [namePrompt, setNamePrompt] = React$1.useState(null);
   const [deleteConfirm, setDeleteConfirm] = React$1.useState(null);
   const [jsonError, setJsonError] = React$1.useState(null);
+  const handleBrowseBackupFolder = React$1.useCallback(async () => {
+    if (!window.ipcRenderer) return;
+    try {
+      const selectedPath = await window.ipcRenderer.selectFolder(localAutoBackupConfigFolder);
+      if (selectedPath) {
+        setLocalAutoBackupConfigFolder(selectedPath);
+      }
+    } catch (error) {
+      console.error("Failed to select backup folder:", error);
+    }
+  }, [localAutoBackupConfigFolder]);
+  const handleBrowseFfmpegPath = React$1.useCallback(async () => {
+    if (!window.ipcRenderer) return;
+    try {
+      const selectedPath = await window.ipcRenderer.selectFolder(localFfmpegPath);
+      if (selectedPath) {
+        setLocalFfmpegPath(selectedPath);
+      }
+    } catch (error) {
+      console.error("Failed to select ffmpeg folder:", error);
+    }
+  }, [localFfmpegPath]);
   const pendingSelectLastRef = React$1.useRef(false);
   React$1.useEffect(() => {
     if (pendingSelectLastRef.current && localConfigs.length > 0) {
@@ -24650,7 +26323,7 @@ const SettingsDialog = ({ onClose }) => {
       title: "New config name",
       initialValue: "",
       onConfirm: (name) => {
-        const newConfig = { ...DEFAULT_SETTINGS.configs[0], name };
+        const newConfig = { ...DEFAULT_SETTINGS.configs[0], name, shortcuts: DEFAULT_SHORTCUTS };
         pendingSelectLastRef.current = true;
         setLocalConfigs((prev) => [...prev, newConfig]);
         setNamePrompt(null);
@@ -24706,18 +26379,36 @@ const SettingsDialog = ({ onClose }) => {
         return;
       }
     }
+    const configsWithShortcuts = finalConfigs.map(
+      (cfg, i) => i === localConfigIndex ? { ...cfg, shortcuts: localShortcuts } : cfg
+    );
     saveFullSettings({
       title: localTitle,
-      configs: finalConfigs,
+      configs: configsWithShortcuts,
       currentConfigIndex: localConfigIndex,
       selectConfigAtLaunch: localSelectConfigAtLaunch,
+      autoBackupConfigOnClose: localAutoBackupConfigOnClose,
+      autoBackupConfigFolder: localAutoBackupConfigFolder,
+      ffmpegPath: localFfmpegPath,
       confirmBeforeStartStreaming: localConfirmBeforeStartStreaming,
       confirmBeforeStopStreaming: localConfirmBeforeStopStreaming,
       confirmBeforeStartRecording: localConfirmBeforeStartRecording,
-      confirmBeforeStopRecording: localConfirmBeforeStopRecording
+      confirmBeforeStopRecording: localConfirmBeforeStopRecording,
+      confirmBeforeGoLive: localConfirmBeforeGoLive,
+      youtube: localYouTube
     });
     onClose();
   };
+  const handleYouTubeAuthSaveNow = React$1.useCallback(
+    (newYouTube) => {
+      setLocalYouTube(newYouTube);
+      saveFullSettings({
+        ...savedSettings,
+        youtube: newYouTube
+      });
+    },
+    [savedSettings, saveFullSettings]
+  );
   const renderTree = () => /* @__PURE__ */ jsxRuntimeExports.jsxs(jsxRuntimeExports.Fragment, { children: [
     /* @__PURE__ */ jsxRuntimeExports.jsxs(
       TreeRow,
@@ -24728,6 +26419,42 @@ const SettingsDialog = ({ onClose }) => {
         children: [
           /* @__PURE__ */ jsxRuntimeExports.jsx(TreeIcon, { children: /* @__PURE__ */ jsxRuntimeExports.jsx(SettingsIcon$1, { style: { width: 16, height: 16, opacity: 0.7 } }) }),
           /* @__PURE__ */ jsxRuntimeExports.jsx(TreeLabel, { children: "Settings" })
+        ]
+      }
+    ),
+    /* @__PURE__ */ jsxRuntimeExports.jsxs(
+      TreeRow,
+      {
+        $depth: 0,
+        $selected: selected === "keyboard-shortcuts",
+        onClick: () => handleSelectNode("keyboard-shortcuts"),
+        children: [
+          /* @__PURE__ */ jsxRuntimeExports.jsx(TreeIcon, { children: /* @__PURE__ */ jsxRuntimeExports.jsx(KeyboardIcon, { style: { width: 16, height: 16, opacity: 0.7 } }) }),
+          /* @__PURE__ */ jsxRuntimeExports.jsx(TreeLabel, { children: "Keyboard Shortcuts" })
+        ]
+      }
+    ),
+    /* @__PURE__ */ jsxRuntimeExports.jsxs(
+      TreeRow,
+      {
+        $depth: 0,
+        $selected: selected === "obs-raw-request",
+        onClick: () => handleSelectNode("obs-raw-request"),
+        children: [
+          /* @__PURE__ */ jsxRuntimeExports.jsx(TreeIcon, { children: /* @__PURE__ */ jsxRuntimeExports.jsx(CodeIcon, { style: { width: 16, height: 16, opacity: 0.7 } }) }),
+          /* @__PURE__ */ jsxRuntimeExports.jsx(TreeLabel, { children: "OBS Raw Request" })
+        ]
+      }
+    ),
+    /* @__PURE__ */ jsxRuntimeExports.jsxs(
+      TreeRow,
+      {
+        $depth: 0,
+        $selected: selected === "youtube",
+        onClick: () => handleSelectNode("youtube"),
+        children: [
+          /* @__PURE__ */ jsxRuntimeExports.jsx(TreeIcon, { children: /* @__PURE__ */ jsxRuntimeExports.jsx(YouTubeIcon, { style: { width: 16, height: 16, opacity: 0.7 } }) }),
+          /* @__PURE__ */ jsxRuntimeExports.jsx(TreeLabel, { children: "YouTube Live" })
         ]
       }
     ),
@@ -24773,7 +26500,112 @@ const SettingsDialog = ({ onClose }) => {
     ))
   ] });
   const renderRightPanel = () => {
+    if (selected === "keyboard-shortcuts") {
+      return /* @__PURE__ */ jsxRuntimeExports.jsxs(jsxRuntimeExports.Fragment, { children: [
+        /* @__PURE__ */ jsxRuntimeExports.jsx(RightPanelHeader, { children: /* @__PURE__ */ jsxRuntimeExports.jsx(Typography$1, { variant: "subtitle1", style: { fontWeight: 600 }, children: "Keyboard Shortcuts" }) }),
+        /* @__PURE__ */ jsxRuntimeExports.jsx(RightPanelContent, { children: /* @__PURE__ */ jsxRuntimeExports.jsx(
+          KeyboardShortcutsPanel,
+          {
+            obs,
+            shortcuts: localShortcuts,
+            onChange: setLocalShortcuts
+          }
+        ) })
+      ] });
+    }
+    if (selected === "youtube") {
+      const connectionNames = localConfigs[localConfigIndex] ? Object.keys(localConfigs[localConfigIndex].connections ?? {}) : ["main"];
+      return /* @__PURE__ */ jsxRuntimeExports.jsxs(jsxRuntimeExports.Fragment, { children: [
+        /* @__PURE__ */ jsxRuntimeExports.jsx(RightPanelHeader, { children: /* @__PURE__ */ jsxRuntimeExports.jsx(Typography$1, { variant: "subtitle1", style: { fontWeight: 600 }, children: "YouTube Live Integration" }) }),
+        /* @__PURE__ */ jsxRuntimeExports.jsx(RightPanelContent, { children: /* @__PURE__ */ jsxRuntimeExports.jsx(
+          YouTubeSettingsPanel,
+          {
+            value: localYouTube,
+            connectionNames: connectionNames.length > 0 ? connectionNames : ["main"],
+            onChange: setLocalYouTube,
+            onSaveNow: handleYouTubeAuthSaveNow
+          }
+        ) })
+      ] });
+    }
+    if (selected === "obs-raw-request") {
+      const isConnected = Boolean(obs?.connected);
+      const connectionName = localConfigs[localConfigIndex]?.connection || "main";
+      const versionLabel = obs?.apiVersion ? `v${obs.apiVersion}` : "";
+      return /* @__PURE__ */ jsxRuntimeExports.jsxs(jsxRuntimeExports.Fragment, { children: [
+        /* @__PURE__ */ jsxRuntimeExports.jsxs(RightPanelHeader, { children: [
+          /* @__PURE__ */ jsxRuntimeExports.jsx(Typography$1, { variant: "subtitle1", style: { fontWeight: 600, flex: 1 }, children: "OBS Raw Request" }),
+          /* @__PURE__ */ jsxRuntimeExports.jsx(Typography$1, { variant: "caption", style: { opacity: 0.6 }, children: isConnected ? `${connectionName} · ${versionLabel}` : `${connectionName} · not connected` })
+        ] }),
+        /* @__PURE__ */ jsxRuntimeExports.jsxs(RawSection, { children: [
+          /* @__PURE__ */ jsxRuntimeExports.jsx(
+            TextField$1,
+            {
+              label: "Request name",
+              value: rawRequestName,
+              onChange: (e2) => setRawRequestName(e2.target.value),
+              variant: "outlined",
+              size: "small",
+              fullWidth: true,
+              placeholder: "e.g. GetStreamServiceSettings",
+              helperText: "OBS WebSocket request type"
+            }
+          ),
+          /* @__PURE__ */ jsxRuntimeExports.jsx(
+            TextField$1,
+            {
+              label: "Request body (JSON)",
+              value: rawRequestBody,
+              onChange: (e2) => setRawRequestBody(e2.target.value),
+              variant: "outlined",
+              multiline: true,
+              minRows: 5,
+              fullWidth: true,
+              inputProps: { style: { fontFamily: "monospace", fontSize: 13 } }
+            }
+          ),
+          /* @__PURE__ */ jsxRuntimeExports.jsx(
+            Button$2,
+            {
+              variant: "contained",
+              color: "primary",
+              onClick: handleSendRawRequest,
+              disabled: !isConnected || rawSending || !rawRequestName.trim(),
+              children: rawSending ? "Sending…" : "Send"
+            }
+          ),
+          rawResponse !== "" && /* @__PURE__ */ jsxRuntimeExports.jsxs(jsxRuntimeExports.Fragment, { children: [
+            /* @__PURE__ */ jsxRuntimeExports.jsx(
+              TextField$1,
+              {
+                label: "Response",
+                value: rawResponse,
+                variant: "outlined",
+                multiline: true,
+                minRows: 12,
+                fullWidth: true,
+                inputProps: { style: { fontFamily: "monospace", fontSize: 13 } },
+                InputProps: { readOnly: true }
+              }
+            ),
+            /* @__PURE__ */ jsxRuntimeExports.jsx(
+              Button$2,
+              {
+                variant: "outlined",
+                size: "small",
+                onClick: () => {
+                  navigator.clipboard.writeText(rawResponse);
+                },
+                children: "Copy Response"
+              }
+            )
+          ] })
+        ] })
+      ] });
+    }
     if (selected === "settings") {
+      const isElectron2 = Boolean(window.ipcRenderer);
+      const backupFolderDisabled = !localAutoBackupConfigOnClose;
       return /* @__PURE__ */ jsxRuntimeExports.jsxs(jsxRuntimeExports.Fragment, { children: [
         /* @__PURE__ */ jsxRuntimeExports.jsx(RightPanelHeader, { children: /* @__PURE__ */ jsxRuntimeExports.jsx(Typography$1, { variant: "subtitle1", style: { fontWeight: 600 }, children: "Settings" }) }),
         /* @__PURE__ */ jsxRuntimeExports.jsx(RightPanelContent, { children: /* @__PURE__ */ jsxRuntimeExports.jsxs(SettingsFormSection, { children: [
@@ -24803,6 +26635,71 @@ const SettingsDialog = ({ onClose }) => {
               label: "Select config at launch"
             }
           ),
+          isElectron2 && /* @__PURE__ */ jsxRuntimeExports.jsxs(jsxRuntimeExports.Fragment, { children: [
+            /* @__PURE__ */ jsxRuntimeExports.jsx(
+              FormControlLabel$1,
+              {
+                control: /* @__PURE__ */ jsxRuntimeExports.jsx(
+                  Checkbox$1,
+                  {
+                    checked: localAutoBackupConfigOnClose,
+                    onChange: (e2) => setLocalAutoBackupConfigOnClose(e2.target.checked),
+                    color: "primary",
+                    size: "small"
+                  }
+                ),
+                label: "Auto backup config on close"
+              }
+            ),
+            /* @__PURE__ */ jsxRuntimeExports.jsxs(BackupFolderRow, { children: [
+              /* @__PURE__ */ jsxRuntimeExports.jsx(
+                TextField$1,
+                {
+                  label: "Backup folder",
+                  value: localAutoBackupConfigFolder,
+                  onChange: (e2) => setLocalAutoBackupConfigFolder(e2.target.value),
+                  variant: "outlined",
+                  size: "small",
+                  fullWidth: true,
+                  disabled: backupFolderDisabled,
+                  helperText: "Folder path where config.json is copied when the app closes"
+                }
+              ),
+              /* @__PURE__ */ jsxRuntimeExports.jsx(
+                BackupFolderBrowseButton,
+                {
+                  variant: "outlined",
+                  onClick: handleBrowseBackupFolder,
+                  disabled: backupFolderDisabled,
+                  children: "Browse"
+                }
+              )
+            ] }),
+            "								",
+            /* @__PURE__ */ jsxRuntimeExports.jsxs(BackupFolderRow, { children: [
+              /* @__PURE__ */ jsxRuntimeExports.jsx(
+                TextField$1,
+                {
+                  label: "FFmpeg binary folder (optional)",
+                  value: localFfmpegPath,
+                  onChange: (e2) => setLocalFfmpegPath(e2.target.value),
+                  variant: "outlined",
+                  size: "small",
+                  fullWidth: true,
+                  helperText: "Folder containing ffmpeg.exe for RTSP tiles. Leave blank to use system PATH."
+                }
+              ),
+              /* @__PURE__ */ jsxRuntimeExports.jsx(
+                BackupFolderBrowseButton,
+                {
+                  variant: "outlined",
+                  onClick: handleBrowseFfmpegPath,
+                  children: "Browse"
+                }
+              )
+            ] }),
+            "								"
+          ] }),
           /* @__PURE__ */ jsxRuntimeExports.jsx(
             FormControlLabel$1,
             {
@@ -24861,6 +26758,21 @@ const SettingsDialog = ({ onClose }) => {
                 }
               ),
               label: "Confirm before stopping recording"
+            }
+          ),
+          /* @__PURE__ */ jsxRuntimeExports.jsx(
+            FormControlLabel$1,
+            {
+              control: /* @__PURE__ */ jsxRuntimeExports.jsx(
+                Checkbox$1,
+                {
+                  checked: localConfirmBeforeGoLive,
+                  onChange: (e2) => setLocalConfirmBeforeGoLive(e2.target.checked),
+                  color: "primary",
+                  size: "small"
+                }
+              ),
+              label: "Confirm before going live (YouTube)"
             }
           )
         ] }) })
@@ -25014,7 +26926,7 @@ const RightActions = qe.div`
 	gap: 4px;
 	color: ${(p2) => p2.theme.text};
 `;
-const Footer = () => {
+const Footer$1 = () => {
   const { settings } = useSettings();
   const { configs, currentConfigIndex } = settings;
   const configName = configs[currentConfigIndex]?.name || "";
@@ -25148,7 +27060,7 @@ const TileWrapper$1 = ({
     }
   );
 };
-const TileImage = qe.img`
+qe.img`
 	display: block;
 	width: ${(p2) => p2.$size * 16}px;
 	height: ${(p2) => p2.$size * 9}px;
@@ -25156,6 +27068,12 @@ const TileImage = qe.img`
 	&[src] {
 		opacity: 1;
 	}
+`;
+const TileCanvasElement = qe.canvas`
+	display: block;
+	width: ${(p2) => p2.$size * 16}px;
+	height: ${(p2) => p2.$size * 9}px;
+	opacity: ${(p2) => p2.$visible ? 1 : 0};
 `;
 const TileContentArea = qe.div`
 	display: flex;
@@ -25603,6 +27521,326 @@ const Button = ({
     ...props
   }) : null;
 };
+const isElectron = typeof window !== "undefined" && !!window.ipcRenderer;
+function useRtspStream(options) {
+  const { streamId, streamUrl, startMuted = true, fps, audioSyncOffsetMs = 0, ffmpegPath } = options;
+  const [hasFrame, setHasFrame] = reactExports.useState(false);
+  const [connecting, setConnecting] = reactExports.useState(false);
+  const [error, setError] = reactExports.useState(null);
+  const [muted, setMuted] = reactExports.useState(startMuted);
+  const [active, setActive] = reactExports.useState(true);
+  const [audioLevel, setAudioLevel] = reactExports.useState(null);
+  const canvasRef = reactExports.useRef(null);
+  const startedRef = reactExports.useRef(false);
+  reactExports.useEffect(() => {
+    if (!isElectron) {
+      setError("RTSP streaming requires Electron (not supported in browser)");
+      return;
+    }
+    if (!active) {
+      setHasFrame(false);
+      setConnecting(false);
+      setError(null);
+      setAudioLevel(null);
+      return;
+    }
+    if (!streamUrl) {
+      setError("No stream URL configured");
+      return;
+    }
+    console.log(`[useRtspStream] Starting stream id='${streamId}' url='${streamUrl}'`);
+    setConnecting(true);
+    setError(null);
+    startedRef.current = true;
+    window.ipcRenderer.rtspStart({
+      streamId,
+      streamUrl,
+      muted: startMuted,
+      fps: fps ?? null,
+      audioSyncOffsetMs,
+      ffmpegPath: ffmpegPath ?? ""
+    }).then(() => {
+      console.log(`[useRtspStream] rtspStart resolved for '${streamId}' - waiting for frames`);
+    }).catch((err) => {
+      console.error(`[useRtspStream] rtspStart rejected for '${streamId}':`, err?.message);
+      setConnecting(false);
+      setError(err?.message ?? "Failed to start stream");
+    });
+    let firstFrame = true;
+    let generation = 0;
+    const handleFrame = (payload) => {
+      if (payload.streamId !== streamId) return;
+      const canvas = canvasRef.current;
+      if (!canvas) return;
+      generation++;
+      const myGeneration = generation;
+      decodeAndDraw(payload.data, canvas).then(() => {
+        if (myGeneration !== generation) return;
+        if (firstFrame) {
+          console.log(`[useRtspStream] First frame decoded for '${streamId}'`);
+          firstFrame = false;
+          setConnecting(false);
+          setHasFrame(true);
+        }
+      }).catch(() => {
+      });
+    };
+    const handleError = (payload) => {
+      if (payload.streamId !== streamId) return;
+      console.error(`[useRtspStream] Error for '${streamId}':`, payload.message);
+      setConnecting(false);
+      setError(payload.message);
+    };
+    const handleConnecting = (payload) => {
+      if (payload.streamId !== streamId) return;
+      console.log(`[useRtspStream] Reconnecting '${streamId}' — resetting to connecting state`);
+      generation++;
+      setHasFrame(false);
+      setConnecting(true);
+      setError(null);
+      setAudioLevel(null);
+      firstFrame = true;
+    };
+    const handleAudioLevel = (payload) => {
+      if (payload.streamId !== streamId) return;
+      setAudioLevel(payload.level);
+    };
+    window.ipcRenderer.onRtspFrame(handleFrame);
+    window.ipcRenderer.onRtspError(handleError);
+    window.ipcRenderer.onRtspConnecting(handleConnecting);
+    window.ipcRenderer.onRtspAudioLevel(handleAudioLevel);
+    return () => {
+      window.ipcRenderer.offRtspFrame(handleFrame);
+      window.ipcRenderer.offRtspError(handleError);
+      window.ipcRenderer.offRtspConnecting(handleConnecting);
+      window.ipcRenderer.offRtspAudioLevel(handleAudioLevel);
+      if (startedRef.current) {
+        window.ipcRenderer.rtspStop(streamId).catch(() => {
+        });
+        startedRef.current = false;
+      }
+    };
+  }, [streamId, streamUrl, active]);
+  reactExports.useEffect(() => {
+    console.log(`[useRtspStream] mute effect - streamId='${streamId}' muted=${muted} isElectron=${isElectron} startedRef=${startedRef.current}`);
+    if (!isElectron || !startedRef.current) return;
+    console.log(`[useRtspStream] Sending rtspSetMuted streamId='${streamId}' muted=${muted}`);
+    window.ipcRenderer.rtspSetMuted(streamId, muted).catch((err) => {
+      console.error(`[useRtspStream] rtspSetMuted failed for '${streamId}':`, err?.message);
+    });
+  }, [streamId, muted]);
+  const toggleMute = reactExports.useCallback(() => {
+    setMuted((prev) => {
+      console.log(`[useRtspStream] toggleMute '${streamId}': ${prev} → ${!prev}`);
+      return !prev;
+    });
+  }, [streamId]);
+  const toggleActive = reactExports.useCallback(() => {
+    setActive((prev) => !prev);
+  }, []);
+  return {
+    hasFrame,
+    canvasRef,
+    connecting,
+    error,
+    muted,
+    toggleMute,
+    active,
+    toggleActive,
+    audioLevel
+  };
+}
+const StreamCanvas = qe.canvas`
+	display: block;
+	width: ${(p2) => p2.$size * 16}px;
+	height: ${(p2) => p2.$size * 9}px;
+	background-color: #000;
+	visibility: ${(p2) => p2.$hasFrame ? "visible" : "hidden"};
+`;
+const OverlayCenter = qe.div`
+	position: absolute;
+	width: ${(p2) => p2.$size * 16}px;
+	height: ${(p2) => p2.$size * 9}px;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: center;
+	pointer-events: none;
+	z-index: 5;
+`;
+const ErrorText = qe.p`
+	color: ${(p2) => p2.theme.sceneText};
+	font-size: ${(p2) => p2.theme.fontSize.small};
+	text-align: center;
+	padding: 8px;
+	margin: 0;
+`;
+const MuteButtonWrapper = qe.div`
+	position: absolute;
+	bottom: 4px;
+	right: 4px;
+	z-index: 10;
+	pointer-events: auto;
+`;
+const PlayButtonWrapper = qe.div`
+	position: absolute;
+	bottom: 4px;
+	left: 4px;
+	z-index: 10;
+	pointer-events: auto;
+`;
+const AudioLevelMeterWrapper = qe.div`
+	position: absolute;
+	top: 0;
+	bottom: 0;
+	right: 0px;
+	width: 5px;
+	z-index: 8;
+	pointer-events: none;
+	border-radius: 2px;
+	overflow: hidden;
+	background: linear-gradient(
+		to top,
+		#00c853 0%,
+		#00c853 50%,
+		#ffb300 55%,
+		#ffb300 85%,
+		#f44336 86%,
+		#d50000 100%
+	);
+`;
+const AudioLevelBar = qe.div`
+	position: absolute;
+	top: 0;
+	left: 0;
+	right: 0;
+	height: ${(p2) => 100 - p2.$levelPercent}%;
+	background-color: rgba(0, 0, 0, 0.75);
+	transition: height 80ms ease-out;
+`;
+const StyledMuteButton = qe(IconButton$1)`
+	padding: 4px !important;
+	background-color: rgba(0, 0, 0, 0.5) !important;
+	color: white !important;
+	&:hover {
+		background-color: rgba(0, 0, 0, 0.7) !important;
+	}
+`;
+const RtspStreamTile = ({
+  connection,
+  rtspStream,
+  streamUrl,
+  fps,
+  audioSyncOffsetMs,
+  startMuted = true,
+  title,
+  tileSize = "10",
+  fontSize
+}) => {
+  const tileSizeInt = parseInt(String(tileSize));
+  const labelFontSize = parseInt(String(fontSize ?? tileSize));
+  const label = title || rtspStream;
+  const { currentConfig, settings } = useSettings();
+  const resolvedStreamUrl = reactExports.useMemo(() => {
+    if (streamUrl) return streamUrl;
+    const connectionKey = connection || currentConfig.connection;
+    const connectionConfig = currentConfig.connections?.[connectionKey];
+    if (!connectionConfig?.address) {
+      return "";
+    }
+    const host = connectionConfig.address.split(":")[0];
+    return `rtsp://${host}/live`;
+  }, [streamUrl, connection, currentConfig]);
+  const ffmpegPath = settings.ffmpegPath ?? "";
+  reactExports.useEffect(() => {
+    console.log(`[RtspStreamTile] id='${rtspStream}' resolvedUrl='${resolvedStreamUrl}' ffmpegPath='${ffmpegPath}'`);
+  }, [rtspStream, resolvedStreamUrl, ffmpegPath]);
+  const { hasFrame, canvasRef, connecting, error, muted, toggleMute, active, toggleActive, audioLevel } = useRtspStream({
+    streamId: `rtsp-${rtspStream}`,
+    streamUrl: resolvedStreamUrl,
+    startMuted,
+    fps: fps ?? null,
+    audioSyncOffsetMs: audioSyncOffsetMs ?? 0,
+    ffmpegPath
+  });
+  const { isEditMode } = useEditMode();
+  const wasActiveBeforeEditMode = reactExports.useRef(false);
+  reactExports.useEffect(() => {
+    if (isEditMode) {
+      wasActiveBeforeEditMode.current = active;
+      if (active) toggleActive();
+    } else {
+      if (wasActiveBeforeEditMode.current && !active) toggleActive();
+    }
+  }, [isEditMode]);
+  reactExports.useEffect(() => {
+    const fullStreamId = `rtsp-${rtspStream}`;
+    const handler = (e2) => {
+      const { command, streamId } = e2.detail;
+      if (streamId !== fullStreamId) return;
+      if (command === "start" && !active) toggleActive();
+      else if (command === "stop" && active) toggleActive();
+      else if (command === "toggle") toggleActive();
+    };
+    window.addEventListener("rtsp-control", handler);
+    return () => window.removeEventListener("rtsp-control", handler);
+  }, [active, toggleActive, rtspStream]);
+  const overlayContent = reactExports.useMemo(() => {
+    if (connecting && !hasFrame) {
+      return /* @__PURE__ */ jsxRuntimeExports.jsx(StyledCircularProgress, { size: tileSizeInt * 3 });
+    }
+    if (error) {
+      return /* @__PURE__ */ jsxRuntimeExports.jsx(ErrorText, { children: error });
+    }
+    return null;
+  }, [connecting, hasFrame, error, tileSizeInt]);
+  const levelPercent = audioLevel !== null ? Math.round(Math.max(0, (audioLevel + 60) / 60 * 100)) : 0;
+  const muteOverlay = /* @__PURE__ */ jsxRuntimeExports.jsx(MuteButtonWrapper, { children: /* @__PURE__ */ jsxRuntimeExports.jsx(
+    StyledMuteButton,
+    {
+      size: "small",
+      onClick: (e2) => {
+        e2.stopPropagation();
+        toggleMute();
+      },
+      children: muted ? /* @__PURE__ */ jsxRuntimeExports.jsx(VolumeOff, { fontSize: "small" }) : /* @__PURE__ */ jsxRuntimeExports.jsx(VolumeUp, { fontSize: "small" })
+    }
+  ) });
+  const playOverlay = /* @__PURE__ */ jsxRuntimeExports.jsx(PlayButtonWrapper, { children: /* @__PURE__ */ jsxRuntimeExports.jsx(
+    StyledMuteButton,
+    {
+      size: "small",
+      onClick: (e2) => {
+        e2.stopPropagation();
+        toggleActive();
+      },
+      children: active ? /* @__PURE__ */ jsxRuntimeExports.jsx(Stop, { fontSize: "small" }) : /* @__PURE__ */ jsxRuntimeExports.jsx(PlayArrow, { fontSize: "small" })
+    }
+  ) });
+  return /* @__PURE__ */ jsxRuntimeExports.jsx(
+    TileWrapper$1,
+    {
+      size: tileSizeInt,
+      fontSize: labelFontSize,
+      label,
+      overlay: /* @__PURE__ */ jsxRuntimeExports.jsxs(jsxRuntimeExports.Fragment, { children: [
+        overlayContent && /* @__PURE__ */ jsxRuntimeExports.jsx(OverlayCenter, { $size: tileSizeInt, children: overlayContent }),
+        audioLevel !== null && /* @__PURE__ */ jsxRuntimeExports.jsx(AudioLevelMeterWrapper, { children: /* @__PURE__ */ jsxRuntimeExports.jsx(AudioLevelBar, { $levelPercent: levelPercent }) }),
+        playOverlay,
+        muteOverlay
+      ] }),
+      elementType: "RtspStreamTile",
+      children: /* @__PURE__ */ jsxRuntimeExports.jsx(
+        StreamCanvas,
+        {
+          ref: canvasRef,
+          $size: tileSizeInt,
+          $hasFrame: hasFrame
+        }
+      )
+    }
+  );
+};
 const SCENE_PLACEHOLDER_PROGRAM = "__OBS_PROGRAM_SCENE__";
 const SCENE_PLACEHOLDER_PREVIEW = "__OBS_PREVIEW_SCENE__";
 const resolveScenePlaceholder = (scene, sceneList2) => {
@@ -25620,6 +27858,8 @@ const SceneButton = ({
   title,
   tileSize = "10",
   fontSize,
+  activeRefreshTime,
+  inactiveRefreshTime,
   viewType = "preview"
 }) => {
   const tileSizeInt = parseInt(String(tileSize));
@@ -25635,10 +27875,10 @@ const SceneButton = ({
   const isProgramScene = scene === SCENE_PLACEHOLDER_PROGRAM;
   const isPreviewScene = scene === SCENE_PLACEHOLDER_PREVIEW;
   const suppressOverlay = isProgramScene || isPreviewScene;
-  const imageData = useSceneImage(obs, {
+  const { canvasRef, hasFrame } = useSceneCanvas(obs, {
     scene: resolvedScene,
     tileSize: Math.min(tileSizeInt, 20),
-    refreshTime: isCurrentScene ? 40 : 100
+    refreshTime: isCurrentScene ? activeRefreshTime ?? 400 : inactiveRefreshTime ?? 1e3
   });
   const handleClick = () => {
     if (obs.connected) {
@@ -25676,7 +27916,7 @@ const SceneButton = ({
       isDeselecting: !suppressOverlay && isPrevScene,
       elementType: "SceneWrapper",
       overlay,
-      children: /* @__PURE__ */ jsxRuntimeExports.jsx(TileImage, { src: imageData ?? void 0, $size: tileSizeInt })
+      children: /* @__PURE__ */ jsxRuntimeExports.jsx(TileCanvasElement, { ref: canvasRef, $size: tileSizeInt, $visible: hasFrame })
     }
   );
 };
@@ -25792,6 +28032,8 @@ const SceneItemButton = ({
   title,
   tileSize = "10",
   fontSize,
+  activeRefreshTime,
+  inactiveRefreshTime,
   viewType = "preview"
 }) => {
   const size = parseInt(String(tileSize));
@@ -25803,10 +28045,10 @@ const SceneItemButton = ({
   const sceneItemList2 = useSceneItemList(obs, { scene });
   const visibleSceneItems = sceneItemList2?.filter((item2) => item2.sceneItemEnabled);
   const isSelected = click === "moveToTop" ? Boolean(sceneItemId && visibleSceneItems?.length && sceneItemId === visibleSceneItems[0]?.sceneItemId) : isVisible;
-  const imageData = useSceneImage(obs, {
+  const { canvasRef, hasFrame } = useSceneCanvas(obs, {
     scene: item,
     tileSize: Math.min(size, 20),
-    refreshTime: isSelected ? 40 : 100
+    refreshTime: isSelected ? activeRefreshTime ?? 400 : inactiveRefreshTime ?? 1e3
   });
   const handlers = React$1.useMemo(
     () => ({
@@ -25864,7 +28106,7 @@ const SceneItemButton = ({
       eventHandlers: buttonEventListeners,
       elementType: "SceneWrapper",
       overlay,
-      children: /* @__PURE__ */ jsxRuntimeExports.jsx(TileImage, { src: imageData ?? void 0, $size: size })
+      children: /* @__PURE__ */ jsxRuntimeExports.jsx(TileCanvasElement, { ref: canvasRef, $size: size, $visible: hasFrame })
     }
   );
 };
@@ -25903,11 +28145,11 @@ const TextComponents = {
     }
     if (!stats2) {
       return /* @__PURE__ */ jsxRuntimeExports.jsxs(StyledText, { $size: size, children: [
-        show.fps && /* @__PURE__ */ jsxRuntimeExports.jsx(Paragraph, { $size: size, $fontSize: textSize, children: "FPS: —" }),
-        show.cpu && /* @__PURE__ */ jsxRuntimeExports.jsx(Paragraph, { $size: size, $fontSize: textSize, children: "CPU: —" }),
-        show.memory && /* @__PURE__ */ jsxRuntimeExports.jsx(Paragraph, { $size: size, $fontSize: textSize, children: "Memory: —" }),
-        show.freeDisk && /* @__PURE__ */ jsxRuntimeExports.jsx(Paragraph, { $size: size, $fontSize: textSize, children: "Free Disk: —" }),
-        show.skippedFrames && /* @__PURE__ */ jsxRuntimeExports.jsx(Paragraph, { $size: size, $fontSize: textSize, children: "Skipped Frames: —" }),
+        show.fps && /* @__PURE__ */ jsxRuntimeExports.jsx(Paragraph, { $size: size, $fontSize: textSize, children: "FPS: -" }),
+        show.cpu && /* @__PURE__ */ jsxRuntimeExports.jsx(Paragraph, { $size: size, $fontSize: textSize, children: "CPU: -" }),
+        show.memory && /* @__PURE__ */ jsxRuntimeExports.jsx(Paragraph, { $size: size, $fontSize: textSize, children: "Memory: -" }),
+        show.freeDisk && /* @__PURE__ */ jsxRuntimeExports.jsx(Paragraph, { $size: size, $fontSize: textSize, children: "Free Disk: -" }),
+        show.skippedFrames && /* @__PURE__ */ jsxRuntimeExports.jsx(Paragraph, { $size: size, $fontSize: textSize, children: "Skipped Frames: -" }),
         customText && /* @__PURE__ */ jsxRuntimeExports.jsx(Paragraph, { $size: size, $fontSize: textSize, children: customText })
       ] });
     }
@@ -25961,6 +28203,589 @@ const Text = ({
     ...props
   }) : null;
 };
+function todayIso$1() {
+  return (/* @__PURE__ */ new Date()).toISOString().slice(0, 10);
+}
+function applyTitleTemplate(template) {
+  return template.replace(/\{date\}/g, todayIso$1());
+}
+const FieldGroup = qe.div`
+	display: flex;
+	flex-direction: column;
+	gap: 16px;
+	padding-top: 8px;
+`;
+const CreateBroadcastDialog = ({
+  open,
+  config: config2,
+  onConfirm,
+  onCancel
+}) => {
+  const [title, setTitle] = React$1.useState(
+    () => applyTitleTemplate(config2.defaultTitle || "{date} Stream")
+  );
+  const [description, setDescription] = React$1.useState(config2.defaultDescription ?? "");
+  const [privacy, setPrivacy] = React$1.useState(
+    config2.defaultPrivacyStatus
+  );
+  const [latency, setLatency] = React$1.useState(
+    config2.defaultLatency
+  );
+  React$1.useEffect(() => {
+    if (open) {
+      setTitle(applyTitleTemplate(config2.defaultTitle || "{date} Stream"));
+      setDescription(config2.defaultDescription ?? "");
+      setPrivacy(config2.defaultPrivacyStatus);
+      setLatency(config2.defaultLatency);
+    }
+  }, [open, config2]);
+  const handleConfirm = () => {
+    if (!title.trim()) return;
+    onConfirm({ title: title.trim(), description, privacyStatus: privacy, latencyPreference: latency });
+  };
+  return /* @__PURE__ */ jsxRuntimeExports.jsxs(Dialog$1, { open, onClose: onCancel, fullWidth: true, maxWidth: "xs", children: [
+    /* @__PURE__ */ jsxRuntimeExports.jsx(DialogTitle$1, { children: "Create YouTube Broadcast" }),
+    /* @__PURE__ */ jsxRuntimeExports.jsx(DialogContent$1, { children: /* @__PURE__ */ jsxRuntimeExports.jsxs(FieldGroup, { children: [
+      /* @__PURE__ */ jsxRuntimeExports.jsx(
+        TextField$1,
+        {
+          label: "Title *",
+          value: title,
+          onChange: (e2) => setTitle(e2.target.value),
+          variant: "outlined",
+          size: "small",
+          fullWidth: true,
+          autoFocus: true
+        }
+      ),
+      /* @__PURE__ */ jsxRuntimeExports.jsx(
+        TextField$1,
+        {
+          label: "Description",
+          value: description,
+          onChange: (e2) => setDescription(e2.target.value),
+          variant: "outlined",
+          size: "small",
+          fullWidth: true,
+          multiline: true,
+          minRows: 2
+        }
+      ),
+      config2.allowPrivacyOverride && /* @__PURE__ */ jsxRuntimeExports.jsxs(FormControl$1, { variant: "outlined", size: "small", fullWidth: true, children: [
+        /* @__PURE__ */ jsxRuntimeExports.jsx(InputLabel$1, { children: "Privacy" }),
+        /* @__PURE__ */ jsxRuntimeExports.jsxs(
+          Select$1,
+          {
+            label: "Privacy",
+            value: privacy,
+            onChange: (e2) => setPrivacy(e2.target.value),
+            children: [
+              /* @__PURE__ */ jsxRuntimeExports.jsx(MenuItem$1, { value: "public", children: "Public" }),
+              /* @__PURE__ */ jsxRuntimeExports.jsx(MenuItem$1, { value: "unlisted", children: "Unlisted" }),
+              /* @__PURE__ */ jsxRuntimeExports.jsx(MenuItem$1, { value: "private", children: "Private" })
+            ]
+          }
+        )
+      ] }),
+      config2.allowLatencyOverride && /* @__PURE__ */ jsxRuntimeExports.jsxs(FormControl$1, { variant: "outlined", size: "small", fullWidth: true, children: [
+        /* @__PURE__ */ jsxRuntimeExports.jsx(InputLabel$1, { children: "Latency" }),
+        /* @__PURE__ */ jsxRuntimeExports.jsxs(
+          Select$1,
+          {
+            label: "Latency",
+            value: latency,
+            onChange: (e2) => setLatency(e2.target.value),
+            children: [
+              /* @__PURE__ */ jsxRuntimeExports.jsx(MenuItem$1, { value: "ultraLow", children: "Ultra Low" }),
+              /* @__PURE__ */ jsxRuntimeExports.jsx(MenuItem$1, { value: "low", children: "Low" }),
+              /* @__PURE__ */ jsxRuntimeExports.jsx(MenuItem$1, { value: "normal", children: "Normal" })
+            ]
+          }
+        )
+      ] })
+    ] }) }),
+    /* @__PURE__ */ jsxRuntimeExports.jsxs(DialogActions$1, { children: [
+      /* @__PURE__ */ jsxRuntimeExports.jsx(Button$2, { onClick: onCancel, children: "Cancel" }),
+      /* @__PURE__ */ jsxRuntimeExports.jsx(
+        Button$2,
+        {
+          onClick: handleConfirm,
+          color: "primary",
+          variant: "contained",
+          disabled: !title.trim(),
+          children: "Go Live →"
+        }
+      )
+    ] })
+  ] });
+};
+const BroadcastTable = qe.table`
+	width: 100%;
+	border-collapse: collapse;
+	font-size: 13px;
+	margin-top: 12px;
+`;
+const Th = qe.th`
+	text-align: left;
+	padding: 6px 10px 6px 0;
+	border-bottom: 1px solid rgba(255, 255, 255, 0.12);
+	font-weight: 600;
+	opacity: 0.7;
+	white-space: nowrap;
+`;
+const Td = qe.td`
+	padding: 8px 10px 8px 0;
+	border-bottom: 1px solid rgba(255, 255, 255, 0.07);
+	vertical-align: middle;
+`;
+const ActionCell = qe(Td)`
+	white-space: nowrap;
+	display: flex;
+	gap: 6px;
+	align-items: center;
+`;
+const StatusBadge = qe.span`
+	display: inline-block;
+	padding: 2px 6px;
+	border-radius: 3px;
+	font-size: 11px;
+	font-weight: 600;
+	text-transform: uppercase;
+	background: ${(p2) => p2.$status === "active" ? "rgba(244, 67, 54, 0.25)" : p2.$status === "testing" ? "rgba(255, 152, 0, 0.25)" : "rgba(255,255,255,0.08)"};
+	color: ${(p2) => p2.$status === "active" ? "#f44336" : p2.$status === "testing" ? "#ff9800" : "inherit"};
+`;
+const Footer = qe.div`
+	display: flex;
+	justify-content: flex-end;
+	margin-top: 16px;
+`;
+function formatStartTime(iso) {
+  if (!iso) return "—";
+  try {
+    return new Date(iso).toLocaleString(void 0, {
+      month: "short",
+      day: "numeric",
+      hour: "2-digit",
+      minute: "2-digit"
+    });
+  } catch {
+    return iso;
+  }
+}
+const ResumeBroadcastDialog = ({
+  open,
+  broadcasts,
+  onResume,
+  onEnd,
+  onCreateNew,
+  onCancel
+}) => {
+  const [endingIds, setEndingIds] = React$1.useState(/* @__PURE__ */ new Set());
+  const handleEnd = async (broadcastId) => {
+    setEndingIds((prev) => /* @__PURE__ */ new Set([...prev, broadcastId]));
+    try {
+      await onEnd(broadcastId);
+    } finally {
+      setEndingIds((prev) => {
+        const next = new Set(prev);
+        next.delete(broadcastId);
+        return next;
+      });
+    }
+  };
+  return /* @__PURE__ */ jsxRuntimeExports.jsxs(Dialog$1, { open, onClose: onCancel, fullWidth: true, maxWidth: "sm", children: [
+    /* @__PURE__ */ jsxRuntimeExports.jsx(DialogTitle$1, { children: "Existing YouTube broadcasts found" }),
+    /* @__PURE__ */ jsxRuntimeExports.jsxs(DialogContent$1, { children: [
+      /* @__PURE__ */ jsxRuntimeExports.jsx(Typography$1, { variant: "body2", children: "One or more YouTube broadcasts are already active. Resume one or end them before creating a new broadcast." }),
+      /* @__PURE__ */ jsxRuntimeExports.jsxs(BroadcastTable, { children: [
+        /* @__PURE__ */ jsxRuntimeExports.jsx("thead", { children: /* @__PURE__ */ jsxRuntimeExports.jsxs("tr", { children: [
+          /* @__PURE__ */ jsxRuntimeExports.jsx(Th, { children: "Title" }),
+          /* @__PURE__ */ jsxRuntimeExports.jsx(Th, { children: "Status" }),
+          /* @__PURE__ */ jsxRuntimeExports.jsx(Th, { children: "Started" }),
+          /* @__PURE__ */ jsxRuntimeExports.jsx(Th, { children: "Actions" })
+        ] }) }),
+        /* @__PURE__ */ jsxRuntimeExports.jsx("tbody", { children: broadcasts.map((b2) => {
+          const isEnding = endingIds.has(b2.broadcastId);
+          return /* @__PURE__ */ jsxRuntimeExports.jsxs("tr", { children: [
+            /* @__PURE__ */ jsxRuntimeExports.jsx(Td, { title: b2.title, style: { maxWidth: 200, overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }, children: b2.title || "(untitled)" }),
+            /* @__PURE__ */ jsxRuntimeExports.jsx(Td, { children: /* @__PURE__ */ jsxRuntimeExports.jsx(StatusBadge, { $status: b2.lifeCycleStatus, children: b2.lifeCycleStatus }) }),
+            /* @__PURE__ */ jsxRuntimeExports.jsx(Td, { children: formatStartTime(b2.scheduledStartTime) }),
+            /* @__PURE__ */ jsxRuntimeExports.jsxs(ActionCell, { as: "td", style: { display: "flex" }, children: [
+              /* @__PURE__ */ jsxRuntimeExports.jsx(
+                Button$2,
+                {
+                  size: "small",
+                  variant: "contained",
+                  color: "primary",
+                  onClick: () => onResume(b2),
+                  disabled: isEnding,
+                  children: "Resume"
+                }
+              ),
+              /* @__PURE__ */ jsxRuntimeExports.jsx(
+                Button$2,
+                {
+                  size: "small",
+                  variant: "outlined",
+                  onClick: () => handleEnd(b2.broadcastId),
+                  disabled: isEnding,
+                  style: { minWidth: 58 },
+                  children: isEnding ? /* @__PURE__ */ jsxRuntimeExports.jsx(CircularProgress$1, { size: 14 }) : "End"
+                }
+              )
+            ] })
+          ] }, b2.broadcastId);
+        }) })
+      ] }),
+      /* @__PURE__ */ jsxRuntimeExports.jsx(Footer, { children: /* @__PURE__ */ jsxRuntimeExports.jsx(Button$2, { variant: "outlined", onClick: onCreateNew, children: "Create new broadcast" }) })
+    ] }),
+    /* @__PURE__ */ jsxRuntimeExports.jsx(DialogActions$1, { children: /* @__PURE__ */ jsxRuntimeExports.jsx(Button$2, { onClick: onCancel, children: "Cancel" }) })
+  ] });
+};
+function todayIso() {
+  return (/* @__PURE__ */ new Date()).toISOString().slice(0, 10);
+}
+function applyDateTemplate(template) {
+  return template.replace(/\{date\}/g, todayIso());
+}
+function formatElapsed(totalSeconds) {
+  const h2 = Math.floor(totalSeconds / 3600);
+  const m2 = Math.floor(totalSeconds % 3600 / 60);
+  const s = totalSeconds % 60;
+  if (h2 > 0) return `${h2}:${String(m2).padStart(2, "0")}:${String(s).padStart(2, "0")}`;
+  return `${String(m2).padStart(2, "0")}:${String(s).padStart(2, "0")}`;
+}
+const IS_ELECTRON = Boolean(window.ipcRenderer);
+function getPhaseVisual(phase, isAuthenticated, isElectron2) {
+  switch (phase) {
+    case "live":
+      return { label: "Live", tintColor: "#f44336" };
+    case "stopping":
+      return { label: "Stopping…", tintColor: "#f44336" };
+    case "starting-stream":
+      return { label: "Starting…", tintColor: "#ff9800" };
+    case "creating-broadcast":
+      return { label: "Preparing…" };
+    case "configuring-obs":
+      return { label: "Configuring OBS…" };
+    case "checking-existing":
+      return { label: "Checking…" };
+    case "error":
+      return { label: "Error", tintColor: "#f44336", isError: true };
+  }
+  if (!isAuthenticated) {
+    return {
+      label: isElectron2 ? "Sign in to YouTube" : "Manual Key",
+      tintColor: "#b71c1c"
+    };
+  }
+  return { label: "Go Live", tintColor: "#1b5e20" };
+}
+const StyledButtonMode = qe(Button$2)`
+	width: ${(p2) => p2.$size * 16}px;
+
+	&.MuiButton-contained.Mui-disabled {
+		background-color: ${(p2) => p2.theme.disabledBackground};
+		color: ${(p2) => p2.theme.disabledText};
+	}
+`;
+const StatsRow = qe.div`
+	display: flex;
+	justify-content: space-between;
+	font-size: 11px;
+	color: rgba(255, 255, 255, 0.6);
+	padding-top: 2px;
+`;
+const StatsLabel = qe.span`
+	opacity: 0.75;
+	margin-right: 6px;
+`;
+const StatsValue = qe.span``;
+const ErrorDetails = qe.div`
+	width: ${(p2) => p2.$size * 16}px;
+	margin-top: 4px;
+	padding: 4px 6px;
+	border-radius: 3px;
+	background: rgba(244, 67, 54, 0.15);
+	border: 1px solid rgba(244, 67, 54, 0.4);
+	font-size: 10px;
+	color: #ef9a9a;
+	word-break: break-word;
+`;
+const ErrorHint = qe.div`
+	margin-top: 3px;
+	color: rgba(255, 255, 255, 0.4);
+	font-size: 10px;
+`;
+const ManualKeyDialog = ({ open, obs, onClose }) => {
+  const [streamKey, setStreamKey] = reactExports.useState("");
+  const [busy, setBusy] = reactExports.useState(false);
+  const [error, setError] = reactExports.useState(null);
+  reactExports.useEffect(() => {
+    if (open) {
+      setStreamKey("");
+      setError(null);
+    }
+  }, [open]);
+  const handleGoLive = async () => {
+    if (!streamKey.trim()) return;
+    setBusy(true);
+    setError(null);
+    try {
+      await setStreamServiceSettings(obs, "rtmp_custom", {
+        server: "rtmp://a.rtmp.youtube.com/live2",
+        key: streamKey.trim(),
+        bwtest: false,
+        use_auth: false
+      });
+      startStreaming(obs)();
+      onClose();
+    } catch (e2) {
+      setError(e2.message ?? String(e2));
+    } finally {
+      setBusy(false);
+    }
+  };
+  return /* @__PURE__ */ jsxRuntimeExports.jsxs(Dialog$1, { open, onClose, fullWidth: true, maxWidth: "xs", children: [
+    /* @__PURE__ */ jsxRuntimeExports.jsx(DialogTitle$1, { children: "Set YouTube Stream Key" }),
+    /* @__PURE__ */ jsxRuntimeExports.jsxs(DialogContent$1, { children: [
+      /* @__PURE__ */ jsxRuntimeExports.jsx(
+        TextField$1,
+        {
+          label: "Stream Key",
+          value: streamKey,
+          onChange: (e2) => setStreamKey(e2.target.value),
+          variant: "outlined",
+          size: "small",
+          fullWidth: true,
+          style: { marginTop: 8 },
+          autoFocus: true,
+          onKeyPress: (e2) => {
+            if (e2.key === "Enter") handleGoLive();
+          }
+        }
+      ),
+      error && /* @__PURE__ */ jsxRuntimeExports.jsx(Typography$1, { variant: "body2", color: "error", style: { marginTop: 8 }, children: error })
+    ] }),
+    /* @__PURE__ */ jsxRuntimeExports.jsxs(DialogActions$1, { children: [
+      /* @__PURE__ */ jsxRuntimeExports.jsx(Button$2, { onClick: onClose, disabled: busy, children: "Cancel" }),
+      /* @__PURE__ */ jsxRuntimeExports.jsx(
+        Button$2,
+        {
+          onClick: handleGoLive,
+          color: "primary",
+          disabled: !streamKey.trim() || busy,
+          children: busy ? "Starting…" : "Set in OBS + Go Live"
+        }
+      )
+    ] })
+  ] });
+};
+const DEFAULT_YT_CONFIG = {
+  defaultTitle: "{date} Stream",
+  defaultDescription: "",
+  defaultPrivacyStatus: "unlisted",
+  defaultLatency: "ultraLow",
+  allowPrivacyOverride: true,
+  allowLatencyOverride: true
+};
+const YouTubeLiveTile = ({
+  autoCreateBroadcast = false,
+  defaultTitle,
+  defaultDescription,
+  tileSize = "10",
+  statsLines
+}) => {
+  const tileSizeInt = parseInt(String(tileSize));
+  const { settings, saveFullSettings } = useSettings();
+  const { yt, obs } = useYouTubeLiveContext();
+  const { phase, isAuthenticated, concurrentViewers, error, existingBroadcasts } = yt;
+  const liveStartRef = reactExports.useRef(null);
+  const [elapsedSeconds, setElapsedSeconds] = reactExports.useState(0);
+  reactExports.useEffect(() => {
+    if (phase === "live") {
+      liveStartRef.current = Date.now();
+      setElapsedSeconds(0);
+      const id2 = setInterval(() => {
+        setElapsedSeconds(Math.floor((Date.now() - liveStartRef.current) / 1e3));
+      }, 1e3);
+      return () => clearInterval(id2);
+    } else {
+      liveStartRef.current = null;
+      setElapsedSeconds(0);
+    }
+  }, [phase]);
+  const [showCreateDialog, setShowCreateDialog] = reactExports.useState(false);
+  const [showResumeDialog, setShowResumeDialog] = reactExports.useState(false);
+  const [showManualKey, setShowManualKey] = reactExports.useState(false);
+  const [showConfirm, setShowConfirm] = reactExports.useState(false);
+  const [signingIn, setSigningIn] = reactExports.useState(false);
+  reactExports.useEffect(() => {
+    if (existingBroadcasts.length > 0) {
+      setShowResumeDialog(true);
+    }
+  }, [existingBroadcasts]);
+  const handleSignIn = reactExports.useCallback(async () => {
+    if (!settings.youtube?.clientId || !settings.youtube?.clientSecret) return;
+    setSigningIn(true);
+    try {
+      const authService = new YouTubeAuthService(
+        settings.youtube.clientId,
+        settings.youtube.clientSecret
+      );
+      const refreshToken = await authService.startOAuthFlow();
+      saveFullSettings({ ...settings, youtube: { ...settings.youtube, refreshToken } });
+    } catch (e2) {
+      console.error("[YouTubeLiveTile] sign-in failed:", e2);
+    } finally {
+      setSigningIn(false);
+    }
+  }, [settings, saveFullSettings]);
+  const doGoLive = reactExports.useCallback(async () => {
+    if (phase !== "idle") return;
+    if (!isAuthenticated) {
+      if (!IS_ELECTRON) {
+        setShowManualKey(true);
+      } else {
+        await handleSignIn();
+      }
+      return;
+    }
+    const existing = await yt.checkExistingBroadcasts();
+    if (existing.length > 0) return;
+    if (autoCreateBroadcast) {
+      const mergedTitle = applyDateTemplate(
+        defaultTitle ?? settings.youtube?.defaultTitle ?? "{date} Stream"
+      );
+      await yt.goLive({
+        title: mergedTitle,
+        description: defaultDescription ?? settings.youtube?.defaultDescription ?? "",
+        privacyStatus: settings.youtube?.defaultPrivacyStatus ?? "unlisted",
+        latencyPreference: settings.youtube?.defaultLatency ?? "ultraLow"
+      });
+    } else {
+      setShowCreateDialog(true);
+    }
+  }, [phase, isAuthenticated, autoCreateBroadcast, settings.youtube, defaultTitle, defaultDescription, yt, handleSignIn]);
+  const handleGoLive = reactExports.useCallback(() => {
+    if (settings.confirmBeforeGoLive) {
+      setShowConfirm(true);
+    } else {
+      doGoLive();
+    }
+  }, [settings.confirmBeforeGoLive, doGoLive]);
+  const handleClick = reactExports.useCallback(() => {
+    if (phase === "error") {
+      yt.clearError();
+      return;
+    }
+    if (phase === "live") {
+      yt.stopLive();
+      return;
+    }
+    if (phase === "idle") {
+      handleGoLive();
+      return;
+    }
+  }, [phase, yt, handleGoLive]);
+  reactExports.useEffect(() => {
+    const handler = (e2) => {
+      const { command } = e2.detail;
+      if (command === "start" && phase === "idle") handleGoLive();
+      else if (command === "stop" && phase === "live") yt.stopLive();
+    };
+    window.addEventListener("youtube-live-control", handler);
+    return () => window.removeEventListener("youtube-live-control", handler);
+  }, [phase, handleGoLive, yt]);
+  const { label: phaseLabel, tintColor } = getPhaseVisual(phase, isAuthenticated, IS_ELECTRON);
+  const isBusy = signingIn || ["checking-existing", "creating-broadcast", "configuring-obs", "starting-stream", "stopping"].includes(phase);
+  const dialogs = /* @__PURE__ */ jsxRuntimeExports.jsxs(jsxRuntimeExports.Fragment, { children: [
+    /* @__PURE__ */ jsxRuntimeExports.jsx(
+      CreateBroadcastDialog,
+      {
+        open: showCreateDialog,
+        config: {
+          ...settings.youtube ?? DEFAULT_YT_CONFIG,
+          ...defaultTitle != null ? { defaultTitle } : {},
+          ...defaultDescription != null ? { defaultDescription } : {}
+        },
+        onConfirm: async (opts) => {
+          setShowCreateDialog(false);
+          await yt.goLive(opts);
+        },
+        onCancel: () => setShowCreateDialog(false)
+      }
+    ),
+    /* @__PURE__ */ jsxRuntimeExports.jsx(
+      ResumeBroadcastDialog,
+      {
+        open: showResumeDialog,
+        broadcasts: existingBroadcasts,
+        onResume: async (broadcast) => {
+          setShowResumeDialog(false);
+          await yt.resumeBroadcast(broadcast);
+        },
+        onEnd: async (broadcastId) => {
+          await yt.endExistingBroadcast(broadcastId);
+        },
+        onCreateNew: () => {
+          setShowResumeDialog(false);
+          setShowCreateDialog(true);
+        },
+        onCancel: () => setShowResumeDialog(false)
+      }
+    ),
+    /* @__PURE__ */ jsxRuntimeExports.jsx(
+      ManualKeyDialog,
+      {
+        open: showManualKey,
+        obs,
+        onClose: () => setShowManualKey(false)
+      }
+    ),
+    /* @__PURE__ */ jsxRuntimeExports.jsx(
+      ConfirmDialog,
+      {
+        open: showConfirm,
+        title: "Go Live?",
+        message: "Start a YouTube Live broadcast?",
+        onConfirm: () => {
+          setShowConfirm(false);
+          doGoLive();
+        },
+        onCancel: () => setShowConfirm(false)
+      }
+    )
+  ] });
+  const buttonLabel = phase === "live" ? "Stop" : phaseLabel;
+  const buttonColor = tintColor === "#f44336" || tintColor === "#b71c1c" ? "secondary" : tintColor === "#1b5e20" ? "primary" : "default";
+  const statsContent = statsLines ? [
+    [statsLines.elapsed, "Elapsed", phase === "live" ? formatElapsed(elapsedSeconds) : ""],
+    [statsLines.viewers, "Viewers", phase === "live" && concurrentViewers != null ? String(concurrentViewers) : ""]
+  ].filter(([enabled]) => enabled) : [];
+  return /* @__PURE__ */ jsxRuntimeExports.jsxs(jsxRuntimeExports.Fragment, { children: [
+    /* @__PURE__ */ jsxRuntimeExports.jsx(
+      StyledButtonMode,
+      {
+        $size: tileSizeInt,
+        variant: "contained",
+        color: buttonColor,
+        disabled: isBusy,
+        onClick: handleClick,
+        children: isBusy ? /* @__PURE__ */ jsxRuntimeExports.jsx(StyledCircularProgress, { size: 14 }) : buttonLabel
+      }
+    ),
+    phase === "error" && /* @__PURE__ */ jsxRuntimeExports.jsxs(ErrorDetails, { $size: tileSizeInt, children: [
+      error ?? "An unknown error occurred.",
+      /* @__PURE__ */ jsxRuntimeExports.jsx(ErrorHint, { children: "Click to reset and try again." })
+    ] }),
+    statsContent.map(([, label, value]) => /* @__PURE__ */ jsxRuntimeExports.jsxs(StatsRow, { children: [
+      /* @__PURE__ */ jsxRuntimeExports.jsx(StatsLabel, { children: label }),
+      /* @__PURE__ */ jsxRuntimeExports.jsx(StatsValue, { children: value })
+    ] }, label)),
+    dialogs
+  ] });
+};
 const validDirections = {
   column: "column",
   row: "row"
@@ -25991,7 +28816,7 @@ const TileWrapper = qe.div`
 	margin-right: ${(p2) => p2.theme.grid(0.5)};
 	margin-bottom: ${(p2) => p2.theme.grid(1)};
 `;
-const COMMON_TILE_PROPS = ["title", "connection", "tileSize", "fontSize"];
+const COMMON_TILE_PROPS = ["title", "connection", "tileSize", "fontSize", "activeRefreshTime", "inactiveRefreshTime"];
 function warnExtraProps(tile, allowed, typeName) {
   if (typeof tile !== "object" || tile == null) return;
   const extras = Object.keys(tile).filter(
@@ -26048,11 +28873,27 @@ function isAudioInputTileConfig(tile) {
   }
   return valid;
 }
+function isRtspStreamTileConfig(tile) {
+  const valid = typeof tile === "object" && "rtspStream" in tile && typeof tile.rtspStream === "string";
+  if (valid) {
+    warnExtraProps(tile, ["rtspStream", "streamUrl", "fps", "audioSyncOffsetMs", "startMuted", ...COMMON_TILE_PROPS], "RtspStreamTileConfig");
+  }
+  return valid;
+}
+function isYouTubeLiveTileConfig(tile) {
+  const valid = typeof tile === "object" && "youtubeLive" in tile && Boolean(tile.youtubeLive);
+  if (valid) {
+    warnExtraProps(tile, ["youtubeLive", "statsLines", "autoCreateBroadcast", "defaultTitle", "defaultDescription", ...COMMON_TILE_PROPS], "YouTubeLiveTileConfig");
+  }
+  return valid;
+}
 const Tiles = ({
   tiles = [],
   connection,
   tileSize,
   fontSize,
+  activeRefreshTime,
+  inactiveRefreshTime,
   direction,
   wrap
 }) => {
@@ -26061,7 +28902,9 @@ const Tiles = ({
     const inheritableProps = {
       connection,
       tileSize,
-      fontSize
+      fontSize,
+      activeRefreshTime,
+      inactiveRefreshTime
     };
     if (isGroupTileConfig(tile)) {
       return /* @__PURE__ */ jsxRuntimeExports.jsxs(TilesGroupWrapper, { "data-elementtype": "TilesGroupWrapper", $backgroundColor: tile.backgroundColor, children: [
@@ -26121,6 +28964,26 @@ const Tiles = ({
         tile.audioInput.inputName
       );
     }
+    if (isRtspStreamTileConfig(tile)) {
+      return /* @__PURE__ */ jsxRuntimeExports.jsx(
+        RtspStreamTile,
+        {
+          ...inheritableProps,
+          ...tile
+        },
+        tile.rtspStream
+      );
+    }
+    if (isYouTubeLiveTileConfig(tile)) {
+      return /* @__PURE__ */ jsxRuntimeExports.jsx(
+        YouTubeLiveTile,
+        {
+          ...inheritableProps,
+          ...tile
+        },
+        "youtube-live"
+      );
+    }
     return null;
   });
   return /* @__PURE__ */ jsxRuntimeExports.jsx(
@@ -26165,6 +29028,8 @@ function detectTileType(tile) {
   if ("button" in tile) return "button";
   if ("text" in tile) return "text";
   if ("audioInput" in tile) return "audioInput";
+  if ("rtspStream" in tile) return "rtspStream";
+  if ("youtubeLive" in tile) return "youtubeLive";
   return "button";
 }
 const ScenePicker = ({ connection, value, onChange }) => {
@@ -26181,7 +29046,7 @@ const ScenePicker = ({ connection, value, onChange }) => {
         variant: "outlined",
         size: "small",
         fullWidth: true,
-        helperText: "OBS not connected — enter scene name manually"
+        helperText: "OBS not connected - enter scene name manually"
       }
     );
   }
@@ -26208,11 +29073,11 @@ const ScenePicker = ({ connection, value, onChange }) => {
           scenes.map((s) => /* @__PURE__ */ jsxRuntimeExports.jsx(MenuItem$1, { value: s, children: s }, s)),
           (programScene || previewScene) && /* @__PURE__ */ jsxRuntimeExports.jsx(MuiDivider, {}),
           programScene && /* @__PURE__ */ jsxRuntimeExports.jsxs(MenuItem$1, { value: SCENE_PLACEHOLDER_PROGRAM, style: { fontStyle: "italic" }, children: [
-            "▶ Program — ",
+            "▶ Program - ",
             programScene
           ] }),
           previewScene && /* @__PURE__ */ jsxRuntimeExports.jsxs(MenuItem$1, { value: SCENE_PLACEHOLDER_PREVIEW, style: { fontStyle: "italic" }, children: [
-            "○ Preview — ",
+            "○ Preview - ",
             previewScene
           ] })
         ]
@@ -26233,7 +29098,7 @@ const SceneItemPicker = ({ connection, scene, value, onChange }) => {
         variant: "outlined",
         size: "small",
         fullWidth: true,
-        helperText: !scene ? "Enter a scene name first" : "OBS not connected — enter item name manually"
+        helperText: !scene ? "Enter a scene name first" : "OBS not connected - enter item name manually"
       }
     );
   }
@@ -26259,8 +29124,12 @@ const SceneItemPicker = ({ connection, scene, value, onChange }) => {
     )
   ] });
 };
+const FieldRow = qe.div`
+	display: flex;
+	gap: 8px;
+`;
 function SizeFields({ draft, setDraft }) {
-  return /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { style: { display: "flex", gap: 8 }, children: [
+  return /* @__PURE__ */ jsxRuntimeExports.jsxs(FieldRow, { children: [
     /* @__PURE__ */ jsxRuntimeExports.jsx(
       TextField$1,
       {
@@ -26283,6 +29152,36 @@ function SizeFields({ draft, setDraft }) {
         variant: "outlined",
         size: "small",
         fullWidth: true
+      }
+    )
+  ] });
+}
+function RefreshTimeFields({ draft, setDraft }) {
+  return /* @__PURE__ */ jsxRuntimeExports.jsxs(FieldRow, { children: [
+    /* @__PURE__ */ jsxRuntimeExports.jsx(
+      TextField$1,
+      {
+        label: "Active Refresh (ms)",
+        type: "number",
+        value: draft.activeRefreshTime ?? "",
+        onChange: (e2) => setDraft({ ...draft, activeRefreshTime: e2.target.value ? Number(e2.target.value) : void 0 }),
+        variant: "outlined",
+        size: "small",
+        fullWidth: true,
+        helperText: "ms - when tile is active"
+      }
+    ),
+    /* @__PURE__ */ jsxRuntimeExports.jsx(
+      TextField$1,
+      {
+        label: "Inactive Refresh (ms)",
+        type: "number",
+        value: draft.inactiveRefreshTime ?? "",
+        onChange: (e2) => setDraft({ ...draft, inactiveRefreshTime: e2.target.value ? Number(e2.target.value) : void 0 }),
+        variant: "outlined",
+        size: "small",
+        fullWidth: true,
+        helperText: "ms - when tile is inactive"
       }
     )
   ] });
@@ -26360,7 +29259,8 @@ function GroupForm({ draft, setDraft }) {
         fullWidth: true
       }
     ),
-    /* @__PURE__ */ jsxRuntimeExports.jsx(SizeFields, { draft, setDraft })
+    /* @__PURE__ */ jsxRuntimeExports.jsx(SizeFields, { draft, setDraft }),
+    /* @__PURE__ */ jsxRuntimeExports.jsx(RefreshTimeFields, { draft, setDraft })
   ] });
 }
 function SceneForm({ draft, setDraft, connection }) {
@@ -26389,7 +29289,8 @@ function SceneForm({ draft, setDraft, connection }) {
         fullWidth: true
       }
     ),
-    /* @__PURE__ */ jsxRuntimeExports.jsx(SizeFields, { draft, setDraft })
+    /* @__PURE__ */ jsxRuntimeExports.jsx(SizeFields, { draft, setDraft }),
+    /* @__PURE__ */ jsxRuntimeExports.jsx(RefreshTimeFields, { draft, setDraft })
   ] });
 }
 function SceneItemForm({ draft, setDraft, connection }) {
@@ -26460,7 +29361,8 @@ function SceneItemForm({ draft, setDraft, connection }) {
         fullWidth: true
       }
     ),
-    /* @__PURE__ */ jsxRuntimeExports.jsx(SizeFields, { draft, setDraft })
+    /* @__PURE__ */ jsxRuntimeExports.jsx(SizeFields, { draft, setDraft }),
+    /* @__PURE__ */ jsxRuntimeExports.jsx(RefreshTimeFields, { draft, setDraft })
   ] });
 }
 function ButtonForm({ draft, setDraft }) {
@@ -26542,7 +29444,7 @@ function TextForm({ draft, setDraft }) {
         size: "small",
         fullWidth: true,
         multiline: true,
-        rows: 2
+        minRows: 2
       }
     ),
     /* @__PURE__ */ jsxRuntimeExports.jsx(SizeFields, { draft, setDraft })
@@ -26601,13 +29503,172 @@ function AudioInputForm({ draft, setDraft }) {
     /* @__PURE__ */ jsxRuntimeExports.jsx(SizeFields, { draft, setDraft })
   ] });
 }
+function YouTubeLiveForm({ draft, setDraft }) {
+  const sl = draft.statsLines ?? {};
+  const patchSL = (partial) => setDraft({ ...draft, statsLines: { ...sl, ...partial } });
+  return /* @__PURE__ */ jsxRuntimeExports.jsxs(FormSection, { children: [
+    /* @__PURE__ */ jsxRuntimeExports.jsx(Typography$1, { variant: "caption", color: "textSecondary", children: "Stat lines (always visible, blank when not live)" }),
+    [
+      ["elapsed", "Elapsed time"],
+      ["viewers", "Concurrent viewers"]
+    ].map(([key2, label]) => /* @__PURE__ */ jsxRuntimeExports.jsx(
+      FormControlLabel$1,
+      {
+        control: /* @__PURE__ */ jsxRuntimeExports.jsx(
+          Checkbox$1,
+          {
+            checked: sl[key2] === true,
+            onChange: (e2) => patchSL({ [key2]: e2.target.checked ? true : void 0 }),
+            size: "small"
+          }
+        ),
+        label
+      },
+      key2
+    )),
+    /* @__PURE__ */ jsxRuntimeExports.jsx(
+      FormControlLabel$1,
+      {
+        control: /* @__PURE__ */ jsxRuntimeExports.jsx(
+          Checkbox$1,
+          {
+            checked: draft.autoCreateBroadcast === true,
+            onChange: (e2) => setDraft({ ...draft, autoCreateBroadcast: e2.target.checked ? true : void 0 })
+          }
+        ),
+        label: "Auto-create broadcast (skip dialog, use default settings)"
+      }
+    ),
+    /* @__PURE__ */ jsxRuntimeExports.jsx(
+      TextField$1,
+      {
+        label: "Default Title (optional)",
+        value: draft.defaultTitle ?? "",
+        onChange: (e2) => setDraft({ ...draft, defaultTitle: e2.target.value || void 0 }),
+        variant: "outlined",
+        size: "small",
+        fullWidth: true,
+        helperText: "Supports {date} token. Overrides the global YouTube default title."
+      }
+    ),
+    /* @__PURE__ */ jsxRuntimeExports.jsx(
+      TextField$1,
+      {
+        label: "Default Description (optional)",
+        value: draft.defaultDescription ?? "",
+        onChange: (e2) => setDraft({ ...draft, defaultDescription: e2.target.value || void 0 }),
+        variant: "outlined",
+        size: "small",
+        fullWidth: true,
+        multiline: true,
+        minRows: 2,
+        helperText: "Overrides the global YouTube default description."
+      }
+    ),
+    /* @__PURE__ */ jsxRuntimeExports.jsx(
+      TextField$1,
+      {
+        label: "Title (optional)",
+        value: draft.title ?? "",
+        onChange: (e2) => setDraft({ ...draft, title: e2.target.value || void 0 }),
+        variant: "outlined",
+        size: "small",
+        fullWidth: true
+      }
+    ),
+    /* @__PURE__ */ jsxRuntimeExports.jsx(SizeFields, { draft, setDraft })
+  ] });
+}
+function RtspStreamForm({ draft, setDraft }) {
+  return /* @__PURE__ */ jsxRuntimeExports.jsxs(FormSection, { children: [
+    /* @__PURE__ */ jsxRuntimeExports.jsx(
+      TextField$1,
+      {
+        label: "Stream ID",
+        value: draft.rtspStream ?? "",
+        onChange: (e2) => setDraft({ ...draft, rtspStream: e2.target.value }),
+        variant: "outlined",
+        size: "small",
+        fullWidth: true,
+        helperText: "Unique identifier for this stream tile"
+      }
+    ),
+    /* @__PURE__ */ jsxRuntimeExports.jsx(
+      TextField$1,
+      {
+        label: "Stream URL (optional)",
+        value: draft.streamUrl ?? "",
+        onChange: (e2) => setDraft({ ...draft, streamUrl: e2.target.value || void 0 }),
+        variant: "outlined",
+        size: "small",
+        fullWidth: true,
+        helperText: "RTSP URL, e.g. rtsp://192.168.1.100/live - defaults to rtsp://<connection-host>/live"
+      }
+    ),
+    /* @__PURE__ */ jsxRuntimeExports.jsxs(FieldRow, { children: [
+      /* @__PURE__ */ jsxRuntimeExports.jsx(
+        TextField$1,
+        {
+          label: "FPS (optional)",
+          type: "number",
+          value: draft.fps ?? "",
+          onChange: (e2) => setDraft({ ...draft, fps: e2.target.value !== "" ? Number(e2.target.value) : void 0 }),
+          variant: "outlined",
+          size: "small",
+          fullWidth: true,
+          helperText: "Leave blank for native rate"
+        }
+      ),
+      /* @__PURE__ */ jsxRuntimeExports.jsx(
+        TextField$1,
+        {
+          label: "Audio Offset (ms)",
+          type: "number",
+          value: draft.audioSyncOffsetMs ?? "",
+          onChange: (e2) => setDraft({ ...draft, audioSyncOffsetMs: e2.target.value !== "" ? Number(e2.target.value) : void 0 }),
+          variant: "outlined",
+          size: "small",
+          fullWidth: true,
+          helperText: "Positive = delay audio"
+        }
+      )
+    ] }),
+    /* @__PURE__ */ jsxRuntimeExports.jsx(
+      FormControlLabel$1,
+      {
+        control: /* @__PURE__ */ jsxRuntimeExports.jsx(
+          Checkbox$1,
+          {
+            checked: draft.startMuted !== false,
+            onChange: (e2) => setDraft({ ...draft, startMuted: e2.target.checked ? void 0 : false })
+          }
+        ),
+        label: "Start muted"
+      }
+    ),
+    /* @__PURE__ */ jsxRuntimeExports.jsx(
+      TextField$1,
+      {
+        label: "Title (optional)",
+        value: draft.title ?? "",
+        onChange: (e2) => setDraft({ ...draft, title: e2.target.value || void 0 }),
+        variant: "outlined",
+        size: "small",
+        fullWidth: true
+      }
+    ),
+    /* @__PURE__ */ jsxRuntimeExports.jsx(SizeFields, { draft, setDraft })
+  ] });
+}
 const TYPE_LABELS = {
   group: "Group",
   scene: "Scene Button",
   sceneItem: "Scene Item Button",
   button: "Button",
   text: "Text",
-  audioInput: "Audio Input"
+  audioInput: "Audio Input",
+  rtspStream: "RTSP Stream",
+  youtubeLive: "YouTube Live"
 };
 const TilePropertiesDialog = ({
   open,
@@ -26634,7 +29695,9 @@ const TilePropertiesDialog = ({
       tileType === "sceneItem" && /* @__PURE__ */ jsxRuntimeExports.jsx(SceneItemForm, { ...formProps }),
       tileType === "button" && /* @__PURE__ */ jsxRuntimeExports.jsx(ButtonForm, { ...formProps }),
       tileType === "text" && /* @__PURE__ */ jsxRuntimeExports.jsx(TextForm, { ...formProps }),
-      tileType === "audioInput" && /* @__PURE__ */ jsxRuntimeExports.jsx(AudioInputForm, { ...formProps })
+      tileType === "audioInput" && /* @__PURE__ */ jsxRuntimeExports.jsx(AudioInputForm, { ...formProps }),
+      tileType === "rtspStream" && /* @__PURE__ */ jsxRuntimeExports.jsx(RtspStreamForm, { ...formProps }),
+      tileType === "youtubeLive" && /* @__PURE__ */ jsxRuntimeExports.jsx(YouTubeLiveForm, { ...formProps })
     ] }),
     /* @__PURE__ */ jsxRuntimeExports.jsxs(DialogActions$1, { children: [
       /* @__PURE__ */ jsxRuntimeExports.jsx(Button$2, { onClick: onClose, children: "Cancel" }),
@@ -26648,7 +29711,9 @@ const TILE_TYPES = [
   { type: "sceneItem", label: "Scene Item Button", defaultTile: { sceneItem: { scene: "", item: "", click: "toggleVisible" } } },
   { type: "button", label: "Button", defaultTile: { button: "toggleStreaming" } },
   { type: "text", label: "Text", defaultTile: { text: "stats" } },
-  { type: "audioInput", label: "Audio Input", defaultTile: { audioInput: { inputName: "" } } }
+  { type: "audioInput", label: "Audio Input", defaultTile: { audioInput: { inputName: "" } } },
+  { type: "rtspStream", label: "RTSP Stream", defaultTile: { rtspStream: "stream", startMuted: true } },
+  { type: "youtubeLive", label: "YouTube Live", defaultTile: { youtubeLive: true } }
 ];
 const AddTileDialog = ({
   open,
@@ -26702,7 +29767,9 @@ const AddTileDialog = ({
       selectedType === "sceneItem" && /* @__PURE__ */ jsxRuntimeExports.jsx(SceneItemForm, { ...formProps }),
       selectedType === "button" && /* @__PURE__ */ jsxRuntimeExports.jsx(ButtonForm, { ...formProps }),
       selectedType === "text" && /* @__PURE__ */ jsxRuntimeExports.jsx(TextForm, { ...formProps }),
-      selectedType === "audioInput" && /* @__PURE__ */ jsxRuntimeExports.jsx(AudioInputForm, { ...formProps })
+      selectedType === "audioInput" && /* @__PURE__ */ jsxRuntimeExports.jsx(AudioInputForm, { ...formProps }),
+      selectedType === "rtspStream" && /* @__PURE__ */ jsxRuntimeExports.jsx(RtspStreamForm, { ...formProps }),
+      selectedType === "youtubeLive" && /* @__PURE__ */ jsxRuntimeExports.jsx(YouTubeLiveForm, { ...formProps })
     ] }) }),
     /* @__PURE__ */ jsxRuntimeExports.jsxs(DialogActions$1, { children: [
       /* @__PURE__ */ jsxRuntimeExports.jsx(Button$2, { onClick: onClose, children: "Cancel" }),
@@ -27019,7 +30086,7 @@ const TileMenu = ({
             {
               value: currentSize,
               min: 4,
-              max: 30,
+              max: 60,
               step: 1,
               onChange: handleSizeChange,
               style: { width: "100%" }
@@ -27051,6 +30118,8 @@ const EditableLeafTile = ({
   inheritedConnection,
   inheritedTileSize,
   inheritedFontSize,
+  inheritedActiveRefreshTime,
+  inheritedInactiveRefreshTime,
   parentDirection,
   siblingCount = 1
 }) => {
@@ -27063,6 +30132,8 @@ const EditableLeafTile = ({
   const effectiveConnection = tile.connection ?? inheritedConnection;
   const effectiveTileSize = tile.tileSize ?? inheritedTileSize;
   const effectiveFontSize = tile.fontSize ?? inheritedFontSize ?? effectiveTileSize;
+  const effectiveActiveRefreshTime = tile.activeRefreshTime ?? inheritedActiveRefreshTime;
+  const effectiveInactiveRefreshTime = tile.inactiveRefreshTime ?? inheritedInactiveRefreshTime;
   const tileIndex = tilePath[tilePath.length - 1];
   const isColumn = parentDirection === "column";
   const BackIcon = isColumn ? ArrowUpward : ArrowBack;
@@ -27079,13 +30150,17 @@ const EditableLeafTile = ({
     const common2 = {
       connection: effectiveConnection,
       tileSize: String(effectiveTileSize ?? 10),
-      fontSize: String(effectiveFontSize ?? effectiveTileSize ?? 10)
+      fontSize: String(effectiveFontSize ?? effectiveTileSize ?? 10),
+      ...effectiveActiveRefreshTime !== void 0 && { activeRefreshTime: effectiveActiveRefreshTime },
+      ...effectiveInactiveRefreshTime !== void 0 && { inactiveRefreshTime: effectiveInactiveRefreshTime }
     };
     if ("scene" in tile) return /* @__PURE__ */ jsxRuntimeExports.jsx(SceneButton, { ...common2, scene: tile.scene, title: tile.title, viewType: tile.viewType });
     if ("sceneItem" in tile) return /* @__PURE__ */ jsxRuntimeExports.jsx(SceneItemButton, { ...common2, sceneItem: tile.sceneItem, title: tile.title, viewType: tile.viewType });
     if ("button" in tile) return /* @__PURE__ */ jsxRuntimeExports.jsx(Button, { ...common2, button: tile.button, title: tile.title });
     if ("text" in tile) return /* @__PURE__ */ jsxRuntimeExports.jsx(Text, { ...common2, text: tile.text, statsLines: tile.statsLines, customText: tile.customText });
     if ("audioInput" in tile) return /* @__PURE__ */ jsxRuntimeExports.jsx(AudioInputTile, { ...common2, audioInput: tile.audioInput, title: tile.title, viewType: tile.viewType });
+    if ("rtspStream" in tile) return /* @__PURE__ */ jsxRuntimeExports.jsx(RtspStreamTile, { ...common2, rtspStream: tile.rtspStream, streamUrl: tile.streamUrl, fps: tile.fps, audioSyncOffsetMs: tile.audioSyncOffsetMs, startMuted: tile.startMuted, title: tile.title });
+    if ("youtubeLive" in tile) return /* @__PURE__ */ jsxRuntimeExports.jsx(YouTubeLiveTile, { ...common2, youtubeLive: true, title: tile.title, viewType: tile.viewType, autoCreateBroadcast: tile.autoCreateBroadcast, defaultTitle: tile.defaultTitle, defaultDescription: tile.defaultDescription });
     return null;
   };
   return /* @__PURE__ */ jsxRuntimeExports.jsxs(jsxRuntimeExports.Fragment, { children: [
@@ -27190,6 +30265,8 @@ const EditableGroupTile = ({
   inheritedConnection,
   inheritedTileSize,
   inheritedFontSize,
+  inheritedActiveRefreshTime,
+  inheritedInactiveRefreshTime,
   parentDirection,
   siblingCount = 1
 }) => {
@@ -27202,6 +30279,8 @@ const EditableGroupTile = ({
   const effectiveConnection = tile.connection ?? inheritedConnection;
   const effectiveTileSize = tile.tileSize ?? inheritedTileSize;
   const effectiveFontSize = tile.fontSize ?? inheritedFontSize ?? effectiveTileSize;
+  const effectiveActiveRefreshTime = tile.activeRefreshTime ?? inheritedActiveRefreshTime;
+  const effectiveInactiveRefreshTime = tile.inactiveRefreshTime ?? inheritedInactiveRefreshTime;
   const tileIndex = tilePath[tilePath.length - 1];
   const isColumn = parentDirection === "column";
   const BackIcon = isColumn ? ArrowUpward : ArrowBack;
@@ -27295,6 +30374,8 @@ const EditableGroupTile = ({
               inheritedConnection: effectiveConnection,
               inheritedTileSize: effectiveTileSize,
               inheritedFontSize: effectiveFontSize,
+              inheritedActiveRefreshTime: effectiveActiveRefreshTime,
+              inheritedInactiveRefreshTime: effectiveInactiveRefreshTime,
               direction: tile.direction,
               wrap: tile.wrap
             }
@@ -27353,6 +30434,8 @@ const EditableGroup = ({
   inheritedConnection,
   inheritedTileSize,
   inheritedFontSize,
+  inheritedActiveRefreshTime,
+  inheritedInactiveRefreshTime,
   direction,
   wrap
 }) => {
@@ -27369,6 +30452,8 @@ const EditableGroup = ({
           inheritedConnection,
           inheritedTileSize,
           inheritedFontSize,
+          inheritedActiveRefreshTime,
+          inheritedInactiveRefreshTime,
           parentDirection: direction,
           siblingCount: tiles.length
         }
@@ -27380,6 +30465,8 @@ const EditableGroup = ({
           inheritedConnection,
           inheritedTileSize,
           inheritedFontSize,
+          inheritedActiveRefreshTime,
+          inheritedInactiveRefreshTime,
           parentDirection: direction,
           siblingCount: tiles.length
         }
@@ -27400,6 +30487,8 @@ const EditableTiles = () => {
     tiles: currentConfig.tiles ?? [],
     tileSize: currentConfig.tileSize,
     fontSize: currentConfig.fontSize,
+    activeRefreshTime: currentConfig.activeRefreshTime,
+    inactiveRefreshTime: currentConfig.inactiveRefreshTime,
     direction: currentConfig.direction,
     connection: currentConfig.connection,
     wrap: currentConfig.wrap
@@ -27474,6 +30563,8 @@ const EditableTiles = () => {
               inheritedConnection: currentConfig.connection,
               inheritedTileSize: currentConfig.tileSize,
               inheritedFontSize: currentConfig.fontSize ?? currentConfig.tileSize,
+              inheritedActiveRefreshTime: currentConfig.activeRefreshTime,
+              inheritedInactiveRefreshTime: currentConfig.inactiveRefreshTime,
               direction: currentConfig.direction,
               wrap: currentConfig.wrap
             }
@@ -27504,6 +30595,8 @@ const EditableTiles = () => {
             ...config2,
             tileSize: updated.tileSize ?? config2.tileSize,
             fontSize: updated.fontSize ?? config2.fontSize,
+            activeRefreshTime: updated.activeRefreshTime ?? config2.activeRefreshTime,
+            inactiveRefreshTime: updated.inactiveRefreshTime ?? config2.inactiveRefreshTime,
             direction: updated.direction ?? config2.direction,
             connection: updated.connection ?? config2.connection,
             wrap: updated.wrap
@@ -27550,6 +30643,8 @@ const Content = () => {
           ...tileSettings,
           tileSize: tileSettings.tileSize ?? "10",
           fontSize: tileSettings.fontSize ?? tileSettings.tileSize ?? "10",
+          activeRefreshTime: tileSettings.activeRefreshTime,
+          inactiveRefreshTime: tileSettings.inactiveRefreshTime,
           direction: tileSettings.direction ?? "row"
         }
       )
@@ -27595,16 +30690,26 @@ const Wrapper = qe.div`
 	color: ${(p2) => p2.theme.text};
 `;
 const Layout = () => {
-  const { autoOpenSelector, closeAutoOpenSelector } = useSettings();
+  const { autoOpenSelector, closeAutoOpenSelector, currentConfig } = useSettings();
+  const obs = useObs({ connection: currentConfig.connection });
+  const currentSceneData = useCurrentScene(obs);
+  useKeyboardShortcuts(currentConfig.shortcuts ?? [], obs, currentSceneData?.name);
+  const [shortcutSelectorOpen, setShortcutSelectorOpen] = React$1.useState(false);
+  React$1.useEffect(() => {
+    const handler = () => setShortcutSelectorOpen(true);
+    window.addEventListener("obs-tiles-open-config-selector", handler);
+    return () => window.removeEventListener("obs-tiles-open-config-selector", handler);
+  }, []);
   return /* @__PURE__ */ jsxRuntimeExports.jsxs(Wrapper, { children: [
     /* @__PURE__ */ jsxRuntimeExports.jsx(HttpsWarningBanner, {}),
     /* @__PURE__ */ jsxRuntimeExports.jsx(Content, {}),
-    /* @__PURE__ */ jsxRuntimeExports.jsx(Footer, {}),
-    /* @__PURE__ */ jsxRuntimeExports.jsx(ConfigSelectorDialog, { open: autoOpenSelector, onClose: closeAutoOpenSelector })
+    /* @__PURE__ */ jsxRuntimeExports.jsx(Footer$1, {}),
+    /* @__PURE__ */ jsxRuntimeExports.jsx(ConfigSelectorDialog, { open: autoOpenSelector, onClose: closeAutoOpenSelector }),
+    /* @__PURE__ */ jsxRuntimeExports.jsx(ConfigSelectorDialog, { open: shortcutSelectorOpen, onClose: () => setShortcutSelectorOpen(false) })
   ] });
 };
 const App = () => {
-  return /* @__PURE__ */ jsxRuntimeExports.jsx(ThemeProvider, { children: /* @__PURE__ */ jsxRuntimeExports.jsx(SettingsProvider, { children: /* @__PURE__ */ jsxRuntimeExports.jsx(OBSWebsocketProvider, { children: /* @__PURE__ */ jsxRuntimeExports.jsx(EditModeProvider, { children: /* @__PURE__ */ jsxRuntimeExports.jsx(Layout, {}) }) }) }) });
+  return /* @__PURE__ */ jsxRuntimeExports.jsx(ThemeProvider, { children: /* @__PURE__ */ jsxRuntimeExports.jsx(SettingsProvider, { children: /* @__PURE__ */ jsxRuntimeExports.jsx(OBSWebsocketProvider, { children: /* @__PURE__ */ jsxRuntimeExports.jsx(YouTubeLiveProvider, { children: /* @__PURE__ */ jsxRuntimeExports.jsx(EditModeProvider, { children: /* @__PURE__ */ jsxRuntimeExports.jsx(Layout, {}) }) }) }) }) });
 };
 if ("serviceWorker" in navigator) {
   try {
