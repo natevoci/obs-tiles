@@ -4,6 +4,10 @@
 
 ### 2026-05-30
 
+**Version 5.1 release**
+
+- Update version number in package.json
+
 **fix(youtube): only use configured OBS connection when it exists**
 
 - `YouTubeLiveProvider` now validates `settings.youtube?.obsConnection` against `currentConfig.connections` before passing it to `useObs`.

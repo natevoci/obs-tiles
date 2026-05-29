@@ -125,7 +125,7 @@ export class RtspManager {
     })
 
     ffmpegProcess.stderr?.on('data', (data: Buffer) => {
-      console.log(`[ffmpeg:${options.streamId}] ${data.toString().trimEnd()}`)
+      // console.log(`[ffmpeg:${options.streamId}] ${data.toString().trimEnd()}`)
     })
 
     // 'error' fires when spawn fails (e.g. binary not found); 'exit' may not follow in that case
