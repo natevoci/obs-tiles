@@ -12,6 +12,11 @@ jobs:
     steps:
       - uses: actions/checkout@v3
 
+      - name: Setup Python 3.11
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
       - name: Get version from package.json
         id: version
         run: |
@@ -36,6 +41,10 @@ jobs:
         uses: actions/setup-node@v3
         with:
           node-version: '25'
+
+      - name: Configure node-gyp Python
+        if: steps.check_release.outputs.EXISTS == 'false'
+        run: echo "npm_config_python=$env:pythonLocation" | Out-File -FilePath $env:GITHUB_ENV -Encoding utf8 -Append
 
       - name: Install dependencies
         if: steps.check_release.outputs.EXISTS == 'false'

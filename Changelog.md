@@ -4,6 +4,11 @@
 
 ### 2026-05-30
 
+**fix(ci): pin Python 3.11 for Electron packaging**
+
+- The Electron packaging workflow now installs Python 3.11 and exports it to `node-gyp` so native module rebuilds do not fail on GitHub Actions images that default to Python 3.12+.
+- This specifically avoids the `distutils` import error raised while rebuilding `speaker` during `electron-builder`.
+
 **Version 5.1 release**
 
 - Update version number in package.json
