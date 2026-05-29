@@ -26898,7 +26898,7 @@ const SettingsButton = () => {
   ] });
 };
 const OBSLogo = "" + new URL("obslogo-B1qHYFBi.png", import.meta.url).href;
-const APP_VERSION = "5.0.0";
+const APP_VERSION = "5.1.0";
 const Wrapper$2 = qe.div`
 	height: ${(p2) => p2.theme.grid(8)};
 	display: flex;
