@@ -23,7 +23,7 @@ interface Connection {
 	providers: Record<string, any>
 }
 
-const obsContext = React.createContext<{ getConnection: (name: string) => Connection | null }>({ getConnection: () => null })
+const obsContext = React.createContext<{ getConnection: (name: string | null) => Connection | null }>({ getConnection: () => null })
 
 /**
  * Recursively check if any tiles in the config contain audioInput tiles
@@ -104,19 +104,27 @@ export const OBSWebsocketProvider = ({ children }: OBSWebsocketProviderProps) =>
 	}
 
 	const getConnection = React.useCallback(
-		(connectionName: string): Connection => {
+		(connectionName: string | null): Connection | null => {
 			const connections = connectionsRef.current
-			if (!connections[connectionName]) {
-				const connSettings = currentConfig.connections[connectionName]
+			const resolvedConnectionName = connectionName ?? Object.keys(currentConfig.connections || {})[0]
+
+			if (!resolvedConnectionName) {
+				console.error('[obs-websocket] No OBS connections configured.')
+				return null
+			}
+
+			if (!connections[resolvedConnectionName]) {
+				const connSettings = currentConfig.connections[resolvedConnectionName]
 				if (!connSettings) {
-					throw new Error(`Missing connection information for '${connectionName}'. Available connections (${Object.keys(currentConfig.connections).join(', ')})`)
+					console.error(`Connection settings for '${resolvedConnectionName}' not found. Available connections (${Object.keys(currentConfig.connections).join(', ')})`)
+					return null
 				}
 
 				const connection: Connection = {
 					adapter: null,
 					shouldBeConnected: false,
 					public: {
-						name: connectionName,
+						name: resolvedConnectionName,
 						connected: false,
 						connecting: false,
 						failed: false,
@@ -153,7 +161,7 @@ export const OBSWebsocketProvider = ({ children }: OBSWebsocketProviderProps) =>
 					}
 
 					try {
-						console.debug(`[obs-websocket] Connecting to '${connectionName}' at ${connSettings.address} (forceVersion=${forceVersion})`)
+						console.debug(`[obs-websocket] Connecting to '${resolvedConnectionName}' at ${connSettings.address} (forceVersion=${forceVersion})`)
 						const adapter = await createAdapter({
 							address: connSettings.address,
 							password: password || undefined,
@@ -165,11 +173,11 @@ export const OBSWebsocketProvider = ({ children }: OBSWebsocketProviderProps) =>
 						connection.public.adapter = adapter
 						connection.public.connected = true
 						connection.public.apiVersion = adapter.version
-						console.log(`[obs-websocket] Connected to ${connectionName} using v${adapter.version} API`)
+						console.log(`[obs-websocket] Connected to ${resolvedConnectionName} using v${adapter.version} API`)
 
 						// Set up reconnection on disconnect
 						adapter.on('ConnectionClosed', () => {
-							console.log(`[obs-websocket] Connection closed for ${connectionName}`)
+							console.log(`[obs-websocket] Connection closed for ${resolvedConnectionName}`)
 							connection.public.connected = false
 							connection.public.adapter = undefined
 							connection.adapter = null
@@ -183,7 +191,7 @@ export const OBSWebsocketProvider = ({ children }: OBSWebsocketProviderProps) =>
 						})
 
 						adapter.on('ConnectionError', (err: any) => {
-							console.error(`[obs-websocket] Error for ${connectionName}:`, err)
+							console.error(`[obs-websocket] Error for ${resolvedConnectionName}:`, err)
 							connection.public.failed = err
 						})
 
@@ -208,7 +216,7 @@ export const OBSWebsocketProvider = ({ children }: OBSWebsocketProviderProps) =>
 							}
 						}
 						
-						console.error(`[obs-websocket] Error connecting to '${connectionName}':`, errorMsg)
+						console.error(`[obs-websocket] Error connecting to '${resolvedConnectionName}':`, errorMsg)
 						connection.public.failedConnection = errorMsg
 					} finally {
 						connection.public.connecting = false
@@ -278,9 +286,9 @@ export const OBSWebsocketProvider = ({ children }: OBSWebsocketProviderProps) =>
 					}
 				}
 
-				connections[connectionName] = connection
+				connections[resolvedConnectionName] = connection
 			}
-			return connections[connectionName]
+			return connections[resolvedConnectionName]
 		},
 		[currentConfig?.connections],
 	)
@@ -326,7 +334,7 @@ export const useObs = ({
 	connection: name
 }: { connection?: string }): ConnectionPublic => {
 	const { getConnection } = React.useContext(obsContext)
-	const connection = getConnection(name || 'main')
+	const connection = getConnection(name ?? null)
 
 	return connection?.public as ConnectionPublic
 }

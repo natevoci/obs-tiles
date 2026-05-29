@@ -34,7 +34,13 @@ export const YouTubeLiveProvider = ({ children }: { children: React.ReactNode })
 	const { settings, currentConfig } = useSettings()
 	// Use the OBS connection configured in YouTube settings, falling back to
 	// the active config's default connection.
-	const obsConnectionName = settings.youtube?.obsConnection ?? currentConfig.connection
+	const youtubeObsConnection = settings.youtube?.obsConnection
+	const hasConfiguredYouTubeConnection = Boolean(
+		youtubeObsConnection && currentConfig.connections?.[youtubeObsConnection]
+	)
+	const obsConnectionName = hasConfiguredYouTubeConnection
+		? youtubeObsConnection
+		: currentConfig.connection
 	const obs = useObs({ connection: obsConnectionName })
 	const yt = useYouTubeLive(obs, settings.youtube)
 

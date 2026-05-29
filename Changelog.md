@@ -2,9 +2,30 @@
 
 ## Feature History
 
+### 2026-05-30
+
+**fix(youtube): only use configured OBS connection when it exists**
+
+- `YouTubeLiveProvider` now validates `settings.youtube?.obsConnection` against `currentConfig.connections` before passing it to `useObs`.
+- If the configured YouTube OBS connection is missing from the active config, it now falls back to `currentConfig.connection`.
+
+**fix(obs): resolve default OBS connection from configured list**
+
+- `useObs` no longer hardcodes `'main'` when no `connection` prop is provided; it now passes `null` through to `getConnection`.
+- `getConnection` now accepts `null` and resolves to the first configured OBS connection key in `currentConfig.connections`.
+- Added an explicit error log when no OBS connections exist, and aligned connection setup/log messages to use the resolved connection name.
+
 ### 2026-04-10
 
-**refactor(youtube): visual style overhaul — button-only tile with per-stat lines**
+**fix(youtube): show error details below button in error state**
+
+- When `phase === 'error'`, an `ErrorDetails` block renders below the button showing the error message and a "Click to reset and try again." hint. Clicking the button clears the error (existing behaviour) and returns to idle.
+
+**fix(youtube): invalid broadcastStatus=testing filter on liveBroadcasts list**
+
+- `YouTubeLiveService.checkForExistingBroadcasts`: replaced `broadcastStatus=testing` with `broadcastStatus=upcoming`. The `testing` value is only valid on the `liveBroadcasts/transition` endpoint — not as a list filter, causing a 400 Bad Request. The `upcoming` filter returns broadcasts with lifecycle status `created`, `ready`, or `testing`.
+
+ — button-only tile with per-stat lines**
 
 - Removed `viewType` prop from `YouTubeLiveTileConfig` and all related code. The `'preview'` tile mode is gone; `YouTubeLiveTile` now always renders as a full-width `variant="contained"` MUI button.
 - Button styling matches the streaming/recording buttons in `Button.tsx`: `StyledButtonMode` sets `width: $size * 16px` and uses MUI `color` prop (`'primary'` for green/Go Live, `'secondary'` for red/live or error) so MUI handles white contrast text automatically. `Mui-disabled` state uses `theme.disabledBackground` / `theme.disabledText`.

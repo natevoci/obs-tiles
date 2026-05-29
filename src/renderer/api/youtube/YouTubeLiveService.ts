@@ -213,15 +213,19 @@ export class YouTubeLiveService {
 	/**
 	 * Check for broadcasts that are currently `active` or in `testing` state.
 	 * Deduplicated by broadcastId. Returns up to 20 combined results.
+	 *
+	 * Note: `broadcastStatus=upcoming` is the correct list-filter for broadcasts
+	 * whose lifeCycleStatus is `created`, `ready`, or `testing`.
+	 * There is no `testing` filter value on the list endpoint.
 	 */
 	async checkForExistingBroadcasts(accessToken: string): Promise<LiveBroadcastInfo[]> {
-		const [activeData, testingData] = await Promise.all([
+		const [activeData, upcomingData] = await Promise.all([
 			apiFetch(
 				`${API_BASE}/liveBroadcasts?part=snippet,status,contentDetails&broadcastStatus=active&maxResults=10`,
 				accessToken,
 			),
 			apiFetch(
-				`${API_BASE}/liveBroadcasts?part=snippet,status,contentDetails&broadcastStatus=testing&maxResults=10`,
+				`${API_BASE}/liveBroadcasts?part=snippet,status,contentDetails&broadcastStatus=upcoming&maxResults=10`,
 				accessToken,
 			),
 		])
@@ -229,7 +233,7 @@ export class YouTubeLiveService {
 		const seen = new Set<string>()
 		const results: LiveBroadcastInfo[] = []
 
-		for (const item of [...(activeData.items ?? []), ...(testingData.items ?? [])]) {
+		for (const item of [...(activeData.items ?? []), ...(upcomingData.items ?? [])]) {
 			if (seen.has(item.id)) continue
 			seen.add(item.id)
 			results.push({

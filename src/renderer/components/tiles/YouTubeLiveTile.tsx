@@ -99,6 +99,24 @@ const StatsLabel = styled.span`
 
 const StatsValue = styled.span``
 
+const ErrorDetails = styled.div<{ $size: number }>`
+	width: ${p => p.$size * 16}px;
+	margin-top: 4px;
+	padding: 4px 6px;
+	border-radius: 3px;
+	background: rgba(244, 67, 54, 0.15);
+	border: 1px solid rgba(244, 67, 54, 0.4);
+	font-size: 10px;
+	color: #ef9a9a;
+	word-break: break-word;
+`
+
+const ErrorHint = styled.div`
+	margin-top: 3px;
+	color: rgba(255, 255, 255, 0.4);
+	font-size: 10px;
+`
+
 // ============================================================================
 // ManualKeyDialog — web mode only
 // ============================================================================
@@ -202,7 +220,7 @@ export const YouTubeLiveTile = ({
 	const { settings, saveFullSettings } = useSettings()
 	const { yt, obs } = useYouTubeLiveContext()
 
-	const { phase, isAuthenticated, concurrentViewers, existingBroadcasts } = yt
+	const { phase, isAuthenticated, concurrentViewers, error, existingBroadcasts } = yt
 
 	// ── Elapsed time while live ──────────────────────────────────────────────
 	const liveStartRef = React.useRef<number | null>(null)
@@ -388,6 +406,12 @@ export const YouTubeLiveTile = ({
 					: buttonLabel
 				}
 			</StyledButtonMode>
+			{phase === 'error' && (
+				<ErrorDetails $size={tileSizeInt}>
+					{error ?? 'An unknown error occurred.'}
+					<ErrorHint>Click to reset and try again.</ErrorHint>
+				</ErrorDetails>
+			)}
 			{statsContent.map(([, label, value]) => (
 				<StatsRow key={label}>
 					<StatsLabel>{label}</StatsLabel>
