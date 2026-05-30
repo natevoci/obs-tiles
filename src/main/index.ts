@@ -124,14 +124,19 @@ function loadWindowState() {
 // Save window state to storage
 function saveWindowState(window: BrowserWindow) {
   if (!window) return
-  
+
+  const isMaximized = window.isMaximized()
+  const currentState = loadWindowState()
   const bounds = window.getBounds()
+  const contentBounds = window.getContentBounds()
+
   const state = {
-    x: bounds.x,
-    y: bounds.y,
-    width: bounds.width,
-    height: bounds.height,
-    isMaximized: window.isMaximized(),
+    x: isMaximized ? currentState.x ?? bounds.x : bounds.x,
+    y: isMaximized ? currentState.y ?? bounds.y : bounds.y,
+    // Persist content size to avoid frame rounding drift on fractional DPI scaling.
+    width: isMaximized ? currentState.width ?? contentBounds.width : contentBounds.width,
+    height: isMaximized ? currentState.height ?? contentBounds.height : contentBounds.height,
+    isMaximized,
   }
   
   const stateFile = path.join(app.getPath('userData'), 'windowState.json')
@@ -155,6 +160,7 @@ function createWindow() {
     y: windowState.y,
     width: windowState.width,
     height: windowState.height,
+    useContentSize: true,
     autoHideMenuBar: true,
     webPreferences: {
       preload: path.join(__dirname, '../preload/index.js'),

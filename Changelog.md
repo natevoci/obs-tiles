@@ -4,6 +4,12 @@
 
 ### 2026-05-30
 
+**fix(electron): stop windowState size drift at 150% DPI**
+
+- `src/main/index.ts` now persists `width`/`height` from `BrowserWindow.getContentBounds()` instead of outer frame bounds.
+- Window creation now sets `useContentSize: true`, so restored dimensions map to the same content size across fractional DPI scaling.
+- When closing while maximized, the app preserves the previously saved normal bounds and only updates `isMaximized`, avoiding accidental bound churn.
+
 **fix(rtsp): validate ffmpeg availability before stream startup**
 
 - `RtspManager` now validates the ffmpeg binary before creating the RTSP audio pipe or starting reconnect logic.
