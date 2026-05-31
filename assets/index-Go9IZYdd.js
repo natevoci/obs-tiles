@@ -24603,6 +24603,7 @@ const DEFAULT_SETTINGS = {
         {
           group: "Scenes",
           direction: "row",
+          showBorder: true,
           tiles: [
             {
               scene: "Scene 1"
@@ -26092,6 +26093,21 @@ const TreeLabel = qe.span`
 	text-overflow: ellipsis;
 	white-space: nowrap;
 `;
+const ConfigRowActions = qe.div`
+	display: flex;
+	align-items: center;
+	gap: 2px;
+	flex-shrink: 0;
+	margin-left: 4px;
+`;
+const ConfigRowActionButton = qe(IconButton$1)`
+	width: 18px;
+	height: 18px;
+	padding: 1px;
+	& .MuiSvgIcon-root {
+		font-size: 0.95rem;
+	}
+`;
 const TreeIcon = qe.div`
 	width: 18px;
 	height: 18px;
@@ -26156,6 +26172,19 @@ const useStyles = makeStyles((theme) => ({
     flex: 1
   }
 }));
+function moveArrayItem(items, fromIndex, toIndex) {
+  if (fromIndex === toIndex) return items;
+  const next = [...items];
+  const [item] = next.splice(fromIndex, 1);
+  next.splice(toIndex, 0, item);
+  return next;
+}
+function getReorderedIndex(currentIndex, fromIndex, toIndex) {
+  if (currentIndex === fromIndex) return toIndex;
+  if (fromIndex < toIndex && currentIndex > fromIndex && currentIndex <= toIndex) return currentIndex - 1;
+  if (fromIndex > toIndex && currentIndex >= toIndex && currentIndex < fromIndex) return currentIndex + 1;
+  return currentIndex;
+}
 const NamePromptDialog = ({ open, title, initialValue, onConfirm, onCancel }) => {
   const [value, setValue] = React$1.useState(initialValue);
   React$1.useEffect(() => {
@@ -26354,6 +26383,19 @@ const SettingsDialog = ({ onClose }) => {
     },
     [localConfigs]
   );
+  const handleMoveConfig = React$1.useCallback((fromIndex, direction) => {
+    const toIndex = fromIndex + direction;
+    setLocalConfigs((prev) => {
+      if (toIndex < 0 || toIndex >= prev.length) return prev;
+      const next = moveArrayItem(prev, fromIndex, toIndex);
+      const nextLocalConfigIndex = getReorderedIndex(localConfigIndex, fromIndex, toIndex);
+      const nextSelected = typeof selected === "number" ? getReorderedIndex(selected, fromIndex, toIndex) : selected;
+      setLocalConfigIndex(nextLocalConfigIndex);
+      setSelected(nextSelected);
+      setJsonValue(JSON.stringify(next[nextLocalConfigIndex], null, 2));
+      return next;
+    });
+  }, [localConfigIndex, selected]);
   const confirmDelete = React$1.useCallback(() => {
     if (!deleteConfirm) return;
     const { configIndex } = deleteConfirm;
@@ -26493,7 +26535,33 @@ const SettingsDialog = ({ onClose }) => {
         onClick: () => handleSelectNode(idx),
         children: [
           /* @__PURE__ */ jsxRuntimeExports.jsx(TreeIcon, {}),
-          /* @__PURE__ */ jsxRuntimeExports.jsx(TreeLabel, { title: cfg.name, children: cfg.name })
+          /* @__PURE__ */ jsxRuntimeExports.jsx(TreeLabel, { title: cfg.name, children: cfg.name }),
+          /* @__PURE__ */ jsxRuntimeExports.jsxs(ConfigRowActions, { children: [
+            /* @__PURE__ */ jsxRuntimeExports.jsx(Tooltip$1, { title: "Move up", children: /* @__PURE__ */ jsxRuntimeExports.jsx("span", { children: /* @__PURE__ */ jsxRuntimeExports.jsx(
+              ConfigRowActionButton,
+              {
+                size: "small",
+                disabled: idx === 0,
+                onClick: (e2) => {
+                  e2.stopPropagation();
+                  handleMoveConfig(idx, -1);
+                },
+                children: /* @__PURE__ */ jsxRuntimeExports.jsx(ArrowUpward, { fontSize: "small" })
+              }
+            ) }) }),
+            /* @__PURE__ */ jsxRuntimeExports.jsx(Tooltip$1, { title: "Move down", children: /* @__PURE__ */ jsxRuntimeExports.jsx("span", { children: /* @__PURE__ */ jsxRuntimeExports.jsx(
+              ConfigRowActionButton,
+              {
+                size: "small",
+                disabled: idx === localConfigs.length - 1,
+                onClick: (e2) => {
+                  e2.stopPropagation();
+                  handleMoveConfig(idx, 1);
+                },
+                children: /* @__PURE__ */ jsxRuntimeExports.jsx(ArrowDownward, { fontSize: "small" })
+              }
+            ) }) })
+          ] })
         ]
       },
       idx
@@ -26898,7 +26966,7 @@ const SettingsButton = () => {
   ] });
 };
 const OBSLogo = "" + new URL("obslogo-B1qHYFBi.png", import.meta.url).href;
-const APP_VERSION = "5.1.0";
+const APP_VERSION = "5.2.0";
 const Wrapper$2 = qe.div`
 	height: ${(p2) => p2.theme.grid(8)};
 	display: flex;
@@ -28794,10 +28862,14 @@ const TilesGroupWrapper = qe.div`
 	display: flex;
 	flex-direction: column;
 	align-items: center;
-	border: 1px solid ${(p2) => p2.theme.border};
+	border: ${(p2) => p2.$showBorder === false ? "none" : `1px solid ${p2.theme.border}`};
 	border-radius: ${(p2) => p2.theme.grid(0.5)};
 	background-color: ${(p2) => p2.$backgroundColor || p2.theme.groupBackground};
-	padding: 0 ${(p2) => p2.theme.grid(0.5)} ${(p2) => p2.theme.grid(0.5)} ${(p2) => p2.theme.grid(0.5)};
+	padding: ${(p2) => {
+  if (p2.$showBorder !== false) return `${p2.$includeTopPadding === "0" ? "0" : p2.theme.grid(0.5)} ${p2.theme.grid(0.5)} ${p2.theme.grid(0.5)} ${p2.theme.grid(0.5)}`;
+  const padding = p2.$backgroundColor ? p2.theme.grid(0.5) : p2.theme.grid(0.25);
+  return `${padding} ${padding} ${padding} ${padding}`;
+}};
 
 	& h3 {
 		margin: ${(p2) => p2.theme.grid(1)} 0;
@@ -28834,7 +28906,7 @@ function warnExtraProps(tile, allowed, typeName) {
 function isGroupTileConfig(tile) {
   const valid = typeof tile === "object" && "tiles" in tile && Array.isArray(tile.tiles);
   if (valid) {
-    warnExtraProps(tile, ["group", "tiles", "direction", "wrap", "backgroundColor", ...COMMON_TILE_PROPS], "GroupTileConfig");
+    warnExtraProps(tile, ["group", "tiles", "direction", "wrap", "backgroundColor", "showBorder", ...COMMON_TILE_PROPS], "GroupTileConfig");
   }
   return valid;
 }
@@ -28907,8 +28979,8 @@ const Tiles = ({
       inactiveRefreshTime
     };
     if (isGroupTileConfig(tile)) {
-      return /* @__PURE__ */ jsxRuntimeExports.jsxs(TilesGroupWrapper, { "data-elementtype": "TilesGroupWrapper", $backgroundColor: tile.backgroundColor, children: [
-        /* @__PURE__ */ jsxRuntimeExports.jsx("h3", { children: tile.group }),
+      return /* @__PURE__ */ jsxRuntimeExports.jsxs(TilesGroupWrapper, { "data-elementtype": "TilesGroupWrapper", $backgroundColor: tile.backgroundColor, $showBorder: tile.showBorder, $includeTopPadding: tile.group ? "0" : "1", children: [
+        tile.group && /* @__PURE__ */ jsxRuntimeExports.jsx("h3", { children: tile.group }),
         /* @__PURE__ */ jsxRuntimeExports.jsx(Tiles, { ...inheritableProps, ...tile, tiles: tile.tiles })
       ] }, tile.group);
     }
@@ -29222,6 +29294,19 @@ function GroupForm({ draft, setDraft }) {
           }
         ),
         label: "Wrap tiles"
+      }
+    ),
+    /* @__PURE__ */ jsxRuntimeExports.jsx(
+      FormControlLabel$1,
+      {
+        control: /* @__PURE__ */ jsxRuntimeExports.jsx(
+          Checkbox$1,
+          {
+            checked: draft.showBorder !== false,
+            onChange: (e2) => setDraft({ ...draft, showBorder: e2.target.checked ? void 0 : false })
+          }
+        ),
+        label: "Show border"
       }
     ),
     /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { style: { display: "flex", alignItems: "center", gap: 8 }, children: [
@@ -29706,7 +29791,7 @@ const TilePropertiesDialog = ({
   ] });
 };
 const TILE_TYPES = [
-  { type: "group", label: "Group", defaultTile: { group: "New Group", direction: "row", tiles: [] } },
+  { type: "group", label: "Group", defaultTile: { group: "New Group", direction: "row", tiles: [], showBorder: true } },
   { type: "scene", label: "Scene Button", defaultTile: { scene: "" } },
   { type: "sceneItem", label: "Scene Item Button", defaultTile: { sceneItem: { scene: "", item: "", click: "toggleVisible" } } },
   { type: "button", label: "Button", defaultTile: { button: "toggleStreaming" } },
@@ -30623,7 +30708,8 @@ const EditableTiles = () => {
   ] });
 };
 const Main = qe.main`
-	padding: ${(p2) => p2.theme.grid(1)};
+	padding: 0 0 ${(p2) => p2.theme.grid(1)} 0;
+	border-bottom: 3px solid ${(p2) => p2.theme.border};
 `;
 const Content = () => {
   const {
