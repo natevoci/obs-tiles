@@ -8,6 +8,10 @@
 
 - Update version number in package.json
 
+**fix: Horizontal scrollbar**
+
+- Fix horizontal scrollbar from appearing by selectively removing the additional right margin for TilesGroup components.
+
 **feat(settings): reorder configs from the settings dialog**
 
 - Added move up / move down actions to each config row in the left-hand settings tree.

@@ -40,20 +40,21 @@ const TilesGroupWrapper = styled.div<TilesGroupWrapperProps>`
 interface TilesGroupProps {
 	$direction?: string
 	$wrap?: boolean
+	$excludeRightMargin?: boolean
 }
 
 const TilesGroup = styled.div<TilesGroupProps>`
 	display: flex;
 	flex-direction: ${(p: any) => validDirections[p.$direction || ''] || 'row'};
 	flex-wrap: ${(p: any) => p.$wrap === false ? 'nowrap' : 'wrap'};
-	margin-right: ${(p: any) => p.theme.grid(-0.5)};
+	margin-right: 0;
 	margin-bottom: ${(p: any) => p.theme.grid(-1)};
 `
 
 const TileWrapper = styled.div<TilesGroupProps>`
 	position: relative;
 	margin: 0;
-	margin-right: ${(p: any) => p.theme.grid(0.5)};
+	margin-right: ${(p: any) => p.$excludeRightMargin ? '0' : p.theme.grid(0.5)};
 	margin-bottom: ${(p: any) => p.theme.grid(1)};
 `
 
@@ -411,6 +412,7 @@ export const Tiles = ({
 						data-elementtype='TileWrapper'
 						$direction={direction}
 						$wrap={wrap}
+						$excludeRightMargin={index === tileComponents.length - 1}
 					>
 						{tile}
 					</TileWrapper>
