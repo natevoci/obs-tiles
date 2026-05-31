@@ -18,7 +18,7 @@ import {
 	FormControlLabel,
 } from '@material-ui/core'
 import { makeStyles } from '@material-ui/core/styles'
-import { Close, Add, Delete, Edit, ExpandMore, ChevronRight, Settings as SettingsIcon, Keyboard as KeyboardIcon, Code as CodeIcon, Subscriptions as YouTubeIcon } from '@material-ui/icons'
+import { Close, Add, Delete, Edit, ExpandMore, ChevronRight, Settings as SettingsIcon, Keyboard as KeyboardIcon, Code as CodeIcon, Subscriptions as YouTubeIcon, ArrowUpward, ArrowDownward } from '@material-ui/icons'
 import { ConfigVisualEditor } from './ConfigVisualEditor'
 import { KeyboardShortcutsPanel } from './KeyboardShortcutsPanel'
 import { YouTubeSettingsPanel } from './YouTubeSettingsPanel'
@@ -90,6 +90,23 @@ const TreeLabel = styled.span`
 	overflow: hidden;
 	text-overflow: ellipsis;
 	white-space: nowrap;
+`
+
+const ConfigRowActions = styled.div`
+	display: flex;
+	align-items: center;
+	gap: 2px;
+	flex-shrink: 0;
+	margin-left: 4px;
+`
+
+const ConfigRowActionButton = styled(IconButton)`
+	width: 18px;
+	height: 18px;
+	padding: 1px;
+	& .MuiSvgIcon-root {
+		font-size: 0.95rem;
+	}
 `
 
 const TreeIcon = styled.div`
@@ -164,6 +181,21 @@ const useStyles = makeStyles((theme) => ({
 		flex: 1,
 	},
 }))
+
+function moveArrayItem<T>(items: T[], fromIndex: number, toIndex: number): T[] {
+	if (fromIndex === toIndex) return items
+	const next = [...items]
+	const [item] = next.splice(fromIndex, 1)
+	next.splice(toIndex, 0, item)
+	return next
+}
+
+function getReorderedIndex(currentIndex: number, fromIndex: number, toIndex: number): number {
+	if (currentIndex === fromIndex) return toIndex
+	if (fromIndex < toIndex && currentIndex > fromIndex && currentIndex <= toIndex) return currentIndex - 1
+	if (fromIndex > toIndex && currentIndex >= toIndex && currentIndex < fromIndex) return currentIndex + 1
+	return currentIndex
+}
 
 // ---------------------------------------------------------------------------
 // Name prompt dialog (replaces window.prompt)
@@ -426,6 +458,22 @@ export const SettingsDialog = ({ onClose }: SettingsDialogProps) => {
 		[localConfigs],
 	)
 
+	const handleMoveConfig = React.useCallback((fromIndex: number, direction: -1 | 1) => {
+		const toIndex = fromIndex + direction
+		setLocalConfigs((prev) => {
+			if (toIndex < 0 || toIndex >= prev.length) return prev
+			const next = moveArrayItem(prev, fromIndex, toIndex)
+			const nextLocalConfigIndex = getReorderedIndex(localConfigIndex, fromIndex, toIndex)
+			const nextSelected = typeof selected === 'number'
+				? getReorderedIndex(selected, fromIndex, toIndex)
+				: selected
+			setLocalConfigIndex(nextLocalConfigIndex)
+			setSelected(nextSelected)
+			setJsonValue(JSON.stringify(next[nextLocalConfigIndex], null, 2))
+			return next
+		})
+	}, [localConfigIndex, selected])
+
 	const confirmDelete = React.useCallback(() => {
 		if (!deleteConfirm) return
 		const { configIndex } = deleteConfirm
@@ -578,6 +626,36 @@ export const SettingsDialog = ({ onClose }: SettingsDialogProps) => {
 				>
 					<TreeIcon />
 					<TreeLabel title={cfg.name}>{cfg.name}</TreeLabel>
+					<ConfigRowActions>
+						<Tooltip title="Move up">
+							<span>
+								<ConfigRowActionButton
+									size="small"
+									disabled={idx === 0}
+									onClick={(e) => {
+										e.stopPropagation()
+										handleMoveConfig(idx, -1)
+									}}
+								>
+									<ArrowUpward fontSize="small" />
+								</ConfigRowActionButton>
+							</span>
+						</Tooltip>
+						<Tooltip title="Move down">
+							<span>
+								<ConfigRowActionButton
+									size="small"
+									disabled={idx === localConfigs.length - 1}
+									onClick={(e) => {
+										e.stopPropagation()
+										handleMoveConfig(idx, 1)
+									}}
+								>
+									<ArrowDownward fontSize="small" />
+								</ConfigRowActionButton>
+							</span>
+						</Tooltip>
+					</ConfigRowActions>
 				</TreeRow>
 			))}
 		</>

@@ -4,6 +4,12 @@
 
 ### 2026-05-31
 
+**feat(settings): reorder configs from the settings dialog**
+
+- Added move up / move down actions to each config row in the left-hand settings tree.
+- Reordering now keeps both the selected config and the active config index pointed at the same config item after the move.
+- Config order is still saved as the existing `configs` array, so the new order persists without any schema change.
+
 **fix(electron): include machine and timestamp in auto-backup filenames**
 
 - `backupConfigOnClose()` now writes backup files named like `obs-tiles settings - <machine> - <timestamp>.json` instead of overwriting a fixed `settings.json`.
