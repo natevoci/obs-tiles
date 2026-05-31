@@ -6,7 +6,8 @@ import { useEditMode } from './EditMode/EditModeContext'
 import { EditableTiles } from './EditMode/EditableTiles'
 
 const Main = styled.main`
-	padding: ${p => p.theme.grid(1)};
+	padding: 0 0 ${p => p.theme.grid(1)} 0;
+	border-bottom: 3px solid ${p => p.theme.border};
 `
 
 export const Content = () => {

@@ -280,6 +280,15 @@ function GroupForm({ draft, setDraft }: FormProps) {
 				}
 				label="Wrap tiles"
 			/>
+			<FormControlLabel
+				control={
+					<Checkbox
+						checked={draft.showBorder !== false}
+						onChange={(e) => setDraft({ ...draft, showBorder: e.target.checked ? undefined : false })}
+					/>
+				}
+				label="Show border"
+			/>
 			<div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
 				<input
 					type="color"
@@ -665,7 +674,7 @@ export const TilePropertiesDialog = ({
 // ---------------------------------------------------------------------------
 
 const TILE_TYPES: { type: TileType; label: string; defaultTile: any }[] = [
-	{ type: 'group',      label: 'Group',            defaultTile: { group: 'New Group', direction: 'row', tiles: [] } },
+	{ type: 'group',      label: 'Group',            defaultTile: { group: 'New Group', direction: 'row', tiles: [], showBorder: true } },
 	{ type: 'scene',      label: 'Scene Button',      defaultTile: { scene: '' } },
 	{ type: 'sceneItem',  label: 'Scene Item Button', defaultTile: { sceneItem: { scene: '', item: '', click: 'toggleVisible' } } },
 	{ type: 'button',     label: 'Button',            defaultTile: { button: 'toggleStreaming' } },

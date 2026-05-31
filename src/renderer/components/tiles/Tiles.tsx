@@ -15,16 +15,22 @@ const validDirections: Record<string, 'column' | 'row'> = {
 
 interface TilesGroupWrapperProps {
 	$backgroundColor?: string
+	$showBorder?: boolean
+	$includeTopPadding?: string
 }
 
 const TilesGroupWrapper = styled.div<TilesGroupWrapperProps>`
 	display: flex;
 	flex-direction: column;
 	align-items: center;
-	border: 1px solid ${(p: any) => p.theme.border};
+	border: ${(p: any) => p.$showBorder === false ? 'none' : `1px solid ${p.theme.border}`};
 	border-radius: ${(p: any) => p.theme.grid(0.5)};
 	background-color: ${(p: any) => p.$backgroundColor || p.theme.groupBackground};
-	padding: 0 ${(p: any) => p.theme.grid(0.5)} ${(p: any) => p.theme.grid(0.5)} ${(p: any) => p.theme.grid(0.5)};
+	padding: ${(p: any) => {
+		if (p.$showBorder !== false) return `${p.$includeTopPadding === '0' ? '0' : p.theme.grid(0.5)} ${p.theme.grid(0.5)} ${p.theme.grid(0.5)} ${p.theme.grid(0.5)}`
+		const padding = p.$backgroundColor ? p.theme.grid(0.5) : p.theme.grid(0.25)
+		return `${padding} ${padding} ${padding} ${padding}`
+	}};
 
 	& h3 {
 		margin: ${(p: any) => p.theme.grid(1)} 0;
@@ -69,6 +75,7 @@ export interface GroupTileConfig extends BaseTileConfig {
 	direction?: string;
 	wrap?: boolean;
 	backgroundColor?: string;
+	showBorder?: boolean;
 }
 
 export interface SceneButtonTileConfig extends BaseTileConfig {
@@ -186,7 +193,7 @@ function isGroupTileConfig(tile: TileConfig): tile is GroupTileConfig {
 		'tiles' in tile &&
 		Array.isArray((tile as any).tiles);
 	if (valid) {
-		warnExtraProps(tile, ['group', 'tiles', 'direction', 'wrap', 'backgroundColor', ...COMMON_TILE_PROPS], 'GroupTileConfig');
+		warnExtraProps(tile, ['group', 'tiles', 'direction', 'wrap', 'backgroundColor', 'showBorder', ...COMMON_TILE_PROPS], 'GroupTileConfig');
 	}
 	return valid;
 }
@@ -309,8 +316,8 @@ export const Tiles = ({
 		
 		if (isGroupTileConfig(tile)) {
 			return (
-				<TilesGroupWrapper key={tile.group} data-elementtype='TilesGroupWrapper' $backgroundColor={tile.backgroundColor}>
-					<h3>{tile.group}</h3>
+				<TilesGroupWrapper key={tile.group} data-elementtype='TilesGroupWrapper' $backgroundColor={tile.backgroundColor} $showBorder={tile.showBorder} $includeTopPadding={tile.group ? '0' : '1'}>
+					{tile.group && <h3>{tile.group}</h3>}
 					<Tiles {...inheritableProps} {...tile} tiles={tile.tiles} />
 				</TilesGroupWrapper>
 			);

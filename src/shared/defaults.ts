@@ -48,6 +48,7 @@ export const DEFAULT_SETTINGS = {
         {
           group: 'Scenes',
           direction: 'row',
+          showBorder: true,
           tiles: [
             {
               scene: 'Scene 1',

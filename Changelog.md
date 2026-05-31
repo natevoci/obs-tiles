@@ -4,6 +4,12 @@
 
 ### 2026-05-30
 
+**fix: Add toggle for group tile borders**
+
+- Group tiles now support an optional `showBorder` setting that defaults to enabled.
+- Inline edit mode keeps its dashed group border unchanged.
+- The default config now seeds groups with border visibility enabled.
+
 **fix(electron): stop windowState size drift at 150% DPI**
 
 - `src/main/index.ts` now persists `width`/`height` from `BrowserWindow.getContentBounds()` instead of outer frame bounds.
