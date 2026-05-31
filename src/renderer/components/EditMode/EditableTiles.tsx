@@ -555,7 +555,7 @@ const EditableLeafTile = ({
 		if ('text' in tile) return <TextTile {...common} text={tile.text} statsLines={tile.statsLines} customText={tile.customText} />
 		if ('audioInput' in tile) return <AudioInputTile {...common} audioInput={tile.audioInput} title={tile.title} viewType={tile.viewType} />
 		if ('rtspStream' in tile) return <RtspStreamTile {...common} rtspStream={tile.rtspStream} streamUrl={tile.streamUrl} fps={tile.fps} audioSyncOffsetMs={tile.audioSyncOffsetMs} startMuted={tile.startMuted} title={tile.title} />
-		if ('youtubeLive' in tile) return <YouTubeLiveTile {...common} youtubeLive={true} title={tile.title} viewType={tile.viewType} autoCreateBroadcast={tile.autoCreateBroadcast} defaultTitle={tile.defaultTitle} defaultDescription={tile.defaultDescription} />
+		if ('youtubeLive' in tile) return <YouTubeLiveTile {...common} youtubeLive={true} title={tile.title} autoCreateBroadcast={tile.autoCreateBroadcast} defaultTitle={tile.defaultTitle} defaultDescription={tile.defaultDescription} />
 		return null
 	}
 
@@ -692,6 +692,11 @@ const EditableGroupTile = ({
 		}))
 	}
 
+	function titleCase(direction: any): React.ReactNode {
+		if (!direction) return ''
+		return String(direction).charAt(0).toUpperCase() + String(direction).slice(1).toLowerCase()
+	}
+
 	return (
 		<>
 			<GroupEditWrapper
@@ -711,7 +716,7 @@ const EditableGroupTile = ({
 				>
 					<div style={{ display: 'flex', alignItems: 'center', gap: 4 }}>
 						<DragIndicator style={{ opacity: 0.5, fontSize: 18 }} />
-						<h3>{tile.group || '(group)'}</h3>
+						<h3>{titleCase(tile.direction)}{tile.group ? ` - ${tile.group}` : ''}</h3>
 					</div>
 					<GroupHeaderActions>
 						<IconButton

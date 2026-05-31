@@ -8,6 +8,11 @@
 
 - Update version number in package.json
 
+**feat(tiles): add direction to group title in inline edit mode**
+
+- Add direction to group title in inline edit mode, with direction title case. Exclude group name if not set.
+- Removed youtubelivetile prop that was producing an error.
+
 **fix: Horizontal scrollbar**
 
 - Fix horizontal scrollbar from appearing by selectively removing the additional right margin for TilesGroup components.
