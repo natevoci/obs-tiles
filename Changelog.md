@@ -4,6 +4,10 @@
 
 ### 2026-05-31
 
+**Version 5.2 release**
+
+- Update version number in package.json
+
 **feat(settings): reorder configs from the settings dialog**
 
 - Added move up / move down actions to each config row in the left-hand settings tree.
