@@ -2,6 +2,13 @@
 
 ## Feature History
 
+### 2026-05-31
+
+**fix(electron): include machine and timestamp in auto-backup filenames**
+
+- `backupConfigOnClose()` now writes backup files named like `obs-tiles settings - <machine> - <timestamp>.json` instead of overwriting a fixed `settings.json`.
+- The machine name comes from the local hostname and the timestamp uses an ISO-style date/time format with Windows-safe separators.
+
 ### 2026-05-30
 
 **fix: Add toggle for group tile borders**

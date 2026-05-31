@@ -3,6 +3,7 @@ import { fileURLToPath } from 'url'
 import { dirname } from 'path'
 import path from 'path'
 import fs from 'fs'
+import os from 'os'
 import { DEFAULT_SETTINGS } from '../shared/defaults'
 import { RtspManager } from './RtspManager'
 import { registerYouTubeOAuthIpc } from './YouTubeOAuthServer'
@@ -70,6 +71,19 @@ function saveSettings(settings: any): boolean {
   }
 }
 
+function sanitizeBackupSegment(value: string): string {
+  return value
+    .trim()
+    .replace(/[<>:"/\\|?*\x00-\x1f]/g, '-')
+    .replace(/\s+/g, ' ')
+}
+
+function getBackupFileName() {
+  const machineName = sanitizeBackupSegment(os.hostname() || 'unknown-machine')
+  const timestamp = new Date().toISOString().replace('T', ' ').slice(0, 19).replace(/:/g, '-')
+  return `obs-tiles settings - ${machineName} - ${timestamp}.json`
+}
+
 function backupConfigOnClose() {
   const settings = loadSettings()
   const enabled = Boolean(settings?.autoBackupConfigOnClose)
@@ -83,8 +97,8 @@ function backupConfigOnClose() {
     ? configuredFolder
     : path.join(basePath, configuredFolder)
 
-  const sourceConfigPath = path.join(dataDir, 'config.json')
-  const targetConfigPath = path.join(backupDir, 'config.json')
+  const sourceConfigPath = path.join(dataDir, 'settings.json')
+  const targetConfigPath = path.join(backupDir, getBackupFileName())
 
   try {
     fs.mkdirSync(backupDir, { recursive: true })
