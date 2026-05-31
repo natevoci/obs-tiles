@@ -28879,13 +28879,13 @@ const TilesGroup = qe.div`
 	display: flex;
 	flex-direction: ${(p2) => validDirections[p2.$direction || ""] || "row"};
 	flex-wrap: ${(p2) => p2.$wrap === false ? "nowrap" : "wrap"};
-	margin-right: ${(p2) => p2.theme.grid(-0.5)};
+	margin-right: 0;
 	margin-bottom: ${(p2) => p2.theme.grid(-1)};
 `;
 const TileWrapper = qe.div`
 	position: relative;
 	margin: 0;
-	margin-right: ${(p2) => p2.theme.grid(0.5)};
+	margin-right: ${(p2) => p2.$excludeRightMargin ? "0" : p2.theme.grid(0.5)};
 	margin-bottom: ${(p2) => p2.theme.grid(1)};
 `;
 const COMMON_TILE_PROPS = ["title", "connection", "tileSize", "fontSize", "activeRefreshTime", "inactiveRefreshTime"];
@@ -29071,6 +29071,7 @@ const Tiles = ({
             "data-elementtype": "TileWrapper",
             $direction: direction,
             $wrap: wrap,
+            $excludeRightMargin: index === tileComponents.length - 1,
             children: tile
           },
           index
@@ -30245,7 +30246,7 @@ const EditableLeafTile = ({
     if ("text" in tile) return /* @__PURE__ */ jsxRuntimeExports.jsx(Text, { ...common2, text: tile.text, statsLines: tile.statsLines, customText: tile.customText });
     if ("audioInput" in tile) return /* @__PURE__ */ jsxRuntimeExports.jsx(AudioInputTile, { ...common2, audioInput: tile.audioInput, title: tile.title, viewType: tile.viewType });
     if ("rtspStream" in tile) return /* @__PURE__ */ jsxRuntimeExports.jsx(RtspStreamTile, { ...common2, rtspStream: tile.rtspStream, streamUrl: tile.streamUrl, fps: tile.fps, audioSyncOffsetMs: tile.audioSyncOffsetMs, startMuted: tile.startMuted, title: tile.title });
-    if ("youtubeLive" in tile) return /* @__PURE__ */ jsxRuntimeExports.jsx(YouTubeLiveTile, { ...common2, youtubeLive: true, title: tile.title, viewType: tile.viewType, autoCreateBroadcast: tile.autoCreateBroadcast, defaultTitle: tile.defaultTitle, defaultDescription: tile.defaultDescription });
+    if ("youtubeLive" in tile) return /* @__PURE__ */ jsxRuntimeExports.jsx(YouTubeLiveTile, { ...common2, youtubeLive: true, title: tile.title, autoCreateBroadcast: tile.autoCreateBroadcast, defaultTitle: tile.defaultTitle, defaultDescription: tile.defaultDescription });
     return null;
   };
   return /* @__PURE__ */ jsxRuntimeExports.jsxs(jsxRuntimeExports.Fragment, { children: [
@@ -30378,6 +30379,10 @@ const EditableGroupTile = ({
       tiles: moveTileAt(config2.tiles, tilePath, delta)
     }));
   };
+  function titleCase(direction) {
+    if (!direction) return "";
+    return String(direction).charAt(0).toUpperCase() + String(direction).slice(1).toLowerCase();
+  }
   return /* @__PURE__ */ jsxRuntimeExports.jsxs(jsxRuntimeExports.Fragment, { children: [
     /* @__PURE__ */ jsxRuntimeExports.jsxs(
       GroupEditWrapper,
@@ -30402,7 +30407,10 @@ const EditableGroupTile = ({
               children: [
                 /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { style: { display: "flex", alignItems: "center", gap: 4 }, children: [
                   /* @__PURE__ */ jsxRuntimeExports.jsx(DragIndicator, { style: { opacity: 0.5, fontSize: 18 } }),
-                  /* @__PURE__ */ jsxRuntimeExports.jsx("h3", { children: tile.group || "(group)" })
+                  /* @__PURE__ */ jsxRuntimeExports.jsxs("h3", { children: [
+                    titleCase(tile.direction),
+                    tile.group ? ` - ${tile.group}` : ""
+                  ] })
                 ] }),
                 /* @__PURE__ */ jsxRuntimeExports.jsxs(GroupHeaderActions, { children: [
                   /* @__PURE__ */ jsxRuntimeExports.jsx(
